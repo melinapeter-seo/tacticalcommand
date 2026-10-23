@@ -1,0 +1,100 @@
+/* Tactical Command — estilos base. Tokens del handoff (design/HANDOFF.md › Design tokens). */
+@font-face { font-family: 'Inter Tight'; font-weight: 300; font-style: normal; font-display: swap; src: url('/fonts/inter-tight-latin-300-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Inter Tight'; font-weight: 400; font-style: normal; font-display: swap; src: url('/fonts/inter-tight-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Inter Tight'; font-weight: 500; font-style: normal; font-display: swap; src: url('/fonts/inter-tight-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Inter Tight'; font-weight: 600; font-style: normal; font-display: swap; src: url('/fonts/inter-tight-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Inter Tight'; font-weight: 700; font-style: normal; font-display: swap; src: url('/fonts/inter-tight-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-weight: 400; font-style: normal; font-display: swap; src: url('/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-weight: 500; font-style: normal; font-display: swap; src: url('/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'TC Stencil'; font-weight: 400; font-style: normal; font-display: swap; src: url('/fonts/tc-stencil.woff2') format('woff2'); }
+@font-face { font-family: 'TC Gunplay'; font-weight: 400; font-style: normal; font-display: swap; src: url('/fonts/tc-gunplay.woff2') format('woff2'); }
+
+:root {
+  --bg: #1A1D1B; --surface: #222623; --surface-deep: #151816; --panel: #1C201D; --surface-2: #202421;
+  --border: #2F3530; --border-soft: #232825; --border-dim: #3E453E;
+  --text: #E8EAE6; --text-2: #C3C8C1; --muted: #9AA09A; --faint: #7E887E; --ph: #5E665E; --muted-2: #8E958E;
+  --gold: #E3B23C; --gold-hover: #F5D470; --gold-bg: #221F16; --gold-line: #3A3524;
+  --warn: #E8B4A0; --ok: #7FB37F; --wa: #25D366; --ink: #0D0F0D;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --sans: 'Inter Tight', Helvetica, Arial, sans-serif;
+  --stencil: 'TC Stencil', 'Stardos Stencil', serif;
+  --gunplay: 'TC Gunplay', 'Saira Condensed', sans-serif;
+  --gold-grad: linear-gradient(115deg, #C9922A 0%, #E3B23C 26%, #FFF3C4 44%, #E3B23C 62%, #C9922A 100%);
+  --gold-text: linear-gradient(100deg, #8A6A1E 0%, #C9922A 18%, #E3B23C 34%, #FFF3C4 47%, #E3B23C 60%, #C9922A 78%, #8A6A1E 100%);
+  --glow: 0 0 42px rgba(227, 178, 60, .55), 0 0 14px rgba(255, 214, 110, .35);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --pad: 40px; --header-h: 76px;
+  /* El sitio se diseña sobre un lienzo fijo y se escala con `zoom` (ver Base.astro). --z = factor actual. */
+  --z: 1;
+  color-scheme: dark;
+}
+@media (max-width: 1023px) { :root { --pad: 18px; --header-h: 46px; } }
+
+@keyframes tapglow { 0%, 100% { box-shadow: 0 0 0 0 rgba(227,178,60,.45); transform: scale(1) } 50% { box-shadow: 0 0 0 12px rgba(227,178,60,0); transform: scale(1.07) } }
+@keyframes goldpulseF { 0%, 100% { filter: drop-shadow(0 0 5px rgba(227,178,60,.5)) } 50% { filter: drop-shadow(0 0 16px rgba(255,214,110,1)) drop-shadow(0 0 26px rgba(227,178,60,.6)) } }
+@keyframes goldpulse { 0%, 100% { text-shadow: 0 0 7px rgba(227,178,60,.40) } 50% { text-shadow: 0 0 22px rgba(255,214,110,.95), 0 0 38px rgba(227,178,60,.55) } }
+@keyframes shine { from { background-position: 0% center } to { background-position: -220% center } }
+@keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sheet { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes drawer { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes trackIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes skel { 0% { opacity: .45 } 50% { opacity: .9 } 100% { opacity: .45 } }
+
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow-anchor: none; }
+body { overflow-x: clip; min-height: 100vh; }
+* { box-sizing: border-box; }
+img { display: block; max-width: 100%; }
+picture { display: contents; }
+a { color: var(--text); text-decoration: none; }
+a:hover { color: var(--gold); }
+button, input, select, textarea { font-family: inherit; color: inherit; }
+::selection { background: var(--gold); color: var(--ink); }
+details summary::-webkit-details-marker { display: none; }
+summary { list-style: none; cursor: pointer; }
+input::placeholder, textarea::placeholder { color: #8E958E; }
+h1, h2, h3, h4 { margin: 0; font-weight: 600; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+[data-noscrollbar] { scrollbar-width: none; -ms-overflow-style: none; }
+[data-noscrollbar]::-webkit-scrollbar { display: none; width: 0; height: 0; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+.skip { position: absolute; left: 12px; top: -60px; z-index: 200; background: var(--gold); color: var(--ink); padding: 12px 16px; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; }
+.skip:focus { top: 12px; color: var(--ink); }
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Mostrar/ocultar por lienzo (el prototipo tenía árboles distintos para desktop y mobile). */
+@media (max-width: 1023px) { .d-only { display: none !important; } }
+@media (min-width: 1024px) { .m-only { display: none !important; } }
+
+.mono { font-family: var(--mono); }
+.gold-text { background-image: var(--gold-text); background-size: 220% auto; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; animation: shine 5s ease-in-out infinite alternate; }
+.pulse { animation: goldpulse 4.5s ease-in-out infinite; }
+.btn-gold { display: inline-block; background: var(--gold-grad); background-size: 230% auto; color: var(--ink); box-shadow: var(--glow); border: 0; cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; font-weight: 500; text-align: center; }
+.btn-gold.anim { animation: shine 5s ease-in-out infinite alternate; }
+.btn-gold:hover { background: var(--gold-hover); color: var(--ink); }
+.btn-line { display: inline-block; font-family: var(--mono); letter-spacing: .16em; color: var(--gold); border: 1px solid var(--gold); background: none; cursor: pointer; }
+.btn-line:hover { background: var(--gold-grad); background-size: 230% auto; color: var(--ink); }
+.arrow-btn { position: absolute; z-index: 4; border-radius: 50%; border: 1px solid rgba(227,178,60,.55); background: rgba(26,29,27,.82); backdrop-filter: blur(6px); color: var(--gold); line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; animation: tapglow 2.2s ease-in-out infinite; width: 54px; height: 54px; font-size: 24px; }
+.arrow-btn:hover { background: var(--gold); color: var(--ink); }
+.arrow-btn[hidden] { display: none; }
+@media (max-width: 1023px) { .arrow-btn { width: 36px; height: 36px; font-size: 16px; } }
+
+.h2 { font-size: 54px; font-weight: 600; letter-spacing: -.03em; line-height: 1; margin: 0; }
+.lead { font-size: 17px; line-height: 1.65; color: var(--muted); text-wrap: pretty; }
+@media (max-width: 1023px) { .h2 { font-size: 27px; } .lead { font-size: 15px; } }
+
+.ph { width: 100%; height: 100%; background-image: repeating-linear-gradient(135deg, #222623 0 8px, #1B1F1B 8px 16px); display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; }
+.ph span { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--faint); line-height: 1.9; }
+
+.cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Animación de aparición al hacer scroll (data-reveal). */
+.rv-wait { opacity: 0; transform: translateY(36px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+@media (max-width: 1023px) { .rv-wait { transform: translateY(22px); } }
+.rv-in { opacity: 1; transform: none; }
+
+/* Mapa de estrellas, chips, etc. */
+.stars { display: flex; gap: 4px; }

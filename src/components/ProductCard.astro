@@ -1,0 +1,42 @@
+---
+// Tarjeta de producto (una por color). Se usa en la home, en "Completá el equipo" y en las guías.
+import Foto from './Foto.astro';
+import { getImage } from 'astro:assets';
+import { money, type TarjetaVista } from '../lib/data';
+import { img } from '../lib/img';
+interface Props { t: TarjetaVista; class?: string; sizes?: string; mobileCta?: boolean }
+const { t, class: cls = '', sizes = '(min-width: 1024px) 22vw, 70vw', mobileCta = true } = Astro.props;
+// Tarjeta que rota fotos cada 2 s (Campera Gore-Tex en el prototipo).
+const rota = t.rota ? await Promise.all(t.rota.map(async (f) => (await getImage({ src: (await img(f))!, width: 800, format: 'webp' })).src)) : null;
+---
+<a href={t.url} class:list={['pc', cls]}>
+  <div class="pc-img">
+    {t.imagen ? (
+      <Foto src={t.imagen} alt={t.nombre} sizes={sizes} class="pc-im" data-rota={rota ? JSON.stringify(rota) : undefined} />
+    ) : (
+      <div class="ph"><span>PLACEHOLDER /<br />{t.placeholder}</span></div>
+    )}
+    <div class="pc-ver" aria-hidden="true">VER PRODUCTO →</div>
+  </div>
+  <div class="pc-meta"><span>{t.categoria}</span><span>{t.sku}</span></div>
+  <div class="pc-n">{t.nombre}</div>
+  <div class="pc-p"><data value={t.precio}>{money(t.precio)}</data></div>
+  {mobileCta && <span class="pc-cta m-only" aria-hidden="true">VER PRODUCTO →</span>}
+</a>
+
+<style>
+  .pc { display: block; flex: none; transition: transform .35s var(--ease); }
+  .pc:hover { transform: translateY(-4px); color: var(--text); }
+  .pc-img { position: relative; overflow: hidden; background: var(--surface); aspect-ratio: 1 / 1; }
+  .pc-img :global(.pc-im) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.22,.61,.36,1); will-change: transform; }
+  .pc:hover .pc-img :global(.pc-im) { transform: scale(1.025); }
+  .pc-ver { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 16px; background: linear-gradient(to top, rgba(26,29,27,.9), transparent); opacity: 0; transition: opacity .4s var(--ease); font-family: var(--mono); font-size: 13px; letter-spacing: .16em; color: var(--gold); animation: goldpulse 4.5s ease-in-out infinite; }
+  .pc:hover .pc-ver { opacity: 1; }
+  .pc-meta { display: flex; justify-content: space-between; gap: 12px; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); margin-top: 16px; }
+  .pc-n { font-size: 16px; font-weight: 500; margin-top: 10px; line-height: 1.3; transition: transform .5s var(--ease); }
+  .pc:hover .pc-n { transform: translateY(-2px); }
+  .pc-p { margin-top: 12px; font-family: var(--mono); font-size: 17px; font-weight: 500; }
+  .pc::after { content: ''; display: block; margin-top: 12px; }
+  .pc-cta { display: block; margin-top: 12px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--gold); animation: goldpulse 4.5s ease-in-out infinite; white-space: nowrap; }
+  @media (max-width: 1023px) { .pc-meta { gap: 8px; } .pc-meta span:last-child { white-space: nowrap; } }
+</style>

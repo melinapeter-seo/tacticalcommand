@@ -1,0 +1,60 @@
+---
+import { NAV } from '../lib/data';
+interface Props { overHero?: boolean; path: string }
+const { overHero = false, path } = Astro.props;
+const cart = `<svg viewBox="0 0 24 24" fill="none" stroke="#E3B23C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 3.5h2.2l2 11.2h10.6"></path><path d="M6.4 12.2h11l1.8-6.4H5.1"></path><circle cx="9" cy="19.2" r="1.3"></circle><circle cx="16.6" cy="19.2" r="1.3"></circle></svg>`;
+---
+<header class:list={['hdr', { over: overHero }]} id="hdr">
+  <div class="hdr-d d-only">
+    <a href="/" class="logo gold-text" aria-label="Tactical Command, inicio">TACTICAL COMMAND</a>
+    <nav aria-label="Principal" class="nav">
+      {NAV.map((it, ix) => (
+        <span class="nav-it">
+          {ix >= 4 && <span class="sep" aria-hidden="true"></span>}
+          <a href={it.url} aria-current={path.startsWith(it.url) ? 'page' : undefined}>{it.t}</a>
+        </span>
+      ))}
+    </nav>
+    <div class="acts">
+      <button type="button" class="search-t gold-text" data-open="search">BUSCAR</button>
+      <button type="button" class="cart-t" data-open="cart" aria-label="Carrito"><Fragment set:html={cart} /><span class="pulse">[<span data-cart-count>0</span>]</span></button>
+      <a href="/mayoristas/" class="ws-t">MAYORISTAS</a>
+    </div>
+  </div>
+  <div class="hdr-m m-only">
+    <a href="/" class="logo-m gold-text" aria-label="Tactical Command, inicio">TACTICAL COMMAND</a>
+    <div class="acts-m">
+      <button type="button" data-open="search" aria-label="Buscar" class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" style="width:23px;height:24px" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5L21 21"></path></svg></button>
+      <button type="button" data-open="cart" aria-label="Carrito" class="cart-m"><Fragment set:html={cart} /><span class="pulse">[<span data-cart-count>0</span>]</span></button>
+      <button type="button" data-open="menu" class="menu-t" aria-label="Menú" aria-expanded="false" aria-controls="menu">MENÚ</button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 70; background: rgba(26,29,27,.88); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); transition: background .4s var(--ease), border-color .4s var(--ease); }
+  .hdr.over:not(.scrolled) { background: transparent; border-bottom-color: transparent; backdrop-filter: none; }
+  .hdr-d { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 40px; height: 76px; }
+  .logo { display: flex; align-items: center; line-height: 1; font-family: var(--stencil); font-weight: 400; font-size: 30px; letter-spacing: .06em; white-space: nowrap; filter: drop-shadow(0 0 16px rgba(227,178,60,.6)); }
+  .nav { display: flex; align-items: center; gap: 20px; }
+  .nav-it { display: flex; align-items: center; gap: 20px; }
+  .sep { width: 1px; height: 16px; background: var(--gold); opacity: .85; }
+  .nav a { font-family: var(--mono); font-size: 13px; letter-spacing: .12em; white-space: nowrap; color: #FFFFFF; padding: 6px 0; border-bottom: 1px solid transparent; transition: color .2s; }
+  .nav a:hover { color: var(--gold); }
+  .nav a[aria-current='page'] { border-bottom-color: var(--gold); }
+  .acts { display: flex; align-items: center; gap: 26px; }
+  .search-t { background-color: transparent; border: 0; padding: 6px 0; cursor: pointer; font-family: var(--mono); font-size: 13px; letter-spacing: .12em; white-space: nowrap; font-weight: 600; filter: drop-shadow(0 0 7px rgba(227,178,60,.65)); animation: none; }
+  .cart-t, .cart-m { background: none; border: 0; padding: 4px 0; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+  .cart-t :global(svg) { width: 26px; height: 26px; filter: drop-shadow(0 0 7px rgba(227,178,60,.65)); animation: goldpulseF 4.5s ease-in-out infinite; }
+  .cart-t > span { font-family: var(--mono); font-size: 13px; letter-spacing: .12em; white-space: nowrap; color: var(--gold); }
+  .ws-t { font-family: var(--mono); font-size: 13px; letter-spacing: .12em; white-space: nowrap; color: var(--text); border: 1px solid var(--gold); padding: 12px 20px; }
+  .ws-t:hover { background: var(--gold-grad); background-size: 230% auto; color: var(--ink); box-shadow: var(--glow); }
+  .hdr-m { display: flex; align-items: center; justify-content: space-between; padding: 0 22px 0 14px; height: 46px; gap: 10px; }
+  .logo-m { font-family: var(--stencil); font-weight: 400; font-size: 17px; letter-spacing: .05em; white-space: nowrap; filter: drop-shadow(0 0 16px rgba(227,178,60,.6)); flex: 0 1 auto; min-width: 0; overflow: hidden; }
+  .acts-m { display: flex; align-items: center; gap: 10px; flex: none; }
+  .ico { background: none; border: 0; padding: 4px 0; min-height: 40px; min-width: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .cart-m { min-height: 40px; gap: 5px; }
+  .cart-m :global(svg) { width: 21px; height: 21px; filter: drop-shadow(0 0 7px rgba(227,178,60,.65)); animation: goldpulseF 4.5s ease-in-out infinite; }
+  .cart-m > span { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--gold); }
+  .menu-t { background: none; border: 1px solid var(--gold); padding: 0 11px; height: 30px; cursor: pointer; font-family: var(--mono); font-size: 14px; font-weight: 500; letter-spacing: .12em; color: var(--gold); box-shadow: 0 0 14px rgba(227,178,60,.25); flex: none; }
+</style>

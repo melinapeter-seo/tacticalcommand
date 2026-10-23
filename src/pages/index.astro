@@ -1,0 +1,289 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import Social from '../components/Social.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Scroller from '../components/Scroller.astro';
+import { categorias, DESTACADOS, tarjeta, type TarjetaVista } from '../lib/data';
+import { img, hasImg } from '../lib/img';
+import { graph, org, website, abs } from '../lib/seo';
+
+const destacados = DESTACADOS.map(tarjeta).filter(Boolean) as TarjetaVista[];
+
+// Reseñas: solo las fotos que existen (el prototipo referenciaba algunas que nunca se subieron).
+const resenas = ['RESEÑA 1.webp', 'resena-13.webp', 'RESEÑA 2.webp', 'RESEÑA 3.webp', 'RESEÑA 4.webp', 'RESEÑA 5.webp', 'RESEÑA 6.webp', 'RESEÑA 7.webp', 'RESEÑA 8.webp', 'RESEÑA 9.webp', 'RESEÑA 10.webp', 'RESEÑA 11.webp', 'RESEÑA 12.webp']
+  .filter((f) => hasImg(f))
+  .map((f, i) => ({ f, alt: f === 'resena-13.webp' ? 'Cliente de Tactical Command con campera y uniforme táctico' : `Cliente de Tactical Command con su compra (${i + 1})` }));
+
+const criterios = [
+  { i: '01', t: 'CONSTRUCCIÓN', d: 'Revisamos terminaciones, costuras y estructura de la prenda o del equipo antes de incorporarlo al catálogo.' },
+  { i: '02', t: 'FUNCIONALIDAD', d: 'Bolsillos, ajustes, sistemas de carga y regulaciones que resuelven un uso concreto.' },
+  { i: '03', t: 'MATERIALES', d: 'Tejidos, herrajes y componentes según la información publicada por el proveedor.' },
+];
+
+const poster = (await img('hero-poster.webp'))!;
+const posterImg = await getImage({ src: poster, widths: [640, 960, 1280, poster.width].filter((w, i, a) => w <= poster.width && a.indexOf(w) === i), format: 'webp' });
+
+const jsonld = graph(org(), website(), {
+  '@type': 'ItemList', name: 'Productos destacados',
+  itemListElement: destacados.map((t, i) => ({ '@type': 'ListItem', position: i + 1, name: t.nombre, url: abs(t.url.split('?')[0]) })).filter((x, i, a) => a.findIndex((y) => y.url === x.url) === i).map((x, i) => ({ ...x, position: i + 1 })),
+});
+---
+<Base
+  title="Tactical Command | Equipamiento táctico en Argentina"
+  description="Indumentaria, equipos, calzado y accesorios tácticos para trabajo, uso operativo y outdoor. Desde Rafaela, Santa Fe, con envíos a todo el país. Comprá por WhatsApp."
+  path="/"
+  jsonld={jsonld}
+  overHero
+  heroFont
+  lcp={{ srcset: posterImg.srcSet.attribute, sizes: '100vw', type: 'image/webp' }}
+>
+  <section class="hero" aria-labelledby="hero-h1">
+    <div class="hero-media">
+      <img src={posterImg.src} srcset={posterImg.srcSet.attribute} sizes="100vw" alt="" width={poster.width} height={poster.height} fetchpriority="high" decoding="sync" class="hero-poster" />
+      <video class="hero-vid" muted playsinline loop preload="none" data-src="/video/hero-ofi-2.mp4" aria-hidden="true" tabindex="-1"></video>
+      <div class="hero-fade m-only"></div>
+    </div>
+    <div class="hero-soc d-only"><Social size={46} /></div>
+    <div class="hero-soc-m m-only"><Social size={32} /></div>
+    <div class="hero-shade d-only" aria-hidden="true"></div>
+    <div class="hero-in">
+      <span class="hero-k">RESISTENCIA · FUNCIONALIDAD · RENDIMIENTO</span>
+      <h1 id="hero-h1" class="hero-h1">
+        <span class="l1">Equipamiento táctico</span>
+        <span class="l2">para <span>condiciones reales</span></span>
+      </h1>
+      <p class="hero-p">Indumentaria, equipos, calzado y accesorios tácticos para trabajo, uso operativo y outdoor.</p>
+      <div class="hero-cta"><a href="#categorias" class="btn-gold anim hero-btn">EXPLORAR CATÁLOGO ↓</a></div>
+      <div class="hero-meta">
+        <span class="hero-raf"><span class="d-only">RAFAELA, SANTA FE — ARGENTINA</span><span class="m-only">RAFAELA · SANTA FE</span></span>
+        <span class="hero-ship"><span class="sq"></span>ENVÍOS A TODO EL PAÍS</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal id="categorias" class="cats" aria-labelledby="cats-h">
+    <h2 id="cats-h" class="h2">ENCONTRÁ TU EQUIPO</h2>
+    <p class="lead cats-lead">Explorá indumentaria, equipos tácticos, calzado y accesorios seleccionados por Tactical Command para responder en condiciones exigentes, con foco en resistencia, funcionalidad, desempeño y altos estándares de calidad.</p>
+    <div class="cats-grid">
+      {categorias.map((c, i) => (
+        <a href={`/${c.slug}/`} class="cat">
+          <Foto src={c.imagen} alt={`${c.titulo.charAt(0) + c.titulo.slice(1).toLowerCase()} tácticos de Tactical Command`} sizes="(min-width: 1024px) 50vw, 100vw" class="cat-im" />
+          <div class="cat-grad" aria-hidden="true"></div>
+          <div class="cat-row">
+            <h3 class="cat-t">{c.titulo}</h3>
+            <span class="cat-arr" aria-hidden="true">→</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section data-reveal class="sec gear" aria-labelledby="dest-h">
+    <div class="sec-head">
+      <h2 id="dest-h" class="h2">DESTACADOS</h2>
+      <a href="/indumentaria/" class="see-all d-only">VER TODO EL CATÁLOGO →</a>
+    </div>
+    <div class="sec-body">
+      <Scroller name="gear" label="Productos destacados">
+        {destacados.map((t) => <ProductCard t={t} class="gear-card" />)}
+      </Scroller>
+    </div>
+  </section>
+
+  <section data-reveal class="sec" aria-labelledby="gar-h">
+    <h2 id="gar-h" class="h2">GARANTÍA DE SATISFACCIÓN</h2>
+    <p class="lead rep-lead">Nuestros clientes destacan la calidad, resistencia y funcionalidad de la indumentaria y el equipamiento táctico de Tactical Command.</p>
+    <div class="sec-body">
+      <Scroller name="rep" arrowTop="30%" class="rep-sc" label="Fotos de clientes">
+        {resenas.map((r) => (
+          <figure class="rep">
+            <div class="rep-img"><Foto src={r.f} alt={r.alt} sizes="(min-width: 1024px) 22vw, 72vw" /></div>
+            <div class="stars" role="img" aria-label="5 de 5 estrellas">
+              {[0, 1, 2, 3, 4].map(() => <svg viewBox="0 0 24 24" width="16" height="16" fill="#E3B23C" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"></path></svg>)}
+            </div>
+          </figure>
+        ))}
+      </Scroller>
+    </div>
+  </section>
+
+  <section data-reveal class="std" aria-labelledby="std-h">
+    <div class="std-grid">
+      <div>
+        <h2 id="std-h" class="std-h2">NUESTROS CRITERIOS DE SELECCIÓN DE PRODUCTOS</h2>
+        <p class="lead std-p1">Priorizamos construcción, funcionalidad, materiales y utilidad real. Cada producto se presenta con información clara sobre características, variantes y disponibilidad para que puedas elegir con criterio.</p>
+        <p class="std-p2">Tactical Command selecciona indumentaria, equipos tácticos, calzado y accesorios orientados al uso operativo y outdoor. Desde Rafaela, Santa Fe, comercializa productos nuevos y realiza envíos a toda la Argentina.</p>
+      </div>
+      <div class="crit-wrap">
+        <ul class="crit">
+          {criterios.map((k, ix) => (
+            <li class:list={['crit-it', { last: ix === criterios.length - 1 }]}>
+              <span class="crit-n">{k.i}</span>
+              <h3 class="crit-t">{k.t}</h3>
+              <p class="crit-d">{k.d}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section data-reveal class="may" aria-labelledby="may-h">
+    <div class="may-grid">
+      <h2 id="may-h" class="h2 may-h2">ARMÁ TU PRESUPUESTO<br />MAYORISTA.</h2>
+      <div>
+        <p class="may-p">Accedé al catálogo mayorista, armá cantidades por producto y prepará una cotización para revisión de stock.</p>
+        <a href="/mayoristas/" class="btn-gold may-btn">INGRESAR AL PORTAL MAYORISTA →</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Video del hero: se carga recién después del LCP; en mobile con ahorro de datos o conexión lenta queda solo el poster.
+  const v = document.querySelector<HTMLVideoElement>('.hero-vid');
+  const c = (navigator as any).connection;
+  const slow = c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ''));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (v && !slow && !reduce) {
+    const start = () => setTimeout(() => {
+      v.src = v.dataset.src!;
+      v.addEventListener('playing', () => v.classList.add('on'), { once: true });
+      v.play().catch(() => {});
+    }, window.innerWidth < 1024 ? 300 : 0);
+    if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
+  }
+
+  // "Explorar catálogo": scroll suave (el header fijo se compensa con scroll-margin-top).
+  document.querySelector('.hero-btn')?.addEventListener('click', (e) => {
+    const el = document.getElementById('categorias');
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Tarjeta que rota fotos (Campera Gore-Tex).
+  document.querySelectorAll<HTMLImageElement>('img[data-rota]').forEach((im) => {
+    const list: string[] = JSON.parse(im.dataset.rota!);
+    let i = 0;
+    const pic = im.parentElement;
+    const tick = () => {
+      const next = (i + 1) % list.length, pre = new Image();
+      pre.onload = () => { i = next; pic?.querySelectorAll('source').forEach((s) => s.remove()); im.removeAttribute('srcset'); im.src = list[i]; setTimeout(tick, 2000); };
+      pre.onerror = () => setTimeout(tick, 2000);
+      pre.src = list[next];
+    };
+    setTimeout(tick, 2000);
+  });
+</script>
+
+<style>
+  .hero { position: relative; min-height: max(600px, calc(100vh / var(--z) - 76px)); overflow: hidden; background: var(--surface); }
+  .hero-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .hero-poster, .hero-vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .hero-vid { opacity: 0; transition: opacity .9s ease; }
+  .hero-vid:global(.on) { opacity: 1; }
+  .hero-soc { position: absolute; top: 28px; left: 40px; z-index: 2; width: 263px; display: flex; align-items: center; justify-content: space-between; }
+  .hero-soc-m { position: absolute; top: 14px; left: 18px; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 20px; min-width: 196px; }
+  .hero-shade { position: absolute; left: 0; bottom: 0; width: min(1100px, 80%); height: 88%; pointer-events: none; background: radial-gradient(ellipse 70% 72% at 18% 78%, rgba(10,12,10,.5) 0%, rgba(10,12,10,.28) 45%, rgba(10,12,10,0) 100%); }
+  .hero-in { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: max(600px, calc(100vh / var(--z) - 76px)); padding: 110px 40px 46px; }
+  .hero-k { display: block; width: fit-content; white-space: nowrap; font-family: var(--mono); font-size: 13px; letter-spacing: 11.64px; color: var(--text-2); text-shadow: 0 1px 2px rgba(0,0,0,.6), 0 2px 14px rgba(0,0,0,.45); animation: rise .9s .1s var(--ease) both; }
+  .hero-h1 { font-family: var(--gunplay); font-weight: 400; font-size: 86.24px; line-height: .96; letter-spacing: .005em; text-transform: uppercase; color: #EDEBE4; margin: 18px 0 0; text-wrap: balance; text-shadow: 0 0 28px rgba(10,12,10,.75), 0 0 60px rgba(10,12,10,.55), 0 4px 14px rgba(0,0,0,.5); animation: rise .9s .2s var(--ease) both; }
+  .hero-h1 > span { display: block; white-space: nowrap; transform: scaleX(.74); transform-origin: left center; }
+  .hero-h1 .l2 > span { color: var(--gold); }
+  .hero-p { white-space: nowrap; font-size: 23.47px; line-height: 1.6; color: var(--text-2); margin: 24px 0 0; max-width: 100%; width: fit-content; text-shadow: 0 1px 2px rgba(0,0,0,.6), 0 2px 14px rgba(0,0,0,.45); animation: rise .9s .5s var(--ease) both; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; animation: rise .9s .6s var(--ease) both; }
+  .hero-btn { padding: 18px 26px; width: 229px; height: 54px; }
+  .hero-meta { margin-top: 64px; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 10px 22px; font-family: var(--mono); font-size: 16px; letter-spacing: .18em; white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,.6), 0 2px 14px rgba(0,0,0,.45); }
+  .hero-raf { color: var(--muted); }
+  .hero-ship { display: flex; align-items: center; gap: 10px; color: var(--gold); }
+  .sq { display: block; width: 5px; height: 5px; background: var(--gold); }
+
+  #categorias { scroll-margin-top: var(--header-h); }
+  .cats { background: radial-gradient(90% 160% at 100% 0%, rgba(227,178,60,.10), transparent 60%), #222623; padding: 56px 40px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .cats-lead { margin-top: 22px; line-height: 1.65; }
+  .cats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 40px; }
+  .cat { position: relative; overflow: hidden; background: var(--surface); aspect-ratio: 16 / 10; display: block; transition: box-shadow .35s, transform .2s; }
+  .cat:hover { box-shadow: inset 0 0 0 1px rgba(227,178,60,.75), 0 24px 60px rgba(0,0,0,.35); color: var(--text); }
+  .cat:active { transform: scale(.985); }
+  .cat :global(.cat-im) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+  .cat:hover :global(.cat-im) { transform: scale(1.025); }
+  .cat-grad { position: absolute; left: 0; right: 0; bottom: 0; height: 45%; background: linear-gradient(to top, rgba(26,29,27,.84) 0%, rgba(26,29,27,.5) 55%, rgba(26,29,27,0) 100%); pointer-events: none; }
+  .cat-row { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+  .cat-t { font-size: 40px; font-weight: 600; letter-spacing: -.025em; line-height: 1; }
+  .cat-arr { flex: none; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(227,178,60,.6); border-radius: 50%; font-family: var(--mono); font-size: 16px; color: var(--text); transition: transform .5s var(--ease), background .35s, color .35s; }
+  .cat:hover .cat-arr { background: var(--gold); color: var(--ink); transform: translateX(6px); }
+
+  .sec { padding: 56px 40px; border-bottom: 1px solid var(--border); }
+  .gear { padding-bottom: 40px; }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .see-all { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  .sec-body { margin-top: 40px; }
+  .sec :global(.gear-card) { width: calc((100% - 66px) / 4); min-width: calc((100% - 66px) / 4); }
+  .rep-lead { margin-top: 18px; line-height: 1.6; }
+  .rep { margin: 0; width: calc((100% - 66px) / 4); min-width: calc((100% - 66px) / 4); flex: none; }
+  .rep-img { aspect-ratio: 1 / 1; overflow: hidden; background: #151715; border: 1px solid var(--border); position: relative; }
+  .rep-img :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .rep .stars { margin-top: 14px; }
+
+  .std { padding: 56px 40px; border-bottom: 1px solid var(--border); }
+  .std-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 72px; align-items: start; }
+  .std-h2 { font-size: 54px; font-weight: 600; letter-spacing: -.03em; line-height: 1.04; }
+  .std-p1 { max-width: 62ch; margin-top: 22px; }
+  .std-p2 { max-width: 62ch; font-size: 15px; line-height: 1.75; color: var(--muted-2); margin-top: 16px; text-wrap: pretty; }
+  .crit-wrap { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+  .crit { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .crit-it { background: var(--bg); padding: 30px 28px; display: flex; flex-direction: column; gap: 16px; transition: background .3s; }
+  .crit-it.last { grid-column: 1 / -1; }
+  .crit-it:hover { background: var(--surface-2); }
+  .crit-n { font-family: var(--mono); font-size: 30px; font-weight: 500; color: var(--gold); line-height: 1; }
+  .crit-t { font-size: 19px; font-weight: 500; letter-spacing: .01em; }
+  .crit-d { font-size: 14px; line-height: 1.7; color: var(--muted); }
+
+  .may { background: radial-gradient(90% 160% at 100% 0%, rgba(227,178,60,.10), transparent 60%), #222623; padding: 56px 40px; }
+  .may-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+  .may-h2 { line-height: 1.02; }
+  .may-p { max-width: 50ch; font-size: 17px; line-height: 1.7; color: var(--text-2); text-wrap: pretty; }
+  .may-btn { margin-top: 28px; padding: 18px 24px; }
+
+  @media (max-width: 1023px) {
+    .hero { min-height: calc(100svh / var(--z) + 8px); }
+    .hero-media { bottom: 117px; }
+    .hero-poster, .hero-vid { object-position: center center; }
+    .hero-fade { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(34,38,35,0) 0%, rgba(34,38,35,0) calc(100% - 114px), rgba(34,38,35,.35) calc(100% - 67px), rgba(34,38,35,.75) calc(100% - 40px), #222623 100%); }
+    .hero-in { min-height: calc(100svh / var(--z) + 8px); padding: calc(75vw / var(--z) + 6px) 18px 18px; }
+    .hero-k { --fs: min(39.2px, (100vw / var(--z) - 36px) / 10); font-size: 11px; letter-spacing: calc(.228 * var(--fs) - 6.777px); text-shadow: none; }
+    .hero-h1 { font-size: min(39.2px, (100vw / var(--z) - 36px) / 10); margin-top: 12px; }
+    .hero-p { --fs: min(39.2px, (100vw / var(--z) - 36px) / 10); white-space: normal; font-size: 17px; margin-top: 18px; width: auto; max-width: min(100%, calc(10.56 * var(--fs))); text-shadow: none; }
+    .hero-btn { width: 100%; max-width: 349px; height: 49px; }
+    .hero-meta { margin-top: 24px; justify-content: space-between; border-top: 1px solid rgba(232,234,230,.16); padding-top: 16px; font-size: 10px; letter-spacing: .16em; text-shadow: none; }
+    .cats { background: #222623; padding: 30px 18px 44px; }
+    .cats-lead { margin-top: 22px; }
+    .cats-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; }
+    .cat { aspect-ratio: 3 / 2; }
+    .cat-row { padding: 22px; }
+    .cat-t { font-size: 26px; }
+    .cat-arr { width: 42px; height: 42px; }
+    .sec, .std { padding: 38px 18px; }
+    .std { padding: 36px 18px; }
+    .gear { padding-bottom: 22px; }
+    .sec-body { margin-top: 32px; }
+    .sec :global(.gear-card) { width: calc(70vw / var(--z)); min-width: calc(70vw / var(--z)); }
+    .rep { width: calc(72vw / var(--z)); min-width: calc(72vw / var(--z)); }
+    .rep-img { aspect-ratio: 4 / 5; }
+    .rep-sc + :global(.arrow-btn), .sec :global(.rep-sc ~ .arrow-btn) { top: calc(45vw / var(--z) - 18px) !important; }
+    .std-grid { grid-template-columns: 1fr; gap: 30px; }
+    .std-h2 { font-size: 22px; line-height: 1.22; }
+    .std-p1, .std-p2 { max-width: none; }
+    .crit { grid-template-columns: 1fr; margin-top: 22px; }
+    .crit-it { padding: 22px 20px; gap: 10px; }
+    .crit-it.last { grid-column: auto; }
+    .crit-n { font-size: 24px; }
+    .may { background: #222623; padding: 34px 18px; }
+    .may-grid { grid-template-columns: 1fr; gap: 40px; }
+    .may-h2 { line-height: 1.18; }
+    .may-p { font-size: 15px; }
+  }
+</style>

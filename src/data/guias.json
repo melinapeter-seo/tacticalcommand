@@ -1,0 +1,575 @@
+[
+ {
+  "slug": "que-es-la-tela-ripstop",
+  "titulo": "Qué es la tela Ripstop y por qué se usa en ropa táctica",
+  "h1": "¿QUÉ ES LA TELA RIPSTOP Y POR QUÉ SE USA EN ROPA TÁCTICA?",
+  "cluster": "MATERIALES",
+  "palabra_clave": "Tela Ripstop",
+  "lectura": "3 MIN LECTURA",
+  "imagen": "pantr-1.webp",
+  "galeria": [
+   "pantwd-2.webp",
+   "uni-mp-2.webp"
+  ],
+  "respuesta": "La tela Ripstop es un tejido reforzado con hilos más gruesos entrelazados cada pocos milímetros, que forman una cuadrícula visible. Si la tela sufre un corte o un enganche, esa cuadrícula frena el avance de la rotura. Por eso se usa en ropa táctica y de trabajo: combina resistencia al desgarro con un peso liviano.",
+  "puntos": [
+   "Ripstop no es una fibra, es una forma de tejer: puede hacerse en algodón, poliéster, nylon o mezclas.",
+   "Su principal ventaja es la resistencia al desgarro sin sumar peso.",
+   "No es impermeable por sí misma: la repelencia al agua depende del acabado de cada prenda.",
+   "En Tactical Command la usan los pantalones cargo, el uniforme Marpat y los bajo chalecos."
+  ],
+  "secciones": [
+   {
+    "h": "¿CÓMO SE RECONOCE UNA TELA RIPSTOP?",
+    "p": "A simple vista se ve un patrón de pequeños cuadrados en relieve sobre la superficie. Esos cuadrados son los hilos de refuerzo, tejidos a intervalos regulares en ambas direcciones del tejido.",
+    "p2": "En telas oscuras o con camuflaje la cuadrícula puede notarse poco: se aprecia mejor al tacto o mirando la tela a contraluz."
+   },
+   {
+    "h": "¿POR QUÉ RESISTE MÁS AL DESGARRO?",
+    "p": "En una tela común, un corte pequeño puede abrirse a lo largo del tejido con cualquier tirón. En el Ripstop, la rotura avanza solo hasta el siguiente hilo de refuerzo y ahí se detiene. El daño queda contenido en un área chica y la prenda sigue siendo usable.",
+    "p2": "Ese principio se popularizó en paracaídas y equipo militar, donde una rotura que se extiende puede ser crítica."
+   },
+   {
+    "h": "¿LA TELA RIPSTOP ES IMPERMEABLE?",
+    "p": "No. Ripstop describe cómo está tejida la tela, no su protección frente al agua. Algunas prendas suman un acabado repelente que hace que las gotas resbalen, como el Pantalón Cargo Táctico Ripstop Negro, pero eso no las convierte en impermeables.",
+    "p2": "Para lluvia sostenida conviene una prenda con membrana y costuras selladas, como una campera Gore-Tex."
+   },
+   {
+    "h": "¿PARA QUÉ USOS CONVIENE?",
+    "p": "Es una buena elección cuando la prenda va a rozar, engancharse o trabajar en movimiento:",
+    "li": [
+     "Trabajo en exteriores y tareas de mantenimiento.",
+     "Outdoor, trekking y camping.",
+     "Seguridad, servicios y uso táctico.",
+     "Uso diario, cuando se busca una prenda que dure."
+    ]
+   },
+   {
+    "h": "¿CÓMO SE CUIDA UNA PRENDA RIPSTOP?",
+    "p": "En general alcanza con lavar con agua fría o templada, con colores similares y sin lavandina. Evitar el secado a alta temperatura ayuda a conservar el color y, en prendas con elastano, la elasticidad. Ante cualquier duda, seguí la etiqueta de la prenda."
+   }
+  ],
+  "tabla": {
+   "cap": "¿RIPSTOP O TELA LISA CONVENCIONAL?",
+   "head": [
+    "",
+    "RIPSTOP",
+    "TELA LISA CONVENCIONAL"
+   ],
+   "rows": [
+    [
+     "Resistencia al desgarro",
+     "Alta: la cuadrícula frena la rotura",
+     "Menor: un corte puede extenderse"
+    ],
+    [
+     "Peso",
+     "Liviano para su resistencia",
+     "Más peso para lograr igual resistencia"
+    ],
+    [
+     "Aspecto",
+     "Cuadrícula visible en relieve",
+     "Superficie uniforme"
+    ],
+    [
+     "Protección al agua",
+     "Depende del acabado",
+     "Depende del acabado"
+    ],
+    [
+     "Uso típico",
+     "Táctico, trabajo, outdoor",
+     "Urbano, uso general"
+    ]
+   ]
+  },
+  "faq": [
+   {
+    "q": "¿Qué significa Ripstop?",
+    "a": "Viene del inglés rip (rasgar) y stop (detener): es una tela que detiene el avance de las rasgaduras."
+   },
+   {
+    "q": "¿De qué material es la tela Ripstop?",
+    "a": "Puede ser de algodón, poliéster, nylon o mezclas. Ripstop define la forma de tejer, no la fibra. Los bajo chalecos de Tactical Command, por ejemplo, combinan algodón, poliéster y licra."
+   },
+   {
+    "q": "¿El Ripstop es fresco?",
+    "a": "Al ser un tejido liviano suele resultar cómodo en clima templado, pero la sensación térmica depende de la fibra y del gramaje de cada prenda."
+   },
+   {
+    "q": "¿Se puede reparar una prenda Ripstop?",
+    "a": "Sí. Como la rotura queda contenida en un área chica, suele poder repararse con un zurcido o un parche."
+   },
+   {
+    "q": "¿Qué prendas Ripstop tiene Tactical Command?",
+    "a": "Los pantalones cargo tácticos Woodland y Negro, el uniforme táctico Marpat y los bajo chalecos de manga larga y manga corta."
+   }
+  ],
+  "productos": [
+   "pantwd",
+   "pantr",
+   "chelco",
+   "unimp"
+  ],
+  "categoria": {
+   "texto": "VER INDUMENTARIA",
+   "url": "/indumentaria/"
+  }
+ },
+ {
+  "slug": "como-funciona-gore-tex",
+  "titulo": "Gore-Tex: cómo funciona una membrana impermeable y transpirable",
+  "h1": "GORE-TEX: ¿CÓMO FUNCIONA UNA MEMBRANA IMPERMEABLE Y TRANSPIRABLE?",
+  "cluster": "MATERIALES",
+  "palabra_clave": "Gore-Tex",
+  "lectura": "3 MIN LECTURA",
+  "imagen": "gtx-od-1.webp",
+  "galeria": [
+   "gtx-ng-2.webp",
+   "gtx-az-3.webp"
+  ],
+  "respuesta": "Una membrana tipo Gore-Tex es una lámina finísima con millones de poros microscópicos: son demasiado chicos para que pase una gota de agua, pero lo suficientemente grandes para que salga el vapor de la transpiración. Así la prenda frena la lluvia y el viento sin acumular humedad adentro. Las costuras selladas completan la protección.",
+  "puntos": [
+   "Impermeable: la membrana no deja pasar el agua líquida.",
+   "Transpirable: deja salir el vapor que genera el cuerpo.",
+   "Rompe viento: bloquea el paso del aire.",
+   "Sin costuras selladas, el agua puede entrar por las uniones."
+  ],
+  "secciones": [
+   {
+    "h": "¿QUÉ ES GORE-TEX?",
+    "p": "Gore-Tex es una marca registrada de membranas impermeables y transpirables. La membrana se lamina entre la tela exterior y el forro: no se ve, pero es la capa que define la protección de la prenda."
+   },
+   {
+    "h": "¿CÓMO PUEDE SER IMPERMEABLE Y TRANSPIRABLE A LA VEZ?",
+    "p": "Por el tamaño de los poros. Una gota de lluvia es miles de veces más grande que cada poro, así que no puede atravesarlos. El vapor de la transpiración, en cambio, está formado por moléculas mucho más chicas y sí sale hacia afuera.",
+    "p2": "Eso evita el efecto \"bolsa de nylon\": quedar seco por fuera pero húmedo por dentro."
+   },
+   {
+    "h": "¿IMPERMEABLE, REPELENTE Y ROMPE VIENTO SON LO MISMO?",
+    "p": "No, y es la duda más frecuente:",
+    "li": [
+     "Impermeable: resiste el ingreso de agua aun con lluvia sostenida.",
+     "Repelente al agua: hace que las gotas resbalen, pero con lluvia intensa o prolongada termina mojándose.",
+     "Rompe viento: reduce el paso del aire, pero no necesariamente frena el agua."
+    ]
+   },
+   {
+    "h": "¿POR QUÉ IMPORTAN LAS COSTURAS SELLADAS?",
+    "p": "Cada costura es una línea de pequeños agujeros hechos por la aguja. Si no se sellan con cinta por dentro, el agua entra justamente por ahí. Una prenda impermeable de verdad necesita membrana y costuras selladas."
+   },
+   {
+    "h": "¿QUÉ OFRECE LA CAMPERA GORE-TEX DE TACTICAL COMMAND?",
+    "p": "Según su ficha técnica:",
+    "li": [
+     "Impermeable y rompe viento, con costuras selladas.",
+     "Forro polar interno y aislamiento térmico.",
+     "Capucha fija ajustable, puños con velcro y cintura regulable.",
+     "Bolsillos frontales y en mangas, con velcro para parches.",
+     "Talles S a 3XL, más 4XL y 5XL en Negro y Verde OD."
+    ]
+   }
+  ],
+  "tabla": {
+   "cap": "¿IMPERMEABLE, REPELENTE O ROMPE VIENTO?",
+   "head": [
+    "",
+    "IMPERMEABLE",
+    "REPELENTE AL AGUA",
+    "ROMPE VIENTO"
+   ],
+   "rows": [
+    [
+     "Lluvia sostenida",
+     "Protege",
+     "Protege por poco tiempo",
+     "No está pensado para eso"
+    ],
+    [
+     "Llovizna",
+     "Protege",
+     "Protege",
+     "Protección limitada"
+    ],
+    [
+     "Viento",
+     "Generalmente sí",
+     "Depende de la tela",
+     "Protege"
+    ],
+    [
+     "Costuras selladas",
+     "Necesarias",
+     "No suelen tener",
+     "No suelen tener"
+    ]
+   ]
+  },
+  "faq": [
+   {
+    "q": "¿La Campera Gore-Tex es impermeable?",
+    "a": "Sí. Está indicada como impermeable y cuenta con costuras selladas."
+   },
+   {
+    "q": "¿Una campera Gore-Tex abriga?",
+    "a": "La membrana protege del agua y del viento, pero no abriga por sí sola. La campera de Tactical Command suma forro polar y aislamiento térmico."
+   },
+   {
+    "q": "¿Sirve para andar en moto?",
+    "a": "Sí. Es impermeable y rompe viento, y los ajustes en puños, cintura y capucha ayudan a frenar el aire y el agua en movimiento."
+   },
+   {
+    "q": "¿Cómo se lava una campera con membrana?",
+    "a": "En general, con agua fría o templada, jabón suave y sin suavizante ni lavandina, que pueden afectar la membrana y el repelente exterior. Seguí siempre la etiqueta."
+   },
+   {
+    "q": "¿Qué diferencia hay con una campera rompe viento común?",
+    "a": "Una rompe viento frena el aire, pero no necesariamente el agua. Una campera con membrana y costuras selladas frena las dos cosas."
+   }
+  ],
+  "productos": [
+   "gtex",
+   "pantr"
+  ],
+  "categoria": {
+   "texto": "VER INDUMENTARIA",
+   "url": "/indumentaria/"
+  }
+ },
+ {
+  "slug": "que-es-el-sistema-molle",
+  "titulo": "Qué es el sistema MOLLE y para qué sirve",
+  "h1": "¿QUÉ ES EL SISTEMA MOLLE Y PARA QUÉ SIRVE?",
+  "cluster": "EQUIPAMIENTO",
+  "palabra_clave": "Sistema MOLLE",
+  "lectura": "3 MIN LECTURA",
+  "imagen": "as50mc-1.webp",
+  "galeria": [
+   "b70mc-2.webp",
+   "band-2.webp"
+  ],
+  "respuesta": "MOLLE es un sistema de fijación modular formado por hileras de cintas cosidas sobre mochilas, chalecos y bolsos. Sirve para sumar y quitar accesorios compatibles, como pouches, porta cargadores o botiquines, y armar la configuración que cada uso necesita. Los accesorios se enhebran en las cintas y quedan firmes, sin moverse.",
+  "puntos": [
+   "MOLLE significa Modular Lightweight Load-carrying Equipment: equipo modular liviano de carga.",
+   "Las cintas forman una grilla llamada PALS, donde se enhebran los accesorios.",
+   "Permite personalizar el equipo sin coser ni perforar.",
+   "La Mochila Táctica 45 L, la Assault 50 L y el Bolso Mochila 70 L de Tactical Command tienen sistema MOLLE."
+  ],
+  "secciones": [
+   {
+    "h": "¿QUÉ SIGNIFICA MOLLE?",
+    "p": "MOLLE es la sigla en inglés de Modular Lightweight Load-carrying Equipment. Nació como sistema de carga para fuerzas armadas y hoy es un estándar en equipamiento táctico, outdoor y de trabajo."
+   },
+   {
+    "h": "¿CÓMO SE RECONOCE?",
+    "p": "Por las hileras horizontales de cintas cosidas a intervalos regulares sobre la mochila o el chaleco. Esa grilla se llama PALS (Pouch Attachment Ladder System). En el estándar más difundido, cada cinta mide unos 2,5 cm de ancho y las hileras se separan unos 2,5 cm entre sí."
+   },
+   {
+    "h": "¿CÓMO SE COLOCA UN ACCESORIO MOLLE?",
+    "p": "El accesorio trae sus propias tiras en la parte trasera. Se coloca así:",
+    "li": [
+     "Apoyá el accesorio sobre la grilla, en la posición que quieras.",
+     "Pasá la tira del accesorio por la primera hilera de la mochila.",
+     "Seguí alternando, una hilera del accesorio y una de la mochila, hasta el final.",
+     "Cerrá la tira con su broche o encastre para que no se suelte."
+    ],
+    "p2": "Al alternar entre las dos piezas, el accesorio queda firme y no se balancea al caminar."
+   },
+   {
+    "h": "¿QUÉ SE PUEDE SUMAR CON MOLLE?",
+    "p": "Cualquier accesorio compatible con el sistema, por ejemplo:",
+    "li": [
+     "Pouches o bolsillos adicionales.",
+     "Porta cargadores.",
+     "Botiquines o kits de primeros auxilios.",
+     "Porta botellas o sistemas de hidratación.",
+     "Linternas, radios y otros accesorios con anclaje MOLLE."
+    ]
+   },
+   {
+    "h": "¿QUÉ PRODUCTOS DE TACTICAL COMMAND TIENEN MOLLE?",
+    "p": "Según sus fichas técnicas, cuentan con sistema MOLLE:",
+    "li": [
+     "Mochila Táctica 45 L, en seis colores y patrones.",
+     "Mochila Táctica Assault 50 L, que además incluye dos pouches laterales y una riñonera frontal desmontables.",
+     "Bolso Mochila Táctica 70 L, con MOLLE exterior y 6 bolsillos."
+    ]
+   }
+  ],
+  "tabla": {
+   "cap": "GLOSARIO MOLLE",
+   "head": [
+    "TÉRMINO",
+    "QUÉ SIGNIFICA"
+   ],
+   "rows": [
+    [
+     "MOLLE",
+     "Sistema modular de carga y fijación de accesorios"
+    ],
+    [
+     "PALS",
+     "La grilla de cintas cosidas donde se enhebran los accesorios"
+    ],
+    [
+     "Pouch",
+     "Bolsillo o estuche que se fija al sistema"
+    ],
+    [
+     "Webbing",
+     "La cinta plana de alta resistencia con la que se arma la grilla"
+    ]
+   ]
+  },
+  "faq": [
+   {
+    "q": "¿MOLLE y PALS son lo mismo?",
+    "a": "No exactamente. PALS es la grilla de cintas y MOLLE es el sistema completo que la usa. En la práctica se dice \"sistema MOLLE\" para ambos."
+   },
+   {
+    "q": "¿Los accesorios MOLLE son compatibles entre marcas?",
+    "a": "En general sí, porque responden al mismo estándar de medidas. Igual conviene revisar el tamaño del accesorio y el espacio libre en la mochila."
+   },
+   {
+    "q": "¿El sistema MOLLE sirve para uso civil?",
+    "a": "Sí. Es muy útil en trekking, camping, viajes y trabajo para tener a mano lo que más usás."
+   },
+   {
+    "q": "¿Las mochilas de Tactical Command incluyen accesorios MOLLE?",
+    "a": "La Mochila Táctica Assault 50 L incluye dos pouches laterales y una riñonera frontal desmontables."
+   },
+   {
+    "q": "¿Cuántos accesorios se pueden colocar?",
+    "a": "Depende de cuántas hileras libres tenga la grilla. Conviene distribuir el peso de forma pareja y no sobrecargar un solo lado."
+   }
+  ],
+  "productos": [
+   "moc45vm",
+   "mocam",
+   "mocac",
+   "mocb70"
+  ],
+  "categoria": {
+   "texto": "VER EQUIPOS TÁCTICOS",
+   "url": "/equipos-tacticos/"
+  }
+ },
+ {
+  "slug": "cordura-y-lona-diferencias",
+  "titulo": "Cordura y lona: diferencias en mochilas y bolsos",
+  "h1": "CORDURA Y LONA: ¿QUÉ DIFERENCIAS HAY EN MOCHILAS Y BOLSOS?",
+  "cluster": "MATERIALES",
+  "palabra_clave": "Cordura y lona",
+  "lectura": "3 MIN LECTURA",
+  "imagen": "b70cy-1.webp",
+  "galeria": [
+   "band-1.webp",
+   "b70ng-3.webp"
+  ],
+  "respuesta": "La cordura es un tejido sintético de alta resistencia, pensado para soportar roce, tirones y uso intensivo con poco peso. La lona es un tejido grueso y firme, tradicionalmente de algodón y hoy también sintético. En mochilas y bolsos tácticos se combinan para lograr estructura, durabilidad y resistencia a la intemperie.",
+  "puntos": [
+   "Cordura: sintética, muy resistente a la abrasión y relativamente liviana.",
+   "Lona: tejido grueso y firme que da cuerpo y estructura.",
+   "Resistente al agua no es lo mismo que impermeable.",
+   "Las mochilas, los bolsos y la bandolera de Tactical Command están confeccionados en cordura/lona."
+  ],
+  "secciones": [
+   {
+    "h": "¿QUÉ ES LA CORDURA?",
+    "p": "La cordura es un tejido sintético, generalmente de nylon de alta tenacidad, conocido por su resistencia a la abrasión, a los desgarros y al uso intensivo. Por eso es habitual en mochilas, bolsos y equipamiento militar y outdoor.",
+    "p2": "CORDURA® es una marca registrada; en el mercado también se usa la palabra \"cordura\" de forma genérica para tejidos sintéticos de alta resistencia."
+   },
+   {
+    "h": "¿QUÉ ES LA LONA?",
+    "p": "La lona es un tejido grueso y de trama cerrada, tradicionalmente de algodón y hoy también de fibras sintéticas. Aporta cuerpo, firmeza y una estructura que ayuda a que la mochila mantenga su forma aun cargada."
+   },
+   {
+    "h": "¿CUÁL ES MEJOR PARA UNA MOCHILA TÁCTICA?",
+    "p": "Depende del uso, pero en equipamiento táctico lo habitual es combinarlas: la resistencia al roce de la cordura con la firmeza de la lona. Además del material, conviene mirar:",
+    "li": [
+     "Costuras reforzadas en asas y zonas de carga.",
+     "Cierres gruesos que soporten uso frecuente.",
+     "Respaldo y tiradores acolchados para cargar peso.",
+     "Sistema MOLLE, si vas a sumar accesorios."
+    ]
+   },
+   {
+    "h": "¿UNA MOCHILA DE CORDURA ES IMPERMEABLE?",
+    "p": "No necesariamente. Estos tejidos resisten bien la llovizna y la intemperie, pero las costuras y los cierres siguen siendo puntos de ingreso de agua. En las fichas de Tactical Command, mochilas y bolsos se informan como resistentes al agua o a la intemperie, no como impermeables ni aptos para inmersión.",
+    "p2": "Para lluvia intensa, una bolsa estanca o un cubre mochila protege lo que llevás adentro."
+   },
+   {
+    "h": "¿CÓMO SE LIMPIA UNA MOCHILA DE CORDURA O LONA?",
+    "p": "En general alcanza con cepillo suave, agua tibia y jabón neutro, sin lavandina. Conviene vaciarla, secarla abierta y a la sombra, y no guardarla húmeda para evitar olores y hongos."
+   }
+  ],
+  "tabla": {
+   "cap": "¿CORDURA O LONA?",
+   "head": [
+    "",
+    "CORDURA",
+    "LONA"
+   ],
+   "rows": [
+    [
+     "Fibra",
+     "Sintética, generalmente nylon",
+     "Algodón o sintética"
+    ],
+    [
+     "Resistencia al roce",
+     "Muy alta",
+     "Alta"
+    ],
+    [
+     "Peso",
+     "Liviana para su resistencia",
+     "Más pesada a igual grosor"
+    ],
+    [
+     "Estructura",
+     "Flexible",
+     "Firme, mantiene la forma"
+    ],
+    [
+     "Frente al agua",
+     "Resistente, seca rápido",
+     "La de algodón absorbe más y seca lento"
+    ]
+   ]
+  },
+  "faq": [
+   {
+    "q": "¿La cordura es lo mismo que el nylon?",
+    "a": "La cordura suele fabricarse con nylon de alta tenacidad, pero es un tejido específico, pensado para resistir el roce y el uso intensivo."
+   },
+   {
+    "q": "¿Qué es el denier?",
+    "a": "Es una medida del grosor del hilo: un número más alto, como 600D o 1000D, indica hilos más gruesos. Las fichas de Tactical Command no informan el denier de cada modelo."
+   },
+   {
+    "q": "¿Qué productos de Tactical Command son de cordura/lona?",
+    "a": "La Mochila Táctica 45 L, la Mochila Táctica Assault 50 L, el Bolso Mochila Táctica 70 L y la Bandolera Táctica Cruzada."
+   },
+   {
+    "q": "¿Cuánto dura una mochila de cordura?",
+    "a": "Depende del uso y del cuidado, pero es uno de los tejidos más elegidos para equipamiento de uso intensivo justamente por su durabilidad."
+   }
+  ],
+  "productos": [
+   "mocng",
+   "mocas",
+   "mocb70",
+   "bandng"
+  ],
+  "categoria": {
+   "texto": "VER EQUIPOS TÁCTICOS",
+   "url": "/equipos-tacticos/"
+  }
+ },
+ {
+  "slug": "algodon-poliester-licra",
+  "titulo": "Algodón, poliéster y licra: qué aporta cada uno en una prenda",
+  "h1": "ALGODÓN, POLIÉSTER Y LICRA: ¿QUÉ APORTA CADA UNO EN UNA PRENDA?",
+  "cluster": "MATERIALES",
+  "palabra_clave": "Algodón, poliéster y licra",
+  "lectura": "3 MIN LECTURA",
+  "imagen": "chmln-1.webp",
+  "galeria": [
+   "chmlmc-2.webp",
+   "chmc-2.webp"
+  ],
+  "respuesta": "En una mezcla de algodón, poliéster y licra, el algodón aporta suavidad y transpirabilidad; el poliéster suma resistencia, secado más rápido y estabilidad de forma; y la licra (elastano) da elasticidad para acompañar el movimiento. Combinadas, logran una prenda cómoda, durable y fácil de mantener.",
+  "puntos": [
+   "El algodón es la fibra del confort: suave al tacto y transpirable.",
+   "El poliéster es la fibra de la resistencia: dura, se arruga menos y seca rápido.",
+   "La licra es la fibra del movimiento: estira y recupera su forma.",
+   "Los bajo chalecos de Tactical Command usan esta mezcla en tela Ripstop."
+  ],
+  "secciones": [
+   {
+    "h": "¿QUÉ APORTA EL ALGODÓN?",
+    "p": "El algodón es una fibra natural, suave y transpirable, que deja circular el aire y absorbe la humedad. Es lo que hace que una prenda se sienta agradable sobre la piel durante muchas horas.",
+    "p2": "Su contracara: retiene humedad, tarda más en secarse y, solo, tiende a arrugarse y a perder forma con los lavados."
+   },
+   {
+    "h": "¿QUÉ APORTA EL POLIÉSTER?",
+    "p": "El poliéster es una fibra sintética de alta resistencia. Aguanta el roce y los lavados frecuentes, se arruga poco, mantiene la forma y se seca más rápido que el algodón.",
+    "p2": "Por sí solo puede resultar menos transpirable; por eso se combina con algodón para equilibrar resistencia y confort."
+   },
+   {
+    "h": "¿QUÉ APORTA LA LICRA?",
+    "p": "La licra (nombre comercial del elastano) es una fibra elástica que se agrega en baja proporción. Permite que la tela estire al agacharse, levantar los brazos o moverse, y que después recupere su forma.",
+    "p2": "Es especialmente útil en prendas de calce ajustado, como un bajo chaleco que se usa debajo de otra capa."
+   },
+   {
+    "h": "¿POR QUÉ SE COMBINAN LAS TRES FIBRAS?",
+    "p": "Porque cada una compensa lo que le falta a la otra. El resultado es una prenda que:",
+    "li": [
+     "Se siente cómoda durante una jornada completa.",
+     "Resiste el uso intensivo y los lavados frecuentes.",
+     "Acompaña el movimiento sin trabar.",
+     "Se seca más rápido que una prenda 100 % algodón."
+    ]
+   },
+   {
+    "h": "¿CÓMO SE CUIDA UNA PRENDA CON ESTA MEZCLA?",
+    "p": "En general: lavar con agua fría o templada, evitar la lavandina y no usar secadora a alta temperatura, ya que el calor excesivo afecta al elastano. Secar a la sombra ayuda a conservar el color. Siempre conviene seguir la etiqueta."
+   }
+  ],
+  "tabla": {
+   "cap": "¿QUÉ APORTA CADA FIBRA?",
+   "head": [
+    "FIBRA",
+    "APORTA",
+    "A TENER EN CUENTA"
+   ],
+   "rows": [
+    [
+     "Algodón",
+     "Suavidad, transpirabilidad y confort",
+     "Seca lento y puede arrugarse"
+    ],
+    [
+     "Poliéster",
+     "Resistencia, forma estable y secado rápido",
+     "Menos transpirable por sí solo"
+    ],
+    [
+     "Licra (elastano)",
+     "Elasticidad y recuperación",
+     "Sensible al calor excesivo"
+    ]
+   ]
+  },
+  "faq": [
+   {
+    "q": "¿La licra y el elastano son lo mismo?",
+    "a": "Sí. Elastano es el nombre genérico de la fibra; Lycra es una marca comercial que se usa como sinónimo."
+   },
+   {
+    "q": "¿Una prenda con poliéster da calor?",
+    "a": "Depende del tejido y de la proporción. Combinado con algodón, el poliéster mantiene buena transpirabilidad y suma resistencia y secado rápido."
+   },
+   {
+    "q": "¿Esta mezcla encoge al lavarla?",
+    "a": "El poliéster y la licra ayudan a que la prenda mantenga su forma mejor que una 100 % algodón. Lavar en frío y evitar la secadora reduce cualquier riesgo."
+   },
+   {
+    "q": "¿Qué prendas de Tactical Command tienen esta composición?",
+    "a": "Los bajo chalecos Manga Larga Negro, Manga Corta Negro, Manga Larga Multicam y Manga Corta Multicam."
+   }
+  ],
+  "productos": [
+   "chelco",
+   "chalmc",
+   "chalmlmc",
+   "chalmcmc"
+  ],
+  "categoria": {
+   "texto": "VER INDUMENTARIA",
+   "url": "/indumentaria/"
+  }
+ }
+]

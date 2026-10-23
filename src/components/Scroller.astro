@@ -1,0 +1,27 @@
+---
+// Fila horizontal con scroll-snap y flechas doradas (destacados, reseñas, relacionados).
+interface Props { name: string; arrowTop?: string; class?: string; label?: string }
+const { name, arrowTop = '32%', class: cls = '', label } = Astro.props;
+---
+<div class="sc-box">
+  <div data-noscrollbar data-scroller={name} class:list={['sc', cls]} role={label ? 'region' : undefined} aria-label={label} tabindex={label ? 0 : undefined}>
+    <div class="sc-lead m-only" aria-hidden="true"></div>
+    <slot />
+  </div>
+  <button type="button" class="arrow-btn sc-prev" data-prev aria-label="Ver anteriores" hidden style={`top:${arrowTop}`}>←</button>
+  <button type="button" class="arrow-btn sc-next" data-next aria-label="Ver siguientes" hidden style={`top:${arrowTop}`}>→</button>
+</div>
+
+<style>
+  .sc-box { position: relative; }
+  .sc { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0; padding: 0 0 4px 0; }
+  .sc > :global(*) { scroll-snap-align: start; }
+  .sc-prev { left: -6px; } .sc-next { right: -6px; }
+  @media (max-width: 1023px) {
+    .sc { gap: 12px; margin-left: -18px; margin-right: -18px; padding-right: calc(15vw / var(--z)); }
+    .sc > :global(*) { scroll-snap-align: center; }
+    .sc > :global(.sc-lead) { flex: none; width: 3px; scroll-snap-align: start; }
+    .sc > :global(.sc-lead + *) { scroll-snap-align: none; }
+    .sc-prev { left: 4px; } .sc-next { right: 4px; }
+  }
+</style>

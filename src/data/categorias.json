@@ -1,0 +1,418 @@
+[
+ {
+  "slug": "indumentaria",
+  "titulo": "INDUMENTARIA",
+  "numero": "01",
+  "imagen": "indumentaria-v2.webp",
+  "seo_titulo": "Indumentaria táctica: camperas, bajo chalecos, pantalones y uniformes",
+  "descripcion": "Indumentaria táctica para trabajo, servicio y outdoor: campera Gore-Tex impermeable con interior polar, bajo chalecos de manga larga y corta, pantalones cargo en tela Ripstop repelente al agua y uniformes tácticos de chaquetilla y pantalón. Talles del S al 5XL según el modelo, con envío desde Rafaela a todo el país.",
+  "frase": "La selección de indumentaria de Tactical Command incluye prendas para distintos niveles de protección, abrigo y movilidad. La disponibilidad de colores, talles y modelos depende del stock vigente.",
+  "subcategorias": [
+   "TODO",
+   "CAMPERAS",
+   "BAJO CHALECOS",
+   "PANTALONES",
+   "UNIFORMES"
+  ],
+  "sub_mapa": {
+   "CAMPERAS": [
+    "gtexng",
+    "gtexod",
+    "gtexaz"
+   ],
+   "BAJO CHALECOS": [
+    "chalmlmc",
+    "chalmcmc",
+    "chelco",
+    "chalmc"
+   ],
+   "PANTALONES": [
+    "pantr",
+    "pantwd"
+   ],
+   "UNIFORMES": [
+    "unimp",
+    "unigt",
+    "uniforme-tactico--2"
+   ]
+  },
+  "tarjetas": [
+   "gtexng",
+   "gtexod",
+   "gtexaz",
+   "chalmlmc",
+   "chalmcmc",
+   "chelco",
+   "chalmc",
+   "pantr",
+   "pantwd",
+   "unimp",
+   "unigt",
+   "uniforme-tactico--2"
+  ],
+  "comparativa": {
+   "titulo": "¿QUÉ PRENDA ELEGIR?",
+   "encabezados": [
+    "MODELO",
+    "TELA",
+    "IDEAL PARA",
+    "LO QUE LA DISTINGUE",
+    "COLORES Y TALLES"
+   ],
+   "filas": [
+    {
+     "nombre": "Campera Gore-Tex",
+     "url": "/productos/campera-gtex-outdoor/",
+     "celdas": [
+      "Gore-Tex con interior polar",
+      "Frío, lluvia, viento, moto y trabajo en exteriores",
+      "Impermeable y rompe viento, costuras selladas, capucha ajustable",
+      "Negro, Verde OD / Oliva y Azul Noche · S a 3XL (4XL y 5XL solo en Negro y Verde OD)"
+     ]
+    },
+    {
+     "nombre": "Bajo Chaleco Manga Larga",
+     "url": "/productos/bajo-chaleco-manga-larga-negro/",
+     "celdas": [
+      "Ripstop de algodón, poliéster y licra",
+      "Trabajo y uso bajo chaleco",
+      "Cuello Mao con abrojo y cremallera, 2 bolsillos con cierre y Velcro",
+      "Negro y Multicam · M a 3XL"
+     ]
+    },
+    {
+     "nombre": "Bajo Chaleco Manga Corta",
+     "url": "/productos/bajo-chaleco-manga-corta-negro/",
+     "celdas": [
+      "Ripstop de algodón, poliéster y licra",
+      "Verano y trabajo",
+      "Manga corta, cuello Mao con abrojo y cremallera",
+      "Negro y Multicam · M a 3XL"
+     ]
+    },
+    {
+     "nombre": "Pantalón Cargo Ripstop",
+     "url": "/productos/pantalon-cargo-tactico-ripstop-negro/",
+     "celdas": [
+      "Ripstop repelente al agua",
+      "Trabajo, camping, caza y uso diario",
+      "Bolsillos cargo y costuras reforzadas; el negro suma porta cargador 9 mm y cintura elastizada",
+      "Negro y Woodland · S a 3XL"
+     ]
+    },
+    {
+     "nombre": "Uniforme Táctico",
+     "url": "/productos/uniforme-tactico/",
+     "celdas": [
+      "Gabardina o ripstop",
+      "Trabajo operativo, seguridad e instrucción",
+      "Chaquetilla + pantalón cargo; abrojo en pecho y mangas, refuerzo en rodillas",
+      "Marpat y Gris Topo · S a 3XL"
+     ]
+    }
+   ]
+  },
+  "faq": [
+   {
+    "q": "¿Qué campera táctica sirve para lluvia y frío?",
+    "a": "La Campera Gore-Tex: es impermeable y rompe viento, tiene costuras selladas, interior forrado en polar y capucha ajustable. Viene en negro, verde OD / oliva y azul noche, en talles S a 3XL. Los talles 4XL y 5XL están disponibles solo en negro y verde OD / oliva."
+   },
+   {
+    "q": "¿Qué es un bajo chaleco?",
+    "a": "Es una prenda pensada para usar debajo del chaleco. Los de Tactical Command son de Ripstop de algodón, poliéster y licra, con cuello Mao con abrojo y cremallera, y dos bolsillos con cierre y Velcro. Hay manga larga (negro y Multicam) y manga corta (negro), en talles M a 3XL."
+   },
+   {
+    "q": "¿Qué diferencia hay entre los dos pantalones cargo?",
+    "a": "Los dos son de tela Ripstop repelente al agua, con bolsillos cargo y costuras reforzadas, en talles S a 3XL. El negro es unisex y suma 8 bolsillos, porta cargador 9 mm, cintura elastizada y rodillas articuladas. El Woodland tiene bolsillos cargo con botones y solapa."
+   },
+   {
+    "q": "¿Qué incluye el uniforme táctico?",
+    "a": "Chaquetilla y pantalón cargo. La chaquetilla tiene cuello Mao, cierre frontal cubierto y abrojo en pecho y mangas; el pantalón, bolsillos laterales y refuerzos en rodillas. Se ofrece en Marpat y gris topo, en gabardina o ripstop, del S al 3XL."
+   },
+   {
+    "q": "¿Las prendas tienen velcro para parches?",
+    "a": "Sí, varias: la Campera Gore-Tex tiene velcro en las mangas, el Bajo Chaleco Multicam tiene bolsillos con velcro en las mangas y el Uniforme Táctico tiene abrojo en pecho y mangas."
+   },
+   {
+    "q": "¿Hacen envíos a todo el país?",
+    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador y se informa por WhatsApp antes de confirmar la compra."
+   },
+   {
+    "q": "¿Venden por mayor?",
+    "a": "Sí. Comercios, revendedores y compradores profesionales pueden armar una cotización mayorista desde la sección Mayoristas."
+   }
+  ],
+  "guias": [
+   "como-funciona-gore-tex",
+   "que-es-la-tela-ripstop",
+   "algodon-poliester-licra"
+  ]
+ },
+ {
+  "slug": "equipos-tacticos",
+  "titulo": "EQUIPOS TÁCTICOS",
+  "numero": "02",
+  "imagen": "equipos-tacticos-v2.webp",
+  "seo_titulo": "Mochilas, bolsos y bandoleras tácticas",
+  "descripcion": "Mochilas tácticas de 45 y 50 litros, bolso mochila de 70 litros y bandolera cruzada, confeccionados en cordura/lona y con sistema MOLLE. Pensados para trabajo, seguridad, outdoor y viajes. Disponibles en negro, coyote, multicam, verde militar y otros patrones, con envío desde Rafaela a todo el país.",
+  "frase": "Seleccionamos cada mochila y bolso por su construcción: cordura/lona, cierres gruesos, refuerzos en asas y sistema MOLLE para sumar accesorios.",
+  "subcategorias": [
+   "TODO",
+   "MOCHILAS",
+   "BOLSOS",
+   "BANDOLERAS"
+  ],
+  "sub_mapa": {
+   "MOCHILAS": [
+    "moc45vm",
+    "mocmd",
+    "mocdk",
+    "mocmc",
+    "mocng",
+    "mocod",
+    "mocas",
+    "mocac",
+    "mocam",
+    "mocb70",
+    "mocb70n",
+    "mocb70c",
+    "mocb70v"
+   ],
+   "BOLSOS": [
+    "mocb70",
+    "mocb70n",
+    "mocb70c",
+    "mocb70v"
+   ],
+   "BANDOLERAS": [
+    "bandng"
+   ]
+  },
+  "tarjetas": [
+   "moc45vm",
+   "mocmd",
+   "mocdk",
+   "mocmc",
+   "mocng",
+   "mocod",
+   "mocas",
+   "mocac",
+   "mocam",
+   "mocb70",
+   "mocb70n",
+   "mocb70c",
+   "mocb70v",
+   "bandng"
+  ],
+  "comparativa": {
+   "titulo": "¿QUÉ MOCHILA O BOLSO ELEGIR?",
+   "encabezados": [
+    "MODELO",
+    "CAPACIDAD Y MEDIDAS",
+    "IDEAL PARA",
+    "LO QUE LA DISTINGUE",
+    "COLORES"
+   ],
+   "filas": [
+    {
+     "nombre": "Mochila Táctica 45 L",
+     "url": "/productos/mochila-tactica-45l/",
+     "celdas": [
+      "45 L · 50 × 32 × 24 cm aprox.",
+      "Trekking, camping, viajes y uso diario",
+      "Respaldo y tiradores acolchados, broche pectoral y cinturón lumbar",
+      "6 colores y patrones"
+     ]
+    },
+    {
+     "nombre": "Mochila Táctica Assault 50 L",
+     "url": "/productos/mochila-tactica-assault-50l/",
+     "celdas": [
+      "50 L · 52 × 31 × 12 cm",
+      "Salidas de varios días, trabajo y viajes",
+      "2 pouches laterales y riñonera frontal desmontables; compartimento para hidratación o notebook",
+      "Multicam, Coyote y Negro"
+     ]
+    },
+    {
+     "nombre": "Bolso Mochila Táctica 70 L",
+     "url": "/productos/bolso-mochila-tactica-70l/",
+     "celdas": [
+      "70 L · 76 × 44 × 28 cm",
+      "Viajes largos, camping y traslado de equipo",
+      "Se lleva como bolso o como mochila; 6 bolsillos, 3 asas y 4 correas con broches",
+      "Multicam, Negro, Coyote y Verde Militar"
+     ]
+    },
+    {
+     "nombre": "Bandolera Táctica Cruzada",
+     "url": "/productos/bandolera-tactica-cruzada-negra/",
+     "celdas": [
+      "40 × 19 × 11 cm aprox.",
+      "Uso diario, trabajo y seguridad",
+      "9 bolsillos, panel de velcro, asa de paracord y porta pistola 9 mm",
+      "Negro"
+     ]
+    }
+   ]
+  },
+  "faq": [
+   {
+    "q": "¿Qué capacidad de mochila táctica necesito?",
+    "a": "Para uso diario o salidas de un día alcanza con 45 L. Si vas a llevar más equipo o querés módulos desmontables, la Assault 50 L suma dos pouches laterales y una riñonera frontal. Para viajes largos o trasladar mucho equipo, el Bolso Mochila 70 L es la opción de mayor capacidad."
+   },
+   {
+    "q": "¿Qué diferencia hay entre la Mochila 45 L y la Assault 50 L?",
+    "a": "La Mochila 45 L tiene cinturón lumbar, respaldo y tiradores acolchados, y viene en 6 colores y patrones. La Assault 50 L suma dos pouches laterales y una riñonera frontal desmontables, y un compartimento interior para bolsa de hidratación o notebook."
+   },
+   {
+    "q": "¿Las mochilas y bolsos son impermeables?",
+    "a": "No. Están confeccionados en cordura/lona y se informan como resistentes al agua o a la intemperie, no como impermeables. Para lluvia intensa conviene usar una funda o una bolsa estanca."
+   },
+   {
+    "q": "¿Qué es el sistema MOLLE?",
+    "a": "Es una grilla de cintas cosidas que permite sumar accesorios compatibles, como pouches o porta cargadores. Lo tienen la Mochila 45 L, la Assault 50 L, el Bolso Mochila 70 L y la Bandolera."
+   },
+   {
+    "q": "¿Hacen envíos a todo el país?",
+    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador y se informa por WhatsApp antes de confirmar la compra."
+   },
+   {
+    "q": "¿Venden por mayor?",
+    "a": "Sí. Comercios, revendedores y compradores profesionales pueden armar una cotización mayorista desde la sección Mayoristas."
+   }
+  ],
+  "guias": [
+   "que-es-el-sistema-molle",
+   "cordura-y-lona-diferencias"
+  ]
+ },
+ {
+  "slug": "calzado",
+  "titulo": "CALZADO",
+  "numero": "03",
+  "imagen": "calzado-v2.webp",
+  "seo_titulo": "Borcegos tácticos de caña alta",
+  "descripcion": "Borcegos tácticos de caña alta, confeccionados con cuero vacuno y Cordura respirable, con cordones, ojales reforzados y suela robusta de dibujo profundo. Pensados para seguridad, uso táctico y actividades al aire libre. Talles del 37 al 45, con envío desde Rafaela a todo el país.",
+  "frase": "Seleccionamos cada borcego por su construcción: materiales de capellada, caña, sistema de ajuste y suela con buena tracción para uso prolongado.",
+  "subcategorias": [
+   "TODO",
+   "BORCEGOS"
+  ],
+  "sub_mapa": {
+   "BORCEGOS": [
+    "altama"
+   ]
+  },
+  "tarjetas": [
+   "altama"
+  ],
+  "comparativa": null,
+  "faq": [
+   {
+    "q": "¿Qué borcegos tácticos tienen?",
+    "a": "Por ahora, el Borcego Táctico Altama Negro: caña alta, cuero vacuno y Cordura respirable, cordones con ojales reforzados y suela robusta con dibujo profundo."
+   },
+   {
+    "q": "¿Qué talles hay?",
+    "a": "Del 37 al 45. La disponibilidad de cada número se confirma por WhatsApp al momento de la compra."
+   },
+   {
+    "q": "¿Para qué sirve un borcego de caña alta?",
+    "a": "La caña alta brinda mayor cobertura en la zona del tobillo. Por eso es una opción habitual para tareas de seguridad, uso táctico, trabajo y actividades al aire libre."
+   },
+   {
+    "q": "¿De qué material están hechos?",
+    "a": "El Altama combina sectores de cuero vacuno con Cordura respirable, una combinación orientada a la resistencia y la comodidad durante el uso."
+   },
+   {
+    "q": "¿Hacen envíos a todo el país?",
+    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador y se informa por WhatsApp antes de confirmar la compra."
+   },
+   {
+    "q": "¿Venden por mayor?",
+    "a": "Sí. Comercios, revendedores y compradores profesionales pueden armar una cotización mayorista desde la sección Mayoristas."
+   }
+  ],
+  "guias": []
+ },
+ {
+  "slug": "accesorios",
+  "titulo": "ACCESORIOS",
+  "numero": "04",
+  "imagen": "accesorios-v2.webp",
+  "seo_titulo": "Accesorios tácticos: gafas, cintos, shemagh y sombreros",
+  "descripcion": "Accesorios tácticos para completar el equipo: gafa sport con lentes intercambiables, cinto táctico Cobra con hebilla metálica de apertura rápida, shemagh tipo árabe y sombrero de monte tipo boonie. Pensados para uso diario, trabajo, tareas operativas y actividades outdoor, con envío desde Rafaela a todo el país.",
+  "frase": "Seleccionamos cada accesorio por su función concreta dentro del equipo: protección visual, sujeción, cobertura y versatilidad de uso.",
+  "subcategorias": [
+   "TODO",
+   "GAFAS",
+   "SOMBREROS",
+   "CINTURONES",
+   "SHEMAGH",
+   "PARCHES"
+  ],
+  "sub_mapa": {
+   "PARCHES": [
+    "parchear"
+   ],
+   "GAFAS": [
+    "gafas"
+   ],
+   "SOMBREROS": [
+    "sombrero",
+    "sommc"
+   ],
+   "CINTURONES": [
+    "cintomt",
+    "cintocy",
+    "cintovo"
+   ],
+   "SHEMAGH": [
+    "shemagh",
+    "shemng",
+    "shemmr"
+   ]
+  },
+  "tarjetas": [
+   "gafas",
+   "sombrero",
+   "sommc",
+   "cintomt",
+   "cintocy",
+   "cintovo",
+   "shemagh",
+   "shemng",
+   "shemmr",
+   "parchear"
+  ],
+  "comparativa": null,
+  "faq": [
+   {
+    "q": "¿Qué incluye el set de gafas tácticas?",
+    "a": "Una gafa de diseño sport, lentes intercambiables en distintos tonos, adaptador óptico, correa de sujeción, estuche rígido termoformado, funda y paño de limpieza. Solo el lente negro polarizado cuenta con protección UV."
+   },
+   {
+    "q": "¿Qué es un cinto táctico Cobra?",
+    "a": "Es un cinturón regulable con cinta textil tipo Cordura, hebilla metálica de cierre y liberación rápida estilo Cobra y anilla triangular lateral para sujetar accesorios compatibles. Viene en negro, coyote y verde oliva."
+   },
+   {
+    "q": "¿Para qué sirve un shemagh?",
+    "a": "Es un pañuelo tipo árabe que puede colocarse sobre la cabeza, alrededor del cuello o para cubrir parcialmente el rostro. Se ofrece en verde militar, negro y marrón."
+   },
+   {
+    "q": "¿Qué es un sombrero de monte tipo boonie?",
+    "a": "Es un sombrero de ala amplia para actividades al aire libre. El modelo de Tactical Command tiene costuras reforzadas, banda perimetral con presillas, ojales de ventilación y cordón ajustable, en Woodland o Multicam."
+   },
+   {
+    "q": "¿Hacen envíos a todo el país?",
+    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador y se informa por WhatsApp antes de confirmar la compra."
+   },
+   {
+    "q": "¿Venden por mayor?",
+    "a": "Sí. Comercios, revendedores y compradores profesionales pueden armar una cotización mayorista desde la sección Mayoristas."
+   }
+  ],
+  "guias": []
+ }
+]

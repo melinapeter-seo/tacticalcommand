@@ -1,0 +1,35 @@
+---
+// Foto optimizada (WebP, srcset 400/800/1200) a partir del nombre de archivo en src/assets/tc.
+// Solo WebP: AVIF tarda ~4 s por variante y multiplicaba el tiempo de build de cada publicación.
+import { Image } from 'astro:assets';
+import { img } from '../lib/img';
+
+interface Props {
+  src: string | null | undefined;
+  alt: string;
+  sizes?: string;
+  class?: string;
+  style?: string;
+  priority?: boolean;
+  widths?: number[];
+  [k: string]: any;
+}
+const { src, alt, sizes = '(min-width: 1024px) 25vw, 70vw', class: cls, style, priority = false, widths = [400, 800, 1200], ...rest } = Astro.props;
+const meta = await img(src);
+const ws = meta ? [...new Set(widths.filter((w) => w < meta.width).concat(meta.width))] : [];
+---
+{meta ? (
+  <Image
+    src={meta}
+    alt={alt}
+    format="webp"
+    widths={ws}
+    sizes={sizes}
+    class={cls}
+    style={style}
+    loading={priority ? 'eager' : 'lazy'}
+    decoding={priority ? 'sync' : 'async'}
+    fetchpriority={priority ? 'high' : 'auto'}
+    {...rest}
+  />
+) : null}

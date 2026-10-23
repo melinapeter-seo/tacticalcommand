@@ -1,0 +1,90 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Overlays from '../components/Overlays.astro';
+import { SITE } from '../lib/data';
+import { abs } from '../lib/seo';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Ruta canónica (sin dominio), con barra final. */
+  path: string;
+  ogType?: 'website' | 'product' | 'article';
+  ogImage?: string;
+  jsonld?: object | null;
+  noindex?: boolean;
+  overHero?: boolean;
+  wsFooter?: boolean;
+  /** Preload de la imagen LCP (srcset generado por astro:assets). */
+  lcp?: { srcset: string; sizes: string; type?: string } | null;
+  heroFont?: boolean;
+}
+const { title, description, path, ogType = 'website', ogImage = '/og/default.jpg', jsonld = null, noindex = false, overHero = false, wsFooter = false, lcp = null, heroFont = false } = Astro.props;
+const canonical = SITE + path;
+const robots = noindex ? 'noindex,nofollow' : 'index,follow,max-image-preview:large,max-snippet:-1';
+---
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#1A1D1B" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={abs(ogImage)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content="Tactical Command" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" href="/fonts/inter-tight-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/tc-stencil.woff2" as="font" type="font/woff2" crossorigin />
+    {heroFont && <link rel="preload" href="/fonts/tc-gunplay.woff2" as="font" type="font/woff2" crossorigin />}
+    {lcp && <link rel="preload" as="image" imagesrcset={lcp.srcset} imagesizes={lcp.sizes} type={lcp.type} fetchpriority="high" />}
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+    <!-- El diseño está hecho sobre un lienzo fijo (1718 px en desktop, 385 px en mobile) y se escala
+         con `zoom` según el ancho real, igual que el prototipo. Corre antes del primer pintado: sin CLS. -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        function z() {
+          var w = window.innerWidth, k = w >= 1024 ? w / 1890 * 1.1 : w < 760 ? w / 385 : w / (385 + (w - 385) * 0.45);
+          d.style.zoom = String(k);
+          d.style.setProperty('--z', String(k));
+        }
+        z();
+        window.addEventListener('resize', z);
+      })();
+    </script>
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#contenido" class="skip">Saltar al contenido</a>
+    <Header overHero={overHero} path={path} />
+    <main id="contenido" class="main">
+      <slot />
+    </main>
+    <Footer extraPb={wsFooter} />
+    <Overlays />
+    <script>
+      import '../scripts/ui.ts';
+    </script>
+  </body>
+</html>
+
+<style>
+  .main { padding-top: var(--header-h); }
+</style>

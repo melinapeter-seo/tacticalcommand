@@ -1,0 +1,65 @@
+{
+ "nombre": "Tactical Command",
+ "whatsapp": "5493492649494",
+ "whatsapp_texto": "+54 9 3492 64-9494",
+ "email": "arieliman624@gmail.com",
+ "redes": [
+  "https://www.instagram.com/tactical.comand/",
+  "https://www.facebook.com/share/1FVdYnVcC4/",
+  "https://www.youtube.com/@TACTICALCOMMAND-ARG",
+  "https://www.tiktok.com/@tactical.comand"
+ ],
+ "cookies": [
+  {
+   "k": "nec",
+   "t": "Necesarias",
+   "d": "Permiten navegar, usar el carrito, comprar y mantener la sesión segura. No se pueden desactivar.",
+   "fixed": true
+  },
+  {
+   "k": "fun",
+   "t": "Funcionales",
+   "d": "Recuerdan tus elecciones y preferencias para mejorar tu experiencia."
+  },
+  {
+   "k": "ana",
+   "t": "Analítica",
+   "d": "Nos ayudan a entender cómo se usa el sitio para mejorar su funcionamiento."
+  },
+  {
+   "k": "pub",
+   "t": "Publicitarias",
+   "d": "Miden campañas y muestran comunicaciones comerciales más relevantes."
+  }
+ ],
+ "enlaces_legales": [
+  {
+   "t": "Botón de Arrepentimiento",
+   "url": "/arrepentimiento/"
+  },
+  {
+   "t": "Política de Cambios y Devoluciones",
+   "url": "/legal/politica-de-cambios-y-devoluciones/"
+  },
+  {
+   "t": "Política de Envíos",
+   "url": "/legal/politica-de-envios/"
+  },
+  {
+   "t": "Política de Privacidad",
+   "url": "/legal/politica-de-privacidad/"
+  },
+  {
+   "t": "Política de Cookies",
+   "url": "/legal/politica-de-cookies/"
+  },
+  {
+   "t": "Términos y Condiciones",
+   "url": "/legal/terminos-y-condiciones/"
+  },
+  {
+   "t": "sección Tu Pedido",
+   "url": "/envios/"
+  }
+ ]
+}

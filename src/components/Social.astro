@@ -1,0 +1,26 @@
+---
+// Íconos dorados de redes. `size` = alto de cada ícono; WhatsApp va al 78 % como en el diseño.
+import { Image } from 'astro:assets';
+import { img } from '../lib/img';
+import { sitio, WA_CONSULTA } from '../lib/data';
+
+interface Props { size: number; filter?: string; linkClass?: string; label?: boolean }
+const { size, filter = 'drop-shadow(0 3px 6px rgba(0,0,0,.45)) drop-shadow(0 0 10px rgba(227,178,60,.7)) drop-shadow(0 0 4px rgba(255,214,110,.55))', linkClass = '' } = Astro.props;
+const redesBase = [
+  { n: 'Instagram', u: sitio.redes[0], f: 'ig-gold.webp', k: 1 },
+  { n: 'Facebook', u: sitio.redes[1], f: 'fb-gold.webp', k: 1 },
+  { n: 'YouTube', u: sitio.redes[2], f: 'yt-gold.webp', k: 1 },
+  { n: 'TikTok', u: sitio.redes[3], f: 'tiktok-gold.webp', k: 1 },
+  { n: 'WhatsApp', u: WA_CONSULTA, f: 'wa-gold.webp', k: 0.78 },
+];
+const redes = await Promise.all(redesBase.map(async (r) => ({ ...r, m: (await img(r.f))! })));
+---
+{redes.map((r) => {
+  const m = r.m;
+  const h = Math.round(size * r.k);
+  return (
+    <a href={r.u} target="_blank" rel="noopener" aria-label={r.n} class={linkClass} data-wa={r.n === 'WhatsApp' ? 'redes' : undefined} style={`display:flex;align-items:center;height:${size}px`}>
+      <Image src={m} alt="" width={Math.round((h * m.width) / m.height) * 2} height={h * 2} style={`height:${h}px;width:auto;display:block;filter:${filter}`} loading="lazy" />
+    </a>
+  );
+})}
