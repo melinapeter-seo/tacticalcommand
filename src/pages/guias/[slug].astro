@@ -34,7 +34,7 @@ const jsonld = graph(
   breadcrumbs([['Inicio', '/'], ['Guías', '/guias/'], [g.titulo, path]]),
 );
 ---
-<Base title={`${g.titulo} | Tactical Command`} description={desc(g.respuesta)} path={path} ogType="article" ogImage={heroImg?.src} jsonld={jsonld}>
+<Base title={`${g.titulo} | Tactical Command`} description={desc(g.respuesta)} path={path} ogType="article" ogImage={`/og/guias/${g.slug}.jpg`} jsonld={jsonld}>
   <div class="crumb"><Breadcrumbs items={[['Inicio', '/'], ['Guías', '/guias/'], [g.palabra_clave, path]]} class="in" /></div>
   <section class="hero">
     <div class="in hero-grid">

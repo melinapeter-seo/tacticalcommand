@@ -85,7 +85,7 @@ const description = desc(p.seo.descripcion || p.descripcion);
 const lcp = c0.fotos[0];
 const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, precio: p.precio_minorista, provisorio: p.precio_provisorio, colores, waNum: '5493492649494' };
 ---
-<Base title={title} description={description} path={path} ogType="product" ogImage={lcp?.full} jsonld={jsonld} lcp={lcp ? { srcset: lcp.srcset, sizes: '(min-width: 1024px) 40vw, 100vw', type: 'image/webp' } : null}>
+<Base title={title} description={description} path={path} ogType="product" ogImage={`/og/productos/${p.slug}.jpg`} jsonld={jsonld} lcp={lcp ? { srcset: lcp.srcset, sizes: '(min-width: 1024px) 40vw, 100vw', type: 'image/webp' } : null}>
   <article class:list={['pdp', app ? 'app' : 'std', { shoe: o.es_calzado }]} itemscope>
     <div class="hero" style={`--nT:${nT};--scd:${sizeColD};--scm:${sizeColM}`}>
       <div class="gal" id="gal" data-n={c0.fotos.length}>

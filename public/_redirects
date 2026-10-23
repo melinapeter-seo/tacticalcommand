@@ -1,0 +1,8 @@
+# Rutas reales del prototipo que cambiaron de nombre.
+/blog            /guias/          301
+/blog/*          /guias/:splat    301
+
+# Versión canónica: sin www y con HTTPS. Activar cuando el dominio esté en Netlify
+# (reemplazar NOMBRE-DEL-SITIO por el subdominio .netlify.app).
+# https://www.tacticalcommand.com.ar/*        https://tacticalcommand.com.ar/:splat  301!
+# https://NOMBRE-DEL-SITIO.netlify.app/*      https://tacticalcommand.com.ar/:splat  301!
