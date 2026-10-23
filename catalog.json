@@ -1,0 +1,3688 @@
+{
+ "_nota": "Fuente única del catálogo. Todo (tarjetas de listados, fichas, mayorista) se deriva de acá. El stock vive en colores[].talles[].estado y NO se muestra en el front: todo se presenta como disponible; el stock se verifica por WhatsApp.",
+ "productos": [
+  {
+   "slug": "bandolera-tactica-cruzada-negra",
+   "nombre": "BANDOLERA TÁCTICA CRUZADA NEGRA",
+   "categoria": "EQUIPOS TÁCTICOS",
+   "subcategoria": "BANDOLERAS Y BOLSOS TÁCTICOS",
+   "sku": "TC-BAN-CR-NG",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Bandolera táctica cruzada en color negro, confeccionada en cordura/lona, reforzada y resistente al agua. Cuenta con 9 bolsillos, sistema MOLLE, panel de velcro exterior, correa ajustable, correa adicional, asa de agarre con paracord y respaldo acolchado. Su interior incorpora tiras ajustables y bandas elásticas para organizar diferentes elementos.",
+   "descripcion_larga": [
+    "La Bandolera Táctica Cruzada Negra es una opción práctica y versátil para transportar y organizar diferentes elementos durante el trabajo, actividades diarias y otros usos.",
+    "Está confeccionada en cordura/lona, con una construcción reforzada y resistente al agua. Su diseño incorpora 9 bolsillos distribuidos para facilitar la organización y el acceso a las pertenencias.",
+    "Cuenta con una correa ajustable al cuerpo y una correa adicional, permitiendo adaptar la configuración de transporte. También incorpora un respaldo acolchado para mayor comodidad durante el uso.",
+    "En el exterior dispone de panel de velcro y sistema MOLLE, que permiten incorporar accesorios compatibles. El asa de agarre con paracord aporta una alternativa adicional para transportar la bandolera.",
+    "Su interior cuenta con tiras ajustables y bandas elásticas, pensadas para mantener diferentes elementos organizados.",
+    "Además, dispone de un porta pistola 9 mm u otros elementos, según las necesidades de uso, y 4 ojales para colocar la correa.",
+    "Sus medidas aproximadas son 40 cm de alto × 19 cm de ancho × 11 cm de fondo."
+   ],
+   "caracteristicas": [
+    "9 bolsillos",
+    "Sistema MOLLE + velcro",
+    "Correa ajustable + correa adicional",
+    "Respaldo acolchado",
+    "Porta pistola 9 mm u otros elementos",
+    "Resistente al agua"
+   ],
+   "usos": [
+    "Uso diario",
+    "Trabajo",
+    "Actividades tácticas",
+    "Elementos personales",
+    "Organización de equipamiento",
+    "Outdoor",
+    "Seguridad y uso operativo"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Bandolera Táctica Cruzada Negra"
+    },
+    {
+     "k": "TIPO",
+     "v": "Bandolera táctica cruzada"
+    },
+    {
+     "k": "COLOR",
+     "v": "Negro"
+    },
+    {
+     "k": "MATERIAL",
+     "v": "Cordura/lona"
+    },
+    {
+     "k": "BOLSILLOS",
+     "v": "9"
+    },
+    {
+     "k": "CONSTRUCCIÓN",
+     "v": "Reforzada"
+    },
+    {
+     "k": "RESISTENCIA",
+     "v": "Resistente al agua"
+    },
+    {
+     "k": "CORREA PRINCIPAL",
+     "v": "Ajustable al cuerpo"
+    },
+    {
+     "k": "CORREA ADICIONAL",
+     "v": "Sí"
+    },
+    {
+     "k": "ASA DE AGARRE",
+     "v": "Sí"
+    },
+    {
+     "k": "MATERIAL DEL ASA",
+     "v": "Paracord"
+    },
+    {
+     "k": "PANEL EXTERIOR",
+     "v": "Velcro"
+    },
+    {
+     "k": "SISTEMA EXTERIOR",
+     "v": "MOLLE"
+    },
+    {
+     "k": "RESPALDO",
+     "v": "Acolchado"
+    },
+    {
+     "k": "INTERIOR",
+     "v": "Tiras ajustables y bandas elásticas"
+    },
+    {
+     "k": "PORTA PISTOLA",
+     "v": "9 mm u otros elementos"
+    },
+    {
+     "k": "OJALES PARA CORREA",
+     "v": "4"
+    },
+    {
+     "k": "ALTO",
+     "v": "40 cm aprox."
+    },
+    {
+     "k": "ANCHO",
+     "v": "19 cm aprox."
+    },
+    {
+     "k": "FONDO",
+     "v": "11 cm aprox."
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es la Bandolera Táctica Cruzada Negra?",
+     "a": "Es una bandolera táctica de color negro, confeccionada en cordura/lona y diseñada para transportar y organizar diferentes elementos de forma práctica durante el trabajo y las actividades diarias."
+    },
+    {
+     "q": "¿De qué material está hecha?",
+     "a": "Está confeccionada en cordura/lona, con una construcción reforzada."
+    },
+    {
+     "q": "¿La Bandolera Táctica Cruzada es resistente al agua?",
+     "a": "Sí. La bandolera es resistente al agua."
+    },
+    {
+     "q": "¿Cuántos bolsillos tiene?",
+     "a": "Cuenta con 9 bolsillos para organizar diferentes pertenencias."
+    },
+    {
+     "q": "¿Tiene sistema MOLLE?",
+     "a": "Sí. Cuenta con sistema MOLLE y un panel de velcro exterior."
+    },
+    {
+     "q": "¿La correa es ajustable?",
+     "a": "Sí. Cuenta con una correa ajustable al cuerpo y una correa adicional."
+    },
+    {
+     "q": "¿Tiene respaldo acolchado?",
+     "a": "Sí. El respaldo está acolchado para mayor comodidad durante el uso."
+    },
+    {
+     "q": "¿Qué sistema de agarre tiene?",
+     "a": "Cuenta con un asa de agarre con paracord."
+    },
+    {
+     "q": "¿Qué tiene en el interior?",
+     "a": "El interior incorpora tiras ajustables y bandas elásticas para ayudar a organizar los elementos transportados."
+    },
+    {
+     "q": "¿Tiene compartimento para una pistola 9 mm?",
+     "a": "La bandolera cuenta con un porta pistola 9 mm u otros elementos, según la configuración y uso del compartimento."
+    },
+    {
+     "q": "¿Cuántos ojales tiene para colocar la correa?",
+     "a": "Cuenta con 4 ojales para colocar la correa."
+    },
+    {
+     "q": "¿Cuáles son las medidas de la bandolera?",
+     "a": "Sus medidas son aproximadamente 40 cm de alto × 19 cm de ancho × 11 cm de fondo."
+    },
+    {
+     "q": "¿Para qué se puede utilizar?",
+     "a": "Está diseñada para llevar elementos organizados durante el trabajo y las actividades diarias, gracias a sus múltiples compartimentos y sistema de organización."
+    },
+    {
+     "q": "¿Qué elementos tiene en el exterior?",
+     "a": "Bolsillos con cierre, compartimentos de organización, panel de velcro, sistema MOLLE, ajuste mediante cordones elásticos, puntos de anclaje laterales y ojales para la correa."
+    },
+    {
+     "q": "¿En qué colores está disponible?",
+     "a": "Por el momento se presenta en color negro."
+    }
+   ],
+   "relacionados": [
+    "cinto-tactico-cobra",
+    "mochila-tactica-45l",
+    "pantalon-cargo-tactico-ripstop-negro",
+    "gafa-tactica-sport-lentes-intercambiables"
+   ],
+   "guia": "#/blog/cordura-y-lona-diferencias/",
+   "opciones": {
+    "con_talles": false,
+    "es_calzado": false,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false
+   },
+   "colores": [
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-BAN-CR-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/band-1.webp",
+      "uploads/TC/band-2.webp",
+      "uploads/TC/band-3.webp",
+      "uploads/TC/band-4.webp",
+      "uploads/TC/band-5.webp",
+      "uploads/TC/band-6.webp"
+     ],
+     "talles": []
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "bandng",
+     "nombre": "Bandolera Táctica Cruzada Negra",
+     "imagen": "uploads/TC/band-1.webp",
+     "color": null
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "bolso-mochila-tactica-70l",
+   "nombre": "BOLSO MOCHILA TÁCTICA 70 L",
+   "categoria": "EQUIPOS TÁCTICOS",
+   "subcategoria": "BOLSOS TÁCTICOS",
+   "sku": "TC-BOL-070",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Bolso mochila táctica de 70 litros, de gran capacidad y diseño versátil, confeccionado en cordura/lona y equipado con 6 bolsillos, sistema MOLLE, asas reforzadas y correas ajustables con broches. Disponible en Multicam, Negro, Coyote y Verde Militar. Diseñado para organizar y transportar equipamiento en viajes, actividades al aire libre y uso laboral.",
+   "descripcion_larga": [
+    "El Bolso Mochila Táctica 70 L combina una gran capacidad de almacenamiento con una configuración versátil para transportar y organizar equipamiento.",
+    "Su diseño incorpora 6 bolsillos distribuidos en diferentes sectores, permitiendo separar elementos y mantener una organización práctica durante el traslado.",
+    "Está confeccionado en cordura/lona y cuenta con cierres gruesos, además de una estructura reforzada y material resistente al agua.",
+    "La parte exterior incorpora sistema MOLLE, permitiendo sumar accesorios compatibles y adaptar la configuración del bolso según las necesidades de cada salida.",
+    "Cuenta con 3 asas reforzadas, 4 correas ajustables con broches, tiradores regulables y broche pectoral, ofreciendo diferentes puntos de sujeción y ajuste.",
+    "Está disponible en cuatro colores: Multicam, Negro, Coyote y Verde Militar. Todos comparten la misma construcción, capacidad y medidas; solo cambia el color.",
+    "Con una capacidad de 70 litros, está pensado para actividades que requieren transportar una cantidad importante de equipamiento: viajes, caza, pesca, camping, trekking y trabajo."
+   ],
+   "caracteristicas": [
+    "Capacidad de 70 litros",
+    "4 colores disponibles",
+    "6 bolsillos",
+    "Sistema MOLLE",
+    "3 asas + 4 correas con broches",
+    "Resistente al agua"
+   ],
+   "usos": [
+    "Viajes",
+    "Camping",
+    "Trekking",
+    "Pesca",
+    "Caza",
+    "Trabajo"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Bolso Mochila Táctica 70 L"
+    },
+    {
+     "k": "TIPO",
+     "v": "Bolso mochila táctico"
+    },
+    {
+     "k": "CAPACIDAD",
+     "v": "70 L"
+    },
+    {
+     "k": "COLORES",
+     "v": "Multicam / Negro / Coyote / Verde Militar"
+    },
+    {
+     "k": "MATERIAL",
+     "v": "Cordura / lona"
+    },
+    {
+     "k": "BOLSILLOS",
+     "v": "6"
+    },
+    {
+     "k": "CIERRES",
+     "v": "Gruesos"
+    },
+    {
+     "k": "SISTEMA",
+     "v": "MOLLE"
+    },
+    {
+     "k": "ASAS",
+     "v": "3 reforzadas"
+    },
+    {
+     "k": "CORREAS",
+     "v": "4 ajustables con broches"
+    },
+    {
+     "k": "TIRADORES",
+     "v": "Regulables"
+    },
+    {
+     "k": "BROCHE PECTORAL",
+     "v": "Sí"
+    },
+    {
+     "k": "CONSTRUCCIÓN",
+     "v": "Reforzada"
+    },
+    {
+     "k": "RESISTENCIA",
+     "v": "Resistente al agua"
+    },
+    {
+     "k": "LARGO",
+     "v": "76 cm"
+    },
+    {
+     "k": "ANCHO",
+     "v": "44 cm"
+    },
+    {
+     "k": "PROFUNDIDAD",
+     "v": "28 cm"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Cuántos litros tiene el Bolso Mochila Táctica 70 L?",
+     "a": "Tiene una capacidad de 70 litros."
+    },
+    {
+     "q": "¿En qué colores está disponible?",
+     "a": "Está disponible en Multicam, Negro, Coyote y Verde Militar."
+    },
+    {
+     "q": "¿Qué diferencia hay entre los colores?",
+     "a": "Ninguna en construcción: todos tienen la misma capacidad, medidas, materiales y equipamiento. Solo cambia el color."
+    },
+    {
+     "q": "¿De qué material está fabricado?",
+     "a": "Está confeccionado en cordura/lona."
+    },
+    {
+     "q": "¿Cuántos bolsillos tiene?",
+     "a": "Cuenta con 6 bolsillos."
+    },
+    {
+     "q": "¿Tiene sistema MOLLE?",
+     "a": "Sí, incorpora sistema MOLLE exterior para sumar accesorios compatibles."
+    },
+    {
+     "q": "¿Tiene asas reforzadas?",
+     "a": "Sí, cuenta con 3 asas reforzadas."
+    },
+    {
+     "q": "¿Cuántas correas tiene?",
+     "a": "Cuenta con 4 correas ajustables con broches."
+    },
+    {
+     "q": "¿Tiene tiradores regulables?",
+     "a": "Sí."
+    },
+    {
+     "q": "¿Tiene broche pectoral?",
+     "a": "Sí."
+    },
+    {
+     "q": "¿Qué medidas tiene?",
+     "a": "Mide 76 cm de largo, 44 cm de ancho y 28 cm de profundidad."
+    },
+    {
+     "q": "¿Para qué actividades sirve?",
+     "a": "Es ideal para viajes, caza, pesca, camping, trekking y trabajo."
+    },
+    {
+     "q": "¿Es una mochila o un bolso?",
+     "a": "Es un bolso mochila táctico, con configuración de transporte mediante correas y diferentes asas."
+    }
+   ],
+   "relacionados": [
+    "mochila-tactica-45l",
+    "bandolera-tactica-cruzada-negra",
+    "shemagh",
+    "cinto-tactico-cobra"
+   ],
+   "guia": "#/blog/que-es-el-sistema-molle/",
+   "opciones": {
+    "con_talles": false,
+    "es_calzado": false,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false
+   },
+   "colores": [
+    {
+     "nombre": "MULTICAM",
+     "sku": "TC-BOL-070-MC",
+     "muestra": "#8A7F5C",
+     "fotos": [
+      "uploads/TC/b70mc-1.webp",
+      "uploads/TC/b70mc-2.webp",
+      "uploads/TC/b70mc-3.webp",
+      "uploads/TC/b70mc-4.webp",
+      "uploads/TC/b70mc-5.webp",
+      "uploads/TC/b70mc-6.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-BOL-070-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/b70ng-1.webp",
+      "uploads/TC/b70ng-2.webp",
+      "uploads/TC/b70ng-3.webp",
+      "uploads/TC/b70ng-4.webp",
+      "uploads/TC/b70ng-5.webp",
+      "uploads/TC/b70ng-6.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "COYOTE",
+     "sku": "TC-BOL-070-CY",
+     "muestra": "#8B6F47",
+     "fotos": [
+      "uploads/TC/b70cy-1.webp",
+      "uploads/TC/b70cy-2.webp",
+      "uploads/TC/b70cy-3.webp",
+      "uploads/TC/b70cy-4.webp",
+      "uploads/TC/b70cy-5.webp",
+      "uploads/TC/b70cy-6.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "VERDE MILITAR",
+     "sku": "TC-BOL-070-VM",
+     "muestra": "#4B5320",
+     "fotos": [
+      "uploads/TC/b70vm-1.webp",
+      "uploads/TC/b70vm-2.webp",
+      "uploads/TC/b70vm-3.webp",
+      "uploads/TC/b70vm-4.webp",
+      "uploads/TC/b70vm-5.webp",
+      "uploads/TC/b70vm-6.webp"
+     ],
+     "talles": []
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "mocb70c",
+     "nombre": "Bolso Mochila Táctica Coyote 70 L",
+     "imagen": "uploads/TC/b70cy-1.webp",
+     "color": "COYOTE"
+    },
+    {
+     "clave": "mocb70v",
+     "nombre": "Bolso Mochila Táctica Verde Militar 70 L",
+     "imagen": "uploads/TC/b70vm-1.webp",
+     "color": "VERDE MILITAR"
+    },
+    {
+     "clave": "mocb70n",
+     "nombre": "Bolso Mochila Táctica Negro 70 L",
+     "imagen": "uploads/TC/b70ng-1.webp",
+     "color": "NEGRO"
+    },
+    {
+     "clave": "mocb70",
+     "nombre": "Bolso Mochila Táctica Multicam 70 L",
+     "imagen": "uploads/TC/b70mc-1.webp",
+     "color": "MULTICAM"
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "mochila-tactica-assault-50l",
+   "nombre": "MOCHILA TÁCTICA ASSAULT 50 L",
+   "categoria": "EQUIPOS TÁCTICOS",
+   "subcategoria": "MOCHILAS TÁCTICAS",
+   "sku": "TC-MOC-050",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Mochila táctica Assault de 50 litros, confeccionada en cordura/lona y diseñada para brindar capacidad, organización y buen ajuste. Cuenta con sistema MOLLE, dos pouches laterales y una riñonera frontal desmontables, respaldo acolchado, tiradores regulables, broche pectoral, cinturón ajustable y compartimento para bolsa de hidratación o notebook. Disponible en Multicam, Coyote y Negro.",
+   "descripcion_larga": [
+    "La Mochila Táctica Assault 50 L está diseñada para organizar y transportar equipamiento de manera práctica, ofreciendo una configuración versátil para diferentes actividades y salidas.",
+    "Con una capacidad de 50 litros, dispone de diferentes compartimientos y módulos exteriores que permiten adaptar la organización del equipo según las necesidades de cada uso.",
+    "Está confeccionada en cordura/lona y cuenta con cierres gruesos. Su diseño incorpora sistema MOLLE, permitiendo sumar accesorios compatibles. La configuración incluye dos pouches laterales desmontables y una riñonera frontal desmontable, ofreciendo mayor flexibilidad para organizar y transportar distintos elementos.",
+    "Para favorecer el ajuste durante el uso, incorpora tiradores acolchados y regulables, broche pectoral, cinturón ajustable y tiras laterales ajustables con broche. El respaldo acolchado y el asa superior reforzada complementan su configuración.",
+    "También cuenta con un compartimento para bolsa de hidratación o notebook, dependiendo de las dimensiones del elemento que se quiera transportar. El material está especificado como resistente al agua.",
+    "Está disponible en Multicam, Coyote y Negro. Todos comparten la misma construcción, capacidad, medidas y accesorios; solo cambia el color.",
+    "Su capacidad y configuración la hacen adecuada para camping, trekking, pesca, viajes y trabajo."
+   ],
+   "caracteristicas": [
+    "Capacidad de 50 litros",
+    "3 colores disponibles",
+    "Sistema MOLLE",
+    "2 pouches + riñonera desmontables",
+    "Hidratación o notebook",
+    "Resistente al agua"
+   ],
+   "usos": [
+    "Camping",
+    "Trekking",
+    "Pesca",
+    "Viajes",
+    "Trabajo"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Mochila Táctica Assault 50 L"
+    },
+    {
+     "k": "TIPO",
+     "v": "Mochila táctica Assault"
+    },
+    {
+     "k": "CAPACIDAD",
+     "v": "50 L"
+    },
+    {
+     "k": "COLORES",
+     "v": "Multicam / Coyote / Negro"
+    },
+    {
+     "k": "MATERIAL",
+     "v": "Cordura / lona"
+    },
+    {
+     "k": "CIERRES",
+     "v": "Gruesos"
+    },
+    {
+     "k": "SISTEMA",
+     "v": "MOLLE"
+    },
+    {
+     "k": "POUCHES LATERALES",
+     "v": "2, desmontables"
+    },
+    {
+     "k": "RIÑONERA FRONTAL",
+     "v": "Desmontable"
+    },
+    {
+     "k": "TIRADORES",
+     "v": "Acolchados y regulables"
+    },
+    {
+     "k": "BROCHE PECTORAL",
+     "v": "Sí"
+    },
+    {
+     "k": "CINTURÓN",
+     "v": "Ajustable"
+    },
+    {
+     "k": "TIRAS LATERALES",
+     "v": "Ajustables con broche"
+    },
+    {
+     "k": "RESPALDO",
+     "v": "Acolchado"
+    },
+    {
+     "k": "ASA SUPERIOR",
+     "v": "Reforzada"
+    },
+    {
+     "k": "COMPARTIMENTO INTERIOR",
+     "v": "Para bolsa de hidratación o notebook"
+    },
+    {
+     "k": "RESISTENCIA",
+     "v": "Resistente al agua"
+    },
+    {
+     "k": "PARCHE",
+     "v": "Argentina"
+    },
+    {
+     "k": "ALTO",
+     "v": "52 cm"
+    },
+    {
+     "k": "ANCHO",
+     "v": "31 cm"
+    },
+    {
+     "k": "PROFUNDIDAD",
+     "v": "12 cm"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Cuántos litros tiene la Mochila Táctica Assault?",
+     "a": "Tiene una capacidad de 50 litros."
+    },
+    {
+     "q": "¿En qué colores está disponible?",
+     "a": "Está disponible en Multicam, Coyote y Negro."
+    },
+    {
+     "q": "¿Qué diferencia hay entre los colores?",
+     "a": "Ninguna en construcción: todos tienen la misma capacidad, medidas, materiales y accesorios. Solo cambia el color."
+    },
+    {
+     "q": "¿De qué material está fabricada?",
+     "a": "Está confeccionada en cordura/lona."
+    },
+    {
+     "q": "¿Tiene sistema MOLLE?",
+     "a": "Sí, incorpora sistema MOLLE para sumar accesorios compatibles."
+    },
+    {
+     "q": "¿Cuántos pouches incluye?",
+     "a": "Incluye dos pouches laterales desmontables."
+    },
+    {
+     "q": "¿Tiene riñonera?",
+     "a": "Sí, cuenta con una riñonera frontal desmontable."
+    },
+    {
+     "q": "¿Tiene compartimento para notebook?",
+     "a": "Sí. Cuenta con un compartimento que puede utilizarse para una notebook según sus dimensiones."
+    },
+    {
+     "q": "¿Tiene espacio para bolsa de hidratación?",
+     "a": "Sí. El compartimento puede utilizarse para una bolsa de hidratación."
+    },
+    {
+     "q": "¿Tiene respaldo acolchado?",
+     "a": "Sí, cuenta con respaldo acolchado."
+    },
+    {
+     "q": "¿Tiene cinturón?",
+     "a": "Sí, incorpora cinturón ajustable."
+    },
+    {
+     "q": "¿Tiene broche pectoral?",
+     "a": "Sí."
+    },
+    {
+     "q": "¿Las tiras son regulables?",
+     "a": "Sí. Cuenta con tiradores acolchados y regulables, además de tiras laterales ajustables."
+    },
+    {
+     "q": "¿Para qué actividades sirve?",
+     "a": "Es ideal para camping, trekking, pesca, viajes y trabajo."
+    },
+    {
+     "q": "¿Qué medidas tiene?",
+     "a": "Mide 52 cm de alto, 31 cm de ancho y 12 cm de profundidad."
+    },
+    {
+     "q": "¿Incluye parche?",
+     "a": "Sí, incluye parche argentino."
+    }
+   ],
+   "relacionados": [
+    "bandolera-tactica-cruzada-negra",
+    "gafa-tactica-sport-lentes-intercambiables",
+    "shemagh",
+    "borcegos-tacticos-altama-negros"
+   ],
+   "guia": "#/blog/que-es-el-sistema-molle/",
+   "opciones": {
+    "con_talles": false,
+    "es_calzado": false,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false
+   },
+   "colores": [
+    {
+     "nombre": "MULTICAM",
+     "sku": "TC-MOC-050-AM",
+     "muestra": "#8A7F5C",
+     "fotos": [
+      "uploads/TC/as50mc-1.webp",
+      "uploads/TC/as50mc-2.webp",
+      "uploads/TC/as50mc-3.webp",
+      "uploads/TC/as50mc-4.webp",
+      "uploads/TC/as50mc-5.webp",
+      "uploads/TC/as50mc-6.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "COYOTE",
+     "sku": "TC-MOC-050-AC",
+     "muestra": "#8B6F47",
+     "fotos": [
+      "uploads/TC/as50cy-1.webp",
+      "uploads/TC/as50cy-2.webp",
+      "uploads/TC/as50cy-3.webp",
+      "uploads/TC/as50cy-4.webp",
+      "uploads/TC/as50cy-5.webp",
+      "uploads/TC/as50cy-6.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-MOC-050-AS",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/as50ng-1.webp",
+      "uploads/TC/as50ng-2.webp",
+      "uploads/TC/as50ng-3.webp",
+      "uploads/TC/as50ng-4.webp",
+      "uploads/TC/as50ng-5.webp",
+      "uploads/TC/as50ng-6.webp"
+     ],
+     "talles": []
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "mocam",
+     "nombre": "Mochila Táctica Assault Multicam 50 L",
+     "imagen": "uploads/TC/as50mc-1.webp",
+     "color": "MULTICAM"
+    },
+    {
+     "clave": "mocac",
+     "nombre": "Mochila Táctica Assault Coyote 50 L",
+     "imagen": "uploads/TC/as50cy-1.webp",
+     "color": "COYOTE"
+    },
+    {
+     "clave": "mocas",
+     "nombre": "Mochila Táctica Assault Negra 50 L",
+     "imagen": "uploads/TC/as50ng-1.webp",
+     "color": "NEGRO"
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "mochila-tactica-45l",
+   "nombre": "MOCHILA TÁCTICA 45 L",
+   "categoria": "EQUIPOS TÁCTICOS",
+   "subcategoria": "MOCHILAS TÁCTICAS",
+   "sku": "TC-MOC-045",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Mochila táctica de 45 litros, resistente y funcional, diseñada para brindar comodidad, organización y buen ajuste. Cuenta con sistema MOLLE, múltiples compartimientos, respaldo y tiradores acolchados, correas ajustables, broche pectoral, cinturón lumbar y asa superior reforzada. Disponible en Verde Militar, Tipo Multicam, Digital Doksa, MARPAT Desert, Negro y Verde OD.",
+   "descripcion_larga": [
+    "La Mochila Táctica 45 L es una mochila de gran capacidad diseñada para transportar y organizar equipamiento en actividades outdoor, trekking, viajes, trabajo y uso cotidiano.",
+    "Cuenta con una capacidad de 45 litros y múltiples compartimientos que permiten distribuir diferentes elementos y mantener una organización práctica.",
+    "Su diseño incorpora sistema MOLLE, ofreciendo una configuración exterior de carácter táctico y modular.",
+    "Para favorecer la comodidad durante el transporte, cuenta con respaldo y tiradores acolchados, además de correas ajustables, broche pectoral y cinturón lumbar, que permiten adaptar la mochila al usuario y mejorar su sujeción. También incorpora un asa superior reforzada para facilitar el transporte manual.",
+    "Está confeccionada en cordura/lona y cuenta con material resistente a la intemperie, por lo que está pensada para acompañar actividades tanto en exteriores como en el uso cotidiano.",
+    "Está disponible en seis colores y patrones: Verde Militar, Tipo Multicam, Digital Doksa, MARPAT Desert, Negro y Verde OD. Todos comparten la misma construcción, capacidad y medidas; solo cambia el color. Incluye parche de la bandera argentina."
+   ],
+   "caracteristicas": [
+    "Capacidad de 45 litros",
+    "6 colores y patrones",
+    "Sistema MOLLE",
+    "Respaldo y tiradores acolchados",
+    "Broche pectoral y cinturón lumbar",
+    "Incluye parche nacional argentino"
+   ],
+   "usos": [
+    "Outdoor",
+    "Trekking",
+    "Camping",
+    "Viajes",
+    "Trabajo",
+    "Uso diario"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Mochila Táctica 45 L"
+    },
+    {
+     "k": "TIPO",
+     "v": "Mochila táctica"
+    },
+    {
+     "k": "CAPACIDAD",
+     "v": "45 L"
+    },
+    {
+     "k": "COLORES / PATRONES",
+     "v": "Verde Militar / Tipo Multicam / Digital Doksa / MARPAT Desert / Negro / Verde OD"
+    },
+    {
+     "k": "MATERIAL",
+     "v": "Cordura / lona"
+    },
+    {
+     "k": "SISTEMA",
+     "v": "MOLLE"
+    },
+    {
+     "k": "COMPARTIMIENTOS",
+     "v": "Múltiples"
+    },
+    {
+     "k": "RESPALDO",
+     "v": "Acolchado"
+    },
+    {
+     "k": "TIRADORES",
+     "v": "Acolchados"
+    },
+    {
+     "k": "CORREAS",
+     "v": "Ajustables"
+    },
+    {
+     "k": "BROCHE PECTORAL",
+     "v": "Sí"
+    },
+    {
+     "k": "CINTURÓN LUMBAR",
+     "v": "Sí"
+    },
+    {
+     "k": "ASA SUPERIOR",
+     "v": "Reforzada"
+    },
+    {
+     "k": "RESISTENCIA",
+     "v": "Resistente a la intemperie"
+    },
+    {
+     "k": "PARCHE",
+     "v": "Nacional / bandera argentina"
+    },
+    {
+     "k": "ALTO",
+     "v": "50 cm aprox."
+    },
+    {
+     "k": "ANCHO",
+     "v": "32 cm aprox."
+    },
+    {
+     "k": "PROFUNDIDAD",
+     "v": "24 cm aprox."
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Cuántos litros tiene la Mochila Táctica 45 L?",
+     "a": "La mochila tiene una capacidad de 45 litros."
+    },
+    {
+     "q": "¿En qué colores está disponible?",
+     "a": "Está disponible en Verde Militar, Tipo Multicam, Digital Doksa, MARPAT Desert, Negro y Verde OD."
+    },
+    {
+     "q": "¿Qué diferencia hay entre los colores?",
+     "a": "Ninguna en construcción: todos tienen la misma capacidad, medidas, materiales y equipamiento. Solo cambia el color o patrón."
+    },
+    {
+     "q": "¿Qué medidas tiene?",
+     "a": "Sus medidas aproximadas son 50 cm de alto, 32 cm de ancho y 24 cm de profundidad."
+    },
+    {
+     "q": "¿De qué material está hecha?",
+     "a": "Está confeccionada en cordura/lona."
+    },
+    {
+     "q": "¿Tiene sistema MOLLE?",
+     "a": "Sí. Cuenta con sistema MOLLE."
+    },
+    {
+     "q": "¿Tiene varios compartimientos?",
+     "a": "Sí. Cuenta con múltiples compartimientos para facilitar la organización del contenido."
+    },
+    {
+     "q": "¿Tiene respaldo acolchado?",
+     "a": "Sí. Cuenta con respaldo y tiradores acolchados."
+    },
+    {
+     "q": "¿Las correas son ajustables?",
+     "a": "Sí. La mochila incorpora correas ajustables."
+    },
+    {
+     "q": "¿Tiene broche pectoral y cinturón lumbar?",
+     "a": "Sí. Cuenta con broche pectoral y cinturón lumbar."
+    },
+    {
+     "q": "¿Tiene asa superior?",
+     "a": "Sí. Cuenta con asa superior reforzada."
+    },
+    {
+     "q": "¿Para qué actividades sirve?",
+     "a": "Está pensada para outdoor, trekking, camping, viajes, trabajo y uso diario."
+    },
+    {
+     "q": "¿La mochila sirve para trekking?",
+     "a": "Sí. Su capacidad de 45 litros, múltiples compartimientos, correas ajustables, broche pectoral y cinturón lumbar la hacen adecuada para actividades de trekking."
+    },
+    {
+     "q": "¿Incluye parche argentino?",
+     "a": "Sí. Incluye parche de la bandera argentina."
+    }
+   ],
+   "relacionados": [
+    "bandolera-tactica-cruzada-negra",
+    "cinto-tactico-cobra",
+    "shemagh",
+    "bolso-mochila-tactica-70l"
+   ],
+   "guia": "#/blog/que-es-el-sistema-molle/",
+   "opciones": {
+    "con_talles": false,
+    "es_calzado": false,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false
+   },
+   "colores": [
+    {
+     "nombre": "VERDE MILITAR",
+     "sku": "TC-MOC-045-VM",
+     "muestra": "#4B5320",
+     "fotos": [
+      "uploads/TC/verde-1.webp",
+      "uploads/TC/verde-2.webp",
+      "uploads/TC/verde-3b.webp",
+      "uploads/TC/verde-4.webp",
+      "uploads/TC/verde-5.webp",
+      "uploads/TC/verde-6.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "TIPO MULTICAM",
+     "sku": "TC-MOC-045-MC",
+     "muestra": "#8A7A58",
+     "fotos": [
+      "uploads/TC/multicam-1e.webp",
+      "uploads/TC/multicam-2.webp",
+      "uploads/TC/multicam-3.webp",
+      "uploads/TC/multicam-4.webp",
+      "uploads/TC/multicam-5.webp",
+      "uploads/TC/multicam-1b.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "DIGITAL DOKSA",
+     "sku": "TC-MOC-045-DK",
+     "muestra": "#4F5A3A",
+     "fotos": [
+      "uploads/TC/doksa-1.webp",
+      "uploads/TC/doksa-2.webp",
+      "uploads/TC/doksa-3.webp",
+      "uploads/TC/doksa-4.webp",
+      "uploads/TC/doksa-5.webp",
+      "uploads/TC/doksa-6.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "MARPAT DESERT",
+     "sku": "TC-MOC-045-MD",
+     "muestra": "#A08560",
+     "fotos": [
+      "uploads/TC/marpat-1.webp",
+      "uploads/TC/marpat-2.webp",
+      "uploads/TC/marpat-3.webp",
+      "uploads/TC/marpat-4.webp",
+      "uploads/TC/marpat-5.webp",
+      "uploads/TC/marpat-6.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-MOC-045-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/negro-1.webp",
+      "uploads/TC/negro-2.webp",
+      "uploads/TC/negro-3.webp",
+      "uploads/TC/negro-4.webp",
+      "uploads/TC/negro-5.webp",
+      "uploads/TC/negro-6.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "VERDE OD",
+     "sku": "TC-MOC-045-OD",
+     "muestra": "#4F5A3A",
+     "fotos": [
+      "uploads/TC/od-1.webp",
+      "uploads/TC/od-2.webp",
+      "uploads/TC/od-3.webp",
+      "uploads/TC/od-4.webp",
+      "uploads/TC/od-5.webp",
+      "uploads/TC/od-6.webp"
+     ],
+     "talles": []
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "mocod",
+     "nombre": "Mochila Táctica Verde OD 45 L",
+     "imagen": "uploads/TC/od-1.webp",
+     "color": "VERDE OD"
+    },
+    {
+     "clave": "mocng",
+     "nombre": "Mochila Táctica Negra 45 L",
+     "imagen": "uploads/TC/negro-1.webp",
+     "color": "NEGRO"
+    },
+    {
+     "clave": "mocmc",
+     "nombre": "Mochila Táctica Tipo Multicam 45 L",
+     "imagen": "uploads/TC/multicam-1e.webp",
+     "color": "TIPO MULTICAM"
+    },
+    {
+     "clave": "mocdk",
+     "nombre": "Mochila Táctica Digital Doksa 45 L",
+     "imagen": "uploads/TC/doksa-1.webp",
+     "color": "DIGITAL DOKSA"
+    },
+    {
+     "clave": "mocmd",
+     "nombre": "Mochila Táctica Marpat Desert 45 L",
+     "imagen": "uploads/TC/marpat-1.webp",
+     "color": "MARPAT DESERT"
+    },
+    {
+     "clave": "moc45vm",
+     "nombre": "Mochila Táctica Verde Militar 45 L",
+     "imagen": "uploads/TC/verde-1.webp",
+     "color": "VERDE MILITAR"
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "uniforme-tactico",
+   "nombre": "UNIFORME TÁCTICO MARPAT · GRIS TOPO",
+   "categoria": "INDUMENTARIA",
+   "subcategoria": "UNIFORMES",
+   "sku": "TC-UNI-001",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Uniforme táctico en Marpat o gris topo, compuesto por chaquetilla y pantalón cargo. La chaquetilla cuenta con cuello Mao, cierre frontal cubierto y paneles de abrojo en el pecho y las mangas. El pantalón incorpora bolsillos laterales y refuerzos en las rodillas. Disponible en gabardina o ripstop, a elección, y en talles del S al 3XL, según disponibilidad.",
+   "descripcion_larga": [
+    "El uniforme táctico es un conjunto de dos piezas, chaquetilla y pantalón, pensado para quienes buscan una prenda funcional con diseño táctico.",
+    "La chaquetilla presenta cuello Mao, cierre frontal cubierto y paneles de abrojo en el pecho y las mangas, que permiten colocar parches o identificaciones compatibles. El pantalón tiene diseño cargo, bolsillos laterales y refuerzos en la zona de las rodillas.",
+    "El conjunto se confecciona en gabardina o ripstop, según la preferencia del comprador y la disponibilidad. Antes de hacer el pedido, confirmá por WhatsApp la tela disponible, el talle y el precio vigente.",
+    "Se ofrece en Marpat y gris topo, en talles del S al 3XL, sujetos a disponibilidad."
+   ],
+   "caracteristicas": [
+    "Chaquetilla + pantalón",
+    "Cuello Mao",
+    "Cierre frontal cubierto",
+    "Abrojo en pecho y mangas",
+    "Pantalón cargo con refuerzo en rodillas",
+    "Marpat o gris topo · S al 3XL"
+   ],
+   "usos": [
+    "Trabajo operativo",
+    "Seguridad",
+    "Instrucción y entrenamiento",
+    "Outdoor"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Uniforme táctico"
+    },
+    {
+     "k": "TIPO",
+     "v": "Conjunto de dos piezas"
+    },
+    {
+     "k": "PRENDAS INCLUIDAS",
+     "v": "Chaquetilla + pantalón"
+    },
+    {
+     "k": "COLORES",
+     "v": "Marpat y gris topo"
+    },
+    {
+     "k": "CUELLO",
+     "v": "Mao"
+    },
+    {
+     "k": "CIERRE DE CHAQUETILLA",
+     "v": "Frontal cubierto"
+    },
+    {
+     "k": "PANELES DE ABROJO",
+     "v": "Pecho y mangas"
+    },
+    {
+     "k": "PANTALÓN",
+     "v": "Tipo cargo"
+    },
+    {
+     "k": "BOLSILLOS DEL PANTALÓN",
+     "v": "Laterales"
+    },
+    {
+     "k": "REFUERZOS",
+     "v": "Zona de las rodillas"
+    },
+    {
+     "k": "TELA",
+     "v": "Gabardina o ripstop, a elección"
+    },
+    {
+     "k": "TALLES",
+     "v": "S al 3XL"
+    },
+    {
+     "k": "CALIDAD",
+     "v": "Premium"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué incluye el uniforme táctico?",
+     "a": "Incluye una chaquetilla táctica y un pantalón cargo, diseñados como conjunto."
+    },
+    {
+     "q": "¿En qué colores está disponible?",
+     "a": "Se ofrece en Marpat y gris topo."
+    },
+    {
+     "q": "¿Qué características tiene la chaquetilla?",
+     "a": "Cuello Mao, cierre frontal cubierto y paneles de abrojo en el pecho y las mangas."
+    },
+    {
+     "q": "¿Cómo es el pantalón del uniforme?",
+     "a": "Es un pantalón cargo con bolsillos laterales y refuerzos en la zona de las rodillas."
+    },
+    {
+     "q": "¿En qué telas está disponible?",
+     "a": "En gabardina o ripstop, a elección, según disponibilidad."
+    },
+    {
+     "q": "¿Qué talles hay?",
+     "a": "Del S al 3XL. La disponibilidad de cada talle se confirma antes del pedido."
+    },
+    {
+     "q": "¿Los paneles de abrojo permiten colocar parches?",
+     "a": "Sí. Los paneles del pecho y las mangas permiten colocar parches o identificaciones compatibles."
+    }
+   ],
+   "relacionados": [
+    "cinto-tactico-cobra",
+    "borcegos-tacticos-altama-negros",
+    "bajo-chaleco-manga-larga-negro",
+    "sombrero-de-monte-tactico"
+   ],
+   "guia": "#/blog/que-es-la-tela-ripstop/",
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": false,
+    "es_indumentaria": true,
+    "consulta_whatsapp_talle": true
+   },
+   "colores": [
+    {
+     "nombre": "MARPAT · RIPSTOP",
+     "sku": "TC-UNI-MP-RS",
+     "muestra": "#5B6248",
+     "fotos": [
+      "uploads/TC/uni-mp-1.webp",
+      "uploads/TC/uni-mp-2.webp",
+      "uploads/TC/uni-mp-3.webp",
+      "uploads/TC/uni-mp-4.webp",
+      "uploads/TC/uni-mp-5.webp"
+     ],
+     "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ]
+    },
+    {
+     "nombre": "GRIS TOPO · GABARDINA",
+     "sku": "TC-UNI-GT-GB",
+     "muestra": "#6E665C",
+     "fotos": [
+      "uploads/TC/uni-gt-1.webp",
+      "uploads/TC/uni-gt-2.webp",
+      "uploads/TC/uni-gt-3.webp",
+      "uploads/TC/uni-gt-4.webp",
+      "uploads/TC/uni-gt-5.webp"
+     ],
+     "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ]
+    },
+    {
+     "nombre": "GRIS TOPO · RIPSTOP",
+     "sku": "TC-UNI-GT-RS",
+     "muestra": "#6E665C",
+     "fotos": [
+      "uploads/TC/uni-gt-1.webp",
+      "uploads/TC/uni-gt-2.webp",
+      "uploads/TC/uni-gt-3.webp",
+      "uploads/TC/uni-gt-4.webp",
+      "uploads/TC/uni-gt-5.webp"
+     ],
+     "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "unimp",
+     "nombre": "Uniforme Táctico Marpat",
+     "imagen": "uploads/TC/uni-mp-1.webp",
+     "color": "MARPAT · RIPSTOP"
+    },
+    {
+     "clave": "unigt",
+     "nombre": "Uniforme Táctico Gris Topo",
+     "imagen": "uploads/TC/uni-gt-1.webp",
+     "color": "GRIS TOPO · GABARDINA"
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "cinto-tactico-cobra",
+   "nombre": "CINTO TÁCTICO COBRA",
+   "categoria": "ACCESORIOS",
+   "subcategoria": "CINTURONES TÁCTICOS",
+   "sku": "TC-CIN-COB",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Cinto táctico regulable con cinta textil de alta resistencia tipo Cordura, hebilla metálica de apertura rápida y anilla triangular lateral para sujetar accesorios compatibles. Pensado para uso diario, tareas operativas, entrenamiento y actividades outdoor. Disponible en negro, coyote y verde oliva.",
+   "descripcion_larga": [
+    "El cinto táctico Cobra es un cinturón regulable diseñado para complementar el equipamiento de uso diario, operativo y outdoor. Está confeccionado con cinta textil resistente tipo Cordura y cuenta con una hebilla metálica de cierre y liberación rápida, de estilo Cobra.",
+    "Incorpora una anilla triangular lateral que permite sujetar un mosquetón, una correa u otros accesorios compatibles. Su sistema de regulación permite adaptar el largo al usuario, mientras que el extremo cuenta con un mecanismo de ajuste y sujeción para mantener ordenada la cinta sobrante.",
+    "Por su diseño práctico y funcional, es una alternativa para quienes buscan un cinturón táctico regulable para uso diario, entrenamiento, tareas operativas y actividades al aire libre.",
+    "Se encuentra disponible en tres colores: negro, coyote y verde oliva."
+   ],
+   "caracteristicas": [
+    "Hebilla metálica de liberación rápida",
+    "Cinta textil tipo Cordura",
+    "Largo regulable",
+    "Anilla triangular para accesorios",
+    "Sujeción de la cinta sobrante",
+    "Negro, coyote y verde oliva"
+   ],
+   "usos": [
+    "Uso diario",
+    "Tareas operativas",
+    "Entrenamiento",
+    "Actividades outdoor",
+    "Sujeción de accesorios compatibles"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Cinto táctico Cobra"
+    },
+    {
+     "k": "TIPO",
+     "v": "Cinturón táctico regulable"
+    },
+    {
+     "k": "MATERIAL DE LA CINTA",
+     "v": "Textil resistente tipo Cordura"
+    },
+    {
+     "k": "HEBILLA",
+     "v": "Metálica, de apertura rápida"
+    },
+    {
+     "k": "ESTILO DE HEBILLA",
+     "v": "Cobra"
+    },
+    {
+     "k": "ANILLA LATERAL",
+     "v": "Triangular"
+    },
+    {
+     "k": "LARGO",
+     "v": "Regulable"
+    },
+    {
+     "k": "SUJECIÓN DEL EXCEDENTE",
+     "v": "Sí"
+    },
+    {
+     "k": "COLORES",
+     "v": "Negro, coyote y verde oliva"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es un cinto táctico Cobra?",
+     "a": "Es un cinturón regulable con cinta textil resistente, hebilla metálica de apertura rápida y anilla triangular lateral para sujetar accesorios compatibles."
+    },
+    {
+     "q": "¿De qué material está hecho?",
+     "a": "La cinta está confeccionada en material textil de alta resistencia tipo Cordura."
+    },
+    {
+     "q": "¿Qué tipo de hebilla tiene?",
+     "a": "Cuenta con una hebilla metálica de cierre y liberación rápida, de estilo Cobra."
+    },
+    {
+     "q": "¿El cinto táctico Cobra es regulable?",
+     "a": "Sí. Su largo se puede ajustar para adaptarlo al usuario."
+    },
+    {
+     "q": "¿Para qué sirve la anilla triangular lateral?",
+     "a": "Permite enganchar un mosquetón, una correa u otros accesorios compatibles."
+    },
+    {
+     "q": "¿Cómo se mantiene ordenada la cinta sobrante?",
+     "a": "El cinto cuenta con un sistema de ajuste y sujeción en el extremo para mantener ordenada la cinta que sobra después de regularlo."
+    },
+    {
+     "q": "¿En qué colores está disponible?",
+     "a": "Se ofrece en negro, coyote y verde oliva."
+    },
+    {
+     "q": "¿Para qué actividades se recomienda?",
+     "a": "Está pensado para uso diario, tareas operativas, entrenamiento y actividades al aire libre."
+    }
+   ],
+   "relacionados": [
+    "pantalon-cargo-tactico-ripstop-negro",
+    "borcegos-tacticos-altama-negros",
+    "bandolera-tactica-cruzada-negra",
+    "uniforme-tactico"
+   ],
+   "guia": "#/blog/que-es-el-sistema-molle/",
+   "opciones": {
+    "con_talles": false,
+    "es_calzado": false,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false
+   },
+   "colores": [
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-CIN-COB-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/cin-ng-1.webp",
+      "uploads/TC/cin-ng-2.webp",
+      "uploads/TC/cin-ng-3.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "COYOTE",
+     "sku": "TC-CIN-COB-CY",
+     "muestra": "#8A6E4B",
+     "fotos": [
+      "uploads/TC/cin-cy-1.webp",
+      "uploads/TC/cin-cy-2.webp",
+      "uploads/TC/cin-cy-3.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "VERDE OLIVA",
+     "sku": "TC-CIN-COB-VO",
+     "muestra": "#4F5638",
+     "fotos": [
+      "uploads/TC/cin-vo-1.webp",
+      "uploads/TC/cin-vo-2.webp",
+      "uploads/TC/cin-vo-3.webp"
+     ],
+     "talles": []
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "cintomt",
+     "nombre": "Cinto Táctico Cobra Negro",
+     "imagen": "uploads/TC/cin-ng-1.webp",
+     "color": "NEGRO"
+    },
+    {
+     "clave": "cintocy",
+     "nombre": "Cinto Táctico Cobra Coyote",
+     "imagen": "uploads/TC/cin-cy-1.webp",
+     "color": "COYOTE"
+    },
+    {
+     "clave": "cintovo",
+     "nombre": "Cinto Táctico Cobra Verde Oliva",
+     "imagen": "uploads/TC/cin-vo-1.webp",
+     "color": "VERDE OLIVA"
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "shemagh",
+   "nombre": "SHEMAGH TÁCTICO",
+   "categoria": "ACCESORIOS",
+   "subcategoria": "SHEMAGH",
+   "sku": "TC-SHE-001",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Shemagh táctico tipo árabe, un pañuelo versátil para complementar el equipamiento táctico y outdoor. Puede utilizarse sobre la cabeza, alrededor del cuello o para cubrir parcialmente el rostro. Disponible en verde militar, negro y marrón.",
+   "descripcion_larga": [
+    "El shemagh táctico es un pañuelo tipo árabe diseñado para ofrecer distintas formas de uso en actividades al aire libre, camping, trekking, trabajo y uso diario.",
+    "Su diseño tejido incorpora detalles geométricos y terminaciones con flecos. Gracias a su formato versátil, puede colocarse sobre la cabeza, alrededor del cuello o utilizarse para cubrir parcialmente el rostro, según las preferencias y necesidades de cada actividad.",
+    "Es un accesorio práctico para complementar el equipo táctico y outdoor sin limitarse a una única forma de colocación.",
+    "Está disponible en tres colores: verde militar, negro y marrón."
+   ],
+   "caracteristicas": [
+    "Pañuelo tipo árabe",
+    "Tejido con detalles geométricos",
+    "Terminaciones con flecos",
+    "Cabeza, cuello o rostro",
+    "Uso táctico y outdoor",
+    "Verde militar, negro y marrón"
+   ],
+   "usos": [
+    "Actividades outdoor",
+    "Camping",
+    "Trekking",
+    "Trabajo",
+    "Uso táctico",
+    "Uso diario"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Shemagh táctico"
+    },
+    {
+     "k": "TIPO",
+     "v": "Pañuelo tipo árabe"
+    },
+    {
+     "k": "DISEÑO",
+     "v": "Tejido con detalles geométricos"
+    },
+    {
+     "k": "TERMINACIÓN",
+     "v": "Flecos"
+    },
+    {
+     "k": "COLORES",
+     "v": "Verde militar, negro y marrón"
+    },
+    {
+     "k": "FORMAS DE USO",
+     "v": "Cabeza, cuello y cobertura parcial del rostro"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es un shemagh táctico?",
+     "a": "Es un pañuelo tipo árabe que puede utilizarse de distintas maneras para complementar la indumentaria y el equipamiento táctico u outdoor."
+    },
+    {
+     "q": "¿Cómo se puede usar un shemagh?",
+     "a": "Puede colocarse sobre la cabeza, alrededor del cuello o para cubrir parcialmente el rostro, según la preferencia y la actividad."
+    },
+    {
+     "q": "¿Para qué actividades sirve el shemagh táctico?",
+     "a": "Puede utilizarse en actividades outdoor, camping, trekking, trabajo, uso táctico y uso diario."
+    },
+    {
+     "q": "¿Qué colores están disponibles?",
+     "a": "Este modelo se ofrece en verde militar, negro y marrón."
+    },
+    {
+     "q": "¿El shemagh tiene flecos?",
+     "a": "Sí. El diseño incluye terminaciones con flecos y un tejido con detalles geométricos."
+    }
+   ],
+   "relacionados": [
+    "gafa-tactica-sport-lentes-intercambiables",
+    "sombrero-de-monte-tactico",
+    "mochila-tactica-45l",
+    "campera-gtex-outdoor"
+   ],
+   "guia": "#/blog/que-es-el-sistema-molle/",
+   "opciones": {
+    "con_talles": false,
+    "es_calzado": false,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false
+   },
+   "colores": [
+    {
+     "nombre": "VERDE MILITAR",
+     "sku": "TC-SHE-001-VM",
+     "muestra": "#4B5A3A",
+     "fotos": [
+      "uploads/TC/she-vm-1.webp",
+      "uploads/TC/she-vm-2.webp",
+      "uploads/TC/she-vm-3.webp",
+      "uploads/TC/she-vm-4.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-SHE-001-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/she-ng-1.webp",
+      "uploads/TC/she-ng-2.webp",
+      "uploads/TC/she-ng-3.webp",
+      "uploads/TC/she-ng-4.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "MARRÓN",
+     "sku": "TC-SHE-001-MR",
+     "muestra": "#6B4A2E",
+     "fotos": [
+      "uploads/TC/she-mr-1.webp",
+      "uploads/TC/she-mr-2.webp",
+      "uploads/TC/she-mr-3.webp",
+      "uploads/TC/she-mr-4.webp"
+     ],
+     "talles": []
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "shemagh",
+     "nombre": "Shemagh Táctico Verde Militar",
+     "imagen": "uploads/TC/she-vm-1.webp",
+     "color": "VERDE MILITAR"
+    },
+    {
+     "clave": "shemng",
+     "nombre": "Shemagh Táctico Negro",
+     "imagen": "uploads/TC/she-ng-1.webp",
+     "color": "NEGRO"
+    },
+    {
+     "clave": "shemmr",
+     "nombre": "Shemagh Táctico Marrón",
+     "imagen": "uploads/TC/she-mr-1.webp",
+     "color": "MARRÓN"
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "borcegos-tacticos-altama-negros",
+   "nombre": "BORCEGO TÁCTICO ALTAMA NEGRO",
+   "categoria": "CALZADO",
+   "subcategoria": "BORCEGOS TÁCTICOS",
+   "sku": "TC-BOR-ALT-NG",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Borcego táctico Altama color negro, confeccionado con sectores de cuero vacuno y Cordura respirable. Su diseño de caña alta, cordones con ojales reforzados y suela robusta con dibujo profundo lo convierte en una opción para tareas de seguridad, uso táctico y actividades al aire libre.",
+   "descripcion_larga": [
+    "El borcego táctico Altama negro está diseñado para acompañar actividades que requieren un calzado robusto y funcional. Combina sectores de cuero vacuno con material Cordura respirable, integrados en una estructura de caña alta que brinda mayor cobertura en la zona del tobillo.",
+    "Su sistema de ajuste mediante cordones y ojales reforzados permite sujetar el calzado al pie. Las costuras y los paneles resistentes complementan su construcción, mientras que la suela robusta con dibujo profundo está diseñada para favorecer la tracción durante el desplazamiento.",
+    "Por su diseño y características, este modelo es una alternativa para tareas de seguridad, uso táctico y actividades al aire libre.",
+    "La elección del calzado debe considerar el terreno, la duración de la actividad y los requisitos específicos de cada tarea."
+   ],
+   "caracteristicas": [
+    "Cuero vacuno + Cordura respirable",
+    "Caña alta",
+    "Cordones y ojales reforzados",
+    "Suela con dibujo profundo"
+   ],
+   "usos": [
+    "Tareas de seguridad",
+    "Uso táctico",
+    "Actividades al aire libre",
+    "Trabajo con calzado de caña alta"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Borcego táctico"
+    },
+    {
+     "k": "MARCA / MODELO",
+     "v": "Altama"
+    },
+    {
+     "k": "COLOR",
+     "v": "Negro"
+    },
+    {
+     "k": "MATERIALES",
+     "v": "Cuero vacuno y Cordura respirable"
+    },
+    {
+     "k": "CAÑA",
+     "v": "Alta"
+    },
+    {
+     "k": "AJUSTE",
+     "v": "Cordones"
+    },
+    {
+     "k": "OJALES",
+     "v": "Reforzados"
+    },
+    {
+     "k": "CONSTRUCCIÓN",
+     "v": "Costuras y paneles de diseño resistente"
+    },
+    {
+     "k": "SUELA",
+     "v": "Robusta, con dibujo profundo"
+    },
+    {
+     "k": "TALLES",
+     "v": "37 al 45"
+    },
+    {
+     "k": "USOS RECOMENDADOS",
+     "v": "Seguridad, uso táctico y actividades outdoor"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es el borcego táctico Altama negro?",
+     "a": "Es un borcego de caña alta, diseñado para tareas de seguridad, uso táctico y actividades al aire libre. Combina sectores de cuero vacuno con Cordura respirable."
+    },
+    {
+     "q": "¿De qué material está hecho?",
+     "a": "Está confeccionado con sectores de cuero vacuno y material Cordura respirable."
+    },
+    {
+     "q": "¿Qué color tiene?",
+     "a": "Este modelo está disponible en color negro."
+    },
+    {
+     "q": "¿Qué talles hay disponibles?",
+     "a": "Los talles informados van del 37 al 45. La disponibilidad de cada número se confirma por WhatsApp al momento de la compra."
+    },
+    {
+     "q": "¿El borcego tiene caña alta?",
+     "a": "Sí. Su diseño de caña alta brinda mayor cobertura en la zona del tobillo."
+    },
+    {
+     "q": "¿Cómo se ajusta al pie?",
+     "a": "Cuenta con un sistema de ajuste mediante cordones y ojales reforzados."
+    },
+    {
+     "q": "¿Cómo es la suela?",
+     "a": "Tiene una suela robusta con dibujo profundo, diseñada para favorecer la tracción durante el desplazamiento."
+    },
+    {
+     "q": "¿Para qué actividades se recomienda?",
+     "a": "Se recomienda para tareas de seguridad, uso táctico y actividades al aire libre, según las necesidades de cada actividad."
+    }
+   ],
+   "relacionados": [
+    "pantalon-cargo-tactico-ripstop-negro",
+    "cinto-tactico-cobra",
+    "uniforme-tactico",
+    "bajo-chaleco-manga-larga-negro"
+   ],
+   "guia": "#/blog/cordura-y-lona-diferencias/",
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": true,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false
+   },
+   "colores": [
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-BOR-ALT-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/altama-1.webp",
+      "uploads/TC/altama-2.webp",
+      "uploads/TC/altama-3.webp",
+      "uploads/TC/altama-4.webp"
+     ],
+     "talles": [
+      {
+       "talle": "37",
+       "estado": "disponible"
+      },
+      {
+       "talle": "38",
+       "estado": "disponible"
+      },
+      {
+       "talle": "39",
+       "estado": "disponible"
+      },
+      {
+       "talle": "40",
+       "estado": "disponible"
+      },
+      {
+       "talle": "41",
+       "estado": "disponible"
+      },
+      {
+       "talle": "42",
+       "estado": "disponible"
+      },
+      {
+       "talle": "43",
+       "estado": "disponible"
+      },
+      {
+       "talle": "44",
+       "estado": "disponible"
+      },
+      {
+       "talle": "45",
+       "estado": "disponible"
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "altama",
+     "nombre": "Borcego Táctico Altama Negro",
+     "imagen": "uploads/TC/altama-1.webp",
+     "color": null
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "bajo-chaleco-manga-larga-negro",
+   "nombre": "BAJO CHALECO MANGA LARGA NEGRO",
+   "categoria": "INDUMENTARIA",
+   "subcategoria": "BAJO CHALECOS",
+   "sku": "TC-BCH-ML-NG",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Bajo Chaleco de manga larga en color negro, confeccionado en tela Ripstop de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, además de dos bolsillos con cierres y Velcro. Una prenda funcional y cómoda para el trabajo y otras actividades.",
+   "descripcion_larga": [
+    "El Bajo Chaleco Manga Larga Negro está diseñado para brindar comodidad y funcionalidad durante la jornada laboral y diferentes actividades.",
+    "Está confeccionado en una tela Ripstop compuesta por algodón, poliéster y licra, que combina estos materiales en una prenda de manga larga de uso práctico.",
+    "Cuenta con cuello Mao con abrojo y cremallera, permitiendo ajustar la zona del cuello según la necesidad de uso. Incorpora además dos bolsillos con cierres y Velcro para llevar elementos de manera práctica.",
+    "Su diseño en color negro y su construcción funcional lo convierten en una alternativa para complementar indumentaria de trabajo y actividades de uso cotidiano."
+   ],
+   "caracteristicas": [
+    "Tela Ripstop",
+    "Algodón + poliéster + licra",
+    "Cuello Mao con abrojo",
+    "Cremallera frontal",
+    "2 bolsillos con cierre + Velcro",
+    "Talles M a 3XL"
+   ],
+   "usos": [
+    "Trabajo",
+    "Actividades diversas",
+    "Uso cotidiano"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Bajo Chaleco Manga Larga Negro"
+    },
+    {
+     "k": "TIPO",
+     "v": "Prenda de manga larga"
+    },
+    {
+     "k": "COLOR",
+     "v": "Negro"
+    },
+    {
+     "k": "TELA",
+     "v": "Ripstop"
+    },
+    {
+     "k": "COMPOSICIÓN",
+     "v": "Algodón + poliéster + licra"
+    },
+    {
+     "k": "CUELLO",
+     "v": "Mao"
+    },
+    {
+     "k": "AJUSTE DE CUELLO",
+     "v": "Abrojo"
+    },
+    {
+     "k": "CIERRE FRONTAL",
+     "v": "Cremallera"
+    },
+    {
+     "k": "BOLSILLOS",
+     "v": "2, con cierres + Velcro"
+    },
+    {
+     "k": "INCLUYE",
+     "v": "1 Bajo Chaleco de manga larga"
+    },
+    {
+     "k": "TALLES",
+     "v": "M, L, XL, 2XL y 3XL"
+    },
+    {
+     "k": "CALIDAD",
+     "v": "Premium"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es un Bajo Chaleco?",
+     "a": "Es una prenda de manga larga de diseño funcional, pensada para utilizar durante el trabajo y otras actividades."
+    },
+    {
+     "q": "¿De qué material está hecho el Bajo Chaleco?",
+     "a": "Está confeccionado en tela Ripstop de algodón, poliéster y licra."
+    },
+    {
+     "q": "¿El Bajo Chaleco es Ripstop?",
+     "a": "Sí. Está confeccionado en tela Ripstop."
+    },
+    {
+     "q": "¿El Bajo Chaleco es de manga larga?",
+     "a": "Sí. Este modelo cuenta con manga larga."
+    },
+    {
+     "q": "¿De qué color es el Bajo Chaleco?",
+     "a": "Este modelo es de color negro."
+    },
+    {
+     "q": "¿Qué tipo de cuello tiene?",
+     "a": "Cuenta con cuello Mao, con abrojo y cremallera."
+    },
+    {
+     "q": "¿El Bajo Chaleco tiene cierre?",
+     "a": "Sí. Tiene una cremallera frontal ubicada en la zona del cuello."
+    },
+    {
+     "q": "¿Cuántos bolsillos tiene?",
+     "a": "Cuenta con dos bolsillos funcionales."
+    },
+    {
+     "q": "¿Los bolsillos tienen cierre?",
+     "a": "Sí. Los dos bolsillos cuentan con cierres y Velcro."
+    },
+    {
+     "q": "¿Qué talles hay disponibles?",
+     "a": "El modelo está disponible en M, L, XL, 2XL y 3XL, sujeto a disponibilidad de stock."
+    },
+    {
+     "q": "¿Para qué se puede usar el Bajo Chaleco?",
+     "a": "Está pensado para brindar comodidad y funcionalidad durante el trabajo y otras actividades."
+    }
+   ],
+   "relacionados": [
+    "pantalon-cargo-tactico-ripstop-negro",
+    "cinto-tactico-cobra",
+    "borcegos-tacticos-altama-negros",
+    "campera-gtex-outdoor"
+   ],
+   "guia": "#/blog/algodon-poliester-licra/",
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": false,
+    "es_indumentaria": true,
+    "consulta_whatsapp_talle": true
+   },
+   "colores": [
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-BCH-ML-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/chmln-1.webp",
+      "uploads/TC/chmln-2.webp",
+      "uploads/TC/chmln-3.webp",
+      "uploads/TC/chmln-4.webp",
+      "uploads/TC/chmln-5.webp"
+     ],
+     "talles": [
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "chelco",
+     "nombre": "Bajo Chaleco Manga Larga Negro",
+     "imagen": "uploads/TC/chmln-1.webp",
+     "color": null
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "bajo-chaleco-manga-corta-negro",
+   "nombre": "BAJO CHALECO MANGA CORTA NEGRO",
+   "categoria": "INDUMENTARIA",
+   "subcategoria": "BAJO CHALECOS",
+   "sku": "TC-BCH-MC-NG",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Bajo Chaleco de manga corta en color negro, confeccionado en tela Ripstop de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera, además de dos bolsillos con cierres y Velcro. Una prenda funcional y cómoda para el verano y el trabajo.",
+   "descripcion_larga": [
+    "El Bajo Chaleco Manga Corta Negro es una prenda de indumentaria funcional diseñada para brindar comodidad durante el trabajo y actividades en épocas de temperaturas más altas.",
+    "Está confeccionado en tela Ripstop de algodón, poliéster y licra y cuenta con manga corta, lo que lo convierte en una opción adecuada para el verano.",
+    "Su diseño incorpora cuello Mao con abrojo y cremallera, además de dos bolsillos con cierres y Velcro para facilitar el acceso y organización de elementos durante el uso.",
+    "El modelo está disponible en talles M a 3XL y se presenta en color negro."
+   ],
+   "caracteristicas": [
+    "Manga corta, ideal para verano",
+    "Tela Ripstop",
+    "Algodón + poliéster + licra",
+    "Cuello Mao con abrojo + cremallera",
+    "2 bolsillos con cierre + Velcro",
+    "Talles M a 3XL"
+   ],
+   "usos": [
+    "Trabajo",
+    "Verano",
+    "Uso cotidiano"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Bajo Chaleco Manga Corta Negro"
+    },
+    {
+     "k": "TIPO",
+     "v": "Prenda de manga corta"
+    },
+    {
+     "k": "COLOR",
+     "v": "Negro"
+    },
+    {
+     "k": "TELA",
+     "v": "Ripstop"
+    },
+    {
+     "k": "COMPOSICIÓN",
+     "v": "Algodón + poliéster + licra"
+    },
+    {
+     "k": "MANGA",
+     "v": "Corta"
+    },
+    {
+     "k": "CUELLO",
+     "v": "Mao"
+    },
+    {
+     "k": "AJUSTE DE CUELLO",
+     "v": "Abrojo"
+    },
+    {
+     "k": "CIERRE FRONTAL",
+     "v": "Cremallera"
+    },
+    {
+     "k": "BOLSILLOS",
+     "v": "2, con cierres + Velcro"
+    },
+    {
+     "k": "INCLUYE",
+     "v": "1 Bajo Chaleco de manga corta"
+    },
+    {
+     "k": "TALLES",
+     "v": "M, L, XL, 2XL y 3XL"
+    },
+    {
+     "k": "CALIDAD",
+     "v": "Premium"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es el Bajo Chaleco Manga Corta Negro?",
+     "a": "Es una prenda de manga corta de diseño funcional, confeccionada en tela Ripstop y pensada para brindar comodidad durante el verano y el trabajo."
+    },
+    {
+     "q": "¿De qué material está hecho el Bajo Chaleco?",
+     "a": "Está confeccionado en tela Ripstop de algodón, poliéster y licra."
+    },
+    {
+     "q": "¿El Bajo Chaleco es Ripstop?",
+     "a": "Sí. Está confeccionado en tela Ripstop de algodón, poliéster y licra."
+    },
+    {
+     "q": "¿El Bajo Chaleco es de manga corta?",
+     "a": "Sí. Este modelo cuenta con manga corta, por lo que está pensado especialmente para su uso durante el verano."
+    },
+    {
+     "q": "¿El Bajo Chaleco es adecuado para el verano?",
+     "a": "Sí. El modelo tiene manga corta y está indicado como una prenda ideal para el verano."
+    },
+    {
+     "q": "¿De qué color es el Bajo Chaleco?",
+     "a": "El modelo está disponible en color negro."
+    },
+    {
+     "q": "¿Qué tipo de cuello tiene?",
+     "a": "Cuenta con cuello Mao, con abrojo y cremallera."
+    },
+    {
+     "q": "¿El Bajo Chaleco tiene cierre?",
+     "a": "Sí. Tiene una cremallera frontal ubicada en la zona del cuello."
+    },
+    {
+     "q": "¿Cuántos bolsillos tiene?",
+     "a": "Cuenta con dos bolsillos funcionales."
+    },
+    {
+     "q": "¿Los bolsillos tienen cierre?",
+     "a": "Sí. Los bolsillos cuentan con cierres y Velcro."
+    },
+    {
+     "q": "¿Qué talles están disponibles?",
+     "a": "Está disponible en talles M, L, XL, 2XL y 3XL, sujeto a disponibilidad de stock."
+    },
+    {
+     "q": "¿Para qué se puede usar el Bajo Chaleco?",
+     "a": "Está pensado para brindar comodidad durante el trabajo y otras actividades, especialmente durante el verano."
+    }
+   ],
+   "relacionados": [
+    "pantalon-cargo-tactico-ripstop-negro",
+    "cinto-tactico-cobra",
+    "borcegos-tacticos-altama-negros",
+    "gafa-tactica-sport-lentes-intercambiables"
+   ],
+   "guia": "#/blog/algodon-poliester-licra/",
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": false,
+    "es_indumentaria": true,
+    "consulta_whatsapp_talle": true
+   },
+   "colores": [
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-BCH-MC-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/chmc-1.webp",
+      "uploads/TC/chmc-2.webp",
+      "uploads/TC/chmc-3.webp",
+      "uploads/TC/chmc-4.webp",
+      "uploads/TC/chmc-5.webp"
+     ],
+     "talles": [
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "chalmc",
+     "nombre": "Bajo Chaleco Manga Corta Negro",
+     "imagen": "uploads/TC/chmc-1.webp",
+     "color": null
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "bajo-chaleco-manga-larga-multicam",
+   "nombre": "BAJO CHALECO MANGA LARGA MULTICAM",
+   "categoria": "INDUMENTARIA",
+   "subcategoria": "BAJO CHALECOS",
+   "sku": "TC-BCH-ML-MC",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Bajo chaleco de manga larga en patrón Multicam, confeccionado en una combinación de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, mientras que las mangas están confeccionadas en tela gabardina e incorporan bolsillos con cierre de velcro para colocar parches.",
+   "descripcion_larga": [
+    "El Bajo Chaleco Manga Larga Multicam está diseñado como una prenda funcional para actividades que requieren comodidad y practicidad.",
+    "Está confeccionado con una combinación de algodón + poliéster + licra, con cuerpo de material flexible y mangas en tela gabardina con patrón Multicam.",
+    "Incorpora cuello Mao con abrojo y cremallera frontal, además de dos bolsillos en las mangas con cierre de velcro, preparados para agregar parches.",
+    "Es una opción versátil para servicio, caza, camping, aventuras y actividades outdoor.",
+    "Calidad Premium."
+   ],
+   "caracteristicas": [
+    "Patrón Multicam",
+    "Mangas en tela gabardina",
+    "Algodón + poliéster + licra",
+    "Cuello Mao con abrojo + cremallera",
+    "2 bolsillos con velcro para parches",
+    "Talles M a 3XL"
+   ],
+   "usos": [
+    "Servicio",
+    "Caza",
+    "Camping",
+    "Aventuras",
+    "Outdoor",
+    "Uso táctico"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Bajo Chaleco Manga Larga Multicam"
+    },
+    {
+     "k": "TIPO",
+     "v": "Bajo chaleco manga larga"
+    },
+    {
+     "k": "PATRÓN",
+     "v": "Multicam"
+    },
+    {
+     "k": "MANGA",
+     "v": "Larga"
+    },
+    {
+     "k": "COMPOSICIÓN",
+     "v": "Algodón + poliéster + licra"
+    },
+    {
+     "k": "MATERIAL DE MANGAS",
+     "v": "Tela gabardina"
+    },
+    {
+     "k": "CUELLO",
+     "v": "Mao"
+    },
+    {
+     "k": "CIERRE FRONTAL",
+     "v": "Cremallera"
+    },
+    {
+     "k": "ABROJO",
+     "v": "En cuello"
+    },
+    {
+     "k": "BOLSILLOS",
+     "v": "2"
+    },
+    {
+     "k": "UBICACIÓN DE BOLSILLOS",
+     "v": "Mangas"
+    },
+    {
+     "k": "CIERRE DE BOLSILLOS",
+     "v": "Velcro"
+    },
+    {
+     "k": "PARCHES",
+     "v": "Bolsillos preparados para agregar parches"
+    },
+    {
+     "k": "CALIDAD",
+     "v": "Premium"
+    },
+    {
+     "k": "TALLES",
+     "v": "M, L, XL, 2XL y 3XL"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es el Bajo Chaleco Manga Larga Multicam?",
+     "a": "Es una prenda funcional de manga larga en patrón Multicam, con cuello Mao, cremallera frontal y bolsillos con velcro en las mangas para colocar parches."
+    },
+    {
+     "q": "¿Qué material tiene el bajo chaleco?",
+     "a": "Está confeccionado en una combinación de algodón, poliéster y licra, con mangas de tela gabardina."
+    },
+    {
+     "q": "¿De qué color es?",
+     "a": "Tiene patrón Multicam."
+    },
+    {
+     "q": "¿Tiene bolsillos?",
+     "a": "Sí. Cuenta con dos bolsillos ubicados en las mangas, con cierre de velcro y espacio para colocar parches."
+    },
+    {
+     "q": "¿Se le pueden poner parches?",
+     "a": "Sí. Los bolsillos de las mangas están preparados para agregar parches."
+    },
+    {
+     "q": "¿Qué tipo de cuello tiene?",
+     "a": "Tiene cuello Mao con abrojo y cierre frontal mediante cremallera."
+    },
+    {
+     "q": "¿En qué talles está disponible?",
+     "a": "Está disponible desde talle M hasta 3XL, sujeto a disponibilidad de stock."
+    },
+    {
+     "q": "¿Para qué actividades está pensado?",
+     "a": "Es una prenda versátil para servicio, caza, camping, aventuras y otras actividades outdoor."
+    },
+    {
+     "q": "¿Qué diferencia tiene con el Bajo Chaleco Manga Larga Negro?",
+     "a": "Además del color, este modelo tiene mangas en tela gabardina Multicam y sus dos bolsillos están ubicados en las mangas, preparados para parches."
+    }
+   ],
+   "relacionados": [
+    "pantalon-cargo-tactico-ripstop-negro",
+    "cinto-tactico-cobra",
+    "borcegos-tacticos-altama-negros",
+    "sombrero-de-monte-tactico"
+   ],
+   "guia": "#/blog/algodon-poliester-licra/",
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": false,
+    "es_indumentaria": true,
+    "consulta_whatsapp_talle": true
+   },
+   "colores": [
+    {
+     "nombre": "MULTICAM",
+     "sku": "TC-BCH-ML-MC",
+     "muestra": "#8A7F5C",
+     "fotos": [
+      "uploads/TC/chmlmc-1.webp",
+      "uploads/TC/chmlmc-2.webp",
+      "uploads/TC/chmlmc-3.webp",
+      "uploads/TC/chmlmc-4.webp",
+      "uploads/TC/chmlmc-5.webp",
+      "uploads/TC/chmlmc-6.webp"
+     ],
+     "talles": [
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "chalmlmc",
+     "nombre": "Bajo Chaleco Manga Larga Multicam",
+     "imagen": "uploads/TC/chmlmc-1.webp",
+     "color": null
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "bajo-chaleco-manga-corta-multicam",
+   "nombre": "BAJO CHALECO MANGA CORTA MULTICAM",
+   "categoria": "INDUMENTARIA",
+   "subcategoria": "BAJO CHALECOS",
+   "sku": "TC-BCH-MC-MC",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Bajo chaleco de manga corta en patrón Multicam, confeccionado en una combinación de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, mientras que las mangas están confeccionadas en tela gabardina e incorporan bolsillos con cierre de velcro para colocar parches.",
+   "descripcion_larga": [
+    "El Bajo Chaleco Manga Corta Multicam está diseñado como una prenda funcional para actividades que requieren comodidad y practicidad.",
+    "Está confeccionado con una combinación de algodón + poliéster + licra, con cuerpo de material flexible y mangas en tela gabardina con patrón Multicam.",
+    "Incorpora cuello Mao con abrojo y cremallera frontal, además de dos bolsillos en las mangas con cierre de velcro, preparados para agregar parches.",
+    "Es una opción versátil para servicio, caza, camping, aventuras y actividades outdoor.",
+    "Calidad Premium."
+   ],
+   "caracteristicas": [
+    "Patrón Multicam",
+    "Mangas en tela gabardina",
+    "Algodón + poliéster + licra",
+    "Cuello Mao con abrojo + cremallera",
+    "2 bolsillos con velcro para parches",
+    "Talles M a 3XL"
+   ],
+   "usos": [
+    "Servicio",
+    "Caza",
+    "Camping",
+    "Aventuras",
+    "Outdoor",
+    "Uso táctico"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Bajo Chaleco Manga Corta Multicam"
+    },
+    {
+     "k": "TIPO",
+     "v": "Bajo chaleco manga corta"
+    },
+    {
+     "k": "PATRÓN",
+     "v": "Multicam"
+    },
+    {
+     "k": "MANGA",
+     "v": "Larga"
+    },
+    {
+     "k": "COMPOSICIÓN",
+     "v": "Algodón + poliéster + licra"
+    },
+    {
+     "k": "MATERIAL DE MANGAS",
+     "v": "Tela gabardina"
+    },
+    {
+     "k": "CUELLO",
+     "v": "Mao"
+    },
+    {
+     "k": "CIERRE FRONTAL",
+     "v": "Cremallera"
+    },
+    {
+     "k": "ABROJO",
+     "v": "En cuello"
+    },
+    {
+     "k": "BOLSILLOS",
+     "v": "2"
+    },
+    {
+     "k": "UBICACIÓN DE BOLSILLOS",
+     "v": "Mangas"
+    },
+    {
+     "k": "CIERRE DE BOLSILLOS",
+     "v": "Velcro"
+    },
+    {
+     "k": "PARCHES",
+     "v": "Bolsillos preparados para agregar parches"
+    },
+    {
+     "k": "CALIDAD",
+     "v": "Premium"
+    },
+    {
+     "k": "TALLES",
+     "v": "M, L, XL, 2XL y 3XL"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es el Bajo Chaleco Manga Corta Multicam?",
+     "a": "Es una prenda funcional de manga corta en patrón Multicam, con cuello Mao, cremallera frontal y bolsillos con velcro en las mangas para colocar parches."
+    },
+    {
+     "q": "¿Qué material tiene el bajo chaleco?",
+     "a": "Está confeccionado en una combinación de algodón, poliéster y licra, con mangas de tela gabardina."
+    },
+    {
+     "q": "¿De qué color es?",
+     "a": "Tiene patrón Multicam."
+    },
+    {
+     "q": "¿Tiene bolsillos?",
+     "a": "Sí. Cuenta con dos bolsillos ubicados en las mangas, con cierre de velcro y espacio para colocar parches."
+    },
+    {
+     "q": "¿Se le pueden poner parches?",
+     "a": "Sí. Los bolsillos de las mangas están preparados para agregar parches."
+    },
+    {
+     "q": "¿Qué tipo de cuello tiene?",
+     "a": "Tiene cuello Mao con abrojo y cierre frontal mediante cremallera."
+    },
+    {
+     "q": "¿En qué talles está disponible?",
+     "a": "Está disponible desde talle M hasta 3XL, sujeto a disponibilidad de stock."
+    },
+    {
+     "q": "¿Para qué actividades está pensado?",
+     "a": "Es una prenda versátil para servicio, caza, camping, aventuras y otras actividades outdoor."
+    },
+    {
+     "q": "¿Qué diferencia tiene con el Bajo Chaleco Manga Corta Negro?",
+     "a": "Además del color, este modelo tiene mangas en tela gabardina Multicam y sus dos bolsillos están ubicados en las mangas, preparados para parches."
+    }
+   ],
+   "relacionados": [
+    "pantalon-cargo-tactico-ripstop-negro",
+    "cinto-tactico-cobra",
+    "borcegos-tacticos-altama-negros",
+    "sombrero-de-monte-tactico"
+   ],
+   "guia": "#/blog/algodon-poliester-licra/",
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": false,
+    "es_indumentaria": true,
+    "consulta_whatsapp_talle": true
+   },
+   "colores": [
+    {
+     "nombre": "MULTICAM",
+     "sku": "TC-BCH-MC-MC",
+     "muestra": "#8A7F5C",
+     "fotos": [
+      "uploads/TC/chmcmc-1.webp",
+      "uploads/TC/chmcmc-2.webp",
+      "uploads/TC/chmcmc-3.webp",
+      "uploads/TC/chmcmc-4.webp",
+      "uploads/TC/chmcmc-5.webp",
+      "uploads/TC/chmcmc-6.webp"
+     ],
+     "talles": [
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "chalmcmc",
+     "nombre": "Bajo Chaleco Manga Corta Multicam",
+     "imagen": "uploads/TC/chmcmc-1.webp",
+     "color": null
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "sombrero-de-monte-tactico",
+   "nombre": "Sombrero de Monte Woodland · Multicam",
+   "categoria": "ACCESORIOS",
+   "subcategoria": "SOMBREROS Y GORROS",
+   "sku": "TC-SOM-BOO",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Sombrero de monte táctico tipo boonie, diseñado para acompañar actividades al aire libre como camping, pesca, trekking y caza. Cuenta con ala amplia con costuras reforzadas, banda perimetral con presillas, ojales laterales de ventilación y cordón de sujeción ajustable. Disponible en estampado Woodland o Multicam.",
+   "descripcion_larga": [
+    "El sombrero de monte táctico tipo boonie es un accesorio de indumentaria outdoor pensado para acompañar actividades al aire libre y complementar el equipamiento táctico.",
+    "Su diseño incorpora un ala amplia con costuras reforzadas, una banda perimetral con presillas en la copa y ojales laterales de ventilación. Además, cuenta con un cordón de sujeción con ajuste para ayudar a mantener el sombrero en su posición durante el uso.",
+    "Está disponible en dos estampados camuflados: Woodland y Multicam. Los talles se consultan por WhatsApp antes de realizar la compra.",
+    "Por su diseño funcional, es una opción para camping, pesca, trekking, caza y otras actividades outdoor."
+   ],
+   "caracteristicas": [
+    "Diseño tipo boonie",
+    "Ala amplia con costuras reforzadas",
+    "Banda perimetral con presillas",
+    "Ojales laterales de ventilación",
+    "Cordón de sujeción ajustable",
+    "Woodland o Multicam"
+   ],
+   "usos": [
+    "Camping",
+    "Pesca",
+    "Trekking",
+    "Caza",
+    "Actividades outdoor",
+    "Complemento de indumentaria táctica"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Sombrero de monte táctico"
+    },
+    {
+     "k": "TIPO",
+     "v": "Boonie"
+    },
+    {
+     "k": "ESTAMPADOS",
+     "v": "Woodland / Multicam"
+    },
+    {
+     "k": "ALA",
+     "v": "Amplia"
+    },
+    {
+     "k": "COSTURAS",
+     "v": "Reforzadas en el ala"
+    },
+    {
+     "k": "BANDA PERIMETRAL",
+     "v": "Con presillas"
+    },
+    {
+     "k": "VENTILACIÓN",
+     "v": "Ojales laterales"
+    },
+    {
+     "k": "SISTEMA DE SUJECIÓN",
+     "v": "Cordón ajustable"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es un sombrero de monte tipo boonie?",
+     "a": "Es un sombrero de ala amplia utilizado en actividades al aire libre. Este modelo incorpora banda perimetral con presillas, ojales laterales de ventilación y cordón de sujeción ajustable."
+    },
+    {
+     "q": "¿Para qué actividades se recomienda?",
+     "a": "Está pensado para camping, pesca, trekking, caza y otras actividades outdoor."
+    },
+    {
+     "q": "¿Qué estampados tiene disponibles?",
+     "a": "Se ofrece en Woodland y Multicam."
+    },
+    {
+     "q": "¿El sombrero tiene cordón de sujeción?",
+     "a": "Sí. Cuenta con un cordón ajustable que ayuda a mantenerlo en su posición durante el uso."
+    },
+    {
+     "q": "¿Tiene ventilación?",
+     "a": "Sí. Incorpora ojales laterales de ventilación."
+    },
+    {
+     "q": "¿Cómo es el ala del sombrero?",
+     "a": "Tiene un ala amplia con costuras reforzadas."
+    }
+   ],
+   "relacionados": [
+    "shemagh",
+    "gafa-tactica-sport-lentes-intercambiables",
+    "pantalon-cargo-tactico-ripstop-woodland",
+    "mochila-tactica-45l"
+   ],
+   "guia": "#/blog/que-es-la-tela-ripstop/",
+   "opciones": {
+    "con_talles": false,
+    "es_calzado": false,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false
+   },
+   "colores": [
+    {
+     "nombre": "WOODLAND",
+     "sku": "TC-SOM-BOO-WD",
+     "muestra": "#4A5A3A",
+     "fotos": [
+      "uploads/TC/som-wd-1.webp",
+      "uploads/TC/som-wd-2.webp"
+     ],
+     "talles": []
+    },
+    {
+     "nombre": "MULTICAM",
+     "sku": "TC-SOM-BOO-MC",
+     "muestra": "#8B8060",
+     "fotos": [
+      "uploads/TC/som-mc-1.webp",
+      "uploads/TC/som-mc-2.webp"
+     ],
+     "talles": []
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "sombrero",
+     "nombre": "Sombrero de Monte Woodland",
+     "imagen": "uploads/TC/som-wd-1.webp",
+     "color": "WOODLAND"
+    },
+    {
+     "clave": "sommc",
+     "nombre": "Sombrero de Monte Multicam",
+     "imagen": "uploads/TC/som-mc-1.webp",
+     "color": "MULTICAM"
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "gafa-tactica-sport-lentes-intercambiables",
+   "nombre": "Gafas Tácticas Oakley - Set Completo",
+   "categoria": "ACCESORIOS",
+   "subcategoria": "GAFAS",
+   "sku": "TC-GAF-SPT",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Gafa táctica de diseño envolvente con set de lentes intercambiables y accesorios para sujeción, protección y limpieza. Incluye lente negro polarizado con protección UV, adaptador óptico, correa de sujeción, estuche rígido termoformado, funda y paño de limpieza.",
+   "descripcion_larga": [
+    "La Gafa Táctica Sport con Lentes Intercambiables es un conjunto versátil pensado para acompañar actividades al aire libre y el uso diario.",
+    "Su diseño envolvente ofrece una cobertura amplia y cuenta con diferentes lentes intercambiables para adaptar la gafa según el estilo o la actividad.",
+    "El set incluye un lente negro polarizado con protección UV, además de otros lentes intercambiables en distintos tonos que no cuentan con protección UV.",
+    "Para complementar su uso, incorpora un adaptador óptico, correa de sujeción, estuche rígido termoformado, funda y paño de limpieza.",
+    "Es una opción práctica para actividades como ciclismo, pesca, trekking, camping y polígono, además del uso diario."
+   ],
+   "caracteristicas": [
+    "Diseño envolvente sport",
+    "Lentes intercambiables",
+    "Lente negro polarizado con UV",
+    "Adaptador óptico",
+    "Correa de sujeción",
+    "Estuche rígido termoformado"
+   ],
+   "usos": [
+    "Uso diario",
+    "Ciclismo",
+    "Pesca",
+    "Trekking",
+    "Camping",
+    "Aire libre",
+    "Polígono"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Gafa Táctica Sport con Lentes Intercambiables – Set Completo"
+    },
+    {
+     "k": "TIPO",
+     "v": "Gafa táctica / deportiva"
+    },
+    {
+     "k": "DISEÑO",
+     "v": "Envolvente"
+    },
+    {
+     "k": "ESTILO",
+     "v": "Sport"
+    },
+    {
+     "k": "LENTES",
+     "v": "Intercambiables"
+    },
+    {
+     "k": "LENTE PRINCIPAL",
+     "v": "Negro polarizado"
+    },
+    {
+     "k": "PROTECCIÓN UV",
+     "v": "Sí, en el lente negro polarizado"
+    },
+    {
+     "k": "OTROS LENTES",
+     "v": "Intercambiables, sin protección UV"
+    },
+    {
+     "k": "ADAPTADOR",
+     "v": "Adaptador óptico"
+    },
+    {
+     "k": "SUJECIÓN",
+     "v": "Correa de sujeción"
+    },
+    {
+     "k": "ESTUCHE",
+     "v": "Rígido termoformado"
+    },
+    {
+     "k": "EXTERIOR DEL ESTUCHE",
+     "v": "Textil resistente"
+    },
+    {
+     "k": "CIERRE",
+     "v": "Perimetral reforzado"
+    },
+    {
+     "k": "GANCHO",
+     "v": "Lateral integrado en el estuche"
+    },
+    {
+     "k": "LIMPIEZA",
+     "v": "Funda y paño"
+    },
+    {
+     "k": "COLOR",
+     "v": "Según lente / configuración del set"
+    },
+    {
+     "k": "MARCA",
+     "v": "Producto genérico"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué incluye el set de gafas tácticas?",
+     "a": "El set incluye una gafa de diseño sport, lentes intercambiables en distintos tonos, adaptador óptico, correa de sujeción, estuche rígido termoformado, funda y paño de limpieza."
+    },
+    {
+     "q": "¿Las gafas tienen lentes intercambiables?",
+     "a": "Sí. El set incluye lentes intercambiables en distintos tonos."
+    },
+    {
+     "q": "¿Todos los lentes tienen protección UV?",
+     "a": "No. El lente negro polarizado cuenta con protección UV, mientras que los demás lentes intercambiables no cuentan con protección UV."
+    },
+    {
+     "q": "¿La gafa tiene lente polarizado?",
+     "a": "Sí. El set incluye un lente negro polarizado con protección UV."
+    },
+    {
+     "q": "¿Qué tipo de diseño tiene la gafa?",
+     "a": "Cuenta con un diseño envolvente y estilo sport."
+    },
+    {
+     "q": "¿La gafa incluye adaptador óptico?",
+     "a": "Sí. El set incluye un adaptador óptico."
+    },
+    {
+     "q": "¿La gafa incluye correa de sujeción?",
+     "a": "Sí. Incluye una correa de sujeción."
+    },
+    {
+     "q": "¿Tiene estuche?",
+     "a": "Sí. El set incluye un estuche rígido termoformado con exterior textil resistente."
+    },
+    {
+     "q": "¿El estuche tiene cierre reforzado?",
+     "a": "Sí. Cuenta con un cierre perimetral reforzado."
+    },
+    {
+     "q": "¿El estuche tiene gancho para transportarlo?",
+     "a": "Sí. El estuche incorpora un gancho lateral integrado."
+    },
+    {
+     "q": "¿La gafa incluye accesorios para limpieza?",
+     "a": "Sí. El set incluye funda y paño de limpieza."
+    },
+    {
+     "q": "¿Para qué actividades sirven estas gafas?",
+     "a": "Están indicadas para uso diario, ciclismo, pesca, trekking, camping, actividades al aire libre y polígono."
+    },
+    {
+     "q": "¿Son gafas tácticas?",
+     "a": "Sí. Se comercializan como un modelo de gafa táctica/deportiva de diseño envolvente, orientado a actividades al aire libre y uso diario."
+    }
+   ],
+   "relacionados": [
+    "shemagh",
+    "sombrero-de-monte-tactico",
+    "cinto-tactico-cobra",
+    "bandolera-tactica-cruzada-negra"
+   ],
+   "guia": "#/blog/que-es-el-sistema-molle/",
+   "opciones": {
+    "con_talles": false,
+    "es_calzado": false,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false
+   },
+   "colores": [
+    {
+     "nombre": "SET COMPLETO",
+     "sku": "TC-GAF-SPT",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/gaf-1.webp",
+      "uploads/TC/gaf-2.webp",
+      "uploads/TC/gaf-3.webp",
+      "uploads/TC/gaf-4.webp"
+     ],
+     "talles": []
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "gafas",
+     "nombre": "Gafa Táctica Sport con Lentes Intercambiables – Set Completo",
+     "imagen": "uploads/TC/gaf-1.webp",
+     "color": null
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "pantalon-cargo-tactico-ripstop-woodland",
+   "nombre": "PANTALÓN CARGO TÁCTICO RIPSTOP WOODLAND",
+   "categoria": "INDUMENTARIA",
+   "subcategoria": "PANTALONES TÁCTICOS",
+   "sku": "TC-PAN-RS-WD",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Pantalón cargo en patrón Woodland, confeccionado en tela Ripstop resistente, diseñado para brindar comodidad, resistencia y funcionalidad. Su diseño con bolsillos cargo, costuras reforzadas y material repelente al agua lo hace una opción versátil para camping, caza, trabajo y uso cotidiano.",
+   "descripcion_larga": [
+    "El Pantalón Cargo Táctico Ripstop Woodland combina un diseño funcional con una construcción pensada para acompañar diferentes actividades.",
+    "Está confeccionado en tela Ripstop resistente y presenta un patrón Woodland, pensado para integrarse visualmente en ambientes naturales.",
+    "Su diseño cargo incorpora bolsillos funcionales con botones y solapa, proporcionando espacios prácticos para transportar diferentes elementos durante la actividad.",
+    "Cuenta con costuras reforzadas para acompañar el uso habitual y un diseño orientado a brindar comodidad y resistencia.",
+    "Además, el material posee característica repelente al agua, aportando una prestación adicional para actividades al aire libre.",
+    "Disponible en talles S, M, L, XL, 2XL y 3XL."
+   ],
+   "caracteristicas": [
+    "Tela Ripstop",
+    "Patrón Woodland",
+    "Bolsillos cargo con solapa",
+    "Costuras reforzadas",
+    "Repelente al agua",
+    "Talles S a 3XL"
+   ],
+   "usos": [
+    "Camping",
+    "Caza",
+    "Trabajo",
+    "Aire libre",
+    "Uso cotidiano",
+    "Estilo urbano"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Pantalón Cargo Táctico Ripstop Woodland"
+    },
+    {
+     "k": "TIPO",
+     "v": "Pantalón cargo"
+    },
+    {
+     "k": "MODELO",
+     "v": "Ripstop Woodland"
+    },
+    {
+     "k": "COLOR",
+     "v": "Woodland"
+    },
+    {
+     "k": "MATERIAL",
+     "v": "Tela Ripstop"
+    },
+    {
+     "k": "CONSTRUCCIÓN",
+     "v": "Resistente"
+    },
+    {
+     "k": "BOLSILLOS",
+     "v": "Funcionales"
+    },
+    {
+     "k": "BOLSILLOS CARGO",
+     "v": "Sí"
+    },
+    {
+     "k": "CIERRE DE BOLSILLOS",
+     "v": "Botones y solapa"
+    },
+    {
+     "k": "COSTURAS",
+     "v": "Reforzadas"
+    },
+    {
+     "k": "RESISTENCIA AL AGUA",
+     "v": "Repelente al agua"
+    },
+    {
+     "k": "CINTURA",
+     "v": "Diseño para ajuste cómodo"
+    },
+    {
+     "k": "TALLES",
+     "v": "S, M, L, XL, 2XL y 3XL"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es el Pantalón Cargo Táctico Ripstop Woodland?",
+     "a": "Es un pantalón cargo confeccionado en tela Ripstop resistente, con patrón Woodland, bolsillos funcionales y costuras reforzadas. Está diseñado para brindar comodidad, resistencia y practicidad."
+    },
+    {
+     "q": "¿De qué material está hecho el Pantalón Cargo Táctico Ripstop Woodland?",
+     "a": "Está confeccionado en tela Ripstop, un material resistente pensado para acompañar actividades al aire libre y el uso cotidiano."
+    },
+    {
+     "q": "¿El Pantalón Cargo Táctico Ripstop Woodland es repelente al agua?",
+     "a": "Sí. La tela cuenta con una característica repelente al agua."
+    },
+    {
+     "q": "¿Qué color tiene el pantalón?",
+     "a": "El modelo presenta un patrón de camuflaje Woodland, con tonalidades verdes, marrones, beige y negras."
+    },
+    {
+     "q": "¿Cuántos bolsillos tiene el Pantalón Cargo Táctico Ripstop Woodland?",
+     "a": "Cuenta con bolsillos funcionales, incluyendo bolsillos cargo laterales con botones y solapa, bolsillos delanteros y bolsillos traseros."
+    },
+    {
+     "q": "¿Los bolsillos cargo tienen cierre?",
+     "a": "Los bolsillos cargo laterales cuentan con botones y solapa para mantenerlos cerrados."
+    },
+    {
+     "q": "¿El pantalón tiene costuras reforzadas?",
+     "a": "Sí. El modelo cuenta con costuras reforzadas, pensadas para acompañar el uso de la prenda."
+    },
+    {
+     "q": "¿Qué talles están disponibles?",
+     "a": "Está disponible en S, M, L, XL, 2XL y 3XL, sujeto a disponibilidad de stock."
+    },
+    {
+     "q": "¿Para qué actividades se recomienda este pantalón?",
+     "a": "Es una opción versátil para camping, caza, trabajo, actividades al aire libre, ambientes naturales y uso cotidiano."
+    },
+    {
+     "q": "¿El Pantalón Cargo Táctico Ripstop Woodland sirve para uso diario?",
+     "a": "Sí. Además de camping, caza y trabajo, su diseño funcional permite utilizarlo para uso cotidiano."
+    }
+   ],
+   "relacionados": [
+    "cinto-tactico-cobra",
+    "borcegos-tacticos-altama-negros",
+    "bajo-chaleco-manga-larga-multicam",
+    "sombrero-de-monte-tactico"
+   ],
+   "guia": "#/blog/que-es-la-tela-ripstop/",
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": false,
+    "es_indumentaria": true,
+    "consulta_whatsapp_talle": true
+   },
+   "colores": [
+    {
+     "nombre": "WOODLAND",
+     "sku": "TC-PAN-RS-WD",
+     "muestra": "#4B5A3A",
+     "fotos": [
+      "uploads/TC/pantwd-1.webp",
+      "uploads/TC/pantwd-2.webp",
+      "uploads/TC/pantwd-3.webp",
+      "uploads/TC/pantwd-4.webp",
+      "uploads/TC/pantwd-5.webp"
+     ],
+     "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "pantwd",
+     "nombre": "Pantalón Cargo Táctico Ripstop Woodland",
+     "imagen": "uploads/TC/pantwd-1.webp",
+     "color": null
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "pantalon-cargo-tactico-ripstop-negro",
+   "nombre": "PANTALÓN CARGO RIPSTOP NEGRO",
+   "categoria": "INDUMENTARIA",
+   "subcategoria": "PANTALONES TÁCTICOS",
+   "sku": "TC-PAN-RS-NG",
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "descripcion": "Pantalón cargo táctico unisex confeccionado en tela Ripstop negra, liviana y resistente, diseñado para brindar comodidad, resistencia y practicidad durante la jornada. Cuenta con múltiples bolsillos funcionales, porta cargador 9 mm, cintura elastizada, rodillas articuladas y costuras reforzadas. Su material es repelente al agua.",
+   "descripcion_larga": [
+    "El Pantalón Cargo Táctico Ripstop Negro está diseñado para brindar comodidad, resistencia y practicidad durante la jornada.",
+    "Está confeccionado en tela Ripstop liviana y resistente, en color negro, y cuenta con múltiples bolsillos funcionales con cierre y solapa, pensados para facilitar la organización y el acceso al equipamiento.",
+    "Incorpora un bolsillo porta cargador 9 mm con prendedores, además de cintura elastizada para favorecer un ajuste más cómodo y rodillas articuladas que permiten mayor libertad de movimiento.",
+    "Las costuras reforzadas aportan una construcción preparada para un uso exigente, mientras que el material repelente al agua brinda una característica adicional de protección frente a la humedad.",
+    "Su diseño funcional y versátil lo hace especialmente indicado para personal de seguridad, fuerzas policiales, polígono y uso diario.",
+    "Disponible en talles S, M, L, XL, 2XL y 3XL."
+   ],
+   "caracteristicas": [
+    "Tela Ripstop",
+    "8 bolsillos",
+    "Porta cargador 9 mm",
+    "Cintura elastizada",
+    "Rodillas articuladas",
+    "Repelente al agua"
+   ],
+   "usos": [
+    "Fuerzas policiales",
+    "Personal de seguridad",
+    "Seguridad privada",
+    "Polígono",
+    "Actividades tácticas",
+    "Uso diario"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Pantalón Cargo Táctico Ripstop Negro"
+    },
+    {
+     "k": "TIPO",
+     "v": "Pantalón cargo táctico"
+    },
+    {
+     "k": "COLOR",
+     "v": "Negro"
+    },
+    {
+     "k": "MATERIAL",
+     "v": "Tela Ripstop"
+    },
+    {
+     "k": "CARACTERÍSTICA DEL MATERIAL",
+     "v": "Liviana y resistente"
+    },
+    {
+     "k": "GÉNERO",
+     "v": "Unisex"
+    },
+    {
+     "k": "BOLSILLOS",
+     "v": "8"
+    },
+    {
+     "k": "BOLSILLOS FUNCIONALES",
+     "v": "Sí"
+    },
+    {
+     "k": "CIERRE Y SOLAPA",
+     "v": "Sí"
+    },
+    {
+     "k": "PORTA CARGADOR",
+     "v": "9 mm"
+    },
+    {
+     "k": "SUJECIÓN PORTA CARGADOR",
+     "v": "Prendedores"
+    },
+    {
+     "k": "CINTURA",
+     "v": "Elastizada"
+    },
+    {
+     "k": "RODILLAS",
+     "v": "Articuladas"
+    },
+    {
+     "k": "COSTURAS",
+     "v": "Reforzadas"
+    },
+    {
+     "k": "REPELENCIA",
+     "v": "Repelente al agua"
+    },
+    {
+     "k": "TALLES",
+     "v": "S, M, L, XL, 2XL, 3XL"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es el Pantalón Cargo Táctico Ripstop Negro?",
+     "a": "Es un pantalón cargo táctico de color negro, confeccionado en tela Ripstop liviana y resistente, diseñado para brindar comodidad, resistencia y practicidad."
+    },
+    {
+     "q": "¿De qué material está hecho?",
+     "a": "Está confeccionado en tela Ripstop, caracterizada en este modelo como liviana y resistente."
+    },
+    {
+     "q": "¿El pantalón es repelente al agua?",
+     "a": "Sí. El material cuenta con característica repelente al agua."
+    },
+    {
+     "q": "¿Cuántos bolsillos tiene?",
+     "a": "Cuenta con 8 bolsillos funcionales para transportar diferentes elementos."
+    },
+    {
+     "q": "¿Los bolsillos tienen cierre?",
+     "a": "Sí. Los bolsillos funcionales cuentan con cierre y solapa."
+    },
+    {
+     "q": "¿Tiene porta cargador?",
+     "a": "Sí. Incorpora un bolsillo porta cargador 9 mm con prendedores."
+    },
+    {
+     "q": "¿La cintura es elastizada?",
+     "a": "Sí. Cuenta con cintura elastizada para proporcionar un ajuste más cómodo."
+    },
+    {
+     "q": "¿Tiene costuras reforzadas?",
+     "a": "Sí. Cuenta con costuras reforzadas para acompañar el uso de la prenda."
+    },
+    {
+     "q": "¿Es un pantalón unisex?",
+     "a": "Sí. El modelo está pensado para uso unisex."
+    },
+    {
+     "q": "¿Qué talles están disponibles?",
+     "a": "Está disponible en talles S, M, L, XL, 2XL y 3XL, sujeto a disponibilidad."
+    },
+    {
+     "q": "¿Para quién está pensado este pantalón?",
+     "a": "Su diseño funcional lo hace adecuado para personal de seguridad y fuerzas policiales, además de otros usos donde se requiera una prenda resistente y funcional."
+    },
+    {
+     "q": "¿En qué colores está disponible?",
+     "a": "Por el momento se presenta en color negro."
+    }
+   ],
+   "relacionados": [
+    "cinto-tactico-cobra",
+    "borcegos-tacticos-altama-negros",
+    "bajo-chaleco-manga-larga-negro",
+    "bandolera-tactica-cruzada-negra"
+   ],
+   "guia": "#/blog/que-es-la-tela-ripstop/",
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": false,
+    "es_indumentaria": true,
+    "consulta_whatsapp_talle": true
+   },
+   "colores": [
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-PAN-RS-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/pantr-1.webp",
+      "uploads/TC/pantr-2.webp",
+      "uploads/TC/pantr-3.webp",
+      "uploads/TC/pantr-4.webp",
+      "uploads/TC/pantr-5.webp"
+     ],
+     "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "pantr",
+     "nombre": "Pantalón Cargo Táctico Ripstop Negro",
+     "imagen": "uploads/TC/pantr-1.webp",
+     "color": null
+    }
+   ],
+   "precio_provisorio": true
+  },
+  {
+   "slug": "campera-gtex-outdoor",
+   "nombre": "CAMPERA GORE-TEX",
+   "categoria": "INDUMENTARIA",
+   "subcategoria": "CAMPERAS",
+   "sku": "TC-GTEX-001",
+   "precio_minorista": 189900,
+   "precio_transferencia": 164900,
+   "descripcion": "Campera Gore-Tex con interior forrado en polar, diseñada para brindar protección, confort y resistencia frente a distintas condiciones climáticas. Cuenta con protección contra el viento y el agua, costuras selladas, capucha ajustable y múltiples bolsillos funcionales. Disponible en Negro, Verde OD/Oliva y Azul Noche, en talles S a 3XL. Los talles 4XL y 5XL están disponibles solo en Negro y Verde OD/Oliva.",
+   "descripcion_larga": [
+    "Campera Gore-Tex pensada para quienes necesitan protección, confort y resistencia en diferentes condiciones climáticas.",
+    "Su construcción combina protección contra el viento y el agua, interior forrado con polar para mayor abrigo, costuras selladas y ajustes regulables que permiten adaptar la campera al cuerpo.",
+    "Cuenta con capucha fija ajustable, puños y cintura regulables, bolsillos frontales y bolsillos en las mangas, además de superficies de velcro para colocar parches o identificaciones.",
+    "Es una prenda versátil para actividades outdoor, trabajo, moto, servicios y uso diario.",
+    "Disponible en Negro, Verde OD/Verde Oliva y Azul Noche, con talles desde S hasta 3XL. Los talles 4XL y 5XL están disponibles solo en Negro y Verde OD/Oliva."
+   ],
+   "caracteristicas": [
+    "Tejido Gore-Tex",
+    "Impermeable y rompe viento",
+    "Interior forrado con polar",
+    "Costuras selladas",
+    "Capucha fija ajustable",
+    "Talles S a 3XL",
+    "4XL y 5XL solo en Negro y Verde OD"
+   ],
+   "usos": [
+    "Outdoor",
+    "Trabajo y servicios",
+    "Moto",
+    "Uso diario"
+   ],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Campera Gore-Tex"
+    },
+    {
+     "k": "TIPO",
+     "v": "Campera táctica / outdoor"
+    },
+    {
+     "k": "COLORES",
+     "v": "Negro / Verde OD-Oliva / Azul Noche"
+    },
+    {
+     "k": "MATERIAL / TECNOLOGÍA",
+     "v": "Gore-Tex"
+    },
+    {
+     "k": "PROTECCIÓN",
+     "v": "Impermeable y rompe viento"
+    },
+    {
+     "k": "INTERIOR",
+     "v": "Forrado con polar"
+    },
+    {
+     "k": "AISLAMIENTO",
+     "v": "Térmico"
+    },
+    {
+     "k": "COSTURAS",
+     "v": "Selladas"
+    },
+    {
+     "k": "CAPUCHA",
+     "v": "Fija y ajustable"
+    },
+    {
+     "k": "PUÑOS",
+     "v": "Ajustables con velcro"
+    },
+    {
+     "k": "CINTURA",
+     "v": "Ajustable"
+    },
+    {
+     "k": "BOLSILLOS",
+     "v": "Frontales + bolsillos en mangas"
+    },
+    {
+     "k": "VELCRO",
+     "v": "Para parches / bordados"
+    },
+    {
+     "k": "CIERRE",
+     "v": "Cierre frontal de apertura principal"
+    },
+    {
+     "k": "TALLES",
+     "v": "S a 3XL"
+    },
+    {
+     "k": "TALLES 4XL Y 5XL",
+     "v": "Solo en Negro y Verde OD / Oliva"
+    },
+    {
+     "k": "USOS",
+     "v": "Outdoor, trabajo, moto, servicios y uso diario"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es la Campera Gore-Tex?",
+     "a": "Es una campera táctica diseñada para brindar protección frente a las condiciones climáticas, con características impermeables, rompe viento y térmicas."
+    },
+    {
+     "q": "¿La Campera Gore-Tex es impermeable?",
+     "a": "Sí. El modelo está indicado como impermeable y cuenta además con costuras selladas."
+    },
+    {
+     "q": "¿La campera es rompe viento?",
+     "a": "Sí. Está diseñada para funcionar como rompe viento, ayudando a proteger frente a condiciones de viento."
+    },
+    {
+     "q": "¿Es una campera térmica?",
+     "a": "Sí. Cuenta con características térmicas y polar interno."
+    },
+    {
+     "q": "¿Tiene polar en el interior?",
+     "a": "Sí. La campera incorpora polar interno para aportar abrigo."
+    },
+    {
+     "q": "¿Tiene costuras selladas?",
+     "a": "Sí. Cuenta con costuras selladas, una característica especialmente importante para su protección frente al agua."
+    },
+    {
+     "q": "¿Tiene capucha?",
+     "a": "Sí. Cuenta con capucha fija ajustable."
+    },
+    {
+     "q": "¿Se puede ajustar la campera?",
+     "a": "Sí. Cuenta con diferentes sistemas de ajuste, incluyendo capucha ajustable, puños ajustables y cintura ajustable."
+    },
+    {
+     "q": "¿Qué bolsillos tiene?",
+     "a": "Cuenta con bolsillos frontales y bolsillos en las mangas con cierre de velcro."
+    },
+    {
+     "q": "¿Tiene velcro para parches?",
+     "a": "Sí. Incorpora superficies de velcro en las mangas para parches, bordados o identificaciones."
+    },
+    {
+     "q": "¿En qué colores está disponible?",
+     "a": "La Campera Gore-Tex está disponible en Negro, Verde OD / Oliva y Azul Noche."
+    },
+    {
+     "q": "¿Qué talles tiene la Campera Gore-Tex?",
+     "a": "Está disponible desde S hasta 3XL en los tres colores. Los talles 4XL y 5XL están disponibles solo en Negro y Verde OD / Oliva."
+    },
+    {
+     "q": "¿Para qué condiciones está pensada?",
+     "a": "Por sus características impermeables, rompe viento y térmicas, está pensada para brindar protección y abrigo en condiciones climáticas adversas."
+    },
+    {
+     "q": "¿La campera es adecuada para uso táctico?",
+     "a": "Sí. Su diseño y características de protección climática la hacen adecuada para uso táctico y actividades en exteriores."
+    },
+    {
+     "q": "¿Para qué actividades sirve?",
+     "a": "Para outdoor, trabajo, moto, servicios y uso diario."
+    }
+   ],
+   "relacionados": [
+    "bajo-chaleco-manga-larga-negro",
+    "pantalon-cargo-tactico-ripstop-negro",
+    "borcegos-tacticos-altama-negros",
+    "shemagh"
+   ],
+   "guia": "#/blog/como-funciona-gore-tex/",
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": false,
+    "es_indumentaria": true,
+    "consulta_whatsapp_talle": true
+   },
+   "colores": [
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-GTEX-001-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "uploads/TC/gtx-ng-1.webp",
+      "uploads/TC/gtx-ng-2.webp",
+      "uploads/TC/gtx-ng-3.webp",
+      "uploads/TC/gtx-ng-4.webp",
+      "uploads/TC/gtx-ng-5.webp",
+      "uploads/TC/gtx-ng-6.webp",
+      "uploads/TC/gtx-ng-7.webp"
+     ],
+     "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "4XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "5XL",
+       "estado": "disponible"
+      }
+     ]
+    },
+    {
+     "nombre": "VERDE OD / OLIVA",
+     "sku": "TC-GTEX-001-OD",
+     "muestra": "#4A5D4B",
+     "fotos": [
+      "uploads/TC/gtx-od-1.webp",
+      "uploads/TC/gtx-od-2.webp",
+      "uploads/TC/gtx-od-3.webp",
+      "uploads/TC/gtx-od-4.webp",
+      "uploads/TC/gtx-od-5.webp",
+      "uploads/TC/gtx-od-6.webp",
+      "uploads/TC/gtx-od-7.webp"
+     ],
+     "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "4XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "5XL",
+       "estado": "disponible"
+      }
+     ]
+    },
+    {
+     "nombre": "AZUL NOCHE",
+     "sku": "TC-GTEX-001-AZ",
+     "muestra": "#1B2434",
+     "fotos": [
+      "uploads/TC/gtx-az-1.webp",
+      "uploads/TC/gtx-az-2.webp",
+      "uploads/TC/gtx-az-3.webp",
+      "uploads/TC/gtx-az-4.webp",
+      "uploads/TC/gtx-az-5.webp",
+      "uploads/TC/gtx-az-6.webp",
+      "uploads/TC/gtx-az-7.webp"
+     ],
+     "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "gtex",
+     "nombre": "Campera Gore-Tex",
+     "imagen": "uploads/TC/gtx-ng-1.webp",
+     "color": null
+    },
+    {
+     "clave": "gtexng",
+     "nombre": "Campera Gore-Tex Negra",
+     "imagen": null,
+     "color": "NEGRO"
+    },
+    {
+     "clave": "gtexod",
+     "nombre": "Campera Gore-Tex Verde OD / Oliva",
+     "imagen": null,
+     "color": "VERDE OD / OLIVA"
+    },
+    {
+     "clave": "gtexaz",
+     "nombre": "Campera Gore-Tex Azul Noche",
+     "imagen": null,
+     "color": "AZUL NOCHE"
+    }
+   ]
+  },
+  {
+   "slug": "parche-bordado-bandera-argentina",
+   "nombre": "Parche Bordado Bandera Argentina con Velcro y Prendedor",
+   "categoria": "ACCESORIOS",
+   "subcategoria": "PARCHES E INSIGNIAS",
+   "sku": "TC-PAR-ARG",
+   "sku_provisorio": true,
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "precio_provisorio": true,
+   "pendientes": [
+    "Precio",
+    "Medidas en cm",
+    "Material y tipo de bordado",
+    "Confirmar si velcro y prendedor vienen en todas las unidades",
+    "Fotos (6, ver orden en ficha)"
+   ],
+   "colores": [
+    {
+     "nombre": "BANDERA ARGENTINA",
+     "sku": "TC-PAR-ARG",
+     "muestra": "#74ACDF",
+     "fotos": [],
+     "talles": []
+    }
+   ],
+   "opciones": {
+    "con_talles": false
+   },
+   "tarjetas": [
+    {
+     "clave": "parchear",
+     "nombre": "Parche Bordado Bandera Argentina",
+     "imagen": null,
+     "color": null
+    }
+   ]
+  }
+ ]
+}

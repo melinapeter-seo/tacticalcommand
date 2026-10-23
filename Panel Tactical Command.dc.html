@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+html, body { margin:0; padding:0; background:#1A1D1B; color:#E8EAE6; font-family:'Inter Tight', Helvetica, Arial, sans-serif; -webkit-font-smoothing:antialiased; }
+* { box-sizing:border-box; }
+a { color:#E3B23C; text-decoration:none; } a:hover { color:#F5D470; }
+input, textarea, select, button { font-family:inherit; }
+input::placeholder, textarea::placeholder { color:#5E665E; }
+input:focus, textarea:focus, select:focus { outline:1px solid #E3B23C; outline-offset:-1px; }
+</style>
+</helmet>
+
+<sc-if value="{{ locked }}" hint-placeholder-val="{{ false }}">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px">
+    <div style="width:100%;max-width:380px;border:1px solid #2F3530;background:#222623;padding:34px 28px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:#E3B23C">TACTICAL COMMAND</div>
+      <div style="font-size:28px;font-weight:600;letter-spacing:-.02em;margin-top:10px">Panel de gestión</div>
+      <div style="font-size:14px;color:#9AA09A;margin-top:8px;line-height:1.6">Pedidos, clientes, precios y productos de la tienda.</div>
+      <label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#9AA09A;margin-top:28px">PIN DE ACCESO</label>
+      <input type="password" inputmode="numeric" value="{{ pin }}" onChange="{{ setPin }}" onKeyDown="{{ pinKey }}" placeholder="••••" style="width:100%;margin-top:10px;background:#1A1D1B;border:1px solid #2F3530;color:#E8EAE6;padding:16px 14px;font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:.3em">
+      <sc-if value="{{ pinErr }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#E8B4A0;margin-top:10px">PIN incorrecto. Probá de nuevo.</div></sc-if>
+      <button onClick="{{ unlock }}" style="width:100%;margin-top:16px;background:#E3B23C;color:#0D0F0D;border:0;padding:17px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;font-weight:500">INGRESAR →</button>
+      <div style="font-size:12px;color:#7E887E;margin-top:14px">Demo: PIN 1234</div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ unlocked }}" hint-placeholder-val="{{ true }}">
+<div style="min-height:100vh;display:flex;flex-direction:column;padding-bottom:{{ padBottom }}">
+
+  <header style="position:sticky;top:0;z-index:10;background:#151816;border-bottom:1px solid #2F3530">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(16px,3vw,28px);min-height:60px">
+      <div style="display:flex;align-items:baseline;gap:10px;flex-shrink:0">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:#E3B23C">TC</span>
+        <span style="font-size:15px;font-weight:600;letter-spacing:.02em">PANEL</span>
+      </div>
+      <sc-if value="{{ D }}" hint-placeholder-val="{{ true }}">
+        <nav style="display:flex;gap:4px;align-self:stretch;flex:1;justify-content:center">
+          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+            <button onClick="{{ t.on }}" style="background:none;border:0;border-bottom:2px solid {{ t.bd }};color:{{ t.col }};padding:0 16px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;display:flex;align-items:center;gap:8px" style-hover="color:#E8EAE6">{{ t.t }}<sc-if value="{{ t.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="background:{{ t.bBg }};color:#0D0F0D;font-size:10px;min-width:18px;height:18px;padding:0 5px;display:flex;align-items:center;justify-content:center">{{ t.badge }}</span></sc-if></button>
+          </sc-for>
+        </nav>
+      </sc-if>
+      <div style="display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:{{ syncCol }};flex-shrink:0"><span style="width:7px;height:7px;background:{{ syncCol }}"></span>{{ syncLabel }}</div>
+    </div>
+  </header>
+
+  <div style="flex:1;width:100%;max-width:1320px;margin:0 auto;padding:clamp(18px,3vw,32px) clamp(16px,3vw,28px);display:flex;flex-direction:column;gap:22px">
+
+    <section style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-end;flex-wrap:wrap">
+        <div style="min-width:0;max-width:720px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#E3B23C">{{ head.eyebrow }}</div>
+          <h1 style="font-size:clamp(26px,4vw,38px);font-weight:600;letter-spacing:-.025em;line-height:1.05;margin:8px 0 0">{{ head.title }}</h1>
+          <p style="font-size:15px;line-height:1.6;color:#9AA09A;margin:10px 0 0;text-wrap:pretty">{{ head.d }}</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button onClick="{{ toggleHelp }}" style="background:none;border:1px solid #2F3530;color:#C3C8C1;padding:12px 14px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em" style-hover="border-color:#E3B23C;color:#E3B23C">{{ helpLabel }}</button>
+          <sc-if value="{{ head.hasCta }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ head.cta }}" style="background:#E3B23C;color:#0D0F0D;border:0;padding:13px 16px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;font-weight:500" style-hover="background:#F5D470">{{ head.ctaLabel }}</button>
+          </sc-if>
+        </div>
+      </div>
+      <sc-if value="{{ helpOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:1px;background:#2F3530;border:1px solid #2F3530">
+          <sc-for list="{{ head.steps }}" as="hs" hint-placeholder-count="3">
+            <div style="background:#151816;padding:16px 18px;display:flex;gap:12px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#E3B23C">{{ hs.i }}</span>
+              <span style="font-size:14px;line-height:1.6;color:#C3C8C1">{{ hs.t }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </section>
+
+    <!-- PEDIDOS -->
+    <sc-if value="{{ tabPedidos }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:{{ mdCols }};gap:22px;align-items:start">
+        <sc-if value="{{ showList }}" hint-placeholder-val="{{ true }}">
+          <div style="border:1px solid #2F3530;background:#151816;min-width:0">
+            <sc-if value="{{ ped.pendingAny }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ ped.showPending }}" style="width:100%;text-align:left;background:#221F16;border:0;border-bottom:1px solid #3A3524;color:#E3B23C;padding:12px 16px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em">● {{ ped.pendingTxt }} →</button>
+            </sc-if>
+            <div style="padding:14px;border-bottom:1px solid #2F3530;display:flex;flex-direction:column;gap:10px">
+              <input value="{{ ped.q }}" onChange="{{ ped.setQ }}" placeholder="Buscar por código, cliente o teléfono" style="width:100%;background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:12px;font-size:14px">
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ ped.filters }}" as="f" hint-placeholder-count="5">
+                  <button onClick="{{ f.on }}" style="background:{{ f.bg }};color:{{ f.col }};border:1px solid {{ f.bd }};padding:7px 9px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;display:flex;gap:6px">{{ f.t }}<span style="opacity:.6">{{ f.n }}</span></button>
+                </sc-for>
+              </div>
+            </div>
+            <sc-for list="{{ ped.list }}" as="it" hint-placeholder-count="4">
+              <button onClick="{{ it.on }}" style="display:block;width:100%;text-align:left;background:{{ it.bg }};border:0;border-bottom:1px solid #2F3530;border-left:3px solid {{ it.edge }};color:#E8EAE6;padding:14px 16px;cursor:pointer" style-hover="background:#222623">
+                <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.06em">{{ it.code }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7E887E">{{ it.date }}</span>
+                </div>
+                <div style="font-size:15px;font-weight:500;margin-top:6px">{{ it.name }}</div>
+                <div style="font-size:13px;color:#9AA09A;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.items }}</div>
+                <div style="display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:{{ it.stCol }};border:1px solid {{ it.stCol }};padding:3px 7px">{{ it.st }}</span>
+                  <sc-if value="{{ it.ws }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:#9AA09A;border:1px solid #2F3530;padding:3px 7px">MAYORISTA</span></sc-if>
+                  <sc-if value="{{ it.pending }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:#E8B4A0">● FALTA AVISAR</span></sc-if>
+                </div>
+              </button>
+            </sc-for>
+            <sc-if value="{{ ped.empty }}" hint-placeholder-val="{{ false }}"><div style="padding:28px 16px;color:#7E887E;font-size:14px">No hay pedidos con ese filtro.</div></sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showPane }}" hint-placeholder-val="{{ true }}">
+          <div style="min-width:0;display:flex;flex-direction:column;gap:20px">
+            <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ back }}" style="align-self:flex-start;background:none;border:0;color:#9AA09A;padding:6px 0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em">← VOLVER A LA LISTA</button>
+            </sc-if>
+
+            <sc-if value="{{ ped.isNew }}" hint-placeholder-val="{{ false }}">
+              <div style="border:1px solid #2F3530;background:#151816;display:flex;flex-direction:column">
+                <div style="padding:18px 20px;border-bottom:1px solid #2F3530">
+                  <div style="font-size:20px;font-weight:600">Cargar pedido confirmado</div>
+                  <div style="font-size:14px;color:#9AA09A;margin-top:6px;line-height:1.6">Cargalo cuando el cliente ya confirmó por WhatsApp. El código de seguimiento se genera al guardar.</div>
+                </div>
+                <div style="padding:20px;display:flex;flex-direction:column;gap:16px;border-bottom:1px solid #2F3530">
+                  <div style="display:flex;gap:10px;align-items:center"><span style="width:24px;height:24px;background:#E3B23C;color:#0D0F0D;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px">1</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em">¿QUIÉN COMPRA?</span></div>
+                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px">
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">NOMBRE *</span><input value="{{ nf.name }}" onChange="{{ nf.setName }}" placeholder="Nombre y apellido o comercio" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px"></label>
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">WHATSAPP *</span><input value="{{ nf.phone }}" onChange="{{ nf.setPhone }}" inputmode="tel" placeholder="3492 123456" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px;font-family:'IBM Plex Mono',monospace"></label>
+                  </div>
+                  <sc-if value="{{ nf.hasSugg }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;gap:6px">
+                      <span style="font-size:12px;color:#7E887E">¿Es un cliente que ya compró? Tocalo para completar los datos:</span>
+                      <div style="display:flex;flex-wrap:wrap;gap:6px">
+                        <sc-for list="{{ nf.sugg }}" as="sg" hint-placeholder-count="2">
+                          <button onClick="{{ sg.on }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:9px 12px;cursor:pointer;font-size:13px" style-hover="border-color:#E3B23C">{{ sg.t }}</button>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ nf.linked }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#7FB37F">✓ Cliente existente: el pedido se suma a su historial.</div></sc-if>
+                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px">
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">DESTINO</span><input value="{{ nf.dest }}" onChange="{{ nf.setDest }}" placeholder="Localidad, provincia" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px"></label>
+                    <div style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">ENTREGA</span>
+                      <div style="display:flex;gap:6px"><sc-for list="{{ nf.modes }}" as="m" hint-placeholder-count="2"><button onClick="{{ m.on }}" style="flex:1;background:{{ m.bg }};color:{{ m.col }};border:1px solid {{ m.bd }};padding:13px 8px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em">{{ m.t }}</button></sc-for></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">TIPO DE VENTA</span>
+                      <div style="display:flex;gap:6px"><sc-for list="{{ nf.types }}" as="m" hint-placeholder-count="2"><button onClick="{{ m.on }}" style="flex:1;background:{{ m.bg }};color:{{ m.col }};border:1px solid {{ m.bd }};padding:13px 8px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em">{{ m.t }}</button></sc-for></div>
+                    </div>
+                  </div>
+                </div>
+                <div style="padding:20px;display:flex;flex-direction:column;gap:14px;border-bottom:1px solid #2F3530">
+                  <div style="display:flex;gap:10px;align-items:center"><span style="width:24px;height:24px;background:#E3B23C;color:#0D0F0D;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px">2</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em">¿QUÉ COMPRA?</span></div>
+                  <div style="display:grid;grid-template-columns:{{ nf.pickCols }};gap:8px;align-items:end">
+                    <label style="display:flex;flex-direction:column;gap:7px;min-width:0"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">PRODUCTO</span>
+                      <select value="{{ nf.pSlug }}" onChange="{{ nf.setPSlug }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 10px;font-size:14px;min-width:0"><option value="">Elegí un producto…</option><sc-for list="{{ nf.prodOpts }}" as="po" hint-placeholder-count="0"><option value="{{ po.v }}">{{ po.t }}</option></sc-for></select></label>
+                    <sc-if value="{{ nf.hasVarSel }}" hint-placeholder-val="{{ false }}"><label style="display:flex;flex-direction:column;gap:7px;min-width:0"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">VARIANTE</span>
+                      <select value="{{ nf.pVar }}" onChange="{{ nf.setPVar }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 10px;font-size:14px;min-width:0"><sc-for list="{{ nf.varOpts }}" as="vo" hint-placeholder-count="0"><option value="{{ vo.v }}">{{ vo.t }}</option></sc-for></select></label></sc-if>
+                    <sc-if value="{{ nf.hasSizeSel }}" hint-placeholder-val="{{ false }}"><label style="display:flex;flex-direction:column;gap:7px;min-width:0"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">TALLE</span>
+                      <select value="{{ nf.pSize }}" onChange="{{ nf.setPSize }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 10px;font-size:14px;min-width:0"><option value="">—</option><sc-for list="{{ nf.sizeOpts }}" as="so" hint-placeholder-count="0"><option value="{{ so.v }}">{{ so.t }}</option></sc-for></select></label></sc-if>
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">CANT.</span><input value="{{ nf.pQty }}" onChange="{{ nf.setPQty }}" inputmode="numeric" style="width:72px;background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 10px;font-size:15px;font-family:'IBM Plex Mono',monospace"></label>
+                    <button onClick="{{ nf.addItem }}" style="background:none;border:1px solid #E3B23C;color:#E3B23C;padding:13px 14px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em">+ SUMAR</button>
+                  </div>
+                  <sc-if value="{{ nf.pickErr }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#E8B4A0">{{ nf.pickErr }}</div></sc-if>
+                  <sc-if value="{{ nf.hasItems }}" hint-placeholder-val="{{ false }}">
+                    <div style="border:1px solid #2F3530">
+                      <sc-for list="{{ nf.items }}" as="li" hint-placeholder-count="0">
+                        <div style="display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:11px 14px;border-bottom:1px solid #2F3530">
+                          <div style="min-width:0"><div style="font-size:14px">{{ li.qty }}× {{ li.n }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7E887E;margin-top:3px">{{ li.sku }}</div></div>
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px">{{ li.sub }}</span>
+                          <button onClick="{{ li.rm }}" style="background:none;border:0;color:#7E887E;cursor:pointer;font-size:16px;padding:4px 6px" style-hover="color:#E8B4A0">×</button>
+                        </div>
+                      </sc-for>
+                      <div style="display:flex;justify-content:space-between;padding:12px 14px;background:#1C201D"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#9AA09A">TOTAL DE REFERENCIA · {{ nf.units }} U.</span><span style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:#E3B23C">{{ nf.total }}</span></div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ nf.wsWarn }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#E3B23C">Atención: la venta mayorista pide mínimo {{ nf.wsMin }} unidades y este pedido tiene {{ nf.units }}.</div></sc-if>
+                </div>
+                <div style="padding:20px;display:flex;flex-direction:column;gap:14px">
+                  <div style="display:flex;gap:10px;align-items:center"><span style="width:24px;height:24px;background:#E3B23C;color:#0D0F0D;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px">3</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em">NOTA (OPCIONAL)</span></div>
+                  <input value="{{ nf.note }}" onChange="{{ nf.setNote }}" placeholder="Solo la ves vos. Ej.: pagó por transferencia, factura A" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px">
+                  <sc-if value="{{ nf.err }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#E8B4A0">Falta completar: {{ nf.err }}</div></sc-if>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <button onClick="{{ nf.save }}" style="flex:1 1 240px;background:#E3B23C;color:#0D0F0D;border:0;padding:17px 20px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;font-weight:500" style-hover="background:#F5D470">GUARDAR Y GENERAR CÓDIGO →</button>
+                    <button onClick="{{ back }}" style="background:none;border:1px solid #2F3530;color:#C3C8C1;padding:17px 18px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em">CANCELAR</button>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ ped.hasOrder }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap">
+                  <div>
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#9AA09A">PEDIDO {{ o.type }} · {{ o.created }}</div>
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(24px,4vw,34px);letter-spacing:.06em;margin-top:8px;color:#E3B23C">{{ o.code }}</div>
+                  </div>
+                  <button onClick="{{ ped.copyCode }}" style="background:none;border:1px solid #2F3530;color:#C3C8C1;padding:11px 12px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em" style-hover="border-color:#E3B23C;color:#E3B23C">COPIAR CÓDIGO</button>
+                </div>
+
+                <div style="border:1px solid #E3B23C;background:#1F1D16;padding:18px 20px;display:flex;flex-direction:column;gap:8px">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:#E3B23C">QUÉ SIGUE</div>
+                  <div style="font-size:16px;line-height:1.55;color:#E8EAE6;text-wrap:pretty">{{ ped.next }}</div>
+                </div>
+
+                <div style="border:1px solid #2F3530;background:#151816">
+                  <sc-for list="{{ ped.steps }}" as="s" hint-placeholder-count="4">
+                    <div style="display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:center;padding:14px 16px;border-bottom:1px solid #232825">
+                      <div style="width:28px;height:28px;border:1px solid {{ s.mCol }};background:{{ s.mBg }};color:{{ s.mFg }};display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px">{{ s.mark }}</div>
+                      <div style="min-width:0"><div style="font-size:14px;font-weight:600;letter-spacing:.04em;color:{{ s.col }}">{{ s.t }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:#7E887E;margin-top:4px">{{ s.date }}</div></div>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:{{ s.avCol }}">{{ s.av }}</span>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ o.hasTrack }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;padding:14px 16px;background:#1C201D">
+                      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em"><span style="color:#7E887E">{{ o.carrier }} · GUÍA </span>{{ o.guia }}</div>
+                      <div style="display:flex;gap:14px">
+                        <button onClick="{{ ped.editGuia }}" style="background:none;border:0;color:#9AA09A;padding:0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em">CORREGIR</button>
+                        <a href="{{ o.carrierUrl }}" target="_blank" rel="noopener" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em">VER EN {{ o.carrier }} ↗</a>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+
+                <sc-if value="{{ ped.needAviso }}" hint-placeholder-val="{{ false }}">
+                  <div style="border:1px solid #2F3530;background:#222623;padding:18px;display:flex;flex-direction:column;gap:12px">
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:#E8B4A0">● FALTA AVISAR AL CLIENTE · MENSAJE LISTO</div>
+                    <div style="font-size:14px;line-height:1.6;color:#C3C8C1;white-space:pre-line;border-left:2px solid #3A3524;padding-left:12px">{{ ped.avisoMsg }}</div>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap">
+                      <a href="{{ ped.avisoUrl }}" target="_blank" rel="noopener" onClick="{{ ped.markAviso }}" style="background:#25D366;color:#0D0F0D;padding:15px 18px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.12em;font-weight:500" style-hover="background:#4BE283;color:#0D0F0D">ENVIAR POR WHATSAPP →</a>
+                      <button onClick="{{ ped.markAviso }}" style="background:none;border:1px solid #2F3530;color:#9AA09A;padding:15px 16px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em">YA LE AVISÉ DE OTRA FORMA</button>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ ped.showDispatch }}" hint-placeholder-val="{{ false }}">
+                  <div style="border:1px solid #2F3530;background:#222623;padding:18px;display:flex;flex-direction:column;gap:14px">
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:#9AA09A">DATOS DEL DESPACHO · LOS VE EL CLIENTE EN LA WEB</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ ped.carriers }}" as="c" hint-placeholder-count="4"><button onClick="{{ c.on }}" style="background:{{ c.bg }};color:{{ c.col }};border:1px solid {{ c.bd }};padding:11px 12px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em">{{ c.t }}</button></sc-for></div>
+                    <input value="{{ ped.guia }}" onChange="{{ ped.setGuia }}" placeholder="Número de guía (está en el comprobante del transporte)" style="background:#1A1D1B;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px;font-family:'IBM Plex Mono',monospace;letter-spacing:.04em">
+                    <sc-if value="{{ ped.dispErr }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#E8B4A0">Elegí el transporte y cargá el número de guía para continuar.</div></sc-if>
+                  </div>
+                </sc-if>
+
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:stretch">
+                  <sc-if value="{{ ped.canAdvance }}" hint-placeholder-val="{{ false }}"><button onClick="{{ ped.advance }}" style="flex:1 1 260px;background:#E3B23C;color:#0D0F0D;border:0;padding:18px 20px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;font-weight:500" style-hover="background:#F5D470">{{ ped.advanceLabel }}</button></sc-if>
+                  <sc-if value="{{ ped.editingGuia }}" hint-placeholder-val="{{ false }}"><button onClick="{{ ped.saveGuia }}" style="flex:1 1 260px;background:#E3B23C;color:#0D0F0D;border:0;padding:18px 20px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;font-weight:500">GUARDAR GUÍA</button></sc-if>
+                  <sc-if value="{{ ped.canBack }}" hint-placeholder-val="{{ false }}"><button onClick="{{ ped.stepBack }}" style="background:none;border:1px solid #2F3530;color:#9AA09A;padding:18px 16px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em" style-hover="border-color:#E8B4A0;color:#E8B4A0">↶ DESHACER ÚLTIMO PASO</button></sc-if>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:1px;background:#2F3530;border:1px solid #2F3530">
+                  <div style="background:#222623;padding:14px 16px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#7E887E">CLIENTE</div><button onClick="{{ ped.goClient }}" style="background:none;border:0;padding:0;margin-top:6px;color:#E8EAE6;font-size:15px;cursor:pointer;text-align:left;text-decoration:underline;text-decoration-color:#3E453E;text-underline-offset:4px" style-hover="color:#E3B23C">{{ o.name }}</button></div>
+                  <div style="background:#222623;padding:14px 16px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#7E887E">WHATSAPP</div><div style="font-size:15px;margin-top:6px;font-family:'IBM Plex Mono',monospace">{{ o.phone }}</div></div>
+                  <div style="background:#222623;padding:14px 16px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#7E887E">DESTINO</div><div style="font-size:15px;margin-top:6px">{{ o.destLine }}</div></div>
+                </div>
+                <div style="border:1px solid #2F3530">
+                  <sc-for list="{{ o.lines }}" as="li" hint-placeholder-count="1">
+                    <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid #2F3530"><div style="min-width:0"><div style="font-size:14px">{{ li.qty }}× {{ li.n }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7E887E;margin-top:3px">{{ li.sku }}</div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;white-space:nowrap">{{ li.sub }}</span></div>
+                  </sc-for>
+                  <div style="display:flex;justify-content:space-between;padding:12px 16px;background:#1C201D"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#9AA09A">TOTAL DE REFERENCIA</span><span style="font-family:'IBM Plex Mono',monospace;font-size:15px">{{ o.total }}</span></div>
+                </div>
+                <sc-if value="{{ o.hasNote }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;color:#C3C8C1;border:1px solid #2F3530;padding:14px 16px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#7E887E">NOTA · </span>{{ o.note }}</div></sc-if>
+                <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                  <button onClick="{{ ped.resend }}" style="background:none;border:0;color:#9AA09A;padding:6px 0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em" style-hover="color:#E3B23C">REENVIAR CÓDIGO POR WHATSAPP ↗</button>
+                  <button onClick="{{ ped.copyRow }}" style="background:none;border:0;color:#9AA09A;padding:6px 0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em" style-hover="color:#E3B23C">COPIAR FILA PARA SHEETS</button>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ ped.none }}" hint-placeholder-val="{{ false }}"><div style="border:1px dashed #2F3530;padding:60px 20px;color:#7E887E;font-size:15px;text-align:center">Elegí un pedido de la lista o tocá “+ Nuevo pedido”.</div></sc-if>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- CLIENTES -->
+    <sc-if value="{{ tabClientes }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:{{ mdCols }};gap:22px;align-items:start">
+        <sc-if value="{{ showList }}" hint-placeholder-val="{{ true }}">
+          <div style="border:1px solid #2F3530;background:#151816;min-width:0">
+            <div style="padding:14px;border-bottom:1px solid #2F3530;display:flex;flex-direction:column;gap:10px">
+              <input value="{{ cli.q }}" onChange="{{ cli.setQ }}" placeholder="Buscar por nombre, teléfono o localidad" style="width:100%;background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:12px;font-size:14px">
+              <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ cli.filters }}" as="f" hint-placeholder-count="3"><button onClick="{{ f.on }}" style="background:{{ f.bg }};color:{{ f.col }};border:1px solid {{ f.bd }};padding:7px 9px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;display:flex;gap:6px">{{ f.t }}<span style="opacity:.6">{{ f.n }}</span></button></sc-for></div>
+            </div>
+            <sc-for list="{{ cli.list }}" as="c" hint-placeholder-count="4">
+              <button onClick="{{ c.on }}" style="display:block;width:100%;text-align:left;background:{{ c.bg }};border:0;border-bottom:1px solid #2F3530;border-left:3px solid {{ c.edge }};color:#E8EAE6;padding:14px 16px;cursor:pointer" style-hover="background:#222623">
+                <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline"><span style="font-size:15px;font-weight:500">{{ c.name }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7E887E">{{ c.n }}</span></div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9AA09A;margin-top:5px">{{ c.phone }}</div>
+                <div style="display:flex;gap:8px;margin-top:9px;flex-wrap:wrap"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:{{ c.tCol }};border:1px solid {{ c.tCol }};padding:3px 7px">{{ c.type }}</span><span style="font-size:12px;color:#7E887E;align-self:center">{{ c.last }}</span></div>
+              </button>
+            </sc-for>
+            <sc-if value="{{ cli.empty }}" hint-placeholder-val="{{ false }}"><div style="padding:28px 16px;color:#7E887E;font-size:14px">No hay clientes con ese filtro.</div></sc-if>
+          </div>
+        </sc-if>
+        <sc-if value="{{ showPane }}" hint-placeholder-val="{{ true }}">
+          <div style="min-width:0;display:flex;flex-direction:column;gap:20px">
+            <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}"><button onClick="{{ back }}" style="align-self:flex-start;background:none;border:0;color:#9AA09A;padding:6px 0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em">← VOLVER A LA LISTA</button></sc-if>
+            <sc-if value="{{ cli.has }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <div style="border:1px solid #2F3530;background:#151816">
+                  <div style="padding:16px 20px;border-bottom:1px solid #2F3530;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+                    <div style="font-size:20px;font-weight:600">{{ cli.title }}</div>
+                    <span style="font-size:12px;color:#7E887E">{{ cli.saveHint }}</span>
+                  </div>
+                  <div style="padding:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px">
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">NOMBRE O RAZÓN SOCIAL *</span><input value="{{ cli.c.name }}" onChange="{{ cli.setName }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px"></label>
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">WHATSAPP *</span><input value="{{ cli.c.phone }}" onChange="{{ cli.setPhone }}" inputmode="tel" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px;font-family:'IBM Plex Mono',monospace"></label>
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">LOCALIDAD</span><input value="{{ cli.c.city }}" onChange="{{ cli.setCity }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px"></label>
+                    <div style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">TIPO</span><div style="display:flex;gap:6px"><sc-for list="{{ cli.types }}" as="m" hint-placeholder-count="2"><button onClick="{{ m.on }}" style="flex:1;background:{{ m.bg }};color:{{ m.col }};border:1px solid {{ m.bd }};padding:13px 8px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em">{{ m.t }}</button></sc-for></div></div>
+                    <sc-if value="{{ cli.isWs }}" hint-placeholder-val="{{ false }}"><label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">CUIT</span><input value="{{ cli.c.cuit }}" onChange="{{ cli.setCuit }}" placeholder="30-12345678-9" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px;font-family:'IBM Plex Mono',monospace"></label></sc-if>
+                    <label style="display:flex;flex-direction:column;gap:7px;grid-column:1/-1"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">NOTA INTERNA</span><input value="{{ cli.c.note }}" onChange="{{ cli.setNote }}" placeholder="Ej.: prefiere retirar en sucursal, pide factura A" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px"></label>
+                  </div>
+                  <sc-if value="{{ cli.isNew }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:0 20px 20px;display:flex;flex-direction:column;gap:10px">
+                      <sc-if value="{{ cli.err }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#E8B4A0">{{ cli.err }}</div></sc-if>
+                      <div style="display:flex;gap:10px;flex-wrap:wrap"><button onClick="{{ cli.create }}" style="background:#E3B23C;color:#0D0F0D;border:0;padding:16px 20px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;font-weight:500">GUARDAR CLIENTE</button><button onClick="{{ back }}" style="background:none;border:1px solid #2F3530;color:#C3C8C1;padding:16px 18px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em">CANCELAR</button></div>
+                    </div>
+                  </sc-if>
+                </div>
+                <sc-if value="{{ cli.isOld }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:20px">
+                    <div style="display:flex;gap:10px;flex-wrap:wrap">
+                      <a href="{{ cli.waUrl }}" target="_blank" rel="noopener" style="background:#25D366;color:#0D0F0D;padding:14px 18px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;font-weight:500" style-hover="background:#4BE283;color:#0D0F0D">ESCRIBIR POR WHATSAPP ↗</a>
+                      <button onClick="{{ cli.newOrder }}" style="background:none;border:1px solid #E3B23C;color:#E3B23C;padding:14px 16px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em">+ NUEVO PEDIDO PARA ESTE CLIENTE</button>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#2F3530;border:1px solid #2F3530">
+                      <div style="background:#222623;padding:14px 16px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#7E887E">PEDIDOS</div><div style="font-size:22px;font-weight:600;margin-top:6px">{{ cli.stats.n }}</div></div>
+                      <div style="background:#222623;padding:14px 16px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#7E887E">UNIDADES</div><div style="font-size:22px;font-weight:600;margin-top:6px">{{ cli.stats.u }}</div></div>
+                      <div style="background:#222623;padding:14px 16px"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#7E887E">ÚLTIMA COMPRA</div><div style="font-size:15px;font-weight:600;margin-top:10px">{{ cli.stats.last }}</div></div>
+                    </div>
+                    <div>
+                      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:#9AA09A;margin-bottom:10px">HISTORIAL DE PEDIDOS</div>
+                      <div style="border:1px solid #2F3530">
+                        <sc-for list="{{ cli.hist }}" as="h" hint-placeholder-count="2">
+                          <button onClick="{{ h.on }}" style="display:grid;grid-template-columns:1fr auto;gap:12px;width:100%;text-align:left;background:#151816;border:0;border-bottom:1px solid #2F3530;color:#E8EAE6;padding:14px 16px;cursor:pointer" style-hover="background:#222623">
+                            <div style="min-width:0"><div style="font-family:'IBM Plex Mono',monospace;font-size:13px">{{ h.code }} <span style="color:#7E887E;font-size:11px">· {{ h.date }}</span></div><div style="font-size:13px;color:#9AA09A;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ h.items }}</div></div>
+                            <span style="align-self:center;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:{{ h.stCol }};border:1px solid {{ h.stCol }};padding:3px 7px">{{ h.st }}</span>
+                          </button>
+                        </sc-for>
+                        <sc-if value="{{ cli.noHist }}" hint-placeholder-val="{{ false }}"><div style="padding:20px 16px;color:#7E887E;font-size:14px">Todavía no tiene pedidos cargados.</div></sc-if>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+            <sc-if value="{{ cli.none }}" hint-placeholder-val="{{ false }}"><div style="border:1px dashed #2F3530;padding:60px 20px;color:#7E887E;font-size:15px;text-align:center">Elegí un cliente para ver sus datos e historial.</div></sc-if>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- PRECIOS -->
+    <sc-if value="{{ tabPrecios }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <input value="{{ pr.q }}" onChange="{{ pr.setQ }}" placeholder="Buscar producto o SKU" style="flex:1 1 220px;background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:12px;font-size:14px">
+          <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ pr.cats }}" as="f" hint-placeholder-count="5"><button onClick="{{ f.on }}" style="background:{{ f.bg }};color:{{ f.col }};border:1px solid {{ f.bd }};padding:9px 10px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em">{{ f.t }}</button></sc-for></div>
+          <button onClick="{{ pr.toggleBulk }}" style="background:{{ pr.bulkBg }};color:{{ pr.bulkCol }};border:1px solid #E3B23C;padding:11px 14px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em">% AJUSTE MASIVO</button>
+        </div>
+
+        <sc-if value="{{ pr.bulkOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="border:1px solid #E3B23C;background:#1F1D16;display:flex;flex-direction:column">
+            <div style="padding:16px 20px;border-bottom:1px solid #3A3524"><div style="font-size:18px;font-weight:600">Ajuste masivo de precios</div><div style="font-size:14px;color:#9AA09A;margin-top:6px;line-height:1.6">Sube o baja un porcentaje a varios productos juntos, incluidos los precios por variante y talle. Se guarda como borrador: lo revisás antes de publicar.</div></div>
+            <div style="padding:18px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:18px">
+              <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#E3B23C">1 · ¿A QUÉ PRODUCTOS?</span><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ pr.bScopes }}" as="m" hint-placeholder-count="5"><button onClick="{{ m.on }}" style="background:{{ m.bg }};color:{{ m.col }};border:1px solid {{ m.bd }};padding:9px 10px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em">{{ m.t }}</button></sc-for></div></div>
+              <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#E3B23C">2 · ¿CUÁNTO?</span>
+                <div style="display:flex;gap:6px"><sc-for list="{{ pr.bDirs }}" as="m" hint-placeholder-count="2"><button onClick="{{ m.on }}" style="background:{{ m.bg }};color:{{ m.col }};border:1px solid {{ m.bd }};padding:12px 12px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em">{{ m.t }}</button></sc-for>
+                <div style="display:flex;align-items:center;border:1px solid #2F3530;background:#222623;flex:1;min-width:90px"><input value="{{ pr.bPct }}" onChange="{{ pr.setBPct }}" inputmode="decimal" placeholder="0" style="width:100%;background:none;border:0;color:#E8EAE6;padding:12px;font-size:16px;font-family:'IBM Plex Mono',monospace"><span style="padding-right:12px;color:#9AA09A;font-family:'IBM Plex Mono',monospace">%</span></div></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#E3B23C">3 · REDONDEO</span><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ pr.bRounds }}" as="m" hint-placeholder-count="4"><button onClick="{{ m.on }}" style="background:{{ m.bg }};color:{{ m.col }};border:1px solid {{ m.bd }};padding:9px 10px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em">{{ m.t }}</button></sc-for></div></div>
+            </div>
+            <sc-if value="{{ pr.hasPreview }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 20px 18px;display:flex;flex-direction:column;gap:8px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#E3B23C">4 · REVISÁ CÓMO QUEDA ({{ pr.bCount }} PRODUCTOS)</span>
+                <div style="border:1px solid #3A3524;max-height:260px;overflow:auto">
+                  <sc-for list="{{ pr.preview }}" as="pv" hint-placeholder-count="0">
+                    <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center;padding:9px 14px;border-bottom:1px solid #2A2820;font-size:14px"><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ pv.n }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7E887E;text-decoration:line-through">{{ pv.a }}</span><span style="color:#7E887E">→</span><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E3B23C">{{ pv.b }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+            <div style="padding:16px 20px;border-top:1px solid #3A3524;display:flex;gap:10px;flex-wrap:wrap">
+              <button onClick="{{ pr.applyBulk }}" style="background:{{ pr.applyBg }};color:#0D0F0D;border:0;padding:15px 18px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;font-weight:500">APLICAR AL BORRADOR</button>
+              <button onClick="{{ pr.toggleBulk }}" style="background:none;border:1px solid #3A3524;color:#9AA09A;padding:15px 16px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em">CERRAR</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <div style="border:1px solid #2F3530;background:#151816">
+          <sc-if value="{{ D }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:56px minmax(0,1fr) 180px 150px;gap:16px;padding:10px 16px;border-bottom:1px solid #2F3530;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:#7E887E"><span></span><span>PRODUCTO</span><span>PRECIO DE LISTA</span><span>VARIANTES</span></div>
+          </sc-if>
+          <sc-for list="{{ pr.rows }}" as="r" hint-placeholder-count="6">
+            <div style="border-bottom:1px solid #2F3530;border-left:3px solid {{ r.edge }}">
+              <div style="display:grid;grid-template-columns:{{ pr.rowCols }};gap:12px 16px;align-items:center;padding:12px 16px">
+                <div style="width:56px;height:56px;background:#222623 center/cover no-repeat;background-image:{{ r.bgImg }}"></div>
+                <div style="min-width:0"><div style="font-size:15px;font-weight:500">{{ r.name }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;color:#7E887E;margin-top:4px">{{ r.sku }} · {{ r.cat }}</div><sc-if value="{{ r.changed }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#E3B23C;margin-top:5px">Publicado: {{ r.before }}</div></sc-if></div>
+                <div style="display:flex;align-items:center;border:1px solid {{ r.inBd }};background:#222623;grid-column:{{ pr.priceCol }}"><span style="padding-left:12px;color:#7E887E;font-family:'IBM Plex Mono',monospace">$</span><input value="{{ r.price }}" onChange="{{ r.setPrice }}" inputmode="numeric" style="width:100%;background:none;border:0;color:#E8EAE6;padding:12px 10px;font-size:16px;font-family:'IBM Plex Mono',monospace"></div>
+                <div style="grid-column:{{ pr.varCol }}"><sc-if value="{{ r.hasVar }}" hint-placeholder-val="{{ false }}"><button onClick="{{ r.toggle }}" style="width:100%;background:none;border:1px solid #2F3530;color:{{ r.varCol }};padding:12px 10px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-align:left" style-hover="border-color:#9AA09A">{{ r.varLabel }}</button></sc-if><sc-if value="{{ r.noVar }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:#5E665E">Única variante</span></sc-if></div>
+              </div>
+              <sc-if value="{{ r.open }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:4px 16px 16px;display:flex;flex-direction:column;gap:10px">
+                  <div style="font-size:13px;color:#9AA09A;line-height:1.6">Dejá el campo vacío para usar el precio de lista. Completalo solo si esa variante o ese talle cuesta distinto.</div>
+                  <sc-for list="{{ r.vars }}" as="vv" hint-placeholder-count="0">
+                    <div style="border:1px solid #2F3530;background:#1C201D;padding:12px 14px;display:flex;flex-direction:column;gap:10px">
+                      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+                        <span style="width:14px;height:14px;background:{{ vv.sw }};border:1px solid #3E453E;flex-shrink:0"></span>
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;flex:1 1 140px">{{ vv.n }}</span>
+                        <div style="display:flex;align-items:center;border:1px solid {{ vv.inBd }};background:#222623;width:180px"><span style="padding-left:10px;color:#7E887E;font-family:'IBM Plex Mono',monospace;font-size:13px">$</span><input value="{{ vv.price }}" onChange="{{ vv.setPrice }}" placeholder="{{ vv.ph }}" inputmode="numeric" style="width:100%;background:none;border:0;color:#E8EAE6;padding:10px 8px;font-size:14px;font-family:'IBM Plex Mono',monospace"></div>
+                      </div>
+                      <sc-if value="{{ vv.hasSizes }}" hint-placeholder-val="{{ false }}">
+                        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:6px">
+                          <sc-for list="{{ vv.sizes }}" as="sz" hint-placeholder-count="0">
+                            <label style="display:flex;align-items:center;border:1px solid {{ sz.bd }};background:#222623"><span style="padding:0 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9AA09A;border-right:1px solid #2F3530;align-self:stretch;display:flex;align-items:center">{{ sz.z }}</span><input value="{{ sz.val }}" onChange="{{ sz.on }}" placeholder="{{ sz.ph }}" inputmode="numeric" style="width:100%;min-width:0;background:none;border:0;color:#E8EAE6;padding:9px 6px;font-size:12px;font-family:'IBM Plex Mono',monospace"></label>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+          <sc-if value="{{ pr.empty }}" hint-placeholder-val="{{ false }}"><div style="padding:28px 16px;color:#7E887E;font-size:14px">No hay productos con ese filtro.</div></sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- PRODUCTOS -->
+    <sc-if value="{{ tabProductos }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:{{ mdCols }};gap:22px;align-items:start">
+        <sc-if value="{{ showList }}" hint-placeholder-val="{{ true }}">
+          <div style="border:1px solid #2F3530;background:#151816;min-width:0">
+            <div style="padding:14px;border-bottom:1px solid #2F3530;display:flex;flex-direction:column;gap:10px">
+              <input value="{{ pd.q }}" onChange="{{ pd.setQ }}" placeholder="Buscar producto o SKU" style="width:100%;background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:12px;font-size:14px">
+              <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ pd.cats }}" as="f" hint-placeholder-count="5"><button onClick="{{ f.on }}" style="background:{{ f.bg }};color:{{ f.col }};border:1px solid {{ f.bd }};padding:7px 9px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em">{{ f.t }}</button></sc-for></div>
+            </div>
+            <sc-for list="{{ pd.list }}" as="p" hint-placeholder-count="5">
+              <button onClick="{{ p.on }}" style="display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:center;width:100%;text-align:left;background:{{ p.bg }};border:0;border-bottom:1px solid #2F3530;border-left:3px solid {{ p.edge }};color:#E8EAE6;padding:12px 14px;cursor:pointer" style-hover="background:#222623">
+                <div style="width:52px;height:52px;background:#222623 center/cover no-repeat;background-image:{{ p.bgImg }};opacity:{{ p.op }}"></div>
+                <div style="min-width:0">
+                  <div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;align-items:center">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7E887E">{{ p.meta }}</span>
+                    <sc-if value="{{ p.hidden }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;color:#9AA09A;border:1px solid #3E453E;padding:2px 5px">OCULTO</span></sc-if>
+                    <sc-if value="{{ p.hasOut }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;color:#E8B4A0;border:1px solid #5A3A30;padding:2px 5px">{{ p.outTxt }}</span></sc-if>
+                    <sc-if value="{{ p.changed }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;color:#E3B23C">● SIN PUBLICAR</span></sc-if>
+                  </div>
+                </div>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ showPane }}" hint-placeholder-val="{{ true }}">
+          <div style="min-width:0;display:flex;flex-direction:column;gap:18px">
+            <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}"><button onClick="{{ back }}" style="align-self:flex-start;background:none;border:0;color:#9AA09A;padding:6px 0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em">← VOLVER A LA LISTA</button></sc-if>
+            <sc-if value="{{ pd.has }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+                  <div style="font-size:22px;font-weight:600;letter-spacing:-.01em;min-width:0">{{ pd.p.name }}</div>
+                  <button onClick="{{ pd.toggleVis }}" style="display:flex;align-items:center;gap:10px;background:none;border:1px solid #2F3530;color:#E8EAE6;padding:10px 12px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em"><span style="width:34px;height:18px;background:{{ pd.visBg }};position:relative;display:block"><span style="position:absolute;top:2px;left:{{ pd.visX }};width:14px;height:14px;background:#0D0F0D"></span></span>{{ pd.visLabel }}</button>
+                </div>
+
+                <div style="border:1px solid #2F3530;background:#151816">
+                  <div style="padding:14px 18px;border-bottom:1px solid #2F3530;display:flex;gap:10px;align-items:center"><span style="width:22px;height:22px;background:#E3B23C;color:#0D0F0D;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px">1</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em">DATOS BÁSICOS</span></div>
+                  <div style="padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px">
+                    <label style="display:flex;flex-direction:column;gap:7px;grid-column:1/-1"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">NOMBRE DEL PRODUCTO</span><input value="{{ pd.p.name }}" onChange="{{ pd.setName }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px"><span style="font-size:12px;color:#7E887E">Usá el nombre que buscaría un cliente: tipo + modelo + color.</span></label>
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">CATEGORÍA</span><select value="{{ pd.p.cat }}" onChange="{{ pd.setCat }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 10px;font-size:14px"><sc-for list="{{ pd.catOpts }}" as="co" hint-placeholder-count="0"><option value="{{ co }}">{{ co }}</option></sc-for></select></label>
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">SUBCATEGORÍA</span><input value="{{ pd.p.sub }}" onChange="{{ pd.setSub }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px"></label>
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">SKU BASE</span><input value="{{ pd.p.sku }}" onChange="{{ pd.setSku }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px;font-family:'IBM Plex Mono',monospace"></label>
+                    <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">TALLES (SEPARADOS POR COMA)</span><input value="{{ pd.sizesRaw }}" onChange="{{ pd.setSizesRaw }}" onBlur="{{ pd.commitSizes }}" placeholder="Sin talles" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px;font-family:'IBM Plex Mono',monospace"></label>
+                  </div>
+                </div>
+
+                <div style="border:1px solid #2F3530;background:#151816">
+                  <div style="padding:14px 18px;border-bottom:1px solid #2F3530;display:flex;gap:10px;align-items:center"><span style="width:22px;height:22px;background:#E3B23C;color:#0D0F0D;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px">2</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em">DESCRIPCIÓN</span></div>
+                  <div style="padding:18px;display:flex;flex-direction:column;gap:8px">
+                    <textarea value="{{ pd.p.desc }}" onChange="{{ pd.setDesc }}" rows="6" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px;line-height:1.6;resize:vertical"></textarea>
+                    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:#7E887E"><span>La primera frase es la que leen Google y los asistentes de IA: decí qué es y para qué sirve. Solo datos confirmados.</span><span style="font-family:'IBM Plex Mono',monospace;color:{{ pd.lenCol }}">{{ pd.len }} caracteres</span></div>
+                  </div>
+                </div>
+
+                <div style="border:1px solid #2F3530;background:#151816">
+                  <div style="padding:14px 18px;border-bottom:1px solid #2F3530;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap"><div style="display:flex;gap:10px;align-items:center"><span style="width:22px;height:22px;background:#E3B23C;color:#0D0F0D;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px">3</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em">VARIANTES, FOTOS Y DISPONIBILIDAD</span></div><button onClick="{{ pd.addVar }}" style="background:none;border:1px solid #2F3530;color:#C3C8C1;padding:9px 11px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em" style-hover="border-color:#E3B23C;color:#E3B23C">+ VARIANTE</button></div>
+                  <div style="padding:18px;display:flex;flex-direction:column;gap:14px">
+                    <sc-for list="{{ pd.vars }}" as="vv" hint-placeholder-count="2">
+                      <div style="border:1px solid #2F3530;background:#1C201D;display:flex;flex-direction:column">
+                        <div style="display:grid;grid-template-columns:44px repeat(auto-fit,minmax(min(100%,160px),1fr)) auto;gap:10px;align-items:end;padding:14px">
+                          <label style="display:flex;flex-direction:column;gap:7px"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:#7E887E">COLOR</span><input type="color" value="{{ vv.sw }}" onChange="{{ vv.setSw }}" style="width:44px;height:44px;padding:0;border:1px solid #2F3530;background:none;cursor:pointer"></label>
+                          <label style="display:flex;flex-direction:column;gap:7px;min-width:0"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:#7E887E">NOMBRE DE LA VARIANTE</span><input value="{{ vv.n }}" onChange="{{ vv.setN }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:12px 10px;font-size:14px;font-family:'IBM Plex Mono',monospace;min-width:0"></label>
+                          <label style="display:flex;flex-direction:column;gap:7px;min-width:0"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:#7E887E">SKU</span><input value="{{ vv.sku }}" onChange="{{ vv.setSku }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:12px 10px;font-size:14px;font-family:'IBM Plex Mono',monospace;min-width:0"></label>
+                          <button onClick="{{ vv.rm }}" style="background:none;border:1px solid #2F3530;color:#7E887E;padding:12px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em" style-hover="border-color:#E8B4A0;color:#E8B4A0">QUITAR</button>
+                        </div>
+                        <div style="padding:0 14px 14px;display:flex;flex-direction:column;gap:8px">
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:#7E887E">FOTOS · LA PRIMERA ES LA PRINCIPAL</span>
+                          <div style="display:flex;flex-wrap:wrap;gap:8px">
+                            <sc-for list="{{ vv.imgs }}" as="im" hint-placeholder-count="0">
+                              <div style="width:84px;display:flex;flex-direction:column;gap:4px">
+                                <div style="width:84px;height:84px;background:#222623 center/cover no-repeat;background-image:{{ im.bg }};border:1px solid {{ im.bd }};position:relative"><sc-if value="{{ im.first }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;left:0;top:0;background:#E3B23C;color:#0D0F0D;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;padding:2px 4px">PRINCIPAL</span></sc-if></div>
+                                <div style="display:flex;justify-content:space-between"><button onClick="{{ im.left }}" style="background:none;border:0;color:#9AA09A;cursor:pointer;padding:4px 6px;font-size:13px">←</button><button onClick="{{ im.rm }}" style="background:none;border:0;color:#9AA09A;cursor:pointer;padding:4px 6px;font-size:13px" style-hover="color:#E8B4A0">×</button><button onClick="{{ im.right }}" style="background:none;border:0;color:#9AA09A;cursor:pointer;padding:4px 6px;font-size:13px">→</button></div>
+                              </div>
+                            </sc-for>
+                            <label style="width:84px;height:84px;border:1px dashed #3E453E;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:#9AA09A;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em" style-hover="border-color:#E3B23C;color:#E3B23C"><span style="font-size:20px">+</span>FOTO<input type="file" accept="image/*" multiple="multiple" onChange="{{ vv.addImg }}" style="display:none"></label>
+                          </div>
+                        </div>
+                        <div style="padding:12px 14px;border-top:1px solid #2F3530;display:flex;flex-direction:column;gap:8px">
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:#7E887E">{{ vv.avHint }}</span>
+                          <sc-if value="{{ vv.hasSizes }}" hint-placeholder-val="{{ false }}">
+                            <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ vv.av }}" as="a" hint-placeholder-count="0"><button onClick="{{ a.on }}" style="min-width:52px;background:{{ a.bg }};color:{{ a.col }};border:1px solid {{ a.bd }};padding:10px 8px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;text-decoration:{{ a.td }}">{{ a.z }}</button></sc-for></div>
+                          </sc-if>
+                          <sc-if value="{{ vv.noSizes }}" hint-placeholder-val="{{ false }}">
+                            <div style="display:flex;gap:6px;max-width:340px"><sc-for list="{{ vv.av1 }}" as="a" hint-placeholder-count="2"><button onClick="{{ a.on }}" style="flex:1;background:{{ a.bg }};color:{{ a.col }};border:1px solid {{ a.bd }};padding:11px 8px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em">{{ a.t }}</button></sc-for></div>
+                          </sc-if>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+                  <span style="font-size:13px;color:#7E887E">El precio se edita en la pestaña Precios.</span>
+                  <button onClick="{{ pd.del }}" style="background:none;border:0;color:#9AA09A;padding:6px 0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em" style-hover="color:#E8B4A0">ELIMINAR PRODUCTO</button>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ pd.none }}" hint-placeholder-val="{{ false }}"><div style="border:1px dashed #2F3530;padding:60px 20px;color:#7E887E;font-size:15px;text-align:center">Elegí un producto para editar textos, fotos, SKU y disponibilidad.</div></sc-if>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- MAYORISTAS -->
+    <sc-if value="{{ tabMayoristas }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:{{ wsCols }};gap:22px;align-items:start">
+        <div style="border:1px solid #2F3530;background:#151816;min-width:0">
+          <div style="padding:14px 18px;border-bottom:1px solid #2F3530;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em">CONDICIONES DE VENTA MAYORISTA</div>
+          <div style="padding:18px;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">PEDIDO MÍNIMO (UNIDADES)</span>
+              <div style="display:flex;align-items:stretch;width:max-content;border:1px solid #2F3530"><button onClick="{{ ws.dec }}" style="width:52px;background:#222623;border:0;color:#E8EAE6;font-size:20px;cursor:pointer">−</button><div style="width:72px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:20px;border-left:1px solid #2F3530;border-right:1px solid #2F3530">{{ ws.min }}</div><button onClick="{{ ws.inc }}" style="width:52px;background:#222623;border:0;color:#E8EAE6;font-size:20px;cursor:pointer">+</button></div>
+              <span style="font-size:12px;color:#7E887E">Se pueden combinar productos, colores y talles para llegar al mínimo.</span></div>
+            <label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">AVISO DE ENVÍO</span><input value="{{ ws.ship }}" onChange="{{ ws.setShip }}" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px"></label>
+            <label style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">TEXTO DE CONDICIONES</span><textarea value="{{ ws.note }}" onChange="{{ ws.setNote }}" rows="4" style="background:#222623;border:1px solid #2F3530;color:#E8EAE6;padding:13px 12px;font-size:15px;line-height:1.6;resize:vertical"></textarea></label>
+            <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#9AA09A">ASÍ LO VE EL CLIENTE EN CADA FICHA</span>
+              <div style="border:1px solid #3A3524;background:#1F1D16;padding:16px;display:flex;flex-direction:column;gap:8px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#E3B23C">VENTA MAYORISTA · MÍNIMO {{ ws.min }} UNIDADES</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:#C3C8C1">ENVÍO: {{ ws.shipUp }}</div><div style="font-size:13px;line-height:1.6;color:#9AA09A">{{ ws.note }}</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="border:1px solid #2F3530;background:#151816;min-width:0">
+          <div style="padding:14px 18px;border-bottom:1px solid #2F3530;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em">CLIENTES MAYORISTAS · {{ ws.count }}</span><button onClick="{{ ws.newClient }}" style="background:none;border:1px solid #E3B23C;color:#E3B23C;padding:9px 11px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em">+ NUEVO MAYORISTA</button></div>
+          <sc-for list="{{ ws.clients }}" as="c" hint-placeholder-count="2">
+            <button onClick="{{ c.on }}" style="display:grid;grid-template-columns:1fr auto;gap:12px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid #2F3530;color:#E8EAE6;padding:14px 18px;cursor:pointer" style-hover="background:#222623">
+              <div style="min-width:0"><div style="font-size:15px;font-weight:500">{{ c.name }}</div><div style="font-size:13px;color:#9AA09A;margin-top:4px">{{ c.sub }}</div></div>
+              <div style="text-align:right"><div style="font-family:'IBM Plex Mono',monospace;font-size:13px">{{ c.u }} u.</div><div style="font-size:12px;color:#7E887E;margin-top:4px">{{ c.n }}</div></div>
+            </button>
+          </sc-for>
+          <sc-if value="{{ ws.empty }}" hint-placeholder-val="{{ false }}"><div style="padding:24px 18px;color:#7E887E;font-size:14px">Todavía no hay clientes mayoristas.</div></sc-if>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ hasDraft }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:0;right:0;bottom:{{ draftBottom }};z-index:12;background:#221F16;border-top:1px solid #E3B23C">
+      <div style="max-width:1320px;margin:0 auto;padding:12px clamp(16px,3vw,28px);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+        <div style="min-width:0"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#E3B23C">● {{ draftTxt }}</div><div style="font-size:13px;color:#9AA09A;margin-top:3px">La web sigue mostrando la versión anterior hasta que publiques.</div></div>
+        <div style="display:flex;gap:8px"><button onClick="{{ askDiscard }}" style="background:none;border:1px solid #3A3524;color:#9AA09A;padding:12px 14px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em">DESCARTAR</button><button onClick="{{ openPub }}" style="background:#E3B23C;color:#0D0F0D;border:0;padding:12px 16px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;font-weight:500" style-hover="background:#F5D470">REVISAR Y PUBLICAR →</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ M }}" hint-placeholder-val="{{ false }}">
+    <nav style="position:fixed;left:0;right:0;bottom:0;z-index:13;background:#151816;border-top:1px solid #2F3530;display:grid;grid-template-columns:repeat(5,1fr);height:62px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+        <button onClick="{{ t.on }}" style="background:none;border:0;border-top:2px solid {{ t.bd }};color:{{ t.col }};cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative;padding:0 2px">
+          <span style="font-size:15px;line-height:1">{{ t.g }}</span>{{ t.s }}
+          <sc-if value="{{ t.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:7px;left:calc(50% + 8px);background:{{ t.bBg }};color:#0D0F0D;font-size:9px;min-width:16px;height:16px;padding:0 4px;display:flex;align-items:center;justify-content:center">{{ t.badge }}</span></sc-if>
+        </button>
+      </sc-for>
+    </nav>
+  </sc-if>
+
+  <sc-if value="{{ pubOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:30;background:rgba(8,10,9,.78);display:flex;align-items:center;justify-content:center;padding:16px">
+      <div style="width:100%;max-width:620px;max-height:88vh;display:flex;flex-direction:column;border:1px solid #2F3530;background:#1A1D1B">
+        <div style="padding:20px 22px;border-bottom:1px solid #2F3530"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:#E3B23C">REVISAR ANTES DE PUBLICAR</div><div style="font-size:22px;font-weight:600;margin-top:8px">{{ draftTxt }}</div><div style="font-size:14px;color:#9AA09A;margin-top:6px;line-height:1.6">Al publicar, estos cambios se ven en la web para todos los clientes.</div></div>
+        <div style="overflow:auto;flex:1">
+          <sc-for list="{{ changes }}" as="ch" hint-placeholder-count="0">
+            <div style="padding:14px 22px;border-bottom:1px solid #2F3530"><div style="font-size:15px;font-weight:500">{{ ch.t }}</div><div style="display:flex;flex-direction:column;gap:4px;margin-top:6px"><sc-for list="{{ ch.w }}" as="w" hint-placeholder-count="0"><div style="font-size:13px;color:#C3C8C1;font-family:'IBM Plex Mono',monospace">· {{ w }}</div></sc-for></div></div>
+          </sc-for>
+        </div>
+        <div style="padding:16px 22px;border-top:1px solid #2F3530;display:flex;gap:10px;flex-wrap:wrap"><button onClick="{{ publish }}" style="flex:1 1 220px;background:#E3B23C;color:#0D0F0D;border:0;padding:16px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;font-weight:500">PUBLICAR EN LA WEB</button><button onClick="{{ closePub }}" style="background:none;border:1px solid #2F3530;color:#C3C8C1;padding:16px 18px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em">SEGUIR EDITANDO</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ cfOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:31;background:rgba(8,10,9,.78);display:flex;align-items:center;justify-content:center;padding:16px">
+      <div style="width:100%;max-width:440px;border:1px solid #2F3530;background:#1A1D1B;padding:24px;display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:20px;font-weight:600">{{ cf.t }}</div>
+        <div style="font-size:14px;color:#9AA09A;line-height:1.6">{{ cf.d }}</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px"><button onClick="{{ cfOk }}" style="flex:1;background:{{ cf.bg }};color:#0D0F0D;border:0;padding:15px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;font-weight:500">{{ cf.ok }}</button><button onClick="{{ cfNo }}" style="flex:1;background:none;border:1px solid #2F3530;color:#C3C8C1;padding:15px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em">CANCELAR</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:50%;bottom:{{ toastBottom }};transform:translateX(-50%);background:#E8EAE6;color:#0D0F0D;padding:12px 18px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;z-index:40;max-width:calc(100vw - 32px);text-align:center">{{ toastText }}</div>
+  </sc-if>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const K = { pub:'tc2-pub', draft:'tc2-draft', orders:'tc2-orders', clients:'tc2-clients' };
+const PIN = '1234', SITE = 'tacticalcommand.com.ar/envios';
+const CATS = ['EQUIPOS TÁCTICOS','INDUMENTARIA','CALZADO','ACCESORIOS'];
+const CAT_SHORT = { 'EQUIPOS TÁCTICOS':'EQUIPOS', 'INDUMENTARIA':'INDUMENTARIA', 'CALZADO':'CALZADO', 'ACCESORIOS':'ACCESORIOS' };
+const STEPS = ['COMPRA CONFIRMADA','PREPARACIÓN','DESPACHADO DESDE RAFAELA','ENTREGADO'];
+const SHORT = ['CONFIRMADO','PREPARACIÓN','DESPACHADO','ENTREGADO'];
+const SCOL = ['#C3C8C1','#8FB3D9','#E3B23C','#7FB37F'];
+const NEXT = [
+  'Mandale al cliente su código de seguimiento (botón verde de abajo). Cuando empieces a armar el paquete, tocá “Marcar: Preparación”.',
+  'Estás armando el pedido. Cuando lo entregues al transporte, elegí la empresa, cargá el número de guía y tocá “Marcar: Despachado”.',
+  'El paquete está viajando. Cuando el cliente lo reciba o el transporte lo marque como entregado, tocá “Marcar: Entregado”.',
+  'Pedido cerrado. No hay nada más que hacer.'
+];
+const CARRIERS = { 'ANDREANI':'https://www.andreani.com/', 'OCA':'https://www.oca.com.ar/', 'CORREO ARGENTINO':'https://www.correoargentino.com.ar/formularios/e-commerce', 'VÍA CARGO':'https://www.viacargo.com.ar/', 'OTRO':'' };
+const MES = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+const WS0 = { min:8, ship:'A cargo del comprador · se cotiza por WhatsApp', note:'Pedido mínimo de 8 unidades, combinables entre productos, colores y talles. El precio final y el costo de envío se confirman por WhatsApp.' };
+const TABS = [
+  { k:'pedidos', t:'PEDIDOS', s:'PEDIDOS', g:'▤' },
+  { k:'clientes', t:'CLIENTES', s:'CLIENTES', g:'◉' },
+  { k:'precios', t:'PRECIOS', s:'PRECIOS', g:'$' },
+  { k:'productos', t:'PRODUCTOS', s:'PRODUCTOS', g:'▦' },
+  { k:'mayoristas', t:'MAYORISTAS', s:'MAYORISTAS', g:'⧉' }
+];
+const HEAD = {
+  pedidos:{ eyebrow:'PEDIDOS Y SEGUIMIENTO', title:'Pedidos', d:'Cargá cada compra confirmada por WhatsApp y avanzá sus pasos. El cliente ve el estado en la web con su código. Los cambios acá se guardan al instante.',
+    steps:['Cuando el cliente confirma por WhatsApp, tocá “+ Nuevo pedido”. El código se genera solo.','Avanzá el pedido con el botón dorado a medida que lo preparás y despachás. Al despachar, cargá transporte y guía.','Después de cada paso, mandá el aviso por WhatsApp: el mensaje ya viene escrito.'] },
+  clientes:{ eyebrow:'CLIENTES', title:'Clientes', d:'Todos los que compraron, con sus datos y su historial de pedidos. Se crean solos al cargar un pedido; también podés agregarlos a mano.',
+    steps:['Buscá por nombre, teléfono o localidad.','Tocá un cliente para ver o corregir sus datos. Los cambios se guardan al instante.','Desde la ficha del cliente podés escribirle o cargarle un pedido nuevo.'] },
+  precios:{ eyebrow:'PRECIOS', title:'Precios de lista', d:'Editá el precio de cada producto. Si una variante o un talle cuesta distinto, abrí “Variantes”. Nada cambia en la web hasta que toques “Publicar”.',
+    steps:['Escribí el nuevo precio en el recuadro. Se marca en dorado lo que cambiaste.','Para subir todo junto (por ejemplo +8% por inflación), usá “% Ajuste masivo”.','Revisá y tocá “Revisar y publicar” abajo. Hasta entonces la web muestra los precios anteriores.'] },
+  productos:{ eyebrow:'CATÁLOGO', title:'Productos', d:'Textos, fotos, SKU, variantes y disponibilidad de cada ficha. Los cambios quedan en borrador hasta que publiques.',
+    steps:['Elegí un producto de la lista.','Editá en orden: 1) datos básicos, 2) descripción, 3) variantes con sus fotos y talles disponibles.','Si un talle o color se agota, tocá el botón para marcarlo agotado. En la web aparece sin stock pero la ficha sigue visible.'] },
+  mayoristas:{ eyebrow:'VENTA MAYORISTA', title:'Mayoristas', d:'Condiciones que ven los compradores mayoristas en cada ficha y el listado de tus clientes mayoristas.',
+    steps:['Ajustá el mínimo de unidades con − y +.','Editá el aviso de envío y el texto de condiciones. Abajo ves cómo queda.','Publicá los cambios con la barra dorada.'] }
+};
+
+const clone = x => JSON.parse(JSON.stringify(x));
+const money = n => '$ ' + Math.round(n || 0).toLocaleString('es-AR');
+const num = s => parseInt(String(s).replace(/\D/g, ''), 10) || 0;
+const fmtN = n => n ? Number(n).toLocaleString('es-AR') : '';
+const dig = p => String(p || '').replace(/\D/g, '').slice(-10);
+const fmt = iso => { if (!iso) return ''; const d = new Date(iso), p = n => String(n).padStart(2, '0'); return p(d.getDate()) + ' ' + MES[d.getMonth()] + ' · ' + p(d.getHours()) + ':' + p(d.getMinutes()); };
+const fmtD = iso => iso ? fmt(iso).split(' · ')[0] : '—';
+const waNum = ph => { let d = String(ph).replace(/\D/g, ''); if (d.startsWith('549')) return d; if (d.startsWith('54')) d = d.slice(2); if (d.startsWith('0')) d = d.slice(1); return '549' + d; };
+const ago = h => new Date(Date.now() - h * 3600e3).toISOString();
+const CH = on => on ? { bg:'#E8EAE6', col:'#0D0F0D', bd:'#E8EAE6' } : { bg:'transparent', col:'#9AA09A', bd:'#2F3530' };
+const ls = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } };
+const effPrice = (p, v, z) => (v && z && v.sizePrice && v.sizePrice[z]) || (v && v.price) || p.price;
+const itemsTxt = o => o.items.map(i => i.qty + '× ' + i.n).join(' | ');
+const orderTotal = o => o.items.reduce((a, i) => a + i.qty * i.price, 0);
+const units = o => o.items.reduce((a, i) => a + i.qty, 0);
+
+const seedOrders = () => [
+  { code:'TC-2610-7KQ4', name:'Martín Gómez', phone:'3492 556677', items:[{n:'Uniforme Táctico · Gris Topo · Gabardina · Talle L',sku:'TC-UNI-GT-GB',qty:1,price:50000},{n:'Cinto Táctico Cobra · Negro',sku:'TC-CIN-COB-NG',qty:1,price:50000}], dest:'Córdoba Capital', mode:'SUCURSAL', type:'MINORISTA', note:'', stage:2, dates:[ago(70),ago(50),ago(5),null], notified:[true,true,false,false], carrier:'ANDREANI', guia:'360002481957' },
+  { code:'TC-2610-M9XZ', name:'Armería del Litoral', phone:'342 4123456', items:[{n:'Shemagh Táctico · Verde Militar',sku:'TC-SHE-001-VM',qty:4,price:50000},{n:'Shemagh Táctico · Negro',sku:'TC-SHE-001-NG',qty:4,price:50000},{n:'Sombrero de Monte Táctico · Woodland',sku:'TC-SOM-BOO-WD',qty:6,price:50000}], dest:'Santa Fe Capital', mode:'DOMICILIO', type:'MAYORISTA', note:'Factura A', stage:1, dates:[ago(26),ago(3),null,null], notified:[true,true,false,false], carrier:'', guia:'' },
+  { code:'TC-2610-P3HT', name:'Lucía Ferreyra', phone:'11 54321098', items:[{n:'Mochila Táctica Assault 50 L · Coyote',sku:'TC-MOC-050-AC',qty:1,price:50000}], dest:'La Plata, Buenos Aires', mode:'DOMICILIO', type:'MINORISTA', note:'', stage:0, dates:[ago(1),null,null,null], notified:[false,false,false,false], carrier:'', guia:'' },
+  { code:'TC-2609-B6RW', name:'Martín Gómez', phone:'3492 556677', items:[{n:'Campera Gore-Tex · Negro · Talle XL',sku:'TC-GTEX-001-NG',qty:1,price:189900}], dest:'Córdoba Capital', mode:'SUCURSAL', type:'MINORISTA', note:'', stage:3, dates:[ago(720),ago(700),ago(670),ago(600)], notified:[true,true,true,true], carrier:'CORREO ARGENTINO', guia:'CU123456789AR' }
+];
+const seedClients = () => [
+  { id:'c1', name:'Martín Gómez', phone:'3492 556677', city:'Córdoba Capital', type:'MINORISTA', cuit:'', note:'' },
+  { id:'c2', name:'Armería del Litoral', phone:'342 4123456', city:'Santa Fe Capital', type:'MAYORISTA', cuit:'30-71234567-8', note:'Factura A. Paga por transferencia.' },
+  { id:'c3', name:'Lucía Ferreyra', phone:'11 54321098', city:'La Plata, Buenos Aires', type:'MINORISTA', cuit:'', note:'' },
+  { id:'c4', name:'Outdoor Patagonia', phone:'294 4556677', city:'Bariloche, Río Negro', type:'MAYORISTA', cuit:'30-70998877-1', note:'Interesado en mochilas y shemagh.' }
+];
+const blankNF = () => ({ name:'', phone:'', dest:'', mode:'DOMICILIO', type:'MINORISTA', note:'', items:[], pSlug:'', pVar:'0', pSize:'', pQty:'1', err:'', pickErr:'', linked:false });
+
+class Component extends DCLogic {
+  state = { ready:false, unlocked:false, pin:'', pinErr:false, w:1200, tab:'pedidos', mob:'list', help:{}, toast:'',
+    pub:null, draft:null, orders:[], clients:[],
+    ped:{ sel:null, view:'none', filter:'ALL', q:'', carrier:'', guia:'', dispErr:false, editingGuia:false }, nf:blankNF(),
+    cli:{ sel:null, q:'', filter:'ALL', nc:null, err:'' },
+    pr:{ q:'', cat:'ALL', open:{}, bulk:false, bScope:'ALL', bDir:1, bPct:'', bRound:'100' },
+    pd:{ sel:null, q:'', cat:'ALL', sizesRaw:null },
+    pubOpen:false, cf:null };
+
+  async componentDidMount() {
+    if (!window.TC_SEED) await new Promise(r => { const s = document.createElement('script'); s.src = 'panel-seed.js'; s.onload = r; s.onerror = r; document.head.appendChild(s); });
+    const seed = { products: clone(window.TC_SEED || []), ws: clone(WS0) };
+    const pub = ls(K.pub, seed), draft = ls(K.draft, clone(pub));
+    let unlocked = false; try { unlocked = sessionStorage.getItem('tc-panel-ok') === '1'; } catch (e) {}
+    this.onR = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this.onR);
+    const orders = ls(K.orders, seedOrders()), D = window.innerWidth >= 900;
+    this.setState({ ready:true, pub, draft, orders, clients: ls(K.clients, seedClients()), w: window.innerWidth, unlocked,
+      ped:{ ...this.state.ped, sel: D && orders[0] ? orders[0].code : null, view: D && orders[0] ? 'detail' : 'none' } });
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onR); }
+
+  put(k, key, val) { this.setState({ [k]: val }); try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) { this.flash('SIN ESPACIO PARA GUARDAR (FOTOS MUY PESADAS)'); } }
+  setDraft(fn) { const d = clone(this.state.draft); fn(d); this.put('draft', K.draft, d); }
+  updP(slug, fn) { this.setDraft(d => { const p = d.products.find(x => x.slug === slug); if (p) fn(p); }); }
+  setOrders(o) { this.put('orders', K.orders, o); }
+  updO(code, fn) { this.setOrders(this.state.orders.map(o => o.code === code ? fn(clone(o)) : o)); }
+  setClients(c) { this.put('clients', K.clients, c); }
+  sub(k, patch) { this.setState(s => ({ [k]: { ...s[k], ...patch } })); }
+  flash(t) { this.setState({ toast:t }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast:'' }), 2200); }
+  copy(t, m) { try { navigator.clipboard.writeText(t); } catch (e) {} this.flash(m); }
+  ask(t, d, ok, fn, danger) { this.setState({ cf:{ t, d, ok, fn, bg: danger ? '#E8B4A0' : '#E3B23C' } }); }
+  goTab(k, extra) { this.setState({ tab:k, mob:'list', ...(extra || {}) }); window.scrollTo(0, 0); }
+
+  newCode() {
+    const d = new Date(), A = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', ym = String(d.getFullYear()).slice(2) + String(d.getMonth() + 1).padStart(2, '0');
+    let c; do { c = 'TC-' + ym + '-' + Array.from({ length:4 }, () => A[Math.floor(Math.random() * A.length)]).join(''); } while (this.state.orders.some(o => o.code === c));
+    return c;
+  }
+  msg(o, st) {
+    const n = o.name.split(' ')[0];
+    if (st === 0) return 'Hola ' + n + '! Confirmamos tu compra en Tactical Command.\nTu código de pedido es: ' + o.code + '\nPodés seguirlo en ' + SITE + ' con ese código y los últimos 4 dígitos de tu teléfono.';
+    if (st === 1) return 'Hola ' + n + '! Tu pedido ' + o.code + ' ya está en preparación. Te avisamos cuando salga de Rafaela.';
+    if (st === 2) return 'Hola ' + n + '! Tu pedido ' + o.code + ' fue despachado desde Rafaela por ' + o.carrier + '.\nNúmero de guía: ' + o.guia + '\nSeguimiento: ' + SITE;
+    return 'Hola ' + n + '! Tu pedido ' + o.code + ' figura como entregado. ¡Gracias por elegir Tactical Command!';
+  }
+  row(o) { return [o.code, fmt(o.dates[0]), o.name, o.phone, itemsTxt(o), o.dest, o.mode, o.type, SHORT[o.stage], o.carrier, o.guia, fmt(o.dates[1]), fmt(o.dates[2]), fmt(o.dates[3]), o.notified[o.stage] ? 'SÍ' : 'NO', orderTotal(o), o.note]; }
+
+  diff() {
+    const { pub, draft } = this.state, out = [];
+    if (!pub || !draft) return out;
+    draft.products.forEach(d => {
+      const p = pub.products.find(x => x.slug === d.slug), w = [];
+      if (!p) { out.push({ t:d.name, w:['Producto nuevo'] }); return; }
+      if (p.name !== d.name) w.push('Nombre: ' + p.name + ' → ' + d.name);
+      if (p.price !== d.price) w.push('Precio de lista: ' + money(p.price) + ' → ' + money(d.price));
+      if (p.visible !== d.visible) w.push(d.visible ? 'Ahora visible en la web' : 'Oculto en la web');
+      if (p.desc !== d.desc) w.push('Descripción editada');
+      if (p.cat !== d.cat || p.sub !== d.sub) w.push('Categoría: ' + d.cat + (d.sub ? ' / ' + d.sub : ''));
+      if (p.sku !== d.sku) w.push('SKU: ' + p.sku + ' → ' + d.sku);
+      if (JSON.stringify(p.sizes) !== JSON.stringify(d.sizes)) w.push('Talles: ' + (d.sizes.join(', ') || 'sin talles'));
+      d.variants.forEach((v, i) => {
+        const pv = p.variants[i];
+        if (!pv) { w.push('Variante nueva: ' + v.n); return; }
+        if (pv.price !== v.price) w.push(v.n + ': precio ' + (pv.price ? money(pv.price) : 'de lista') + ' → ' + (v.price ? money(v.price) : 'de lista'));
+        if (JSON.stringify(pv.sizePrice) !== JSON.stringify(v.sizePrice)) w.push(v.n + ': precios por talle');
+        if (JSON.stringify(pv.off) !== JSON.stringify(v.off) || pv.out !== v.out) w.push(v.n + ': disponibilidad');
+        if (JSON.stringify(pv.imgs) !== JSON.stringify(v.imgs)) w.push(v.n + ': fotos');
+        if (pv.n !== v.n || pv.sku !== v.sku || pv.sw !== v.sw) w.push(v.n + ': nombre, SKU o color');
+      });
+      if (p.variants.length > d.variants.length) w.push((p.variants.length - d.variants.length) + ' variante(s) quitada(s)');
+      if (w.length) out.push({ t:d.name, w });
+    });
+    pub.products.forEach(p => { if (!draft.products.find(x => x.slug === p.slug)) out.push({ t:p.name, w:['Producto eliminado'] }); });
+    const a = pub.ws, b = draft.ws, ww = [];
+    if (a.min !== b.min) ww.push('Mínimo: ' + a.min + ' → ' + b.min + ' unidades');
+    if (a.ship !== b.ship) ww.push('Aviso de envío editado');
+    if (a.note !== b.note) ww.push('Texto de condiciones editado');
+    if (ww.length) out.push({ t:'Condiciones mayoristas', w:ww });
+    return out;
+  }
+
+  renderVals() {
+    const s = this.state, D = s.w >= 900, v = {};
+    v.D = D; v.M = !D;
+    v.locked = !s.unlocked; v.unlocked = s.unlocked;
+    v.pin = s.pin; v.pinErr = s.pinErr;
+    v.setPin = e => this.setState({ pin:e.target.value, pinErr:false });
+    const unlock = () => { if (s.pin === PIN) { try { sessionStorage.setItem('tc-panel-ok', '1'); } catch (e) {} this.setState({ unlocked:true, pin:'' }); } else this.setState({ pinErr:true }); };
+    v.unlock = unlock; v.pinKey = e => { if (e.key === 'Enter') unlock(); };
+    if (!s.ready) { Object.assign(v, { tabs:[], head:HEAD.pedidos, ped:{ filters:[], list:[] }, cli:{}, pr:{ rows:[], cats:[] }, pd:{ list:[], cats:[] }, ws:{}, changes:[] }); return v; }
+
+    const pub = s.pub, draft = s.draft, orders = s.orders, clients = s.clients;
+    const changes = this.diff(), nCh = changes.reduce((a, c) => a + c.w.length, 0);
+    v.changes = changes; v.hasDraft = nCh > 0;
+    v.draftTxt = nCh + (nCh === 1 ? ' CAMBIO SIN PUBLICAR' : ' CAMBIOS SIN PUBLICAR');
+    v.syncLabel = nCh ? 'BORRADOR' : 'WEB AL DÍA'; v.syncCol = nCh ? '#E3B23C' : '#7FB37F';
+    v.draftBottom = D ? '0px' : '62px';
+    v.padBottom = (D ? 0 : 62) + (nCh ? 78 : 0) + 'px';
+    v.toastBottom = ((D ? 24 : 78) + (nCh ? 78 : 0)) + 'px';
+    v.openPub = () => this.setState({ pubOpen:true }); v.closePub = () => this.setState({ pubOpen:false }); v.pubOpen = s.pubOpen;
+    v.publish = () => { this.put('pub', K.pub, clone(draft)); this.setState({ pubOpen:false }); this.flash('CAMBIOS PUBLICADOS EN LA WEB'); };
+    v.askDiscard = () => this.ask('¿Descartar los cambios?', 'Se pierden los ' + nCh + ' cambios sin publicar y todo vuelve a como está en la web.', 'SÍ, DESCARTAR', () => { this.put('draft', K.draft, clone(pub)); this.sub('pd', { sizesRaw:null }); this.flash('CAMBIOS DESCARTADOS'); }, true);
+    v.cfOpen = !!s.cf; v.cf = s.cf || {};
+    v.cfOk = () => { const f = s.cf && s.cf.fn; this.setState({ cf:null }); if (f) f(); };
+    v.cfNo = () => this.setState({ cf:null });
+    v.toast = !!s.toast; v.toastText = s.toast;
+
+    const pendingN = orders.filter(o => !o.notified[o.stage]).length;
+    const chProd = new Set(changes.filter(c => c.t !== 'Condiciones mayoristas').map(c => c.t));
+    v.tabs = TABS.map(t => {
+      const on = s.tab === t.k;
+      let badge = 0, bBg = '#E3B23C';
+      if (t.k === 'pedidos') { badge = pendingN; bBg = '#E8B4A0'; }
+      if (t.k === 'precios' || t.k === 'productos') badge = chProd.size;
+      if (t.k === 'mayoristas') badge = changes.some(c => c.t === 'Condiciones mayoristas') ? 1 : 0;
+      return { ...t, col: on ? '#E8EAE6' : '#7E887E', bd: on ? '#E3B23C' : 'transparent', badge, hasBadge: badge > 0, bBg, on: () => this.goTab(t.k) };
+    });
+    ['Pedidos','Clientes','Precios','Productos','Mayoristas'].forEach(n => v['tab' + n] = s.tab === n.toLowerCase());
+    const h = HEAD[s.tab], helpOpen = s.help[s.tab] ?? false;
+    v.helpOpen = helpOpen; v.helpLabel = helpOpen ? 'OCULTAR AYUDA' : '? CÓMO FUNCIONA';
+    v.toggleHelp = () => this.setState({ help:{ ...s.help, [s.tab]: !helpOpen } });
+    v.head = { ...h, steps: h.steps.map((t, i) => ({ i: String(i + 1).padStart(2, '0'), t })), hasCta:false };
+
+    const inDetail = s.mob === 'detail';
+    v.mdCols = D ? 'minmax(300px,380px) minmax(0,1fr)' : 'minmax(0,1fr)';
+    v.showList = D || !inDetail; v.showPane = D || inDetail; v.showBack = !D && inDetail;
+    v.back = () => {
+      if (s.tab === 'pedidos') this.sub('ped', { view: D && s.ped.sel ? 'detail' : 'none' });
+      if (s.tab === 'clientes') this.sub('cli', { nc:null, err:'', sel: D ? s.cli.sel : null });
+      this.setState({ mob:'list' });
+    };
+    const open = (k, patch) => { this.sub(k, patch); this.setState({ mob:'detail' }); if (!D) window.scrollTo(0, 0); };
+
+    // PEDIDOS
+    if (s.tab === 'pedidos') {
+      const P = s.ped, ped = {};
+      v.head.hasCta = true; v.head.ctaLabel = '+ NUEVO PEDIDO';
+      v.head.cta = () => { this.setState({ nf:blankNF() }); open('ped', { view:'new' }); };
+      ped.q = P.q; ped.setQ = e => this.sub('ped', { q:e.target.value });
+      ped.pendingAny = pendingN > 0; ped.pendingTxt = pendingN + (pendingN === 1 ? ' PEDIDO SIN AVISAR AL CLIENTE' : ' PEDIDOS SIN AVISAR AL CLIENTE');
+      ped.showPending = () => this.sub('ped', { filter:'PEND' });
+      ped.filters = [['ALL','TODOS'],['PEND','SIN AVISAR']].concat(SHORT.map((t, i) => [i, t])).map(([k, t]) => ({ t, n: k === 'ALL' ? orders.length : k === 'PEND' ? pendingN : orders.filter(o => o.stage === k).length, ...CH(P.filter === k), on: () => this.sub('ped', { filter:k }) }));
+      const q = P.q.trim().toLowerCase(), qd = q.replace(/\D/g, '');
+      const list = orders.filter(o => (P.filter === 'ALL' || (P.filter === 'PEND' ? !o.notified[o.stage] : o.stage === P.filter)) && (!q || o.code.toLowerCase().includes(q) || o.name.toLowerCase().includes(q) || (qd.length > 2 && o.phone.replace(/\D/g, '').includes(qd))))
+        .sort((a, b) => (a.stage === 3) - (b.stage === 3) || new Date(b.dates[0]) - new Date(a.dates[0]));
+      ped.list = list.map(o => { const on = o.code === P.sel && P.view === 'detail'; return { code:o.code, name:o.name, items:itemsTxt(o), date:fmtD(o.dates[0]), st:SHORT[o.stage], stCol:SCOL[o.stage], ws:o.type === 'MAYORISTA', pending:!o.notified[o.stage], bg: on ? '#222623' : 'transparent', edge: on ? '#E3B23C' : 'transparent',
+        on: () => open('ped', { sel:o.code, view:'detail', carrier:'', guia:'', dispErr:false, editingGuia:false }) }; });
+      ped.empty = !list.length;
+      ped.isNew = P.view === 'new';
+      ped.none = D && P.view === 'none';
+
+      if (ped.isNew) {
+        const F = s.nf, nf = { ...F };
+        const setF = k => e => this.setState({ nf:{ ...s.nf, [k]: e.target.value, err:'', pickErr:'', ...(k === 'name' || k === 'phone' ? { linked:false } : {}) } });
+        nf.setName = setF('name'); nf.setPhone = setF('phone'); nf.setDest = setF('dest'); nf.setNote = setF('note');
+        nf.setPQty = setF('pQty'); nf.setPSize = setF('pSize'); nf.setPVar = e => this.setState({ nf:{ ...s.nf, pVar:e.target.value, pSize:'' } });
+        nf.setPSlug = e => this.setState({ nf:{ ...s.nf, pSlug:e.target.value, pVar:'0', pSize:'', pickErr:'' } });
+        const opt = (k, vals) => vals.map(t => ({ t, ...CH(F[k] === t), on: () => this.setState({ nf:{ ...s.nf, [k]: t } }) }));
+        nf.modes = opt('mode', ['DOMICILIO','SUCURSAL']); nf.types = opt('type', ['MINORISTA','MAYORISTA']);
+        const qn = F.name.trim().toLowerCase(), qp = dig(F.phone);
+        const sugg = F.linked ? [] : clients.filter(c => (qn.length > 1 && c.name.toLowerCase().includes(qn)) || (qp.length > 3 && dig(c.phone).includes(qp))).slice(0, 3);
+        nf.hasSugg = sugg.length > 0;
+        nf.sugg = sugg.map(c => ({ t: c.name + ' · ' + c.phone, on: () => this.setState({ nf:{ ...s.nf, name:c.name, phone:c.phone, dest:c.city || s.nf.dest, type:c.type, linked:true } }) }));
+        const prods = pub.products.filter(p => p.visible);
+        nf.prodOpts = prods.map(p => ({ v:p.slug, t:p.name }));
+        const pp = prods.find(p => p.slug === F.pSlug), pv = pp && pp.variants[+F.pVar];
+        nf.hasVarSel = !!pp && pp.variants.length > 1;
+        nf.varOpts = pp ? pp.variants.map((x, i) => ({ v:String(i), t:x.n + (x.out ? ' (agotado)' : '') })) : [];
+        nf.hasSizeSel = !!pp && pp.sizes.length > 0;
+        nf.sizeOpts = pp ? pp.sizes.map(z => ({ v:z, t:z + (pv && pv.off.includes(z) ? ' (agotado)' : '') })) : [];
+        nf.pickCols = D ? 'minmax(0,2fr)' + (nf.hasVarSel ? ' minmax(0,1.3fr)' : '') + (nf.hasSizeSel ? ' 90px' : '') + ' auto auto' : 'minmax(0,1fr) auto auto';
+        nf.addItem = () => {
+          if (!pp) return this.setState({ nf:{ ...s.nf, pickErr:'Elegí un producto.' } });
+          if (pp.sizes.length && !F.pSize) return this.setState({ nf:{ ...s.nf, pickErr:'Elegí el talle.' } });
+          const qty = Math.max(1, num(F.pQty));
+          const n = pp.name + (pp.variants.length > 1 ? ' · ' + cap(pv.n) : '') + (F.pSize ? ' · Talle ' + F.pSize : '');
+          this.setState({ nf:{ ...s.nf, items: s.nf.items.concat([{ n, sku:pv.sku, qty, price:effPrice(pp, pv, F.pSize) }]), pSlug:'', pVar:'0', pSize:'', pQty:'1', pickErr:'' } });
+        };
+        nf.hasItems = F.items.length > 0;
+        nf.items = F.items.map((it, i) => ({ ...it, sub:money(it.qty * it.price), rm: () => this.setState({ nf:{ ...s.nf, items: s.nf.items.filter((_, j) => j !== i) } }) }));
+        const u = F.items.reduce((a, i) => a + i.qty, 0);
+        nf.units = u; nf.total = money(F.items.reduce((a, i) => a + i.qty * i.price, 0));
+        nf.wsMin = pub.ws.min; nf.wsWarn = F.type === 'MAYORISTA' && F.items.length > 0 && u < pub.ws.min;
+        nf.save = () => {
+          const miss = [];
+          if (!F.name.trim()) miss.push('nombre'); if (dig(F.phone).length < 8) miss.push('WhatsApp válido'); if (!F.items.length) miss.push('al menos un producto');
+          if (miss.length) return this.setState({ nf:{ ...s.nf, err:miss.join(', ') + '.' } });
+          const o = { code:this.newCode(), name:F.name.trim(), phone:F.phone.trim(), items:F.items, dest:F.dest.trim(), mode:F.mode, type:F.type, note:F.note.trim(), stage:0, dates:[new Date().toISOString(),null,null,null], notified:[false,false,false,false], carrier:'', guia:'' };
+          this.setOrders([o].concat(orders));
+          if (!clients.some(c => dig(c.phone) === dig(o.phone))) this.setClients(clients.concat([{ id:'c' + Date.now(), name:o.name, phone:o.phone, city:o.dest, type:o.type, cuit:'', note:'' }]));
+          this.sub('ped', { sel:o.code, view:'detail', filter:'ALL' });
+          this.flash('PEDIDO ' + o.code + ' CREADO · AHORA AVISALE AL CLIENTE');
+        };
+        v.nf = nf;
+      } else v.nf = { modes:[], types:[], sugg:[], prodOpts:[], varOpts:[], sizeOpts:[], items:[] };
+
+      const o = P.view === 'detail' ? orders.find(x => x.code === P.sel) : null;
+      ped.hasOrder = !!o;
+      if (o) {
+        v.o = { ...o, created:fmtD(o.dates[0]), destLine:[o.dest || 'Sin cargar', o.mode].join(' · '), hasNote:!!o.note, hasTrack:o.stage >= 2 && !!o.guia && !P.editingGuia, carrierUrl:CARRIERS[o.carrier] || '#',
+          lines:o.items.map(i => ({ ...i, sub:money(i.qty * i.price) })), total:money(orderTotal(o)) };
+        ped.next = NEXT[o.stage];
+        ped.steps = STEPS.map((t, i) => { const done = i < o.stage, cur = i === o.stage;
+          return { t, date: o.dates[i] ? fmt(o.dates[i]) : 'PENDIENTE', mark: done || (cur && o.stage === 3) ? '✓' : String(i + 1),
+            mCol: done ? '#4A5D4B' : cur ? '#E3B23C' : '#3E453E', mBg: cur ? '#E3B23C' : 'transparent', mFg: cur ? '#0D0F0D' : done ? '#7FB37F' : '#5A615A',
+            col: cur ? '#E8EAE6' : done ? '#9AA09A' : '#5A615A', av: i <= o.stage ? (o.notified[i] ? 'AVISADO' : 'SIN AVISAR') : '', avCol: o.notified[i] ? '#7E887E' : '#E8B4A0' }; });
+        ped.needAviso = !o.notified[o.stage] && !P.editingGuia;
+        ped.avisoMsg = this.msg(o, o.stage);
+        ped.avisoUrl = 'https://wa.me/' + waNum(o.phone) + '?text=' + encodeURIComponent(ped.avisoMsg);
+        ped.markAviso = () => { this.updO(o.code, x => { x.notified[x.stage] = true; return x; }); this.flash('MARCADO COMO AVISADO'); };
+        const toDisp = o.stage === 1;
+        ped.showDispatch = toDisp || P.editingGuia;
+        ped.carriers = Object.keys(CARRIERS).map(t => ({ t, ...CH(P.carrier === t), col: P.carrier === t ? '#0D0F0D' : '#C3C8C1', on: () => this.sub('ped', { carrier:t, dispErr:false }) }));
+        ped.guia = P.guia; ped.setGuia = e => this.sub('ped', { guia:e.target.value, dispErr:false }); ped.dispErr = P.dispErr;
+        ped.canAdvance = o.stage < 3 && !P.editingGuia;
+        ped.advanceLabel = 'MARCAR: ' + STEPS[o.stage + 1] + ' →';
+        ped.advance = () => {
+          if (toDisp && (!P.carrier || !P.guia.trim())) return this.sub('ped', { dispErr:true });
+          const nx = STEPS[o.stage + 1];
+          this.ask('¿Marcar “' + nx + '”?', 'El cliente lo va a ver en la web con su código. Después te ofrecemos el mensaje de aviso por WhatsApp.', 'SÍ, MARCAR', () => {
+            this.updO(o.code, x => { x.stage++; x.dates[x.stage] = new Date().toISOString(); x.notified[x.stage] = false; if (toDisp) { x.carrier = P.carrier; x.guia = P.guia.trim(); } return x; });
+            this.sub('ped', { carrier:'', guia:'', dispErr:false }); this.flash('PASO ACTUALIZADO · FALTA AVISAR');
+          });
+        };
+        ped.canBack = o.stage > 0 && !P.editingGuia;
+        ped.stepBack = () => this.ask('¿Deshacer el último paso?', 'El pedido vuelve a “' + STEPS[o.stage - 1] + '”. Usalo solo si te equivocaste.', 'SÍ, DESHACER', () => this.updO(o.code, x => { x.dates[x.stage] = null; x.notified[x.stage] = false; x.stage--; if (x.stage < 2) { x.carrier = ''; x.guia = ''; } return x; }), true);
+        ped.editingGuia = P.editingGuia;
+        ped.editGuia = () => this.sub('ped', { editingGuia:true, carrier:o.carrier, guia:o.guia, dispErr:false });
+        ped.saveGuia = () => { if (!P.carrier || !P.guia.trim()) return this.sub('ped', { dispErr:true }); this.updO(o.code, x => { x.carrier = P.carrier; x.guia = P.guia.trim(); return x; }); this.sub('ped', { editingGuia:false }); this.flash('GUÍA CORREGIDA'); };
+        ped.copyCode = () => this.copy(o.code, 'CÓDIGO COPIADO');
+        ped.resend = () => window.open('https://wa.me/' + waNum(o.phone) + '?text=' + encodeURIComponent(this.msg(o, 0)), '_blank');
+        ped.copyRow = () => this.copy(this.row(o).join('\t'), 'FILA COPIADA · PEGALA EN SHEETS');
+        ped.goClient = () => { const c = clients.find(c => dig(c.phone) === dig(o.phone)); if (c) { this.goTab('clientes'); this.sub('cli', { sel:c.id, nc:null }); this.setState({ mob:'detail' }); } };
+      } else { v.o = { lines:[] }; ped.steps = []; ped.carriers = []; }
+      v.ped = ped;
+    } else { v.ped = { filters:[], list:[], steps:[], carriers:[] }; v.o = { lines:[] }; v.nf = { modes:[], types:[], sugg:[], prodOpts:[], varOpts:[], sizeOpts:[], items:[] }; }
+
+    // CLIENTES
+    const ordersOf = c => orders.filter(o => dig(o.phone) === dig(c.phone)).sort((a, b) => new Date(b.dates[0]) - new Date(a.dates[0]));
+    if (s.tab === 'clientes') {
+      const C = s.cli, cli = {};
+      v.head.hasCta = true; v.head.ctaLabel = '+ NUEVO CLIENTE';
+      v.head.cta = () => open('cli', { nc:{ name:'', phone:'', city:'', type:'MINORISTA', cuit:'', note:'' }, err:'' });
+      cli.q = C.q; cli.setQ = e => this.sub('cli', { q:e.target.value });
+      cli.filters = [['ALL','TODOS'],['MINORISTA','MINORISTAS'],['MAYORISTA','MAYORISTAS']].map(([k, t]) => ({ t, n: k === 'ALL' ? clients.length : clients.filter(c => c.type === k).length, ...CH(C.filter === k), on: () => this.sub('cli', { filter:k }) }));
+      const q = C.q.trim().toLowerCase(), qd = q.replace(/\D/g, '');
+      const list = clients.filter(c => (C.filter === 'ALL' || c.type === C.filter) && (!q || c.name.toLowerCase().includes(q) || (c.city || '').toLowerCase().includes(q) || (qd.length > 2 && dig(c.phone).includes(qd))));
+      cli.list = list.map(c => { const os = ordersOf(c), on = C.sel === c.id && !C.nc; return { name:c.name, phone:c.phone, type:c.type, tCol: c.type === 'MAYORISTA' ? '#E3B23C' : '#9AA09A', n: os.length + (os.length === 1 ? ' pedido' : ' pedidos'), last: os[0] ? 'Último: ' + fmtD(os[0].dates[0]) : 'Sin pedidos', bg: on ? '#222623' : 'transparent', edge: on ? '#E3B23C' : 'transparent', on: () => open('cli', { sel:c.id, nc:null, err:'' }) }; });
+      cli.empty = !list.length;
+      const isNew = !!C.nc, c = isNew ? C.nc : clients.find(x => x.id === C.sel);
+      cli.has = !!c; cli.none = D && !c; cli.isNew = isNew; cli.isOld = !!c && !isNew; cli.err = C.err;
+      if (c) {
+        cli.c = c; cli.title = isNew ? 'Nuevo cliente' : c.name; cli.saveHint = isNew ? '' : 'Los cambios se guardan solos';
+        cli.isWs = c.type === 'MAYORISTA';
+        const setC = k => e => { const val = e && e.target ? e.target.value : e; if (isNew) this.sub('cli', { nc:{ ...C.nc, [k]: val }, err:'' }); else this.setClients(clients.map(x => x.id === c.id ? { ...x, [k]: val } : x)); };
+        cli.setName = setC('name'); cli.setPhone = setC('phone'); cli.setCity = setC('city'); cli.setCuit = setC('cuit'); cli.setNote = setC('note');
+        cli.types = ['MINORISTA','MAYORISTA'].map(t => ({ t, ...CH(c.type === t), on: () => setC('type')(t) }));
+        cli.create = () => {
+          if (!c.name.trim() || dig(c.phone).length < 8) return this.sub('cli', { err:'Completá nombre y un WhatsApp válido.' });
+          if (clients.some(x => dig(x.phone) === dig(c.phone))) return this.sub('cli', { err:'Ya existe un cliente con ese WhatsApp.' });
+          const nc = { ...c, id:'c' + Date.now() }; this.setClients(clients.concat([nc])); this.sub('cli', { nc:null, sel:nc.id }); this.flash('CLIENTE GUARDADO');
+        };
+        if (!isNew) {
+          const os = ordersOf(c);
+          cli.waUrl = 'https://wa.me/' + waNum(c.phone);
+          cli.newOrder = () => { this.goTab('pedidos'); this.setState({ nf:{ ...blankNF(), name:c.name, phone:c.phone, dest:c.city || '', type:c.type, linked:true }, mob:'detail' }); this.sub('ped', { view:'new' }); };
+          cli.stats = { n:os.length, u:os.reduce((a, o) => a + units(o), 0), last: os[0] ? fmtD(os[0].dates[0]) : '—' };
+          cli.hist = os.map(o => ({ code:o.code, date:fmtD(o.dates[0]), items:itemsTxt(o), st:SHORT[o.stage], stCol:SCOL[o.stage], on: () => { this.goTab('pedidos'); this.sub('ped', { sel:o.code, view:'detail' }); this.setState({ mob:'detail' }); } }));
+          cli.noHist = !os.length;
+        } else { cli.hist = []; cli.stats = {}; }
+      } else { cli.c = {}; cli.types = []; cli.hist = []; cli.stats = {}; }
+      v.cli = cli;
+    } else v.cli = { filters:[], list:[], types:[], hist:[], c:{}, stats:{} };
+
+    // PRECIOS
+    const pubOf = slug => pub.products.find(x => x.slug === slug);
+    const catChips = (k, cur) => [['ALL','TODOS']].concat(CATS.map(c => [c, CAT_SHORT[c]])).map(([c, t]) => ({ t, ...CH(cur === c), on: () => this.sub(k, { cat:c }) }));
+    const img0 = p => { const f = p.variants.find(x => x.imgs.length); return f ? 'url("' + f.imgs[0] + '")' : 'none'; };
+    if (s.tab === 'precios') {
+      const R = s.pr, pr = {};
+      pr.q = R.q; pr.setQ = e => this.sub('pr', { q:e.target.value });
+      pr.cats = catChips('pr', R.cat);
+      pr.rowCols = D ? '56px minmax(0,1fr) 180px 150px' : '56px minmax(0,1fr)';
+      pr.priceCol = D ? 'auto' : '1 / -1'; pr.varCol = D ? 'auto' : '1 / -1';
+      const q = R.q.trim().toLowerCase();
+      const rows = draft.products.filter(p => (R.cat === 'ALL' || p.cat === R.cat) && (!q || p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q)));
+      pr.rows = rows.map(p => {
+        const pp = pubOf(p.slug), changed = !pp || pp.price !== p.price, op = !!R.open[p.slug];
+        const nOv = p.variants.reduce((a, x) => a + (x.price ? 1 : 0) + Object.keys(x.sizePrice || {}).length, 0);
+        const setVP = (i, val) => this.updP(p.slug, P => { P.variants[i].price = num(val) || null; });
+        const setSP = (i, z, val) => this.updP(p.slug, P => { const sp = P.variants[i].sizePrice || {}; const n = num(val); if (n) sp[z] = n; else delete sp[z]; P.variants[i].sizePrice = sp; });
+        return { name:p.name, sku:p.sku, cat:CAT_SHORT[p.cat] || p.cat, bgImg:img0(p), price:fmtN(p.price), changed, before: pp ? money(pp.price) : 'nuevo', edge: changed ? '#E3B23C' : 'transparent', inBd: changed ? '#E3B23C' : '#2F3530',
+          setPrice: e => this.updP(p.slug, P => { P.price = num(e.target.value); }),
+          hasVar: p.variants.length > 1 || p.sizes.length > 0, noVar: !(p.variants.length > 1 || p.sizes.length > 0), open:op,
+          varLabel: (op ? '▾ ' : '▸ ') + (nOv ? nOv + ' PRECIO(S) PROPIO(S)' : 'VARIANTES · ' + p.variants.length), varCol: nOv ? '#E3B23C' : '#C3C8C1',
+          toggle: () => this.sub('pr', { open:{ ...R.open, [p.slug]: !op } }),
+          vars: p.variants.map((x, i) => { const pvv = pp && pp.variants[i];
+            return { n:x.n, sw:x.sw, price:fmtN(x.price), ph:'Lista (' + fmtN(p.price) + ')', inBd: pvv && pvv.price !== x.price ? '#E3B23C' : '#2F3530', setPrice: e => setVP(i, e.target.value), hasSizes: p.sizes.length > 0,
+              sizes: p.sizes.map(z => ({ z, val:fmtN((x.sizePrice || {})[z]), ph:fmtN(x.price || p.price), bd: (pvv && (pvv.sizePrice || {})[z]) !== (x.sizePrice || {})[z] ? '#E3B23C' : '#2F3530', on: e => setSP(i, z, e.target.value) })) }; }) };
+      });
+      pr.empty = !rows.length;
+      pr.bulkOpen = R.bulk; pr.bulkBg = R.bulk ? '#E3B23C' : 'transparent'; pr.bulkCol = R.bulk ? '#0D0F0D' : '#E3B23C';
+      pr.toggleBulk = () => this.sub('pr', { bulk:!R.bulk });
+      pr.bScopes = [['ALL','TODOS']].concat(CATS.map(c => [c, CAT_SHORT[c]])).map(([c, t]) => ({ t, ...CH(R.bScope === c), on: () => this.sub('pr', { bScope:c }) }));
+      pr.bDirs = [[1,'+ SUBIR'],[-1,'− BAJAR']].map(([d, t]) => ({ t, ...CH(R.bDir === d), on: () => this.sub('pr', { bDir:d }) }));
+      pr.bRounds = [['0','SIN REDONDEO'],['100','A $100'],['1000','A $1.000'],['900','TERMINA EN 900']].map(([r, t]) => ({ t, ...CH(R.bRound === r), on: () => this.sub('pr', { bRound:r }) }));
+      pr.bPct = R.bPct; pr.setBPct = e => this.sub('pr', { bPct:e.target.value.replace(/[^\d.,]/g, '') });
+      const pct = parseFloat(String(R.bPct).replace(',', '.')) || 0;
+      const rnd = x => { x = x * (1 + R.bDir * pct / 100); if (R.bRound === '100') return Math.round(x / 100) * 100; if (R.bRound === '1000') return Math.round(x / 1000) * 1000; if (R.bRound === '900') return Math.max(900, Math.ceil((x - 900) / 1000) * 1000 + 900); return Math.round(x); };
+      const scope = draft.products.filter(p => R.bScope === 'ALL' || p.cat === R.bScope);
+      pr.hasPreview = pct > 0 && scope.length > 0; pr.bCount = scope.length;
+      pr.preview = pr.hasPreview ? scope.map(p => ({ n:p.name, a:money(p.price), b:money(rnd(p.price)) })) : [];
+      pr.applyBg = pr.hasPreview ? '#E3B23C' : '#5E665E';
+      pr.applyBulk = () => {
+        if (!pr.hasPreview) return this.flash('INDICÁ UN PORCENTAJE');
+        this.ask('¿Aplicar ' + (R.bDir > 0 ? '+' : '−') + pct + '% a ' + scope.length + ' productos?', 'Se ajustan también los precios por variante y por talle. Queda en borrador: lo revisás antes de publicar.', 'SÍ, APLICAR', () => {
+          this.setDraft(d => d.products.forEach(p => { if (R.bScope !== 'ALL' && p.cat !== R.bScope) return; p.price = rnd(p.price); p.variants.forEach(x => { if (x.price) x.price = rnd(x.price); Object.keys(x.sizePrice || {}).forEach(z => x.sizePrice[z] = rnd(x.sizePrice[z])); }); }));
+          this.sub('pr', { bulk:false, bPct:'' }); this.flash('AJUSTE APLICADO AL BORRADOR · FALTA PUBLICAR');
+        });
+      };
+      v.pr = pr;
+    } else v.pr = { rows:[], cats:[], bScopes:[], bDirs:[], bRounds:[], preview:[] };
+
+    // PRODUCTOS
+    if (s.tab === 'productos') {
+      const Q = s.pd, pd = {};
+      v.head.hasCta = true; v.head.ctaLabel = '+ NUEVO PRODUCTO';
+      v.head.cta = () => { const slug = 'nuevo-' + Date.now(); this.setDraft(d => d.products.unshift({ slug, name:'Nuevo producto', cat:'ACCESORIOS', sub:'', sku:'TC-NUEVO', desc:'', visible:false, price:0, sizes:[], variants:[{ n:'ÚNICO', sku:'TC-NUEVO-01', sw:'#5A615A', imgs:[], price:null, sizePrice:{}, off:[], out:false }] })); open('pd', { sel:slug, sizesRaw:null }); };
+      pd.q = Q.q; pd.setQ = e => this.sub('pd', { q:e.target.value });
+      pd.cats = catChips('pd', Q.cat);
+      const q = Q.q.trim().toLowerCase();
+      pd.list = draft.products.filter(p => (Q.cat === 'ALL' || p.cat === Q.cat) && (!q || p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q))).map(p => {
+        const out = p.variants.reduce((a, x) => a + (p.sizes.length ? x.off.length : (x.out ? 1 : 0)), 0), on = Q.sel === p.slug;
+        return { name:p.name, meta:p.variants.length + (p.variants.length === 1 ? ' variante' : ' variantes') + ' · ' + (CAT_SHORT[p.cat] || p.cat), bgImg:img0(p), op: p.visible ? 1 : .45, hidden:!p.visible, hasOut: out > 0, outTxt: out + ' AGOTADO' + (out > 1 ? 'S' : ''), changed: chProd.has(p.name),
+          bg: on ? '#222623' : 'transparent', edge: on ? '#E3B23C' : 'transparent', on: () => open('pd', { sel:p.slug, sizesRaw:null }) };
+      });
+      const p = draft.products.find(x => x.slug === Q.sel);
+      pd.has = !!p; pd.none = D && !p;
+      if (p) {
+        const U = fn => this.updP(p.slug, fn);
+        pd.p = p; pd.catOpts = CATS;
+        pd.visBg = p.visible ? '#7FB37F' : '#3E453E'; pd.visX = p.visible ? '18px' : '2px'; pd.visLabel = p.visible ? 'VISIBLE EN LA WEB' : 'OCULTO EN LA WEB';
+        pd.toggleVis = () => U(P => { P.visible = !P.visible; });
+        pd.setName = e => U(P => { P.name = e.target.value; }); pd.setCat = e => U(P => { P.cat = e.target.value; }); pd.setSub = e => U(P => { P.sub = e.target.value; });
+        pd.setSku = e => U(P => { P.sku = e.target.value.toUpperCase(); }); pd.setDesc = e => U(P => { P.desc = e.target.value; });
+        pd.len = p.desc.length; pd.lenCol = p.desc.length < 120 ? '#E8B4A0' : '#7E887E';
+        pd.sizesRaw = Q.sizesRaw ?? p.sizes.join(', ');
+        pd.setSizesRaw = e => this.sub('pd', { sizesRaw:e.target.value });
+        pd.commitSizes = () => { if (Q.sizesRaw == null) return; const sz = Q.sizesRaw.split(',').map(x => x.trim().toUpperCase()).filter(Boolean); U(P => { P.sizes = sz; P.variants.forEach(x => { x.off = x.off.filter(z => sz.includes(z)); }); }); this.sub('pd', { sizesRaw:null }); };
+        pd.addVar = () => U(P => P.variants.push({ n:'NUEVA VARIANTE', sku:P.sku + '-' + String(P.variants.length + 1).padStart(2, '0'), sw:'#5A615A', imgs:[], price:null, sizePrice:{}, off:[], out:false }));
+        pd.vars = p.variants.map((x, i) => {
+          const UV = fn => U(P => fn(P.variants[i]));
+          const move = (j, d) => UV(V => { const k = j + d; if (k < 0 || k >= V.imgs.length) return; const t = V.imgs[j]; V.imgs[j] = V.imgs[k]; V.imgs[k] = t; });
+          return { n:x.n, sku:x.sku, sw:x.sw,
+            setN: e => UV(V => { V.n = e.target.value.toUpperCase(); }), setSku: e => UV(V => { V.sku = e.target.value.toUpperCase(); }), setSw: e => UV(V => { V.sw = e.target.value; }),
+            rm: () => { if (p.variants.length === 1) return this.flash('EL PRODUCTO NECESITA AL MENOS UNA VARIANTE'); this.ask('¿Quitar la variante ' + x.n + '?', 'Se borran sus fotos y su disponibilidad. Queda en borrador hasta que publiques.', 'SÍ, QUITAR', () => U(P => P.variants.splice(i, 1)), true); },
+            imgs: x.imgs.map((src, j) => ({ bg:'url("' + src + '")', first:j === 0, bd: j === 0 ? '#E3B23C' : '#2F3530', left: () => move(j, -1), right: () => move(j, 1), rm: () => UV(V => V.imgs.splice(j, 1)) })),
+            addImg: e => { const files = Array.from(e.target.files || []); e.target.value = ''; Promise.all(files.map(f => new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(f); }))).then(urls => UV(V => { V.imgs = V.imgs.concat(urls); })); },
+            hasSizes: p.sizes.length > 0, noSizes: !p.sizes.length,
+            avHint: p.sizes.length ? 'TALLES · TOCÁ PARA MARCAR AGOTADO / DISPONIBLE' : 'DISPONIBILIDAD',
+            av: p.sizes.map(z => { const off = x.off.includes(z); return { z, bg: off ? '#1A1D1B' : '#1E2A1F', col: off ? '#5E665E' : '#7FB37F', bd: off ? '#3A2A26' : '#4A5D4B', td: off ? 'line-through' : 'none', on: () => UV(V => { V.off = off ? V.off.filter(y => y !== z) : V.off.concat([z]); }) }; }),
+            av1: [['DISPONIBLE', false], ['AGOTADO', true]].map(([t, val]) => { const on = !!x.out === val; return { t, bg: on ? (val ? '#3A2A26' : '#1E2A1F') : 'transparent', col: on ? (val ? '#E8B4A0' : '#7FB37F') : '#7E887E', bd: on ? (val ? '#5A3A30' : '#4A5D4B') : '#2F3530', on: () => UV(V => { V.out = val; }) }; }) };
+        });
+        pd.del = () => this.ask('¿Eliminar “' + p.name + '”?', 'Desaparece de la web cuando publiques. Si solo querés sacarlo un tiempo, mejor usá “Oculto en la web”.', 'SÍ, ELIMINAR', () => { this.setDraft(d => { d.products = d.products.filter(x => x.slug !== p.slug); }); this.sub('pd', { sel:null }); this.setState({ mob:'list' }); }, true);
+      } else { pd.p = {}; pd.vars = []; pd.catOpts = []; }
+      v.pd = pd;
+    } else v.pd = { list:[], cats:[], vars:[], p:{}, catOpts:[] };
+
+    // MAYORISTAS
+    if (s.tab === 'mayoristas') {
+      const W = draft.ws, ws = {};
+      v.wsCols = D ? 'minmax(0,1.1fr) minmax(0,1fr)' : 'minmax(0,1fr)';
+      ws.min = W.min; ws.ship = W.ship; ws.shipUp = W.ship.toUpperCase(); ws.note = W.note;
+      ws.dec = () => this.setDraft(d => { d.ws.min = Math.max(1, d.ws.min - 1); }); ws.inc = () => this.setDraft(d => { d.ws.min = d.ws.min + 1; });
+      ws.setShip = e => this.setDraft(d => { d.ws.ship = e.target.value; }); ws.setNote = e => this.setDraft(d => { d.ws.note = e.target.value; });
+      const wc = clients.filter(c => c.type === 'MAYORISTA');
+      ws.count = wc.length; ws.empty = !wc.length;
+      ws.clients = wc.map(c => { const os = ordersOf(c); return { name:c.name, sub:[c.city, c.cuit].filter(Boolean).join(' · '), u: os.reduce((a, o) => a + units(o), 0), n: os.length + (os.length === 1 ? ' pedido' : ' pedidos'), on: () => { this.goTab('clientes'); this.sub('cli', { sel:c.id, nc:null }); this.setState({ mob:'detail' }); } }; });
+      ws.newClient = () => { this.goTab('clientes'); this.sub('cli', { nc:{ name:'', phone:'', city:'', type:'MAYORISTA', cuit:'', note:'' }, err:'' }); this.setState({ mob:'detail' }); };
+      v.ws = ws;
+    } else { v.ws = { clients:[] }; v.wsCols = '1fr'; }
+    return v;
+  }
+}
+function cap(s) { return String(s).toLowerCase().replace(/(^|\s|·\s)(\p{L})/gu, (m, a, b) => a + b.toUpperCase()); }
+</script>
+</body>
+</html>
