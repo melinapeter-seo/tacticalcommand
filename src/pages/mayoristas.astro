@@ -1,0 +1,338 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import config from '../data/config.json';
+import { productos, money, WA } from '../lib/data';
+import { fotosVista } from '../lib/fotos';
+import { graph, breadcrumbs, faqPage, abs, ORG_ID } from '../lib/seo';
+
+const CATS = ['INDUMENTARIA', 'EQUIPOS TÁCTICOS', 'CALZADO', 'ACCESORIOS'];
+const MIN = config.ws_minimo;
+const rows = await Promise.all(
+  productos
+    .slice()
+    .sort((a, b) => CATS.indexOf(a.categoria) - CATS.indexOf(b.categoria))
+    .map(async (p) => ({
+      slug: p.slug, n: p.titulo.join(' ').replace(/\s+/g, ' ').trim(), sku: p.sku, cat: p.categoria, price: p.precio_minorista, to: `/productos/${p.slug}/`,
+      colors: await Promise.all(p.colores.map(async (c) => ({
+        n: c.nombre, sw: c.muestra, sku: c.sku,
+        g: (await fotosVista(c.fotos)).map((f) => ({ t: f.thumb, s: f.src, ss: f.srcset, f: f.full })),
+        sizes: !p.opciones.con_talles ? [{ t: 'UNIDAD', sp: false }] : c.talles.length ? c.talles.map((t) => ({ t: t.talle, sp: t.estado === 'consultar' })) : [{ t: 'TALLE', sp: true }],
+      }))),
+    })),
+);
+const cats = ['TODO', ...CATS].map((t) => ({ t, n: t === 'TODO' ? rows.length : rows.filter((r) => r.cat === t).length })).filter((c) => c.n > 0);
+const qa = [
+  { q: '¿Tactical Command vende por mayor?', a: 'Sí. Ofrece venta mayorista de indumentaria y equipos tácticos sujeta a disponibilidad y condiciones comerciales vigentes.' },
+  { q: '¿Hay un mínimo de compra mayorista?', a: `Sí. La cotización mayorista se habilita desde ${MIN} unidades en total, combinando los productos, colores y talles que quieras. El precio mayorista final se confirma por WhatsApp.` },
+  { q: '¿Quién puede solicitar una cotización mayorista?', a: 'Comercios, revendedores y compradores profesionales pueden preparar una solicitud mayorista.' },
+  { q: '¿La cotización confirma el stock?', a: 'No. La disponibilidad publicada es orientativa y el stock final debe validarse.' },
+  { q: '¿Puedo pedir más unidades que las disponibles?', a: 'Sí. Se puede solicitar una cantidad superior a la publicada, pero las unidades adicionales quedan sujetas a confirmación.' },
+  { q: '¿Realizan envíos mayoristas?', a: 'Sí. Coordinamos envíos desde Rafaela según volumen y destino. El costo de envío está a cargo del comprador y se informa por WhatsApp.' },
+  { q: '¿Puedo solicitar talles especiales?', a: 'Algunos productos admiten talles especiales o confección por pedido. Deben confirmarse previamente.' },
+];
+const path = '/mayoristas/';
+const jsonld = graph(
+  {
+    '@type': 'WebPage', '@id': abs(path) + '#page', name: 'Venta mayorista de equipamiento táctico', url: abs(path), inLanguage: 'es-AR',
+    mainEntity: { '@type': 'Offer', name: 'Venta mayorista Tactical Command', seller: { '@id': ORG_ID }, priceCurrency: 'ARS', areaServed: 'AR', eligibleCustomerType: 'https://schema.org/Business', eligibleQuantity: { '@type': 'QuantitativeValue', minValue: MIN, unitText: 'unidades' }, description: config.ws_texto },
+  },
+  faqPage(qa),
+  breadcrumbs([['Inicio', '/'], ['Mayoristas', path]]),
+);
+const data = { min: MIN, rows };
+---
+<Base title="Venta mayorista de equipamiento táctico | Tactical Command" description={`Cotización mayorista de indumentaria y equipos tácticos para comercios y revendedores. Desde ${MIN} unidades combinables, con envío desde Rafaela a todo el país.`} path={path} jsonld={jsonld} wsFooter>
+  <section class="top" aria-labelledby="ws-h1">
+    <div class="in">
+      <Breadcrumbs items={[['Inicio', '/'], ['Mayoristas', path]]} class="bc-top" />
+      <h1 id="ws-h1" class="h1"><span>ARMÁ TU PRESUPUESTO</span><span>MAYORISTA.</span></h1>
+      <p class="lead-p">Tactical Command ofrece venta mayorista de indumentaria y equipos tácticos para comercios, revendedores y compradores profesionales en Argentina. Desde Rafaela, Santa Fe, permite preparar pedidos por producto, talle, color y cantidad para solicitar una cotización sujeta a disponibilidad y validación final de stock.</p>
+      <div class="min">
+        <div class="min-l"><span class="k">MÍNIMO DE COMPRA MAYORISTA</span><span class="v">{MIN} UNIDADES</span></div>
+        <p>Podés combinar productos, colores y talles.<br />El precio mayorista final se confirma por WhatsApp.</p>
+      </div>
+      <div class="top-cta">
+        <a href="#bulk" class="btn-gold anim c1">ARMAR PEDIDO MAYORISTA ↓</a>
+        <a href={WA('Hola Tactical Command! Quiero hacer una consulta sobre compras mayoristas.')} target="_blank" rel="noopener" class="c2" data-wa="mayorista">CONSULTAR POR WHATSAPP →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="bulk" class="bulk" aria-labelledby="bulk-h">
+    <div class="in">
+      <div class="bulk-head">
+        <h2 id="bulk-h" class="h2">ARMÁ TU PEDIDO</h2>
+        <p>Tocá la foto para ver la galería completa del artículo. Elegí color y cargá cantidades por talle.</p>
+      </div>
+      <div class="tools">
+        <div class="cats" data-noscrollbar role="group" aria-label="Filtrar por categoría">
+          {cats.map((c, i) => <button type="button" class="cat" data-cat={c.t} aria-pressed={i === 0 ? 'true' : 'false'}>{c.t}<span>{String(c.n).padStart(2, '0')}</span></button>)}
+        </div>
+        <label class="srch">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#7E887E" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>
+          <span class="sr-only">Buscar por nombre o SKU</span>
+          <input type="search" id="ws-q" placeholder="BUSCAR POR NOMBRE O SKU" autocomplete="off" />
+        </label>
+      </div>
+      <div class="res-l" id="ws-res" aria-live="polite">{String(rows.length).padStart(2, '0')} ARTÍCULOS</div>
+      <div class="empty" id="ws-empty" hidden>NO HAY ARTÍCULOS QUE COINCIDAN CON LA BÚSQUEDA.</div>
+      <div class="rows" id="ws-rows">
+        {rows.map((r) => {
+          const c = r.colors[0];
+          const total = r.colors.reduce((a, x) => a + x.g.length, 0);
+          return (
+            <article class="row" data-slug={r.slug} data-cat={r.cat} data-q={(r.n + ' ' + r.sku).toLowerCase()}>
+              <div class="head">
+                <button type="button" class="thumb" data-gal aria-label={`Ver galería de ${r.n}`}>
+                  {c.g[0] ? <img src={c.g[0].t} alt={`${r.n} ${c.n}`} width="240" height="300" loading="lazy" decoding="async" /> : <span class="ph"></span>}
+                  <span class="ph-n"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#E3B23C" stroke-width="2" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>{String(total).padStart(2, '0')} FOTOS</span>
+                </button>
+                <div class="meta">
+                  <div class="cs"><span>{r.cat}</span> · <span data-rsku>{c.sku || r.sku}</span></div>
+                  <h3 class="n"><a href={r.to}>{r.n}</a></h3>
+                  <div class="sws">
+                    <div class="dots">{r.colors.map((x, i) => <span title={x.n} style={`background:${x.sw}`} class:list={{ on: i === 0 && r.colors.length > 1 }}></span>)}</div>
+                    <span class="cl">{r.colors.length > 1 ? `${r.colors.length} COLORES` : c.n}</span>
+                  </div>
+                </div>
+                <div class="aside">
+                  <div class="nums">
+                    <div class="num pr"><span class="k">PRECIO PUBLICADO / UN.</span><span class="v"><data value={r.price}>{money(r.price)}</data></span></div>
+                    <div class="num un"><span class="k">EN PEDIDO</span><span class="v" data-units>—</span></div>
+                  </div>
+                  <button type="button" class="tg" data-toggle aria-expanded="false">CARGAR CANTIDADES +</button>
+                </div>
+              </div>
+              <div class="panel" hidden></div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="cond" aria-labelledby="cond-h">
+    <div class="in">
+      <h2 id="cond-h" class="h2 cond-h">CONDICIONES MAYORISTAS</h2>
+      <div class="qa">
+        {qa.map((x) => <details><summary><span class="q">{x.q}</span><span class="pl" aria-hidden="true">+</span></summary><p>{x.a}</p></details>)}
+      </div>
+    </div>
+  </section>
+
+  <div class="bar" id="ws-bar">
+    <div class="bar-prog" aria-hidden="true"><div id="ws-pct"></div></div>
+    <div class="bar-in">
+      <div class="bar-l">
+        <span class="u"><span id="ws-units">0</span> UNIDADES</span>
+        <span class="p d-only"><span id="ws-prods">00</span> PRODUCTOS</span>
+        <span class="t" id="ws-total">$ 0</span>
+        <span class="m" id="ws-min">MÍNIMO {MIN} UNIDADES · FALTAN {MIN}</span>
+      </div>
+      <button type="button" class="btn-gold anim bar-b" id="ws-open"><span class="d-only">VER RESUMEN</span><span class="m-only">VER PEDIDO</span></button>
+    </div>
+  </div>
+
+  <div id="quote" class="ov q-ov" hidden role="dialog" aria-modal="true" aria-labelledby="q-h">
+    <div class="q-box" data-stop>
+      <div class="q-top"><button type="button" data-close>CERRAR ✕</button></div>
+      <h2 id="q-h">RESUMEN DE COTIZACIÓN</h2>
+      <div class="q-lines" id="q-lines"></div>
+      <div class="q-sum">
+        <div><span class="k">SUBTOTAL A PRECIO PUBLICADO</span><span id="q-total">$ 0</span></div>
+        <div><span class="k">ENVÍO</span><span class="ship"><span class="g">A CARGO DEL COMPRADOR</span><span class="s">SE COTIZA POR WHATSAPP</span></span></div>
+        <div class="fin"><span>PRECIO MAYORISTA</span><span class="g">SE CONFIRMA POR WHATSAPP</span></div>
+      </div>
+      <p class="q-p">Los montos corresponden a los precios publicados de cada artículo. El precio mayorista del total de tu compra, el stock y el envío se confirman en el siguiente paso, por WhatsApp.</p>
+      <div class="q-min" id="q-minbox">
+        <div class="q-min-t"><span class="k">MÍNIMO DE COMPRA MAYORISTA · {MIN} UNIDADES</span><span id="q-minst"></span></div>
+        <div class="q-min-bar"><div id="q-minpct"></div></div>
+      </div>
+      <a href="#" target="_blank" rel="noopener" class="btn-gold anim q-wa" id="q-wa" data-wa="mayorista" hidden>COTIZAR COMPRA MAYORISTA POR WHATSAPP →</a>
+      <div id="q-no"><div class="q-dis" aria-disabled="true">COTIZAR COMPRA MAYORISTA POR WHATSAPP</div><div class="q-hint">Sumá unidades hasta llegar a {MIN} para habilitar la cotización.</div></div>
+    </div>
+  </div>
+
+  <script type="application/json" id="ws-data" set:html={JSON.stringify(data)} />
+</Base>
+
+<script>
+  import '../scripts/mayoristas.ts';
+</script>
+
+<style>
+  .in { max-width: 1400px; margin: 0 auto; }
+  .top { padding: 32px 40px; border-bottom: 1px solid var(--border); }
+  :global(.bc-top) { margin-bottom: 18px; }
+  .h1 { font-size: 86px; font-weight: 600; letter-spacing: -.035em; line-height: .98; overflow: hidden; }
+  .h1 span { display: block; animation: mask .9s .1s var(--ease) both; }
+  .h1 span + span { animation-delay: .2s; }
+  .lead-p { max-width: 76ch; font-size: 17px; line-height: 1.75; color: var(--text-2); margin: 30px 0 0; text-wrap: pretty; }
+  .min { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 34px; padding: 18px 22px; border: 1px solid rgba(227,178,60,.45); background: #151715; max-width: 760px; }
+  .min-l { display: flex; flex-direction: column; gap: 6px; }
+  .min .k { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+  .min .v { font-size: 30px; font-weight: 600; letter-spacing: -.02em; line-height: 1; color: var(--gold); }
+  .min p { flex: 1 1 280px; font-size: 14px; line-height: 1.6; color: var(--text-2); text-wrap: pretty; }
+  .top-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .c1 { padding: 18px 24px; }
+  .c2 { border: 1px solid var(--border); padding: 18px 24px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; }
+  .c2:hover { border-color: var(--gold); color: var(--gold); }
+
+  .bulk { padding: 32px 40px; border-bottom: 1px solid var(--border); scroll-margin-top: 90px; }
+  .bulk-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px 24px; flex-wrap: wrap; }
+  .bulk-head p { max-width: 52ch; font-size: 14px; line-height: 1.7; color: var(--muted); text-wrap: pretty; }
+  .tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 36px; padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .cats { display: flex; gap: 8px; overflow-x: auto; max-width: 100%; flex: 0 1 auto; }
+  .cat { flex: none; display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1px solid var(--border); background: transparent; color: var(--text-2); cursor: pointer; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; white-space: nowrap; }
+  .cat span { font-size: 10px; color: var(--faint); }
+  .cat[aria-pressed='true'] { border-color: var(--gold); background: var(--gold); color: var(--ink); }
+  .cat[aria-pressed='true'] span { color: var(--ink); }
+  .srch { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border: 1px solid var(--border); flex: 0 1 340px; min-width: 0; }
+  .srch input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: var(--text); font-family: var(--mono); font-size: 11px; letter-spacing: .12em; padding: 12px 0; -webkit-appearance: none; appearance: none; }
+  .srch:focus-within { border-color: var(--gold); }
+  .res-l { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--faint); margin: 18px 0 14px; }
+  .empty { padding: 40px 0; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--muted-2); border-top: 1px solid var(--border); }
+  .empty[hidden] { display: none; }
+  .rows { display: flex; flex-direction: column; gap: 10px; }
+  .row { border: 1px solid #232823; background: #121412; transition: border-color .2s; }
+  .row[hidden] { display: none; }
+  .row.has { border-color: rgba(227,178,60,.45); }
+  .row.open { border-color: #3A413A; }
+  .head { display: grid; grid-template-columns: 112px minmax(0, 1fr) auto; gap: 28px; align-items: center; padding: 14px 20px 14px 14px; }
+  .thumb { position: relative; display: block; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: #151715; border: 1px solid #1C211C; padding: 0; cursor: zoom-in; }
+  .thumb:hover { border-color: var(--gold); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .ph-n { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 5px 0; background: rgba(13,15,13,.82); font-family: var(--mono); font-size: 9px; letter-spacing: .14em; }
+  .meta { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+  .cs { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); }
+  .n { font-size: 19px; font-weight: 600; letter-spacing: .01em; line-height: 1.2; text-wrap: pretty; }
+  .n a:hover { color: var(--gold); }
+  .sws { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .dots { display: flex; gap: 5px; }
+  .dots span { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 1px rgba(232,234,230,.25); }
+  .dots span.on { box-shadow: 0 0 0 1px var(--gold); }
+  .cl { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted); }
+  .aside { display: flex; align-items: center; justify-content: flex-end; gap: 32px; flex-wrap: wrap; }
+  .nums { display: flex; gap: 32px; }
+  .num { display: flex; flex-direction: column; gap: 6px; }
+  .num.pr { min-width: 130px; } .num.un { min-width: 70px; }
+  .num .k { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; color: var(--faint); }
+  .num .v { font-family: var(--mono); font-size: 14px; }
+  .num.un .v { color: #5A615A; }
+  .row.has .num.un .v { color: var(--gold); }
+  .tg { min-height: 44px; padding: 0 18px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; white-space: nowrap; flex: none; }
+  .row.has .tg { border-color: var(--gold); color: var(--gold); }
+  .row.open .tg { border-color: var(--gold); background: var(--gold); color: var(--ink); }
+  .panel { border-top: 1px solid var(--border); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 36px; padding: 24px; background: #151815; animation: fade .3s both; }
+  .panel[hidden] { display: none; }
+  .panel :global(.lbl) { display: flex; justify-content: space-between; gap: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--faint); margin-bottom: 12px; }
+  .panel :global(.gal) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .panel :global(.gb) { position: relative; display: block; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: #151715; border: 1px solid #1C211C; padding: 0; cursor: zoom-in; }
+  .panel :global(.gb:hover) { border-color: var(--gold); }
+  .panel :global(.gb img) { width: 100%; height: 100%; object-fit: cover; }
+  .panel :global(.gb span) { position: absolute; top: 6px; left: 6px; font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-shadow: 0 0 6px rgba(0,0,0,.9); }
+  .panel :global(.ficha) { display: inline-flex; align-items: center; min-height: 44px; margin-top: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--gold); }
+  .panel :global(.r) { min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+  .panel :global(.cols) { display: flex; flex-wrap: wrap; gap: 8px; }
+  .panel :global(.cb) { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; }
+  .panel :global(.cb[aria-pressed='true']) { border-color: var(--gold); background: rgba(227,178,60,.08); color: var(--text); }
+  .panel :global(.cb i) { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 1px rgba(232,234,230,.25); }
+  .panel :global(.cb b) { background: var(--gold); color: var(--ink); padding: 2px 6px; font-size: 9px; font-weight: 400; }
+  .panel :global(.szs) { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .panel :global(.sz) { border: 1px solid var(--border); background: #121412; padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+  .panel :global(.sz.on) { border-color: rgba(227,178,60,.6); }
+  .panel :global(.szt) { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
+  .panel :global(.szt em) { font-style: normal; font-size: 8px; letter-spacing: .14em; color: var(--gold); border: 1px solid rgba(227,178,60,.5); padding: 2px 5px; }
+  .panel :global(.ctl) { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .panel :global(.ctl button) { width: 44px; height: 44px; flex: none; background: none; border: 1px solid var(--border); color: var(--text); cursor: pointer; font-family: var(--mono); font-size: 15px; }
+  .panel :global(.ctl button:hover) { border-color: var(--gold); color: var(--gold); }
+  .panel :global(.ctl output) { flex: 1; text-align: center; font-family: var(--mono); font-size: 15px; color: #5A615A; }
+  .panel :global(.sz.on .ctl output) { color: var(--text); }
+  .panel :global(.sub) { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--border); }
+  .panel :global(.sub .k) { display: block; font-family: var(--mono); font-size: 9px; letter-spacing: .18em; color: var(--faint); }
+  .panel :global(.sub .v) { display: block; font-family: var(--mono); font-size: 16px; margin-top: 6px; }
+  .panel :global(.clr) { min-height: 44px; padding: 0 14px; background: none; border: 0; color: var(--muted); cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-decoration: underline; text-underline-offset: 4px; }
+  .panel :global(.clr:hover) { color: var(--text); }
+
+  .cond { padding: 32px 40px; }
+  .cond-h { margin-bottom: 56px; }
+  .qa { border-top: 1px solid var(--border); }
+  .qa details { border-bottom: 1px solid var(--border); }
+  .qa summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 26px 0; font-size: 19px; font-weight: 500; letter-spacing: -.01em; }
+  .qa .pl { font-family: var(--mono); font-size: 14px; color: var(--gold); flex: none; animation: goldpulse 4.5s ease-in-out infinite; }
+  .qa p { max-width: 78ch; font-size: 15px; line-height: 1.8; color: var(--muted); padding: 0 0 26px; text-wrap: pretty; }
+
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 62; background: rgba(26,29,27,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--border); padding: 16px 40px; animation: rise .4s var(--ease) both; }
+  .bar-prog { position: absolute; left: 0; right: 0; top: -1px; height: 3px; background: var(--border); }
+  .bar-prog div { height: 100%; width: 0; background: var(--gold); box-shadow: 0 0 12px rgba(227,178,60,.6); transition: width .35s var(--ease); }
+  .bar-in { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .bar-l { display: flex; gap: 28px; align-items: baseline; flex-wrap: wrap; font-family: var(--mono); }
+  .bar-l .u { font-size: 13px; letter-spacing: .12em; }
+  .bar-l .p { font-size: 11px; letter-spacing: .14em; color: var(--muted); }
+  .bar-l .t { font-size: 15px; }
+  .bar-l .m { font-size: 10px; letter-spacing: .16em; color: var(--text-2); }
+  .bar-l .m.ok { color: var(--gold); }
+  .bar-b { padding: 18px 24px; white-space: nowrap; }
+
+  .q-ov { position: fixed; inset: 0; z-index: 97; background: rgba(0,0,0,.65); display: flex; align-items: center; justify-content: center; padding: 40px 20px; animation: fade .25s both; overflow-y: auto; }
+  .q-box { width: 100%; max-width: 780px; background: var(--bg); border: 1px solid var(--border); animation: rise .4s var(--ease) both; padding: 30px 32px 34px; margin: auto; }
+  .q-top { display: flex; justify-content: flex-end; }
+  .q-top button { background: none; border: 0; cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+  .q-box h2 { font-size: 31px; font-weight: 600; letter-spacing: -.025em; margin-top: 20px; }
+  .q-lines { border-top: 1px solid var(--border); margin-top: 26px; }
+  .q-lines :global(.e) { padding: 34px 0; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--muted-2); line-height: 2; }
+  .q-lines :global(.l) { display: grid; grid-template-columns: minmax(0, 2fr) 1.4fr .8fr 1fr 1fr; gap: 10px 14px; padding: 16px 0; border-bottom: 1px solid var(--surface); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; }
+  .q-lines :global(.l span:nth-child(n+2)) { color: var(--muted); }
+  .q-lines :global(.l span:last-child) { text-align: right; color: var(--text); }
+  .q-sum { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; }
+  .q-sum > div { display: flex; justify-content: space-between; gap: 16px; }
+  .q-sum .k { color: var(--muted); }
+  .q-sum .ship { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; text-align: right; }
+  .q-sum .g { color: var(--gold); }
+  .q-sum .s { color: var(--muted-2); font-size: 10px; }
+  .q-sum .fin { padding-top: 12px; border-top: 1px solid var(--border); font-size: 13px; }
+  .q-sum .fin .g { text-align: right; }
+  .q-p { font-size: 14px; line-height: 1.65; color: var(--text-2); margin-top: 20px; text-wrap: pretty; }
+  .q-min { margin-top: 24px; padding: 16px 18px; border: 1px solid var(--border); background: #151715; }
+  .q-min.ok { border-color: rgba(227,178,60,.55); }
+  .q-min-t { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; }
+  .q-min-t .k { color: var(--muted); }
+  #q-minst { color: var(--text-2); }
+  .q-min.ok #q-minst { color: var(--gold); }
+  .q-min-bar { position: relative; height: 3px; margin-top: 12px; background: var(--border); overflow: hidden; }
+  .q-min-bar div { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--gold); transition: width .3s; }
+  .q-wa { display: block; margin-top: 22px; padding: 19px; }
+  .q-wa[hidden], #q-no[hidden] { display: none; }
+  .q-dis { margin-top: 22px; text-align: center; border: 1px solid var(--border); color: #5A615A; padding: 19px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; cursor: not-allowed; }
+  .q-hint { margin-top: 10px; font-size: 13px; line-height: 1.5; color: var(--muted-2); text-align: center; }
+
+  @media (max-width: 1023px) {
+    .top, .bulk, .cond { padding: 18px; }
+    .h1 { font-size: 34px; }
+    .lead-p, .min, .top-cta { margin-top: 18px; }
+    .lead-p { font-size: 15px; }
+    .bulk { scroll-margin-top: 64px; }
+    .tools { margin-top: 24px; }
+    .cats { flex: 1 1 100%; }
+    .srch { flex: 1 1 100%; }
+    .head { grid-template-columns: 84px minmax(0, 1fr); gap: 14px; padding: 12px; }
+    .n { font-size: 16px; }
+    .aside { grid-column: 1 / -1; justify-content: space-between; gap: 18px; }
+    .nums { gap: 18px; }
+    .num.pr { min-width: 0; }
+    .tg { flex: 1 1 100%; }
+    .panel { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 16px 12px 18px; }
+    .panel :global(.gal) { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 96px; overflow-x: auto; }
+    .panel :global(.szs) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cond-h { margin-bottom: 18px; }
+    .qa summary { padding: 22px 0; font-size: 16px; }
+    .bar { padding: 12px 18px; }
+    .bar-l { gap: 12px; }
+    .bar-l .m { flex-basis: 100%; }
+    .q-ov { align-items: flex-end; padding: 0; }
+    .q-box { animation: sheet .42s var(--ease) both; padding: 22px 20px 30px; margin: 0; }
+    .q-box h2 { font-size: 23px; }
+    .q-lines :global(.l) { grid-template-columns: 1fr 1fr; }
+  }
+</style>

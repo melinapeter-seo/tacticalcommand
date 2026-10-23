@@ -1,0 +1,168 @@
+[
+ {
+  "t": "SEGUIMIENTO DEL PEDIDO",
+  "items": [
+   {
+    "q": "¿Cómo puedo consultar el estado de mi pedido?",
+    "a": "Ingresá el código de pedido recibido después de confirmar tu compra en el buscador ubicado al comienzo de esta página. Allí podrás consultar el estado actualizado del pedido."
+   },
+   {
+    "q": "¿Necesito crear una cuenta para seguir mi pedido?",
+    "a": "No. No necesitás registrarte ni iniciar sesión. Sólo necesitás el código correspondiente a tu compra."
+   },
+   {
+    "q": "¿Dónde encuentro mi código de pedido?",
+    "a": "Te lo enviamos por WhatsApp cuando se confirma la compra. Si no lo encontrás, escribinos por WhatsApp desde el mismo número con el que compraste y te lo reenviamos."
+   },
+   {
+    "q": "¿Qué significan los estados de mi pedido?",
+    "a": "Compra confirmada significa que registramos correctamente la operación. Preparación indica que estamos controlando y armando el pedido. Despachado significa que fue entregado al servicio de transporte. Seguimiento y entrega indica que el pedido se encuentra en tránsito o avanzando hacia su entrega final."
+   },
+   {
+    "q": "¿El código de pedido es el mismo que el código de seguimiento del transporte?",
+    "a": "No necesariamente. El código de pedido identifica tu compra dentro de Tactical Command. Cuando la empresa transportista genere un número de seguimiento propio, esa información podrá incorporarse al estado de tu pedido."
+   }
+  ]
+ },
+ {
+  "t": "ENVÍOS",
+  "items": [
+   {
+    "q": "¿Tactical Command realiza envíos a todo el país?",
+    "a": "Realizamos envíos desde Rafaela, Santa Fe, hacia distintas localidades de Argentina, sujetos a la cobertura disponible de las empresas de transporte utilizadas."
+   },
+   {
+    "q": "¿Desde dónde se despachan los pedidos?",
+    "a": "Los pedidos son preparados y despachados desde Rafaela, Santa Fe."
+   },
+   {
+    "q": "¿Puedo elegir entre envío a domicilio y retiro en sucursal?",
+    "a": "Sí. Tactical Command realiza envíos tanto a domicilio como a sucursal de la empresa transportista. Las opciones disponibles se mostrarán al momento de la compra y pueden variar según el destino y la cobertura del servicio."
+   },
+   {
+    "q": "¿Cuánto tarda en llegar un pedido?",
+    "a": "El plazo depende del destino, disponibilidad del producto, tiempo de preparación y servicio de transporte seleccionado. Cuando exista una estimación disponible, será informada durante la compra o junto con los datos del envío."
+   },
+   {
+    "q": "¿Todos los productos tardan lo mismo en despacharse?",
+    "a": "No necesariamente. Algunos productos pueden requerir tiempos de preparación diferentes. Si un artículo tiene una condición o demora particular, procuraremos informarla en su publicación o durante el proceso de compra."
+   },
+   {
+    "q": "¿Cómo sé qué empresa transporta mi pedido?",
+    "a": "Cuando el pedido sea despachado, la información disponible sobre el transportista y el seguimiento podrá incorporarse al estado de tu pedido o comunicarse por los canales asociados a la compra."
+   },
+   {
+    "q": "¿Quién paga el envío?",
+    "a": "El costo de envío está a cargo del comprador y se informa por WhatsApp antes de confirmar la compra."
+   },
+   {
+    "q": "¿Puedo consultar el costo del envío antes de comprar?",
+    "a": "Sí. El costo y las modalidades disponibles se informan por WhatsApp antes de confirmar la compra."
+   },
+   {
+    "q": "¿Los pedidos mayoristas tienen el mismo proceso de envío?",
+    "a": "Los pedidos mayoristas pueden requerir condiciones, volúmenes, costos o modalidades logísticas diferentes. Esos detalles se coordinan específicamente con Tactical Command antes del despacho."
+   }
+  ]
+ },
+ {
+  "t": "RECEPCIÓN E INCIDENCIAS",
+  "items": [
+   {
+    "q": "¿Qué tengo que revisar cuando recibo mi pedido?",
+    "a": "Antes de aceptar la entrega, verificá el estado exterior del paquete y, cuando el envío esté compuesto por más de un bulto, comprobá que la cantidad recibida coincida con la informada. Prestá atención a roturas, humedad, aperturas, cintas alteradas o signos visibles de manipulación."
+   },
+   {
+    "q": "¿Qué hago si el paquete llega roto, mojado, abierto o con menos bultos de los informados?",
+    "a": "Si detectás una irregularidad visible antes de aceptar la entrega, solicitá dejar constancia ante el transportista. Cuando las condiciones del servicio lo permitan, también podés rechazar la recepción indicando el motivo. Conservá cualquier comprobante o registro de la incidencia y comunicate con Tactical Command para que podamos revisar el caso."
+   },
+   {
+    "q": "¿Qué hago si el paquete llegó cerrado pero al abrirlo falta un producto?",
+    "a": "Conservá el paquete, la etiqueta, el contenido recibido y cualquier documentación asociada al envío. Contactanos dentro de las 48 horas de recibido el pedido, indicando tu número de pedido y adjuntando fotografías o videos del embalaje y del contenido recibido. Revisaremos la documentación del despacho y la evidencia disponible para asistirte en el reclamo ante el transportista."
+   },
+   {
+    "q": "¿Qué hago si descubro un daño que no era visible al momento de recibir el paquete?",
+    "a": "No descartes el embalaje ni la etiqueta. Documentá el estado del producto y del paquete mediante fotografías o video y comunicate con Tactical Command dentro de las 48 horas de recibido el pedido para que podamos verificar el despacho y asistirte en el reclamo ante el transportista."
+   },
+   {
+    "q": "¿Cómo verifica Tactical Command un reclamo por faltante o daño?",
+    "a": "Antes del despacho controlamos los pedidos y podemos registrar información como contenido, cantidad de bultos, peso y, cuando corresponde, fotografías o videos. Ante una incidencia, esa documentación podrá compararse con la información aportada por el cliente y por la empresa transportista."
+   },
+   {
+    "q": "¿Tengo que conservar el embalaje si hubo un problema con el envío?",
+    "a": "Sí. Si detectás daños, faltantes o cualquier irregularidad, conservá el embalaje, la etiqueta de transporte y el contenido recibido hasta que el caso haya sido revisado."
+   }
+  ]
+ },
+ {
+  "t": "CAMBIOS",
+  "items": [
+   {
+    "q": "¿Puedo cambiar un producto por otro talle, color o modelo?",
+    "a": "Sí, siempre que el cambio se encuentre dentro del plazo establecido y el producto cumpla las condiciones indicadas en nuestra Política de Cambios y Devoluciones."
+   },
+   {
+    "q": "¿En qué condiciones debe estar un producto para realizar un cambio?",
+    "a": "Debe encontrarse sin uso, sin lavar, con sus etiquetas originales y en las mismas condiciones en que fue recibido, salvo que el reclamo se deba precisamente a una falla o defecto."
+   },
+   {
+    "q": "¿Quién paga el envío de un cambio?",
+    "a": "En los cambios voluntarios de talle, color o modelo, los gastos de envío se encuentran a cargo del cliente. Si el cambio se origina por una falla, defecto o error atribuible a Tactical Command, los costos correspondientes serán asumidos por Tactical Command."
+   },
+   {
+    "q": "¿Qué pasa si el producto que quiero para el cambio no está disponible?",
+    "a": "Podremos ofrecerte las alternativas disponibles. Si elegís otro producto, se tendrá en cuenta el valor abonado originalmente y se cobrará o reintegrará la diferencia que corresponda."
+   },
+   {
+    "q": "¿Qué hago si recibí un producto diferente al que compré?",
+    "a": "Comunicate con nosotros indicando tu número de pedido y enviando fotografías del producto recibido. Revisaremos el caso y coordinaremos la solución correspondiente sin trasladarte los costos derivados de un error de preparación del pedido."
+   },
+   {
+    "q": "¿Cómo solicito un cambio?",
+    "a": "Contactanos por WhatsApp indicando tu número de pedido, producto que querés cambiar y motivo de la solicitud. Cuando sea necesario podremos pedir fotografías para verificar el estado del artículo."
+   },
+   {
+    "q": "¿Dónde puedo consultar todas las condiciones para realizar un cambio?",
+    "a": "Podés consultar la información completa en nuestra Política de Cambios y Devoluciones."
+   }
+  ]
+ },
+ {
+  "t": "DEVOLUCIONES Y ARREPENTIMIENTO",
+  "items": [
+   {
+    "q": "¿Puedo devolver una compra realizada online?",
+    "a": "Sí. Las compras realizadas a distancia cuentan con derecho de arrepentimiento en los casos y plazos establecidos por la normativa vigente."
+   },
+   {
+    "q": "¿Tengo que explicar por qué quiero arrepentirme de la compra?",
+    "a": "No. Para ejercer el derecho de arrepentimiento no necesitás justificar tu decisión."
+   },
+   {
+    "q": "¿Cómo inicio una solicitud de arrepentimiento?",
+    "a": "Podés hacerlo desde el Botón de Arrepentimiento disponible en el sitio. Allí podrás identificar tu pedido y registrar la solicitud."
+   },
+   {
+    "q": "¿El cambio de talle y el arrepentimiento son lo mismo?",
+    "a": "No. Un cambio de talle, color o modelo forma parte de la política comercial de cambios de Tactical Command. El derecho de arrepentimiento corresponde a las compras a distancia y permite solicitar la devolución dentro de las condiciones establecidas por la normativa aplicable."
+   }
+  ]
+ },
+ {
+  "t": "ATENCIÓN Y CONSULTAS",
+  "items": [
+   {
+    "q": "¿Puedo consultar antes de realizar una compra?",
+    "a": "Sí. Si tenés dudas sobre talles, características, stock, envíos o cualquier producto, podés contactarnos antes de confirmar tu compra."
+   },
+   {
+    "q": "¿Qué hago si perdí mi código de pedido?",
+    "a": "Contactanos utilizando los datos con los que realizaste la compra. Podemos solicitarte información adicional para identificar correctamente el pedido antes de brindarte sus datos."
+   },
+   {
+    "q": "¿Por dónde puedo comunicarme si tengo un problema con mi pedido?",
+    "a": "Podés contactarnos a través de nuestro canal de WhatsApp o escribir a info@tacticalcommand.com.ar, indicando siempre tu código de pedido cuando lo tengas disponible."
+   }
+  ]
+ }
+]

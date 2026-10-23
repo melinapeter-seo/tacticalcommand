@@ -121,7 +121,10 @@ const sitio = {
   redes: D.TC_SOCIAL, cookies: D.CK_CATS, enlaces_legales: D.LINKS.map(([t, to]) => ({ t, url: ruta(to).replace('/blog/', '/guias/') })),
 };
 
-const out = (f, v) => { fs.writeFileSync(`src/data/${f}`, JSON.stringify(v, null, 1) + '\n'); console.log(f, Array.isArray(v) ? v.length : Object.keys(v).length); };
+// El handoff pide usar el email del dominio en lugar del Gmail del prototipo.
+const EMAIL = 'info@tacticalcommand.com.ar';
+const conEmail = (v) => JSON.parse(JSON.stringify(v).replaceAll(D.TC_MAIL, EMAIL));
+const out = (f, v0) => { const v = conEmail(v0); fs.writeFileSync(`src/data/${f}`, JSON.stringify(v, null, 1) + '\n'); console.log(f, Array.isArray(v) ? v.length : Object.keys(v).length); };
 out('catalog.json', { _nota: 'Fuente única del catálogo. Generado desde el prototipo con scripts/catalogo-desde-prototipo.mjs; en la fase 2 se reemplaza por la lectura de Google Sheets con la misma forma. El estado de stock NO se muestra en la web.', productos, tarjeta_slug: tarjetaSlug });
 out('categorias.json', categorias);
 out('guias.json', guias);

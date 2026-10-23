@@ -1,0 +1,272 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { WA, sitio } from '../lib/data';
+import { graph, breadcrumbs, abs, EMAIL } from '../lib/seo';
+
+const steps = ['Recibirás una confirmación de que tu pedido de arrepentimiento fue registrado.', 'Tactical Command verificará los datos de la compra.', 'Te indicaremos cómo realizar la devolución del producto.', 'Se coordinará el reintegro correspondiente conforme al medio de pago utilizado y la normativa aplicable.'];
+const fields = [
+  { k: 'name', l: 'NOMBRE Y APELLIDO', type: 'text', ac: 'name', ph: '', wide: false },
+  { k: 'email', l: 'CORREO ELECTRÓNICO UTILIZADO EN LA COMPRA', type: 'email', ac: 'email', ph: '', wide: true },
+  { k: 'order', l: 'NÚMERO DE PEDIDO', type: 'text', ac: 'off', ph: 'TC-XXXX-XXXX', wide: false },
+  { k: 'tel', l: 'TELÉFONO', type: 'tel', ac: 'tel', ph: '', wide: false },
+  { k: 'prod', l: 'PRODUCTO/S QUE QUERÉS DEVOLVER', type: 'text', ac: 'off', ph: '', wide: true },
+];
+const path = '/arrepentimiento/';
+const api = import.meta.env.PUBLIC_TC_API || '';
+const wa = WA('Hola, tengo una consulta sobre el botón de arrepentimiento.');
+const mail = `mailto:${EMAIL}?subject=${encodeURIComponent('Consulta sobre el botón de arrepentimiento')}`;
+const jsonld = graph(
+  { '@type': 'WebPage', '@id': abs(path) + '#page', name: 'Botón de arrepentimiento', url: abs(path), inLanguage: 'es-AR' },
+  breadcrumbs([['Inicio', '/'], ['Botón de arrepentimiento', path]]),
+);
+---
+<Base title="Botón de arrepentimiento | Tactical Command" description="Solicitá la revocación de tu compra online dentro de los 10 días corridos, sin motivo y sin costo, según la Ley 24.240 de Defensa del Consumidor." path={path} jsonld={jsonld}>
+  <div class="crumb"><Breadcrumbs items={[['Inicio', '/'], ['Legal', '/legal/terminos-y-condiciones/'], ['Botón de arrepentimiento', path]]} class="in" /></div>
+  <section class="hero">
+    <div class="in">
+      <div class="kick"><span>LEGAL</span><span>/</span><span>LEY 24.240 · DEFENSA DEL CONSUMIDOR</span></div>
+      <h1>BOTÓN DE ARREPENTIMIENTO</h1>
+      <p class="intro">¿Querés cancelar una compra realizada a través de Tactical Command?<br />Si compraste online, podés ejercer tu derecho de arrepentimiento.</p>
+      <ul class="facts">
+        <li><span class="v">10 DÍAS</span><span>Corridos, contados desde la entrega del producto o desde la celebración de la compra, lo que ocurra último.</span></li>
+        <li><span class="v">SIN MOTIVO</span><span>No necesitás justificar el motivo de la devolución.</span></li>
+        <li><span class="v">SIN COSTO</span><span>Los gastos necesarios para devolver el producto son a cargo de Tactical Command.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="body">
+    <div class="in grid">
+      <div class="main">
+        <div id="ar-form" class="box">
+          <form name="arrepentimiento" method="POST" data-netlify="true" netlify-honeypot="empresa" id="ar" data-api={api} novalidate>
+            <input type="hidden" name="form-name" value="arrepentimiento" />
+            <input type="hidden" name="codigo" value="" />
+            <input type="hidden" name="motivo" value="Derecho de arrepentimiento" />
+            <p class="hp" aria-hidden="true"><label>No completar <input name="empresa" tabindex="-1" autocomplete="off" /></label></p>
+            <div class="f-k">SOLICITAR ARREPENTIMIENTO</div>
+            <p class="f-p">Completá los siguientes datos para identificar tu compra.</p>
+            <div class="fields">
+              {fields.map((f) => (
+                <div class:list={['fd', { wide: f.wide }]}>
+                  <label for={`ar-${f.k}`}>{f.l}{f.k === 'tel' && <span class="opt"> — OPCIONAL</span>}</label>
+                  <input id={`ar-${f.k}`} name={f.k} type={f.type} autocomplete={f.ac} placeholder={f.ph} inputmode={f.type === 'tel' ? 'numeric' : undefined} required={f.k !== 'tel'} aria-describedby={`ar-${f.k}-e`} />
+                  <span class="err" id={`ar-${f.k}-e`} aria-live="polite"></span>
+                </div>
+              ))}
+              <div class="fd wide">
+                <span class="lbl-s">MOTIVO DE CONTACTO</span>
+                <div class="fixed"><span>Derecho de arrepentimiento</span><span class="tag">FIJO</span></div>
+              </div>
+              <div class="fd wide">
+                <label for="ar-com">COMENTARIOS ADICIONALES <span class="opt">— OPCIONAL</span></label>
+                <textarea id="ar-com" name="com" rows="4"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn-gold submit" id="ar-btn">SOLICITAR ARREPENTIMIENTO</button>
+            <p class="f-note">Al enviar, registramos la fecha y hora de tu solicitud y te mostramos un código de constancia.</p>
+          </form>
+          <div id="ar-ok" hidden></div>
+        </div>
+
+        <div class="after m-only">
+          <div class="lbl">¿QUÉ PASA DESPUÉS?</div>
+          <ol class="steps">{steps.map((t, i) => <li><div class="st-c"><span>0{i + 1}</span><i class:list={{ last: i === steps.length - 1 }}></i></div><p>{t}</p></li>)}</ol>
+          <div class="free"><span class="sq"></span>El ejercicio del derecho de arrepentimiento no tiene costo para el consumidor.</div>
+        </div>
+
+        <div class="info">
+          <div><div class="lbl">ESTADO DEL PRODUCTO</div><p>El producto deberá ponerse a disposición de Tactical Command para su devolución.</p><p class="s">Te recomendamos conservar el producto, sus accesorios, etiquetas y embalaje original en las mejores condiciones posibles hasta recibir las instrucciones de devolución.</p></div>
+          <div><div class="lbl">EXCEPCIONES</div><p>El derecho de arrepentimiento puede tener excepciones previstas legalmente, por ejemplo para determinados productos personalizados o confeccionados especialmente según indicaciones del consumidor.</p><p class="s">Si existiera alguna excepción aplicable al producto adquirido, será informada conforme a la normativa vigente.</p></div>
+        </div>
+
+        <div class="help m-only">
+          <div class="lbl">¿NECESITÁS AYUDA?</div>
+          <p>Si tenés alguna consulta sobre el procedimiento:</p>
+          <div class="hl"><a href={mail}><span class="k">EMAIL</span><span>{EMAIL}</span></a><a href={wa} target="_blank" rel="noopener" data-wa="arrepentimiento"><span class="k">WHATSAPP</span><span>{sitio.whatsapp_texto}</span></a></div>
+        </div>
+      </div>
+
+      <aside class="side d-only" aria-label="Próximos pasos y ayuda">
+        <div class="side-in">
+          <div class="after">
+            <div class="lbl">¿QUÉ PASA DESPUÉS?</div>
+            <ol class="steps">{steps.map((t, i) => <li><div class="st-c"><span>0{i + 1}</span><i class:list={{ last: i === steps.length - 1 }}></i></div><p>{t}</p></li>)}</ol>
+            <div class="free"><span class="sq"></span>El ejercicio del derecho de arrepentimiento no tiene costo para el consumidor.</div>
+          </div>
+          <div class="help">
+            <div class="lbl">¿NECESITÁS AYUDA?</div>
+            <p>Si tenés alguna consulta sobre el procedimiento:</p>
+            <div class="hl"><a href={mail}><span class="k">EMAIL</span><span>{EMAIL}</span></a><a href={wa} target="_blank" rel="noopener" data-wa="arrepentimiento"><span class="k">WHATSAPP</span><span>{sitio.whatsapp_texto}</span></a></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { track } from '../scripts/track';
+  // Envío: a la API de Apps Script si está configurada (fase 2; también manda la constancia por mail);
+  // mientras tanto, a Netlify Forms (la solicitud queda registrada y le llega por mail a Walter).
+  const form = document.getElementById('ar') as HTMLFormElement;
+  const ok = document.getElementById('ar-ok')!;
+  const btn = document.getElementById('ar-btn') as HTMLButtonElement;
+  const API = form.dataset.api;
+  const MSG: Record<string, string> = { name: 'Ingresá tu nombre y apellido.', email: 'Ingresá un correo electrónico válido.', order: 'Ingresá el número de pedido.', prod: 'Indicá qué producto/s querés devolver.' };
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+  const cid = Array.from(ok.attributes).find((a) => a.name.startsWith('data-astro-cid'))?.name || '';
+
+  function validate() {
+    let first: HTMLInputElement | null = null;
+    for (const k of Object.keys(MSG)) {
+      const el = form.elements.namedItem(k) as HTMLInputElement;
+      const v = el.value.trim();
+      const bad = !v || (k === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+      el.setAttribute('aria-invalid', String(bad));
+      document.getElementById(`ar-${k}-e`)!.textContent = bad ? MSG[k] : '';
+      if (bad && !first) first = el;
+    }
+    first?.focus();
+    return !first;
+  }
+  form.addEventListener('input', (e) => { const el = e.target as HTMLInputElement; if (el.getAttribute('aria-invalid') === 'true') { el.setAttribute('aria-invalid', 'false'); const er = document.getElementById(`${el.id}-e`); if (er) er.textContent = ''; } });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    const ch = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+    let c = ''; for (let i = 0; i < 6; i++) c += ch[Math.floor(Math.random() * ch.length)];
+    const code = 'ARREP-' + c;
+    (form.elements.namedItem('codigo') as HTMLInputElement).value = code;
+    const fd = new FormData(form);
+    const now = new Date();
+    const when = now.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).replace(',', ' ·') + ' hs';
+    btn.disabled = true; btn.textContent = 'ENVIANDO…';
+    try {
+      const r = API
+        ? await fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'arrepentimiento', ...Object.fromEntries(fd), fecha: now.toISOString() }) })
+        : await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fd as any).toString() });
+      if (!r.ok) throw new Error(String(r.status));
+    } catch {
+      btn.disabled = false; btn.textContent = 'SOLICITAR ARREPENTIMIENTO';
+      (window as any).tcFlash?.('NO PUDIMOS ENVIAR LA SOLICITUD. PROBÁ DE NUEVO O ESCRIBINOS.');
+      return;
+    }
+    track('arrepentimiento_submit', { codigo: code });
+    const g = (k: string) => String(fd.get(k) || '').trim();
+    const rows: [string, string][] = [['FECHA Y HORA', when], ['NOMBRE', g('name')], ['EMAIL', g('email')], ['PEDIDO', g('order')], ['PRODUCTO/S', g('prod')], ['MOTIVO', 'Derecho de arrepentimiento']];
+    if (g('com')) rows.push(['COMENTARIOS', g('com')]);
+    form.hidden = true; ok.hidden = false;
+    ok.innerHTML = `<div class="ok-k"><span class="ok-c">✓</span>SOLICITUD RECIBIDA</div>
+      <h2 class="ok-h">REGISTRAMOS TU SOLICITUD DE ARREPENTIMIENTO</h2>
+      <div class="code"><span class="k">CÓDIGO DE SOLICITUD</span><span class="v">${code}</span></div>
+      <dl class="kvs">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+      <p class="ok-p">${API ? `Te enviamos una confirmación a <strong>${esc(g('email'))}</strong> con los próximos pasos.` : 'Nos comunicaremos con vos a <strong>' + esc(g('email')) + '</strong> con los próximos pasos.'} Guardá este código como constancia.</p>
+      <div class="ok-b"><button type="button" class="copy">COPIAR CÓDIGO</button><button type="button" class="print">IMPRIMIR CONSTANCIA</button></div>`;
+    if (cid) ok.querySelectorAll('*').forEach((el) => el.setAttribute(cid, ''));
+    ok.querySelector('.copy')!.addEventListener('click', (ev) => { navigator.clipboard?.writeText(code).catch(() => {}); (ev.currentTarget as HTMLElement).textContent = 'CÓDIGO COPIADO ✓'; });
+    ok.querySelector('.print')!.addEventListener('click', () => window.print());
+    document.getElementById('ar-form')!.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
+
+<style>
+  .in { max-width: 1240px; margin: 0 auto; }
+  .crumb { padding: 20px 40px; border-bottom: 1px solid var(--surface); }
+  .hero { padding: 64px 40px; border-bottom: 1px solid var(--border); }
+  .kick { display: flex; gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--gold); }
+  h1 { font-size: 50px; font-weight: 600; letter-spacing: -.035em; line-height: 1.04; margin: 22px 0 0; text-wrap: balance; }
+  .intro { font-size: 19px; line-height: 1.6; color: var(--text-2); margin-top: 18px; max-width: 640px; text-wrap: pretty; }
+  .facts { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 36px; }
+  .facts li { background: var(--bg); padding: 28px 26px; display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.55; color: var(--text-2); }
+  .facts .v { font-size: 30px; font-weight: 600; letter-spacing: -.02em; line-height: 1; color: var(--gold); }
+  .body { padding: 72px 40px 120px; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 80px; align-items: start; }
+  .main { min-width: 0; display: flex; flex-direction: column; gap: 56px; }
+  .box { background: #1D201E; border: 1px solid var(--border); padding: 40px; scroll-margin-top: 120px; }
+  .hp { position: absolute; left: -9999px; }
+  .f-k { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--gold); }
+  .f-p { font-size: 16px; line-height: 1.6; color: var(--text-2); margin-top: 12px; }
+  .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 20px; margin-top: 28px; }
+  .fd { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .fd.wide { grid-column: 1 / -1; }
+  .fd label, .lbl-s { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--muted); }
+  .opt { color: var(--faint); }
+  .fd input, .fd textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 15px 14px; font-size: 16px; line-height: 1.5; outline: none; font-family: inherit; border-radius: 0; }
+  .fd textarea { resize: vertical; }
+  .fd input:focus, .fd textarea:focus { border-color: var(--gold); }
+  .fd input[aria-invalid='true'] { border-color: #E58A6B; }
+  .err { font-size: 13px; color: #E58A6B; }
+  .err:empty { display: none; }
+  .fixed { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 14px; background: var(--surface); border: 1px solid var(--border); font-size: 16px; font-weight: 500; }
+  .fixed .tag { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; color: var(--gold); font-weight: 400; }
+  .submit { width: 100%; margin-top: 28px; padding: 20px; }
+  .submit:disabled { opacity: .7; cursor: progress; }
+  .f-note { font-size: 13px; line-height: 1.55; color: var(--faint); margin-top: 14px; text-wrap: pretty; }
+  #ar-ok :global(.ok-k) { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--gold); }
+  #ar-ok :global(.ok-c) { width: 28px; height: 28px; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  #ar-ok :global(.ok-h) { font-size: 28px; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; margin-top: 20px; text-wrap: balance; }
+  #ar-ok :global(.code) { margin-top: 26px; padding: 22px 24px; background: var(--bg); border: 1px solid var(--gold); display: flex; flex-direction: column; gap: 8px; }
+  #ar-ok :global(.code .k) { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--faint); }
+  #ar-ok :global(.code .v) { font-family: var(--mono); font-size: 30px; letter-spacing: .08em; color: var(--gold); font-weight: 500; }
+  #ar-ok :global(.kvs) { margin: 22px 0 0; border-top: 1px solid var(--border); }
+  #ar-ok :global(.kvs div) { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 4px 24px; padding: 13px 0; border-bottom: 1px solid var(--surface); align-items: baseline; }
+  #ar-ok :global(.kvs dt) { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); }
+  #ar-ok :global(.kvs dd) { margin: 0; font-size: 15px; overflow-wrap: anywhere; }
+  #ar-ok :global(.ok-p) { font-size: 15px; line-height: 1.6; color: var(--text-2); margin-top: 20px; text-wrap: pretty; }
+  #ar-ok :global(.ok-p strong) { color: var(--text); font-weight: 500; }
+  #ar-ok :global(.ok-b) { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  #ar-ok :global(.ok-b button) { flex: 1 1 180px; background: none; border: 1px solid var(--border); color: var(--text); cursor: pointer; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; padding: 16px; }
+  #ar-ok :global(.ok-b .copy) { border-color: var(--gold); color: var(--gold); }
+  #ar-ok :global(.ok-b button:hover) { border-color: var(--gold); color: var(--gold); }
+  .info { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--border); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .info > div { background: var(--bg); padding: 32px 28px 32px 0; }
+  .info > div + div { padding: 32px 0 32px 28px; }
+  .lbl { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--faint); }
+  .info p { font-size: 15px; line-height: 1.7; color: var(--text-2); margin-top: 14px; text-wrap: pretty; }
+  .info p.s { margin-top: 10px; }
+  .side { min-width: 0; }
+  .side-in { position: sticky; top: 110px; display: flex; flex-direction: column; gap: 40px; }
+  .after { display: flex; flex-direction: column; gap: 18px; }
+  .steps { list-style: none; display: flex; flex-direction: column; }
+  .steps li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 14px; }
+  .st-c { display: flex; flex-direction: column; align-items: center; }
+  .st-c span { width: 34px; height: 34px; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; color: var(--gold); flex: none; }
+  .st-c i { flex: 1; width: 1px; background: var(--border); min-height: 18px; }
+  .st-c i.last { background: transparent; }
+  .steps p { font-size: 15px; line-height: 1.55; color: var(--text-2); margin: 6px 0 22px; text-wrap: pretty; }
+  .free { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); font-size: 14px; line-height: 1.5; }
+  .sq { width: 7px; height: 7px; background: var(--gold); display: block; flex: none; }
+  .help { display: flex; flex-direction: column; gap: 14px; }
+  .help p { font-size: 14px; line-height: 1.6; color: var(--muted); }
+  .hl { border-top: 1px solid var(--border); }
+  .hl a { display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--surface); font-size: 14px; color: var(--gold); overflow-wrap: anywhere; }
+  .hl a:hover { color: var(--gold-hover); }
+  .hl .k { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); }
+  @media print {
+    :global(header), :global(footer), .crumb, .hero, .info, .side, .after, .help, :global(.ov), :global(.toast) { display: none !important; }
+    .body { padding: 0; }
+  }
+  @media (max-width: 1023px) {
+    .crumb { padding: 14px 18px; }
+    .hero { padding: 28px 18px 40px; }
+    h1 { font-size: 30px; }
+    .intro { font-size: 16px; }
+    .facts { grid-template-columns: 1fr; }
+    .facts li { padding: 20px 18px; }
+    .facts .v { font-size: 24px; }
+    .body { padding: 40px 18px 72px; }
+    .grid { grid-template-columns: 1fr; gap: 40px; }
+    .main { gap: 44px; }
+    .box { padding: 24px 18px; }
+    .fields { grid-template-columns: 1fr; }
+    #ar-ok :global(.code) { padding: 18px; }
+    #ar-ok :global(.code .v) { font-size: 24px; }
+    #ar-ok :global(.ok-h) { font-size: 21px; }
+    #ar-ok :global(.kvs div) { grid-template-columns: 1fr; }
+    .info { grid-template-columns: 1fr; }
+    .info > div, .info > div + div { padding: 26px 0; }
+  }
+</style>

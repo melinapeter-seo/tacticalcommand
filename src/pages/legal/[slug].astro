@@ -1,0 +1,202 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Linkify from '../../components/Linkify.astro';
+import { legales, WA } from '../../lib/data';
+import { graph, breadcrumbs, abs, EMAIL } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return legales.map((d, i) => ({ params: { slug: d.slug }, props: { d, i } }));
+}
+const { d, i } = Astro.props as { d: any; i: number };
+const pad2 = (n: number) => String(n).padStart(2, '0');
+const path = `/legal/${d.slug}/`;
+const mailto = (su: string) => `mailto:${EMAIL}?subject=${encodeURIComponent(su)}`;
+const wa = WA(`Hola, tengo una consulta sobre ${d.h1.toLowerCase()}.`);
+const secs = d.secs.map((s: any, k: number) => ({ id: `l-s${k + 1}`, n: pad2(k + 1), h: s.h, b: s.b }));
+const docUrl = (t: string) => { const x = legales.find((l) => l.titulo === t); return x ? `/legal/${x.slug}/` : null; };
+const [dd, mm, yy] = String(d.upd).split('/');
+const updIso = yy && mm && dd ? `${yy}-${mm}-${dd}` : undefined;
+const jsonld = graph(
+  { '@type': 'WebPage', '@id': abs(path) + '#page', name: d.titulo, url: abs(path), inLanguage: 'es-AR', ...(updIso ? { dateModified: updIso } : {}) },
+  breadcrumbs([['Inicio', '/'], [d.titulo, path]]),
+);
+---
+<Base title={`${d.titulo} | Tactical Command`} description={`${d.titulo} de Tactical Command: ${String(d.intro[0]).slice(0, 110).replace(/\s+\S*$/, '')}…`} path={path} jsonld={jsonld}>
+  <div class="crumb"><Breadcrumbs items={[['Inicio', '/'], ['Legal', '/legal/terminos-y-condiciones/'], [d.h1.charAt(0) + d.h1.slice(1).toLowerCase(), path]]} class="in" /></div>
+  <section class="hero">
+    <div class="in">
+      <div class="kick"><span>LEGAL</span><span>/</span><span>DOCUMENTO {pad2(i + 1)}</span></div>
+      <h1>{d.h1}</h1>
+      <dl class="meta">
+        <div><dt>ÚLTIMA ACTUALIZACIÓN</dt><dd>{updIso ? <time datetime={updIso}>{d.upd}</time> : d.upd}</dd></div>
+        <div><dt>ALCANCE</dt><dd>{d.scope}</dd></div>
+        <div><dt>LEGISLACIÓN</dt><dd>República Argentina</dd></div>
+      </dl>
+      <div class="intro">{d.intro.map((t: string) => <p><Linkify text={t} self={d.slug} /></p>)}</div>
+    </div>
+  </section>
+  <div class="body">
+    <div class="in grid">
+      <aside class="side d-only" aria-label="Índice y documentos">
+        <div class="side-in">
+          <nav class="blk" aria-label="Índice del documento">
+            <div class="lbl">ÍNDICE</div>
+            <div class="toc">{secs.map((s: any) => <a href={`#${s.id}`}><span>{s.n}</span><span>{s.h}</span></a>)}</div>
+          </nav>
+          <nav class="blk" aria-label="Documentos legales">
+            <div class="lbl">DOCUMENTOS LEGALES</div>
+            <div class="docs">{legales.map((x) => <a href={`/legal/${x.slug}/`} aria-current={x.slug === d.slug ? 'page' : undefined}><span>{x.titulo}</span><span class="tag">{x.slug === d.slug ? 'ESTÁS ACÁ' : '→'}</span></a>)}</div>
+          </nav>
+        </div>
+      </aside>
+      <article class="art">
+        <details class="toc-m m-only">
+          <summary><span>ÍNDICE · {secs.length} SECCIONES</span><span class="pl" aria-hidden="true">+</span></summary>
+          <nav aria-label="Índice del documento" class="toc-ml">{secs.map((s: any) => <a href={`#${s.id}`}><span>{s.n}</span><span>{s.h}</span></a>)}</nav>
+        </details>
+        <div class="secs">
+          {secs.map((s: any) => (
+            <section id={s.id} class="sec">
+              <span class="n" aria-hidden="true">{s.n}</span>
+              <div class="sec-b">
+                <h2>{s.h.toUpperCase()}</h2>
+                <div class="blocks">
+                  {s.b.map((b: any) => (
+                    b.note ? (
+                      <div class="note"><span class="note-l"><span class="sq"></span>{b.lbl || 'LEY 24.240 · DEFENSA DEL CONSUMIDOR'}</span><p><Linkify text={b.note} self={d.slug} /></p></div>
+                    ) : b.p ? (
+                      <p class="p"><Linkify text={b.p} self={d.slug} /></p>
+                    ) : b.sub ? (
+                      <h3 class="sub">{b.sub.toUpperCase()}</h3>
+                    ) : b.ol ? (
+                      <ol class="ol">{b.ol.map((t: string, j: number) => <li><span>PASO {pad2(j + 1)}</span><span>{t}</span></li>)}</ol>
+                    ) : b.ul ? (
+                      <ul class="ul">{b.ul.map((t: string) => <li><span class="dash" aria-hidden="true"></span><span>{t}</span></li>)}</ul>
+                    ) : b.kv ? (
+                      <dl class="kv">{b.kv.map(([k, v, l, to, su]: string[]) => (
+                        <div><dt>{k.toUpperCase()}</dt><dd>{l === 'mail' ? <a href={mailto(su || 'Consulta sobre ' + d.h1.toLowerCase())}>{v}</a> : l === 'wa' ? <a href={WA('Hola Tactical Command, tengo una consulta.')} target="_blank" rel="noopener">{v}</a> : v}</dd></div>
+                      ))}</dl>
+                    ) : (b.docs || b.links) ? (
+                      <div class="dl">
+                        {(b.links || []).map(([t, to]: string[]) => <a href={to.replace(/^#/, '').replace(/^\/blog\//, '/guias/')}><span>{t}</span><span class="tag">→</span></a>)}
+                        {(b.docs || []).map((t: string) => { const u = docUrl(t); return u ? <a href={u}><span>{t}</span><span class="tag">→</span></a> : <span class="na"><span>{t}</span><span class="tag">PRÓXIMAMENTE</span></span>; })}
+                      </div>
+                    ) : null
+                  ))}
+                </div>
+              </div>
+            </section>
+          ))}
+        </div>
+        <section class="cta" aria-labelledby="cta-h">
+          <h2 id="cta-h">¿TENÉS UNA CONSULTA SOBRE ESTE DOCUMENTO?</h2>
+          <p>Lunes a viernes de 8 a 12 hs y de 16 a 20 hs. Sábados y domingos de 9 a 15 hs.</p>
+          <div class="cta-b">
+            <a href={wa} target="_blank" rel="noopener" class="btn-gold c1" data-wa="legal">CONSULTAR POR WHATSAPP →</a>
+            <a href={mailto('Consulta sobre ' + d.h1.toLowerCase())} class="c2">ESCRIBIR POR EMAIL →</a>
+          </div>
+        </section>
+        <nav class="docs-m m-only" aria-label="Documentos legales">
+          <div class="lbl">DOCUMENTOS LEGALES</div>
+          <div class="docs">{legales.map((x) => <a href={`/legal/${x.slug}/`} aria-current={x.slug === d.slug ? 'page' : undefined}><span>{x.titulo}</span><span class="tag">{x.slug === d.slug ? 'ESTÁS ACÁ' : '→'}</span></a>)}</div>
+        </nav>
+      </article>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .in { max-width: 1240px; margin: 0 auto; }
+  .crumb { padding: 20px 40px; border-bottom: 1px solid var(--surface); }
+  .hero { padding: 64px 40px; border-bottom: 1px solid var(--border); }
+  .kick { display: flex; gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--gold); }
+  h1 { font-size: 50px; font-weight: 600; letter-spacing: -.035em; line-height: 1.04; margin: 22px 0 0; text-wrap: balance; }
+  .meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 36px 0 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .meta > div { padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; border-left: 1px solid var(--border); }
+  .meta > div:first-child { padding-left: 0; border-left: 0; }
+  .meta dt { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--faint); }
+  .meta dd { margin: 0; font-size: 16px; font-weight: 500; }
+  .intro { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; max-width: 760px; }
+  .intro p { font-size: 18px; line-height: 1.7; color: var(--text-2); text-wrap: pretty; }
+  .body { padding: 72px 40px 120px; }
+  .grid { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 80px; }
+  .side { min-width: 0; }
+  .side-in { position: sticky; top: 110px; display: flex; flex-direction: column; gap: 36px; }
+  .blk { border-top: 1px solid var(--border); padding-top: 20px; }
+  .lbl { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--faint); }
+  .toc { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+  .toc a { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  .toc a:hover { color: var(--gold); }
+  .toc a span:first-child, .toc-ml a span:first-child { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: var(--gold); padding-top: 2px; }
+  .docs { display: flex; flex-direction: column; margin-top: 10px; }
+  .docs a { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--surface); font-size: 13px; line-height: 1.4; color: var(--text-2); }
+  .docs a[aria-current='page'] { color: var(--gold); }
+  .docs a:hover { color: var(--gold); }
+  .docs .tag { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; color: var(--faint); white-space: nowrap; }
+  .art { min-width: 0; max-width: 820px; }
+  .secs { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+  .sec { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 24px; padding: 44px 0; border-bottom: 1px solid var(--border); scroll-margin-top: 110px; }
+  .n { font-family: var(--mono); font-size: 22px; letter-spacing: .04em; line-height: 1; color: var(--gold); padding-top: 4px; }
+  .sec-b { min-width: 0; }
+  .sec h2 { font-size: 24px; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; text-wrap: balance; }
+  .blocks { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
+  .p { font-size: 16px; line-height: 1.75; color: var(--text-2); max-width: 68ch; text-wrap: pretty; }
+  .sub { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; line-height: 1.6; color: var(--gold); font-weight: 400; margin-top: 10px; padding-top: 16px; border-top: 1px dashed var(--border); }
+  .note { padding: 20px 22px; background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
+  .note-l { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--gold); }
+  .sq { width: 7px; height: 7px; background: var(--gold); display: block; }
+  .note p { font-size: 16px; line-height: 1.7; text-wrap: pretty; }
+  .ol { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .ol li { background: var(--bg); padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+  .ol li span:first-child { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--gold); }
+  .ol li span:last-child { font-size: 15px; line-height: 1.5; text-wrap: pretty; }
+  .ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .ul li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.6; color: var(--text-2); }
+  .dash { width: 10px; height: 1px; background: var(--gold); margin-top: 13px; display: block; }
+  .kv { border-top: 1px solid var(--border); margin: 0; }
+  .kv > div { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 4px 24px; padding: 14px 0; border-bottom: 1px solid var(--surface); align-items: baseline; }
+  .kv dt { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); }
+  .kv dd { margin: 0; font-size: 16px; font-weight: 500; overflow-wrap: anywhere; }
+  .kv a { color: var(--gold); }
+  .kv a:hover { color: var(--gold-hover); }
+  .dl { border-top: 1px solid var(--border); }
+  .dl a, .dl .na { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--surface); font-size: 16px; font-weight: 500; }
+  .dl .na { color: var(--faint); }
+  .dl a:hover { color: var(--gold); }
+  .dl .tag { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; color: var(--gold); white-space: nowrap; }
+  .cta { margin-top: 64px; padding: 40px; background: var(--surface); border: 1px solid var(--border); }
+  .cta h2 { font-size: 28px; font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
+  .cta p { font-size: 16px; line-height: 1.7; color: var(--text-2); margin-top: 14px; white-space: nowrap; }
+  .cta-b { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+  .c1 { flex: 1 1 240px; padding: 18px 20px; font-size: 11px; letter-spacing: .14em; }
+  .c2 { flex: 1 1 200px; text-align: center; border: 1px solid var(--border); font-family: var(--mono); font-size: 11px; letter-spacing: .14em; padding: 18px 20px; }
+  .c2:hover { border-color: var(--gold); color: var(--gold); }
+  @media (max-width: 1023px) {
+    .crumb { padding: 14px 18px; }
+    .hero { padding: 28px 18px 40px; }
+    h1 { font-size: 30px; }
+    .meta { grid-template-columns: 1fr; }
+    .meta > div { padding: 18px 0; border-left: 0; border-top: 1px solid var(--border); }
+    .meta > div:first-child { border-top: 0; }
+    .intro p { font-size: 16px; }
+    .body { padding: 40px 18px 72px; }
+    .grid { grid-template-columns: 1fr; gap: 40px; }
+    .toc-m { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+    .toc-m summary { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+    .toc-m .pl { color: var(--gold); }
+    .toc-ml { display: flex; flex-direction: column; gap: 14px; padding-bottom: 24px; }
+    .toc-ml a { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; color: var(--text-2); font-size: 14px; line-height: 1.45; }
+    .sec { grid-template-columns: 1fr; gap: 14px; padding: 34px 0; }
+    .n { font-size: 13px; }
+    .sec h2 { font-size: 20px; }
+    .ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .kv > div { grid-template-columns: 1fr; }
+    .cta { margin-top: 48px; padding: 24px 20px; }
+    .cta h2 { font-size: 21px; }
+    .cta p { white-space: normal; }
+    .docs-m { margin-top: 48px; }
+    .docs-m .docs { margin-top: 14px; border-top: 1px solid var(--border); }
+    .docs-m .docs a { padding: 16px 0; font-size: 15px; }
+  }
+</style>

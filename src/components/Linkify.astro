@@ -1,0 +1,24 @@
+---
+// Enlaza dentro de un texto legal las menciones a otros documentos (excepto el propio).
+import { sitio } from '../lib/data';
+interface Props { text: string; self: string }
+const { text, self } = Astro.props;
+const L = sitio.enlaces_legales.filter((l) => !l.url.includes('/' + self + '/'));
+let segs: { t: string; u?: string }[] = [{ t: text }];
+for (const { t: ph, url } of L) {
+  segs = segs.flatMap((sg) => {
+    if (sg.u) return [sg];
+    const parts = sg.t.split(ph);
+    if (parts.length < 2) return [sg];
+    const r: { t: string; u?: string }[] = [];
+    parts.forEach((p, i) => { if (p) r.push({ t: p }); if (i < parts.length - 1) r.push({ t: ph, u: url }); });
+    return r;
+  });
+}
+---
+{segs.map((s) => (s.u ? <a href={s.u} class="lk">{s.t}</a> : s.t))}
+
+<style>
+  .lk { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+  .lk:hover { color: var(--gold-hover); }
+</style>

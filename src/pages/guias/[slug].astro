@@ -1,0 +1,228 @@
+---
+import Base from '../../layouts/Base.astro';
+import Foto from '../../components/Foto.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import meta from '../../data/guias-meta.json';
+import { guias, tarjeta, WA, type Guia, type TarjetaVista } from '../../lib/data';
+import { img } from '../../lib/img';
+import { getImage } from 'astro:assets';
+import { graph, breadcrumbs, faqPage, abs, desc, ORG_ID, WALTER_ID, walter } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return guias.map((g) => ({ params: { slug: g.slug }, props: { g } }));
+}
+const { g } = Astro.props as { g: Guia };
+const m = (meta.guias as Record<string, { publicado: string; actualizado: string }>)[g.slug];
+const fmt = (d: string) => new Date(d + 'T12:00:00').toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+const path = `/guias/${g.slug}/`;
+const secs = g.secciones.map((s: any, i: number) => ({ id: `g-s${i + 1}`, h: s.h, p: s.p, p2: s.p2 || '', li: s.li || [] }));
+const toc = [{ t: 'EN RESUMEN', id: 'g-res' }, ...secs.map((s) => ({ t: s.h, id: s.id })), { t: g.tabla.cap, id: 'g-tbl' }, { t: 'PREGUNTAS FRECUENTES', id: 'g-faq' }];
+const prods = g.productos.map(tarjeta).filter(Boolean) as TarjetaVista[];
+const otras = guias.filter((x) => x.slug !== g.slug);
+const wa = WA(`Hola, leí la guía "${g.titulo}" y tengo una consulta.`);
+const hero = await img(g.imagen);
+const heroImg = hero ? await getImage({ src: hero, width: 1200, format: 'webp' }) : null;
+const jsonld = graph(
+  {
+    '@type': 'BlogPosting', '@id': abs(path) + '#articulo', headline: g.titulo, description: g.respuesta, inLanguage: 'es-AR',
+    image: heroImg ? abs(heroImg.src) : undefined, datePublished: m.publicado, dateModified: m.actualizado,
+    author: { '@id': WALTER_ID }, publisher: { '@id': ORG_ID }, mainEntityOfPage: abs(path), about: g.palabra_clave,
+    mentions: prods.filter((t, i, a) => a.findIndex((x) => x.slug === t.slug) === i).map((t) => ({ '@type': 'Product', name: t.nombre, url: abs(`/productos/${t.slug}/`) })),
+  },
+  walter(),
+  faqPage(g.faq),
+  breadcrumbs([['Inicio', '/'], ['Guías', '/guias/'], [g.titulo, path]]),
+);
+---
+<Base title={`${g.titulo} | Tactical Command`} description={desc(g.respuesta)} path={path} ogType="article" ogImage={heroImg?.src} jsonld={jsonld}>
+  <div class="crumb"><Breadcrumbs items={[['Inicio', '/'], ['Guías', '/guias/'], [g.palabra_clave, path]]} class="in" /></div>
+  <section class="hero">
+    <div class="in hero-grid">
+      <div class="hero-l">
+        <div class="kick pulse"><span>{g.cluster}</span><span>/</span><span>{g.lectura}</span></div>
+        <h1>{g.h1}</h1>
+        <div class="ans">
+          <div class="ans-k"><span class="sq"></span>RESPUESTA CORTA</div>
+          <p>{g.respuesta}</p>
+        </div>
+        <div class="by">POR <a href="/nosotros/">{meta.autor.toUpperCase()}</a> · TACTICAL COMMAND · RAFAELA, SANTA FE · ACTUALIZADO EL <time datetime={m.actualizado}>{fmt(m.actualizado)}</time></div>
+      </div>
+      <div class="hero-im"><Foto src={g.imagen} alt={g.palabra_clave} sizes="(min-width: 1024px) 40vw, 100vw" priority /></div>
+    </div>
+  </section>
+
+  <div class="body">
+    <div class="in body-grid">
+      <article class="art">
+        <details class="toc-m m-only">
+          <summary>EN ESTA GUÍA<span aria-hidden="true">+</span></summary>
+          <nav aria-label="Índice de la guía" class="toc-ml">{toc.map((t) => <a href={`#${t.id}`}>{t.t}</a>)}</nav>
+        </details>
+        <section id="g-res" aria-labelledby="res-h">
+          <h2 id="res-h" class="lbl">EN RESUMEN</h2>
+          <ul class="pts">{g.puntos.map((p: string) => <li><span class="dot" aria-hidden="true"></span><span>{p}</span></li>)}</ul>
+        </section>
+        {secs.map((s) => (
+          <section id={s.id} class="sec">
+            <h2>{s.h}</h2>
+            <p class="p">{s.p}</p>
+            {s.li.length > 0 && <ul class="li">{s.li.map((l: string) => <li><span class="dash" aria-hidden="true"></span><span>{l}</span></li>)}</ul>}
+            {s.p2 && <p class="p2">{s.p2}</p>}
+          </section>
+        ))}
+        <section id="g-tbl" class="sec">
+          <h2>{g.tabla.cap}</h2>
+          <table class="tbl" style={`--c:${g.tabla.head.length - 1}`}>
+            <thead><tr>{g.tabla.head.map((h: string) => <th scope="col">{h}</th>)}</tr></thead>
+            <tbody>
+              {g.tabla.rows.map((r: string[]) => (
+                <tr><th scope="row">{r[0]}</th>{r.slice(1).map((v, i) => <td data-h={g.tabla.head[i + 1]}>{v}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+        <section id="g-faq" class="sec">
+          <h2>PREGUNTAS FRECUENTES</h2>
+          <div class="faq">{g.faq.map((f) => <details><summary><h3>{f.q}</h3><span aria-hidden="true">+</span></summary><p>{f.a}</p></details>)}</div>
+        </section>
+        {prods.length > 0 && (
+          <section class="sec" aria-labelledby="pr-h">
+            <h2 id="pr-h" class="lbl">PRODUCTOS RELACIONADOS</h2>
+            <div class="prods" style={`--n:${Math.min(prods.length, 4)}`}>
+              {prods.map((p) => (
+                <a href={p.url} class="pr">
+                  <div class="pr-im">{p.imagen ? <Foto src={p.imagen} alt={p.nombre} sizes="(min-width: 1024px) 14vw, 45vw" /> : <span>{p.placeholder}</span>}</div>
+                  <div class="pr-n">{p.nombre}</div>
+                  <div class="pr-go">VER PRODUCTO →</div>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+        <section class="sec cta" aria-labelledby="cta-h">
+          <h2 id="cta-h">¿TENÉS DUDAS ANTES DE ELEGIR?</h2>
+          <p>Escribinos por WhatsApp y te respondemos con información del producto, talles y disponibilidad.</p>
+          <div class="cta-b">
+            <a href={wa} target="_blank" rel="noopener" class="btn-gold c1" data-wa="guia">CONSULTAR POR WHATSAPP →</a>
+            <a href={g.categoria.url} class="c2">{g.categoria.texto} →</a>
+          </div>
+        </section>
+        <section class="sec" aria-labelledby="mas-h">
+          <h2 id="mas-h" class="lbl">MÁS GUÍAS</h2>
+          <div class="more">{otras.map((a) => <a href={`/guias/${a.slug}/`}><span class="t">{a.titulo}</span><span class="r">{a.lectura} →</span></a>)}</div>
+        </section>
+      </article>
+      <aside class="side d-only" aria-label="Índice y consultas">
+        <div class="side-in">
+          <nav class="toc" aria-label="En esta guía">
+            <div class="lbl">EN ESTA GUÍA</div>
+            <div class="toc-l">{toc.map((t) => <a href={`#${t.id}`}>{t.t}</a>)}</div>
+          </nav>
+          <div class="gal">{g.galeria.map((im: string) => <div><Foto src={im} alt={g.palabra_clave} sizes="160px" widths={[400]} /></div>)}</div>
+          <a href={wa} target="_blank" rel="noopener" class="side-wa" data-wa="guia">CONSULTAR POR WHATSAPP →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .in { max-width: 1240px; margin: 0 auto; }
+  .crumb { padding: 20px 40px; border-bottom: 1px solid var(--surface); }
+  .hero { padding: 64px 40px 72px; border-bottom: 1px solid var(--border); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 72px; align-items: center; }
+  .hero-l { min-width: 0; }
+  .kick { display: flex; gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--gold); }
+  h1 { font-size: 50px; font-weight: 600; letter-spacing: -.035em; line-height: 1.04; margin: 22px 0 0; text-wrap: balance; }
+  .ans { margin-top: 34px; padding: 28px 30px; background: var(--surface); border: 1px solid var(--border); }
+  .ans-k { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--gold); }
+  .sq { width: 7px; height: 7px; background: var(--gold); display: block; }
+  .ans p { font-size: 19px; line-height: 1.6; letter-spacing: -.01em; margin: 14px 0 0; text-wrap: pretty; }
+  .by { margin-top: 20px; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--muted-2); line-height: 1.8; }
+  .by a { color: var(--text-2); text-decoration: underline; text-underline-offset: 3px; }
+  .hero-im { aspect-ratio: 1 / 1; overflow: hidden; background: var(--surface); min-width: 0; position: relative; }
+  .hero-im :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .body { padding: 72px 40px 120px; }
+  .body-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 80px; }
+  .art { min-width: 0; max-width: 780px; }
+  section[id] { scroll-margin-top: 110px; }
+  .lbl { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--faint); font-weight: 400; }
+  .pts { list-style: none; margin-top: 18px; border-top: 1px solid var(--border); }
+  .pts li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--surface); font-size: 17px; line-height: 1.6; text-wrap: pretty; }
+  .dot { width: 6px; height: 6px; background: var(--gold); margin-top: 10px; display: block; }
+  .sec { margin-top: 72px; }
+  .sec h2:not(.lbl) { font-size: 28px; font-weight: 600; letter-spacing: -.02em; line-height: 1.15; text-wrap: balance; }
+  .p { font-size: 17px; line-height: 1.8; color: var(--text-2); margin-top: 20px; text-wrap: pretty; }
+  .li { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+  .li li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.65; color: var(--text-2); }
+  .dash { width: 10px; height: 1px; background: var(--gold); margin-top: 13px; display: block; }
+  .p2 { font-size: 16px; line-height: 1.8; color: var(--muted); margin-top: 18px; text-wrap: pretty; }
+  .tbl { width: 100%; margin-top: 28px; border-collapse: collapse; border-top: 1px solid var(--border); table-layout: fixed; }
+  .tbl th, .tbl td { text-align: left; vertical-align: baseline; padding: 18px 24px 18px 0; border-bottom: 1px solid var(--surface); }
+  .tbl thead th { padding: 16px 24px 16px 0; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--gold); font-weight: 400; }
+  .tbl thead th:first-child { width: calc(100% / (1 + 1.35 * var(--c))); }
+  .tbl tbody th { font-size: 15px; font-weight: 600; line-height: 1.45; }
+  .tbl td { font-size: 15px; line-height: 1.55; color: var(--text-2); text-wrap: pretty; }
+  .faq { margin-top: 22px; border-top: 1px solid var(--border); }
+  .faq details { border-bottom: 1px solid var(--border); }
+  .faq summary { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 0; }
+  .faq summary h3 { font-size: 17px; font-weight: 500; line-height: 1.4; }
+  .faq summary span { flex: none; font-family: var(--mono); font-size: 16px; color: var(--gold); }
+  .faq p { font-size: 16px; line-height: 1.8; color: var(--text-2); margin: 0 0 24px; max-width: 64ch; text-wrap: pretty; }
+  .prods { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+  .pr { display: flex; flex-direction: column; min-width: 0; }
+  .pr:hover { color: var(--gold); }
+  .pr-im { aspect-ratio: 1 / 1; overflow: hidden; background: var(--surface); display: flex; align-items: center; justify-content: center; position: relative; }
+  .pr-im :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .pr-im span { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--faint); text-align: center; padding: 14px; line-height: 1.6; }
+  .pr-n { font-size: 14px; font-weight: 500; line-height: 1.35; margin-top: 14px; text-wrap: pretty; }
+  .pr-go { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--gold); margin-top: 10px; }
+  .cta { padding: 40px; background: var(--surface); border: 1px solid var(--border); }
+  .cta p { font-size: 16px; line-height: 1.7; color: var(--text-2); margin-top: 14px; max-width: 56ch; text-wrap: pretty; }
+  .cta-b { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+  .c1 { flex: 1 1 240px; padding: 18px 20px; font-size: 11px; letter-spacing: .14em; }
+  .c2 { flex: 1 1 200px; text-align: center; border: 1px solid var(--border); font-family: var(--mono); font-size: 11px; letter-spacing: .14em; padding: 18px 20px; }
+  .c2:hover { border-color: var(--gold); color: var(--gold); }
+  .more { border-top: 1px solid var(--border); margin-top: 16px; }
+  .more a { display: flex; justify-content: space-between; gap: 20px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--surface); }
+  .more .t { font-size: 16px; font-weight: 500; line-height: 1.4; text-wrap: pretty; }
+  .more .r { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); white-space: nowrap; }
+  .side { min-width: 0; }
+  .side-in { position: sticky; top: 110px; display: flex; flex-direction: column; gap: 28px; }
+  .toc { border-top: 1px solid var(--border); padding-top: 20px; }
+  .toc-l { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
+  .toc-l a { color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: .1em; line-height: 1.6; }
+  .toc-l a:hover { color: var(--gold); }
+  .gal { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .gal div { aspect-ratio: 1 / 1; overflow: hidden; background: var(--surface); position: relative; }
+  .gal :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .side-wa { text-align: center; border: 1px solid var(--gold); color: var(--gold); font-family: var(--mono); font-size: 10px; letter-spacing: .14em; padding: 16px; animation: goldpulse 4.5s ease-in-out infinite; }
+  .side-wa:hover { background: var(--gold-grad); background-size: 230% auto; color: var(--ink); box-shadow: var(--glow); }
+  @media (max-width: 1023px) {
+    .crumb { padding: 14px 18px; }
+    .hero { padding: 28px 18px 40px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+    h1 { font-size: 30px; }
+    .ans { padding: 20px 18px; }
+    .ans p { font-size: 17px; }
+    .body { padding: 40px 18px 72px; }
+    .body-grid { grid-template-columns: 1fr; }
+    .toc-m { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 44px; }
+    .toc-m summary { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+    .toc-m summary span { color: var(--gold); }
+    .toc-ml { display: flex; flex-direction: column; gap: 16px; padding-bottom: 24px; }
+    .toc-ml a { color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; line-height: 1.6; }
+    .sec { margin-top: 52px; }
+    .sec h2:not(.lbl) { font-size: 21px; }
+    .tbl, .tbl tbody, .tbl tr, .tbl th, .tbl td { display: block; width: auto !important; }
+    .tbl { border-top: 0; margin-top: 22px; }
+    .tbl thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .tbl tbody { display: flex; flex-direction: column; gap: 10px; }
+    .tbl tr { border: 1px solid var(--border); background: #1D201E; padding: 18px; }
+    .tbl tbody th { font-size: 16px; line-height: 1.35; padding: 0 0 14px; border-bottom: 1px solid var(--border); }
+    .tbl td { display: flex; flex-direction: column; gap: 5px; padding: 12px 0 0; border: 0; line-height: 1.5; }
+    .tbl td::before { content: attr(data-h); font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--gold); }
+    .prods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cta { padding: 24px 20px; }
+  }
+</style>

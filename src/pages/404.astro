@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { categorias } from '../lib/data';
+---
+<Base title="Página no encontrada | Tactical Command" description="La página que buscás no existe o cambió de dirección. Buscá en el catálogo o elegí una categoría." path="/404/" noindex>
+  <section class="nf">
+    <div class="k">ERROR 404</div>
+    <h1>NO ENCONTRAMOS<br />ESTA PÁGINA.</h1>
+    <p>Puede que el producto haya cambiado de dirección o que el enlace esté mal escrito. Buscá en el catálogo o elegí una categoría.</p>
+    <button type="button" class="btn-gold anim srch" data-open="search">BUSCAR EN EL CATÁLOGO →</button>
+    <ul class="cats">
+      {categorias.map((c) => <li><a href={`/${c.slug}/`}><span class="n">{c.numero} /</span><span>{c.titulo}</span><span class="a" aria-hidden="true">→</span></a></li>)}
+    </ul>
+    <a href="/" class="home">VOLVER AL INICIO</a>
+  </section>
+</Base>
+
+<style>
+  .nf { padding: 96px 40px 120px; max-width: 1100px; }
+  .k { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--gold); }
+  h1 { font-size: 86px; font-weight: 600; letter-spacing: -.035em; line-height: .98; margin-top: 22px; }
+  p { max-width: 60ch; font-size: 17px; line-height: 1.7; color: var(--text-2); margin-top: 26px; }
+  .srch { margin-top: 32px; padding: 18px 24px; }
+  .cats { list-style: none; margin-top: 56px; border-top: 1px solid var(--border); }
+  .cats a { display: flex; align-items: baseline; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--border); font-size: 27px; font-weight: 500; letter-spacing: -.01em; }
+  .cats .n { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--gold); }
+  .cats .a { margin-left: auto; font-family: var(--mono); font-size: 14px; color: var(--gold); }
+  .home { display: inline-block; margin-top: 32px; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  @media (max-width: 1023px) {
+    .nf { padding: 48px 18px 72px; }
+    h1 { font-size: 34px; }
+    p { font-size: 15px; }
+    .cats { margin-top: 40px; }
+    .cats a { font-size: 21px; padding: 18px 0; }
+  }
+</style>

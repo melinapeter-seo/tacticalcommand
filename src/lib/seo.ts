@@ -34,7 +34,7 @@ export const org = () => ({
 
 export const website = () => ({ '@type': 'WebSite', '@id': SITE_ID, name: 'Tactical Command', url: SITE + '/', inLanguage: 'es-AR', publisher: { '@id': ORG_ID } });
 
-export const walter = () => ({ '@type': 'Person', '@id': WALTER_ID, name: 'Walter Iman', jobTitle: 'Fundador de Tactical Command', url: abs('/nosotros/'), worksFor: { '@id': ORG_ID } });
+export const walter = () => ({ '@type': 'Person', '@id': WALTER_ID, name: 'Walter Iman', jobTitle: 'Titular de Tactical Command', url: abs('/nosotros/'), worksFor: { '@id': ORG_ID } });
 
 export const breadcrumbs = (parts: [string, string][]) => ({
   '@type': 'BreadcrumbList',

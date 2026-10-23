@@ -1,0 +1,153 @@
+---
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import Scroller from '../components/Scroller.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { graph, org, walter, breadcrumbs, faqPage, abs, ORG_ID, WALTER_ID } from '../lib/seo';
+
+const facts = [
+  { i: 'EN EL RUBRO', t: 'Desde 2012 (14 años).' },
+  // El schema Person exige que Walter figure visible en la página (requisito E-E-A-T del handoff).
+  { i: 'TITULAR', t: 'Walter Iman.' },
+  { i: 'UBICACIÓN', t: 'Rafaela, Santa Fe, Argentina. Opera de forma digital.' },
+  { i: 'QUÉ VENDE', t: 'Indumentaria, equipos tácticos, calzado y accesorios nuevos.' },
+  { i: 'PARA QUÉ USOS', t: 'Fuerzas de seguridad, seguridad privada, trabajo, entrenamiento, camping, trekking y caza.' },
+  { i: 'TIPO DE VENTA', t: 'Minorista y mayorista (desde 8 unidades combinables).' },
+  { i: 'CÓMO SE COMPRA', t: 'Por WhatsApp: se confirman stock, precio y envío antes de cerrar la compra.' },
+  { i: 'ENVÍOS', t: 'A todo el país desde Rafaela, a domicilio o a sucursal.' },
+];
+const faq = [
+  { q: '¿Qué es Tactical Command?', a: 'Tactical Command es una tienda argentina de indumentaria, equipos tácticos, calzado y accesorios para fuerzas de seguridad, trabajo, entrenamiento y outdoor. Tiene base en Rafaela, Santa Fe, y vende por menor y por mayor con envíos a todo el país.' },
+  { q: '¿Desde cuándo opera Tactical Command?', a: 'Desde 2012. Lleva 14 años comercializando equipamiento táctico.' },
+  { q: '¿Dónde está ubicado Tactical Command?', a: 'En Rafaela, provincia de Santa Fe, Argentina. Opera de forma digital y prepara y despacha los pedidos desde Rafaela.' },
+  { q: '¿Qué productos vende Tactical Command?', a: 'Indumentaria táctica (camperas, uniformes, pantalones cargo y bajo chalecos), equipos tácticos (mochilas, bolsos y bandoleras), calzado (borcegos) y accesorios (cintos, gafas, shemagh y sombreros). Todos los productos son nuevos.' },
+  { q: '¿Cómo se compra en Tactical Command?', a: 'Elegís el producto, la variante y el talle en la web y tocás el botón de WhatsApp, que envía un mensaje con los datos del producto. Por WhatsApp se confirman el stock, el precio final y el envío. Con la compra confirmada recibís un código para seguir el pedido.' },
+  { q: '¿Tactical Command vende por mayor?', a: 'Sí. La venta mayorista es desde 8 unidades, que se pueden combinar entre productos, colores y talles. El envío está a cargo del comprador y se cotiza por WhatsApp.' },
+  { q: '¿Tactical Command hace envíos a todo el país?', a: 'Sí. Despacha desde Rafaela, Santa Fe, a domicilio o a sucursal de la empresa de transporte. El costo de envío está a cargo del comprador y se informa antes de confirmar la compra.' },
+  { q: '¿Cómo sigo mi pedido?', a: 'Ingresá el código de pedido en la sección Tu pedido. Vas a ver en qué paso está: compra confirmada, preparación, despacho desde Rafaela y entrega.' },
+];
+const crit = [
+  { i: '01', t: 'CONSTRUCCIÓN', d: 'Terminaciones, costuras y estructura del producto.' },
+  { i: '02', t: 'MATERIALES', d: 'Tejidos y componentes según la información publicada por el proveedor.' },
+  { i: '03', t: 'FUNCIONALIDAD', d: 'Ajustes, bolsillos y sistemas que resuelven un uso concreto.' },
+  { i: '04', t: 'DISPONIBILIDAD', d: 'Talles, colores y reposición según stock vigente.' },
+];
+const altOp = ['Depósito de Tactical Command en Rafaela con mochilas tácticas e indumentaria', 'Mochila táctica negra y mochilas camufladas en stock', 'Mochilas tácticas en distintos camuflajes y colores', 'Chalecos tácticos coyote y negro', 'Stock de mochilas tácticas sobre bandera argentina', 'Mochilas tácticas camufladas, verdes y negras', 'Bolsos mochila tácticos negro, verde y coyote', 'Chaquetas y uniformes tácticos en exhibición', 'Chaquetas tácticas, cintos Cobra y shemagh verde', 'Borcegos, uniformes camuflados y gafas tácticas', 'Preparación de pedido: uniformes, borcegos y gafas', 'Uniformes Woodland, borcegos y set de gafas tácticas', 'Camperas tácticas, cintos y shemagh en stock', 'Uniformes tácticos, cintos y borcegos en exhibición', 'Uniformes camuflados, borcegos, shemagh, gafas y sombrero tactico'];
+const fotos = altOp.map((alt, i) => ({ alt, src: `op-${String(i + 1).padStart(2, '0')}.webp` })).filter((_, i) => ![1, 2, 5, 6, 9, 10, 11, 12, 13].includes(i));
+
+const path = '/nosotros/';
+const description = 'Tactical Command es una tienda de indumentaria, equipos tácticos, calzado y accesorios en Rafaela, Santa Fe, desde 2012. Venta minorista y mayorista con envíos a todo el país.';
+const jsonld = graph(
+  { '@type': 'AboutPage', '@id': abs(path) + '#page', name: 'Qué es Tactical Command', description, url: abs(path), inLanguage: 'es-AR', about: { '@id': ORG_ID }, mainEntity: { '@id': ORG_ID }, author: { '@id': WALTER_ID } },
+  org(), walter(),
+  breadcrumbs([['Inicio', '/'], ['Nosotros', path]]),
+  faqPage(faq),
+);
+---
+<Base title="Qué es Tactical Command: equipamiento táctico desde 2012 | Tactical Command" description={description} path={path} jsonld={jsonld}>
+  <section class="top" aria-labelledby="ab-h1">
+    <Breadcrumbs items={[['Inicio', '/'], ['Nosotros', path]]} class="bc-top" />
+    <h1 id="ab-h1" class="h1"><span>¿QUÉ ES</span><span>TACTICAL COMMAND?</span></h1>
+    <div class="top-grid">
+      <div class="top-l">
+        <div class="years"><span class="y">14 AÑOS</span><span class="s">EN EL RUBRO<br />DESDE 2012</span></div>
+        <p class="stat">Tactical Command es una tienda argentina de indumentaria, equipos tácticos, calzado y accesorios para fuerzas de seguridad, trabajo, entrenamiento y outdoor, con base en Rafaela, Santa Fe. Opera desde 2012, vende por menor y por mayor, y hace envíos a todo el país.</p>
+      </div>
+      <dl class="facts">
+        {facts.map((f) => <div><dt>{f.i}</dt><dd>{f.t}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+
+  <section class="blk" aria-labelledby="crit-h">
+    <h2 id="crit-h" class="h2 blk-h">¿CÓMO ELEGIMOS LOS PRODUCTOS?</h2>
+    <ul class="flow">
+      {crit.map((k) => <li><div class="n pulse">{k.i}</div><h3>{k.t}</h3><p>{k.d}</p></li>)}
+    </ul>
+  </section>
+
+  <section class="blk" aria-labelledby="op-h">
+    <div class="op-head">
+      <h2 id="op-h" class="h2">OPERACIÓN REAL</h2>
+      <div class="op-note">STOCK Y PREPARACIÓN DE PEDIDOS EN RAFAELA, SANTA FE.</div>
+    </div>
+    <div class="op-body">
+      <Scroller name="aboutPh" arrowTop="calc(50% - 18px)" label="Fotos de la operación de Tactical Command">
+        {fotos.map((f) => <figure class="op"><Foto src={f.src} alt={f.alt} sizes="(min-width: 1024px) 24vw, 78vw" /></figure>)}
+      </Scroller>
+    </div>
+  </section>
+
+  <section class="blk" aria-labelledby="faq-h">
+    <h2 id="faq-h" class="h2">PREGUNTAS FRECUENTES SOBRE TACTICAL COMMAND</h2>
+    <div class="faq">
+      {faq.map((f) => <details><summary><h3>{f.q}</h3><span aria-hidden="true">+</span></summary><p>{f.a}</p></details>)}
+    </div>
+  </section>
+
+  <section class="blk cta-sec">
+    <div class="cta-grid">
+      <p class="stat">Desde 2012, Tactical Command opera desde Rafaela, Santa Fe, gestionando preparación, control y despacho de pedidos para clientes de distintas localidades de Argentina.</p>
+      <div class="ctas">
+        <a href="/indumentaria/" class="btn-gold c1">EXPLORAR CATÁLOGO →</a>
+        <a href="/mayoristas/" class="c2">PORTAL MAYORISTA →</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .top { padding: 48px 40px 64px; border-bottom: 1px solid var(--border); }
+  :global(.bc-top) { margin-bottom: 18px; }
+  .h1 { font-size: 86px; font-weight: 600; letter-spacing: -.035em; line-height: .98; overflow: hidden; }
+  .h1 span { display: block; animation: mask .9s .1s var(--ease) both; }
+  .h1 span + span { animation-delay: .2s; }
+  .top-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 40px; align-items: start; }
+  .top-l { display: flex; flex-direction: column; gap: 22px; }
+  .years { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .years .y { font-size: clamp(56px, calc(7vw / var(--z)), 96px); font-weight: 600; letter-spacing: -.04em; line-height: .9; color: var(--gold); }
+  .years .s { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; color: var(--text-2); line-height: 1.7; }
+  .stat { font-size: 34px; letter-spacing: -.02em; line-height: 1.3; text-wrap: pretty; }
+  .facts { border-top: 1px solid var(--border); margin: 0; }
+  .facts > div { padding: 16px 0; border-bottom: 1px solid var(--surface); display: flex; gap: 18px; align-items: baseline; }
+  .facts dt { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); flex: none; width: 128px; }
+  .facts dd { margin: 0; font-size: 15px; line-height: 1.7; color: var(--text-2); }
+  .blk { padding: 64px 40px; border-bottom: 1px solid var(--border); }
+  .blk-h { margin-bottom: 40px; }
+  .flow { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .flow li { background: var(--bg); padding: 32px 26px 36px; }
+  .flow .n { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; color: var(--gold); }
+  .flow h3 { font-size: 18px; font-weight: 600; letter-spacing: .04em; margin-top: 20px; }
+  .flow p { font-size: 14px; line-height: 1.7; color: var(--muted); margin-top: 10px; }
+  .op-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .op-note { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); max-width: 40ch; line-height: 1.9; }
+  .op-body { margin-top: 40px; }
+  .op { margin: 0; width: calc(25% - 12px); min-width: calc(25% - 12px); flex: none; aspect-ratio: 1 / 1; border: 1px solid var(--border); background: var(--surface); overflow: hidden; position: relative; }
+  .op :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .faq { margin-top: 40px; border-top: 1px solid var(--border); max-width: 960px; }
+  .faq details { border-bottom: 1px solid var(--border); }
+  .faq summary { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 0; }
+  .faq summary h3 { font-size: 17px; font-weight: 500; line-height: 1.4; }
+  .faq summary span { flex: none; font-family: var(--mono); font-size: 16px; color: var(--gold); }
+  .faq p { font-size: 16px; line-height: 1.8; color: var(--text-2); margin: 0 0 24px; max-width: 68ch; text-wrap: pretty; }
+  .cta-sec { border-bottom: 0; }
+  .cta-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 80px; align-items: end; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .c1 { padding: 18px 24px; }
+  .c2 { border: 1px solid var(--border); font-family: var(--mono); font-size: 12px; letter-spacing: .16em; padding: 18px 24px; }
+  .c2:hover { border-color: var(--gold); color: var(--gold); }
+  @media (max-width: 1023px) {
+    .top { padding: 18px; }
+    .h1 { font-size: 34px; margin-top: 22px; }
+    .top-grid { grid-template-columns: 1fr; gap: 18px; margin-top: 18px; }
+    .stat { font-size: 19px; }
+    .blk { padding: 18px; }
+    .blk-h { margin-bottom: 18px; }
+    .flow { grid-template-columns: 1fr; }
+    .flow li { padding: 18px; }
+    .op-body, .faq { margin-top: 18px; }
+    .op { width: 78%; min-width: 78%; }
+    .cta-grid { grid-template-columns: 1fr; gap: 18px; }
+  }
+  @media (min-width: 760px) and (max-width: 1023px) { .op { width: calc(40% - 8px); min-width: calc(40% - 8px); } }
+</style>

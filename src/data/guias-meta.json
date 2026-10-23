@@ -1,0 +1,26 @@
+{
+ "_nota": "Fechas y autoría de las guías (no estaban en el prototipo). Actualizar `actualizado` cuando se edite una guía.",
+ "autor": "Walter Iman",
+ "guias": {
+  "que-es-la-tela-ripstop": {
+   "publicado": "2026-10-23",
+   "actualizado": "2026-10-23"
+  },
+  "como-funciona-gore-tex": {
+   "publicado": "2026-10-23",
+   "actualizado": "2026-10-23"
+  },
+  "que-es-el-sistema-molle": {
+   "publicado": "2026-10-23",
+   "actualizado": "2026-10-23"
+  },
+  "cordura-y-lona-diferencias": {
+   "publicado": "2026-10-23",
+   "actualizado": "2026-10-23"
+  },
+  "algodon-poliester-licra": {
+   "publicado": "2026-10-23",
+   "actualizado": "2026-10-23"
+  }
+ }
+}

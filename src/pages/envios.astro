@@ -1,0 +1,285 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import faqGroups from '../data/envios-faq.json';
+import { WA } from '../lib/data';
+import { graph, breadcrumbs, faqPage, abs } from '../lib/seo';
+
+const flow = [
+  { i: '01 /', t: 'COMPRA CONFIRMADA', d: 'Validamos la compra y las variantes seleccionadas.' },
+  { i: '02 /', t: 'PREPARACIÓN', d: 'Controlamos los productos y armamos el pedido.' },
+  { i: '03 /', t: 'DESPACHO DESDE RAFAELA', d: 'El pedido se entrega al servicio de transporte disponible.' },
+  { i: '04 /', t: 'SEGUIMIENTO Y ENTREGA', d: 'Cuando existe información de tracking, se incorpora al estado del pedido hasta completar la entrega.' },
+];
+const antes = [
+  { n: '01', t: 'VERIFICÁ', d: 'Estado exterior y cantidad de bultos antes de aceptar.' },
+  { n: '02', t: 'DOCUMENTÁ', d: 'Si detectás una irregularidad, sacá fotos y dejá constancia ante el transportista.' },
+  { n: '03', t: 'CONSERVÁ', d: 'No descartes embalaje ni etiqueta hasta haber comprobado que el pedido está completo.' },
+];
+const path = '/envios/';
+const api = import.meta.env.PUBLIC_TC_API || '';
+const jsonld = graph(
+  { '@type': 'WebPage', '@id': abs(path) + '#page', name: 'Envíos, seguimiento y cambios', url: abs(path), inLanguage: 'es-AR' },
+  faqPage(faqGroups.flatMap((g) => g.items)),
+  breadcrumbs([['Inicio', '/'], ['Tu pedido', path]]),
+);
+---
+<Base title="Envíos, seguimiento y cambios | Tactical Command" description="Consultá el estado de tu pedido, plazos de envío desde Rafaela a todo el país, cambios y devoluciones. Seguimiento con tu código y los últimos 4 dígitos de tu teléfono." path={path} jsonld={jsonld}>
+  <section class="top" aria-labelledby="sh-h1">
+    <div class="top-grid">
+      <div class="top-l">
+        <Breadcrumbs items={[['Inicio', '/'], ['Tu pedido', path]]} class="bc-top" />
+        <h1 id="sh-h1" class="h1"><span>SEGUÍ TU PEDIDO.</span></h1>
+        <p class="lead-p">Consultá el estado actualizado de tu compra en Tactical Command ingresando el código de pedido recibido después de confirmar tu compra.</p>
+      </div>
+
+      <form class="trk" id="trk" data-api={api} novalidate>
+        <div class="trk-f">
+          <label for="trk-code">CÓDIGO DE PEDIDO</label>
+          <input id="trk-code" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="TC-XXXX-XXXX" required />
+        </div>
+        <div class="trk-row">
+          <div class="trk-f trk-tel">
+            <label for="trk-tel">ÚLTIMOS 4 DÍGITOS DE TU TELÉFONO</label>
+            <input id="trk-tel" name="tel4" inputmode="numeric" autocomplete="tel-local-suffix" maxlength="4" pattern="[0-9]{4}" placeholder="0000" required />
+          </div>
+          <button type="submit" class="btn-gold anim trk-btn" id="trk-btn">CONSULTAR PEDIDO →</button>
+        </div>
+        <div class="trk-help">Lo recibiste por WhatsApp al confirmar tu compra.</div>
+      </form>
+
+      <div class="trk-res" id="trk-res" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="info" aria-labelledby="pais-h">
+    <div class="info-grid">
+      <h2 id="pais-h" class="h2">DE RAFAELA<br />A TODO EL PAÍS.</h2>
+      <p>Tactical Command prepara y despacha pedidos desde Rafaela, Santa Fe, hacia distintas localidades de Argentina. Cada compra pasa por un proceso de confirmación, preparación y despacho antes de continuar con el seguimiento correspondiente. Los plazos, costos y modalidades pueden variar según el destino, el producto y las condiciones disponibles al momento de la compra.</p>
+    </div>
+  </section>
+
+  <section class="flow-sec" aria-label="Pasos del pedido">
+    <ol class="flow">
+      {flow.map((s) => <li><div class="i">{s.i}</div><h3>{s.t}</h3><p>{s.d}</p></li>)}
+    </ol>
+  </section>
+
+  <section class="pad antes" aria-labelledby="antes-h">
+    <h2 id="antes-h" class="antes-h">ANTES DE RECIBIR TU PEDIDO</h2>
+    <ol class="antes-g">
+      {antes.map((a) => <li><div class="ah"><span>{a.n}</span><span>{a.t}</span></div><p>{a.d}</p></li>)}
+    </ol>
+  </section>
+
+  <section class="pad box" aria-labelledby="cam-h">
+    <div class="box-in">
+      <div class="box-t">
+        <h2 id="cam-h" class="bh">¿NECESITÁS HACER UN CAMBIO?</h2>
+        <p>Podés solicitar cambios de talle, color o modelo dentro del plazo establecido, siempre que el producto cumpla las condiciones indicadas en nuestra política.</p>
+        <p class="s">Si recibiste un producto incorrecto o con una falla, contactanos para revisar el caso.</p>
+      </div>
+      <div class="box-b">
+        <a href={WA('Hola Tactical Command! Quiero solicitar un cambio. Mi número de pedido es: ')} target="_blank" rel="noopener" class="btn-gold anim b1" data-wa="cambio">SOLICITAR CAMBIO POR WHATSAPP →</a>
+        <a href="/legal/politica-de-cambios-y-devoluciones/" class="b2">VER POLÍTICA DE CAMBIOS Y DEVOLUCIONES</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad box bt" aria-labelledby="dan-h">
+    <div class="box-in">
+      <div class="box-t">
+        <h2 id="dan-h" class="bh">¿TU PEDIDO LLEGÓ DAÑADO O INCOMPLETO?</h2>
+        <p>Al recibir tu pedido, revisá el estado exterior del paquete y verificá que la cantidad de bultos coincida con la informada.</p>
+        <p class="s">Si observás roturas, humedad, aperturas o signos de manipulación, dejá constancia ante el transportista cuando sea posible y conservá el embalaje y la etiqueta.</p>
+        <p class="s">Si descubrís posteriormente un faltante o daño que no era visible al momento de recibirlo, comunicate con nosotros dentro de las 48 horas de recibido el pedido.</p>
+        <p class="s">Si el producto es devuelto en malas condiciones o incompleto por incidencias del transporte, Tactical Command no efectuará el reintegro del dinero. El reclamo y la eventual indemnización por el daño o faltante corresponden al transportista.</p>
+        <div class="law">SEGÚN LEY 24.240 · DEFENSA DEL CONSUMIDOR</div>
+      </div>
+      <div class="box-b">
+        <a href={WA('Hola, mi pedido llegó con un problema. Código de pedido: ')} target="_blank" rel="noopener" class="btn-gold b1" data-wa="problema">REPORTAR UN PROBLEMA →</a>
+        <a href="/legal/politica-de-envios/" class="b2">VER POLÍTICA DE ENVÍOS</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="pad faq-sec" aria-labelledby="faq-h">
+    <h2 id="faq-h" class="h2 faq-h">PREGUNTAS FRECUENTES</h2>
+    <div class="groups">
+      {faqGroups.map((g) => (
+        <div>
+          <h3 class="gt pulse">{g.t}</h3>
+          <div class="qa">
+            {g.items.map((x) => <details><summary><span class="q">{x.q}</span><span class="pl" aria-hidden="true">+</span></summary><p>{x.a}</p></details>)}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="contacto" class="pad box bt" aria-labelledby="ct-h">
+    <div class="box-in">
+      <div class="box-t">
+        <h2 id="ct-h" class="bh ct">¿TENÉS UNA DUDA SOBRE TU PEDIDO?</h2>
+        <p>Si necesitás ayuda con una compra, disponibilidad, cambios o seguimiento, podés comunicarte directamente con Tactical Command.</p>
+      </div>
+      <a href={WA('Hola Tactical Command! Tengo una duda sobre mi pedido.')} target="_blank" rel="noopener" class="btn-gold anim b1 ct-b" data-wa="ayuda">CONSULTAR POR WHATSAPP →</a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { track } from '../scripts/track';
+  import { waLink } from '../scripts/cart';
+  // Seguimiento en vivo contra la API de Apps Script (action=track). Devuelve solo código, estado, fechas, transporte y guía.
+  const form = document.getElementById('trk') as HTMLFormElement;
+  const res = document.getElementById('trk-res')!;
+  const btn = document.getElementById('trk-btn') as HTMLButtonElement;
+  const API = form.dataset.api;
+  const STEPS = ['PEDIDO CONFIRMADO', 'PREPARACIÓN', 'DESPACHADO', 'ENTREGADO'];
+  const LABEL = ['COMPRA CONFIRMADA', 'EN PREPARACIÓN', 'DESPACHADO', 'ENTREGADO'];
+  const HEAD = ['RECIBIMOS TU COMPRA.', 'ESTAMOS PREPARANDO TU PEDIDO.', 'TU PEDIDO YA FUE DESPACHADO.', 'TU PEDIDO FUE ENTREGADO.'];
+  const MSG = ['La compra está confirmada. El próximo paso es controlar y armar el pedido.', 'Estamos controlando los productos y armando el pedido en Rafaela.', 'El pedido salió desde Rafaela, Santa Fe, y ya cuenta con información de seguimiento.', 'El pedido llegó a destino. ¡Gracias por comprar en Tactical Command!'];
+  const CARRIER: Record<string, string> = { ANDREANI: 'https://www.andreani.com/#!/informacionEnvio/', OCA: 'https://www.oca.com.ar/Busquedas/Envios', 'CORREO ARGENTINO': 'https://www.correoargentino.com.ar/formularios/e-commerce', 'VÍA CARGO': 'https://www.viacargo.com.ar/' };
+  const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+  const fmt = (iso?: string) => iso ? new Date(iso).toLocaleString('es-AR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).toUpperCase().replace(',', ' ·') : '';
+  const cid = Array.from(res.attributes).find((a) => a.name.startsWith('data-astro-cid'))?.name || '';
+  const html = (s: string) => { res.innerHTML = s; if (cid) res.querySelectorAll('*').forEach((e) => e.setAttribute(cid, '')); };
+  const waHelp = (code: string) => waLink('Hola Tactical Command! Quiero consultar por mi pedido' + (code ? ' ' + code : '') + '. No lo encuentro en el seguimiento.');
+  function error(title: string, text: string, code: string) {
+    html(`<div class="r-err"><div class="r-et">${esc(title)}</div><p>${esc(text)}</p><a class="r-wa" target="_blank" rel="noopener" data-wa="seguimiento" href="${waHelp(code)}">CONSULTAR POR WHATSAPP →</a></div>`);
+  }
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const code = (form.code.value || '').trim().toUpperCase();
+    const tel4 = (form.tel4.value || '').replace(/\D/g, '');
+    if (!code || tel4.length !== 4) { error('FALTAN DATOS.', 'Ingresá el código de pedido y los últimos 4 dígitos del teléfono con el que compraste.', code); return; }
+    track('track_order', { codigo: code });
+    if (!API) { error('EL SEGUIMIENTO EN LÍNEA ESTARÁ DISPONIBLE MUY PRONTO.', 'Mientras tanto, escribinos por WhatsApp con tu código y te contamos en qué paso está tu pedido.', code); return; }
+    btn.disabled = true; btn.textContent = 'BUSCANDO TU PEDIDO…';
+    html(`<div class="r-box r-skel"><div class="sk w40"></div><div class="sk w70"></div>${STEPS.map(() => '<div class="sk row"></div>').join('')}</div>`);
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 10000);
+    try {
+      const r = await fetch(`${API}?action=track&code=${encodeURIComponent(code)}&tel4=${tel4}`, { signal: ctl.signal });
+      const j = await r.json();
+      if (!j.ok) { error('CÓDIGO O TELÉFONO INCORRECTOS.', 'Revisá que el código esté escrito exactamente como aparece en tu confirmación de compra y que los 4 dígitos correspondan al teléfono con el que compraste.', code); return; }
+      const d = j.data; const st = Math.max(0, Math.min(3, +d.estado || 0)); const f = d.fechas || [];
+      const last = [...f].reverse().find(Boolean);
+      const steps = STEPS.map((s, i) => { const done = i < st || (i === st && st === 3), cur = i === st && st < 3; return `<li><span class="mk" style="color:${done ? '#4A5D4B' : cur ? '#E3B23C' : '#3E453E'}">${done ? '✓' : cur ? '●' : '○'}</span><span style="color:${cur ? '#E8EAE6' : '#5A615A'}">${s}</span>${f[i] ? `<span class="fd">${esc(fmt(f[i]))}</span>` : ''}</li>`; }).join('');
+      const link = d.transporte && CARRIER[String(d.transporte).toUpperCase()];
+      const ship = st >= 2 && d.guia ? `<div class="r-ship"><div class="r-l">SEGUIMIENTO DEL ENVÍO</div><div class="r-kv"><div><div class="k">TRANSPORTISTA</div><div>${esc(d.transporte || 'A CONFIRMAR')}</div></div><div><div class="k">CÓDIGO DE SEGUIMIENTO</div><div>${esc(d.guia)}</div></div></div>${link ? `<a class="r-go" href="${link}" target="_blank" rel="noopener">SEGUIR ENVÍO →</a>` : ''}</div>` : '';
+      html(`<div class="r-box"><div class="r-top"><div><div class="k">PEDIDO</div><div class="v">${esc(d.codigo)}</div></div><div><div class="k">STATUS</div><div class="v g">${LABEL[st]}</div></div><div><div class="k">ÚLTIMA ACTUALIZACIÓN</div><div class="v">${esc(fmt(last))}</div></div></div><div class="r-body"><div class="r-h">${HEAD[st]}</div><p>${MSG[st]}</p><ol class="r-steps">${steps}</ol>${ship}</div></div>`);
+    } catch {
+      error('NO PUDIMOS CONSULTAR EL PEDIDO.', 'La conexión tardó demasiado. Probá de nuevo en unos segundos o escribinos por WhatsApp.', code);
+    } finally {
+      clearTimeout(t); btn.disabled = false; btn.textContent = 'CONSULTAR PEDIDO →';
+    }
+  });
+</script>
+
+<style>
+  .top { padding: 48px 40px 40px; border-bottom: 1px solid var(--border); }
+  .top-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; align-items: start; }
+  .top-l { width: fit-content; max-width: 100%; }
+  :global(.bc-top) { margin-bottom: 18px; }
+  .h1 { font-size: min(86px, calc(8.4vw / var(--z))); font-weight: 600; letter-spacing: -.035em; line-height: .98; overflow: hidden; white-space: nowrap; }
+  .h1 span { display: block; animation: mask .9s .1s var(--ease) both; }
+  .lead-p { width: 0; min-width: 100%; font-size: 17px; line-height: 1.75; color: var(--text-2); margin: 26px 0 0; text-wrap: pretty; }
+  .trk { border: 1px solid var(--border); background: var(--surface); padding: 30px; display: flex; flex-direction: column; gap: 14px; }
+  .trk-f { display: flex; flex-direction: column; gap: 14px; flex: 1; min-width: 160px; }
+  .trk label { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+  .trk input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 16px 14px; font-family: var(--mono); font-size: 14px; letter-spacing: .08em; border-radius: 0; }
+  .trk input:focus-visible { border-color: var(--gold); outline-offset: 0; }
+  .trk-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+  .trk-btn { padding: 16px 22px; letter-spacing: .14em; white-space: nowrap; min-height: 52px; }
+  .trk-btn:disabled { opacity: .7; cursor: progress; }
+  .trk-help { font-size: 12px; color: var(--muted-2); line-height: 1.6; }
+  .trk-res { grid-column: 1 / -1; max-width: 760px; width: 100%; margin: 8px auto 0; }
+  .trk-res:empty { display: none; }
+  .trk-res :global(> div) { animation: trackIn .5s var(--ease) both; }
+  .trk-res :global(.r-err) { border: 1px solid #3A2020; background: #1B1615; padding: 30px; }
+  .trk-res :global(.r-et) { font-size: 19px; font-weight: 600; letter-spacing: -.01em; color: var(--warn); }
+  .trk-res :global(.r-err p), .trk-res :global(.r-body p) { font-size: 14px; line-height: 1.7; color: var(--muted); margin: 12px 0 0; }
+  .trk-res :global(.r-wa), .trk-res :global(.r-go) { display: inline-block; margin-top: 18px; border: 1px solid var(--border); color: var(--text); padding: 14px 18px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; }
+  .trk-res :global(.r-wa:hover) { border-color: var(--gold); color: var(--gold); }
+  .trk-res :global(.r-go) { border-color: var(--gold); color: var(--gold); animation: goldpulse 4.5s ease-in-out infinite; }
+  .trk-res :global(.r-box) { border: 1px solid var(--border); background: var(--surface); }
+  .trk-res :global(.r-top) { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; padding: 30px; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; }
+  .trk-res :global(.k) { color: var(--muted-2); font-family: var(--mono); font-size: 10px; letter-spacing: .16em; }
+  .trk-res :global(.v) { margin-top: 6px; font-size: 13px; }
+  .trk-res :global(.v.g) { color: var(--gold); animation: goldpulse 4.5s ease-in-out infinite; }
+  .trk-res :global(.r-body) { padding: 30px; }
+  .trk-res :global(.r-h) { font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
+  .trk-res :global(.r-steps) { list-style: none; margin-top: 26px; }
+  .trk-res :global(.r-steps li) { display: flex; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; letter-spacing: .12em; align-items: baseline; }
+  .trk-res :global(.mk) { font-size: 13px; flex: none; width: 18px; }
+  .trk-res :global(.fd) { margin-left: auto; color: var(--muted-2); font-size: 10px; }
+  .trk-res :global(.r-ship) { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--border); }
+  .trk-res :global(.r-l) { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--faint); }
+  .trk-res :global(.r-kv) { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 14px; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
+  .trk-res :global(.r-skel) { padding: 30px; display: flex; flex-direction: column; gap: 14px; }
+  .trk-res :global(.sk) { height: 14px; background: var(--border); animation: skel 1.2s ease-in-out infinite; }
+  .trk-res :global(.sk.w40) { width: 40%; height: 20px; } .trk-res :global(.sk.w70) { width: 70%; } .trk-res :global(.sk.row) { height: 38px; }
+
+  .info { padding: 24px 40px 48px; border-bottom: 1px solid var(--border); }
+  .info-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; align-items: start; }
+  .info .h2 { line-height: 1.02; }
+  .info p { font-size: 16px; line-height: 1.75; color: var(--text-2); text-wrap: pretty; }
+  .flow-sec { padding: 0 40px 32px; border-bottom: 1px solid var(--border); }
+  .flow { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); margin-top: 32px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .flow li { background: var(--bg); padding: 32px 26px 36px; }
+  .flow .i { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; color: var(--faint); }
+  .flow h3 { font-size: 17px; font-weight: 600; letter-spacing: .04em; margin-top: 20px; }
+  .flow p { font-size: 14px; line-height: 1.7; color: var(--muted); margin-top: 10px; }
+  .pad { padding: 56px 40px; }
+  .antes { background: var(--bg); border-top: 1px solid var(--border); }
+  .antes-h { font-family: var(--mono); font-size: 15px; letter-spacing: .22em; font-weight: 500; color: var(--gold); margin: 0 0 30px; }
+  .antes-g { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 24px clamp(24px, calc(3vw / var(--z)), 48px); }
+  .antes-g li { display: flex; flex-direction: column; gap: 10px; padding-top: 18px; border-top: 1px solid #2E352E; }
+  .ah { display: flex; align-items: baseline; gap: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .2em; font-weight: 500; }
+  .ah span:first-child { color: var(--gold); }
+  .antes-g p { font-size: 15px; line-height: 1.7; color: var(--muted); text-wrap: pretty; }
+  .box { background: var(--surface); }
+  .bt { border-top: 1px solid var(--border); }
+  .box-in { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  .box-t { width: fit-content; max-width: 100%; }
+  .bh { font-size: min(54px, calc(5.6vw / var(--z))); font-weight: 600; letter-spacing: -.03em; line-height: 1.1; white-space: nowrap; text-wrap: balance; }
+  .bh.ct { font-size: min(54px, calc(5.2vw / var(--z))); }
+  .box-t p { width: 0; min-width: 100%; font-size: 15px; line-height: 1.7; color: var(--text-2); margin: 20px 0 0; text-wrap: pretty; }
+  .box-t p.s { margin-top: 12px; }
+  .law { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; font-weight: 500; color: var(--gold); margin: 14px 0 0; line-height: 1.7; }
+  .box-b { display: flex; flex-direction: column; gap: 12px; flex: 0 0 auto; width: min(100%, 410px); }
+  .b1 { padding: 19px 26px; }
+  .ct-b { flex: 0 0 auto; width: min(100%, 410px); }
+  .b2 { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 18px 26px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; font-weight: 500; text-align: center; transition: background .2s, color .2s; }
+  .b2:hover { background: var(--gold); color: var(--ink); }
+  .faq-sec { border-top: 1px solid var(--border); scroll-margin-top: 70px; }
+  #contacto { scroll-margin-top: 70px; }
+  .faq-h { margin-bottom: 32px; }
+  .groups { display: flex; flex-direction: column; gap: clamp(36px, calc(5vw / var(--z)), 56px); }
+  .gt { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; font-weight: 500; color: var(--gold); margin: 0 0 14px; }
+  .qa { border-top: 1px solid var(--border); }
+  .qa details { border-bottom: 1px solid var(--border); }
+  .qa summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 26px 0; font-size: 19px; font-weight: 500; letter-spacing: -.01em; }
+  .qa .pl { font-family: var(--mono); font-size: 14px; color: var(--gold); flex: none; animation: goldpulse 4.5s ease-in-out infinite; }
+  .qa p { max-width: 78ch; font-size: 15px; line-height: 1.8; color: var(--muted); padding: 0 0 26px; text-wrap: pretty; }
+  @media (max-width: 1023px) {
+    .top { padding: 18px 18px 18px; }
+    .top-grid, .info-grid { grid-template-columns: 1fr; gap: 18px; }
+    .top-l { width: auto; }
+    .h1 { font-size: min(34px, calc(8.4vw / var(--z))); }
+    .lead-p { width: auto; font-size: 15px; }
+    .trk { padding: 20px; }
+    .trk-btn { width: 100%; }
+    .trk-res :global(.r-err), .trk-res :global(.r-top), .trk-res :global(.r-body) { padding: 20px; }
+    .info { padding: 18px; }
+    .flow-sec { padding: 0 18px 18px; }
+    .flow { grid-template-columns: 1fr; margin-top: 18px; }
+    .flow li { padding: 18px; }
+    .pad { padding: 18px; }
+    .box-in { gap: 18px; }
+    .bh, .bh.ct { font-size: 27px; white-space: normal; }
+    .faq-h { margin-bottom: 18px; }
+    .qa summary { padding: 22px 0; font-size: 16px; }
+  }
+</style>

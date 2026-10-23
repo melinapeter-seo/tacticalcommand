@@ -1,0 +1,81 @@
+---
+import Base from '../../layouts/Base.astro';
+import Foto from '../../components/Foto.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { guias } from '../../lib/data';
+import { graph, breadcrumbs, abs } from '../../lib/seo';
+
+const clusters = ['TODOS', 'MATERIALES', 'EQUIPAMIENTO'];
+const path = '/guias/';
+const jsonld = graph(
+  { '@type': 'CollectionPage', '@id': abs(path) + '#page', name: 'Guías técnicas', url: abs(path), inLanguage: 'es-AR', mainEntity: { '@type': 'ItemList', itemListElement: guias.map((g, i) => ({ '@type': 'ListItem', position: i + 1, name: g.titulo, url: abs(`/guias/${g.slug}/`) })) } },
+  breadcrumbs([['Inicio', '/'], ['Guías', path]]),
+);
+---
+<Base title="Guías técnicas de equipamiento táctico | Tactical Command" description="Guías sobre materiales y equipamiento táctico: tela Ripstop, Gore-Tex, sistema MOLLE, cordura y lona, algodón, poliéster y licra. Respuestas claras antes de comprar." path={path} jsonld={jsonld}>
+  <link rel="alternate" type="application/rss+xml" title="Guías de Tactical Command" href="/guias/rss.xml" slot="head" />
+  <section class="top" aria-labelledby="bl-h1">
+    <Breadcrumbs items={[['Inicio', '/'], ['Guías', path]]} class="bc-top" />
+    <h1 id="bl-h1" class="h1"><span>CONOCIMIENTO</span><span>PARA ELEGIR MEJOR.</span></h1>
+    <p class="lead-p">La sección de guías de Tactical Command reúne contenido sobre indumentaria técnica, equipamiento táctico, talles, materiales, cuidado y uso de productos. El contenido está pensado para responder dudas frecuentes antes y después de una compra y orientar a usuarios de Argentina que buscan equipamiento para outdoor, trabajo, moto, seguridad y uso diario.</p>
+  </section>
+  <div class="cl" role="group" aria-label="Filtrar guías por tema">
+    <div class="cl-in" data-noscrollbar>
+      {clusters.map((c, i) => <button type="button" data-cl={c} aria-pressed={i === 0 ? 'true' : 'false'}>{c}</button>)}
+    </div>
+  </div>
+  <div class="grid-wrap">
+    <ul class="grid" id="bl-grid">
+      {guias.map((g) => (
+        <li data-cl={g.cluster}>
+          <a href={`/guias/${g.slug}/`} class="it">
+            <div class="im"><Foto src={g.imagen} alt={g.palabra_clave} sizes="(min-width: 1024px) 22vw, 100vw" /></div>
+            <div class="meta"><span>{g.cluster}</span><span>{g.lectura}</span></div>
+            <h2 class="t">{g.titulo}</h2>
+            <div class="go">LEER GUÍA →</div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<script>
+  const btns = Array.from(document.querySelectorAll<HTMLButtonElement>('.cl button'));
+  const lis = Array.from(document.querySelectorAll<HTMLLIElement>('#bl-grid li'));
+  btns.forEach((b) => b.addEventListener('click', () => {
+    btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    lis.forEach((li) => (li.hidden = b.dataset.cl !== 'TODOS' && li.dataset.cl !== b.dataset.cl));
+  }));
+</script>
+
+<style>
+  .top { padding: 48px 40px; border-bottom: 1px solid var(--border); }
+  :global(.bc-top) { margin-bottom: 18px; }
+  .h1 { font-size: 86px; font-weight: 600; letter-spacing: -.035em; line-height: .98; overflow: hidden; }
+  .h1 span { display: block; animation: mask .9s .1s var(--ease) both; }
+  .h1 span + span { animation-delay: .2s; }
+  .lead-p { max-width: 76ch; font-size: 17px; line-height: 1.75; color: var(--text-2); margin: 24px 0 0; text-wrap: pretty; }
+  .cl { border-bottom: 1px solid var(--border); padding: 0 var(--pad); }
+  .cl-in { display: flex; gap: 26px; overflow-x: auto; }
+  .cl button { background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted); padding: 22px 0; cursor: pointer; white-space: nowrap; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; }
+  .cl button[aria-pressed='true'] { border-bottom-color: var(--gold); color: #FFFFFF; }
+  .grid-wrap { padding: 40px 40px 72px; }
+  .grid { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .grid li[hidden] { display: none; }
+  .it { display: block; }
+  .it:hover { color: var(--text); }
+  .im { overflow: hidden; background: var(--surface); aspect-ratio: 1 / 1; position: relative; }
+  .im :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .meta { display: flex; justify-content: space-between; gap: 12px; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); margin-top: 14px; }
+  .t { font-size: 20px; font-weight: 500; line-height: 1.24; letter-spacing: -.02em; margin-top: 12px; max-width: 34ch; text-wrap: pretty; }
+  .go { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--gold); margin-top: 16px; animation: goldpulse 4.5s ease-in-out infinite; }
+  @media (max-width: 1023px) {
+    .top { padding: 18px; }
+    .h1 { font-size: 34px; margin-top: 22px; }
+    .lead-p { font-size: 15px; margin-top: 18px; }
+    .grid-wrap { padding: 18px; }
+    .grid { grid-template-columns: 1fr; gap: 14px; }
+    .meta { margin-top: 18px; }
+  }
+</style>
