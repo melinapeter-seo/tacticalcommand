@@ -38,6 +38,7 @@
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes sheet { from { transform: translateY(100%); } to { transform: none; } }
 @keyframes drawer { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes mask { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: none; } }
 @keyframes trackIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 @keyframes skel { 0% { opacity: .45 } 50% { opacity: .9 } 100% { opacity: .45 } }
 
@@ -98,3 +99,6 @@ ul, ol { margin: 0; padding: 0; }
 
 /* Mapa de estrellas, chips, etc. */
 .stars { display: flex; gap: 4px; }
+
+/* Overlays: ocultos hasta que se abren (menú, buscador, carrito, visor, calculador). */
+.ov[hidden], [hidden].ov { display: none !important; }

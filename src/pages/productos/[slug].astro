@@ -1,0 +1,634 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Scroller from '../../components/Scroller.astro';
+import SizeCalc from '../../components/SizeCalc.astro';
+import { productos, categoriaDeProducto, guias, money, relacionados, tarjeta, WA, type Producto, type TarjetaVista } from '../../lib/data';
+import { fotosVista } from '../../lib/fotos';
+import { graph, breadcrumbs, faqPage, abs, cap, desc, ORG_ID } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return productos.map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Producto };
+const cat = categoriaDeProducto(p);
+const path = `/productos/${p.slug}/`;
+const o = p.opciones;
+const app = o.es_indumentaria;
+const nombre = p.nombre;
+const h1 = p.titulo.join(' ');
+const multi = p.colores.length > 1;
+const sizeCalc = o.con_talles && !o.es_calzado;
+const hasKeys = p.caracteristicas.length > 0;
+const keysD = hasKeys && !o.es_calzado;
+
+// Datos por color para el script de la ficha (fotos optimizadas, talles, SKU).
+const colores = await Promise.all(p.colores.map(async (c) => ({
+  n: c.nombre, sku: c.sku, sw: c.muestra, talles: c.talles.map((t) => t.talle), fotos: await fotosVista(c.fotos),
+})));
+const c0 = colores[0];
+const tallesMax = c0.talles;
+const nT = Math.max(c0.fotos.length - 1, 1);
+const sizeColD = o.columnas_talle || 6;
+const sizeColM = c0.talles.length % 4 === 0 ? 4 : 3;
+
+const waAsk = (cn: string, sku: string) => WA(`Hola Walter! Quiero consultar por ${nombre}${multi || app ? `, color ${cn.toLowerCase()}` : ''} (SKU ${sku}). ¿Tienen disponibilidad y precio?`);
+const waSpec = WA(`Hola Tactical Command! Quiero consultar disponibilidad de ${nombre} en color ${c0.n.toLowerCase()}.`);
+
+const funcHead = p.funciones[0];
+const funcRest = p.funciones.slice(1);
+const fl = p.funciones.length;
+const pfCols = fl % 4 === 0 ? 'repeat(4,minmax(0,1fr))' : fl % 3 === 0 ? 'repeat(3,minmax(0,1fr))' : 'minmax(0,1.25fr) repeat(3,minmax(0,1fr))';
+const pfHeadRow = fl % 4 !== 0 && fl % 3 !== 0 ? 'span 2' : 'auto';
+const dist = p.distribucion;
+const distCols = !p.beneficios.length && dist ? `repeat(${Math.min(3, Math.max(2, Math.ceil(dist.items.length / 2)))},minmax(0,1fr))` : '1fr';
+const nav = [
+  ['DESCRIPCIÓN', 'pdp-desc', true], ['CARACTERÍSTICAS', 'pdp-func', fl > 0], ['MEDIDAS Y USOS', 'pdp-dims', p.medidas.length > 0],
+  [dist?.titulo || 'DISTRIBUCIÓN Y USOS', 'pdp-dist', !!dist], ['ESPECIFICACIONES', 'pdp-specs', true], ['PREGUNTAS FRECUENTES', 'pdp-faq', p.faq.length > 0],
+].filter((x) => x[2]) as [string, string, boolean][];
+const longLead = p.descripcion_larga[0] || p.descripcion;
+const longRest = p.descripcion_larga.slice(1);
+const rel = relacionados(p).map(tarjeta).filter(Boolean) as TarjetaVista[];
+const guia = p.guia && guias.find((g) => `/guias/${g.slug}/` === p.guia!.url);
+const hoy = new Date();
+const actualizado = (p as any).actualizado ? new Date((p as any).actualizado) : hoy;
+const fecha = actualizado.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+// JSON-LD: ProductGroup con una variante (Product + Offer) por color.
+const validUntil = new Date(hoy.getFullYear(), hoy.getMonth() + 3, 0).toISOString().slice(0, 10);
+const offer = (sku: string) => ({
+  '@type': 'Offer', price: p.precio_minorista, priceCurrency: 'ARS', availability: 'https://schema.org/InStock', itemCondition: 'https://schema.org/NewCondition',
+  priceValidUntil: validUntil, url: abs(path), seller: { '@id': ORG_ID },
+  shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AR' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'DAY' } }, shippingRate: { '@type': 'MonetaryAmount', currency: 'ARS', description: 'A cargo del comprador; se cotiza por WhatsApp' } },
+  hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'AR', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays: 10, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/FreeReturn', merchantReturnLink: abs('/arrepentimiento/') },
+  ...(sku ? { sku } : {}),
+});
+const props = p.especificaciones.filter((s) => !/confirmar/i.test(s.v)).map((s) => ({ '@type': 'PropertyValue', name: cap(s.k), value: s.v }));
+const material = p.especificaciones.find((s) => /^(MATERIAL|TELA|MATERIALES)/.test(s.k))?.v;
+const jsonld = graph(
+  {
+    '@type': 'ProductGroup', '@id': abs(path) + '#producto', name: nombre, description: p.descripcion, url: abs(path), productGroupID: p.sku,
+    brand: { '@type': 'Brand', name: 'Tactical Command' }, category: `${cap(p.categoria)} > ${cap(p.subcategoria)}`, ...(material ? { material } : {}),
+    variesBy: [multi && 'https://schema.org/color', o.con_talles && 'https://schema.org/size'].filter(Boolean),
+    image: colores.flatMap((c) => c.fotos.map((f) => abs(f.full))).slice(0, 10),
+    additionalProperty: props,
+    hasVariant: colores.map((c) => ({
+      '@type': 'Product', name: multi ? `${nombre} ${cap(c.n)}` : nombre, sku: c.sku, color: cap(c.n), url: abs(path) + (multi ? `?color=${encodeURIComponent(c.n)}` : ''),
+      image: c.fotos.map((f) => abs(f.full)), ...(c.talles.length ? { size: c.talles.join(', ') } : {}), offers: offer(c.sku),
+    })),
+  },
+  breadcrumbs([['Inicio', '/'], [cap(cat.titulo), `/${cat.slug}/`], [nombre, path]]),
+  faqPage(p.faq),
+);
+const title = p.seo.titulo ? `${p.seo.titulo} | Tactical Command` : `${nombre} | Tactical Command`;
+const description = desc(p.seo.descripcion || p.descripcion);
+const lcp = c0.fotos[0];
+const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, precio: p.precio_minorista, provisorio: p.precio_provisorio, colores, waNum: '5493492649494' };
+---
+<Base title={title} description={description} path={path} ogType="product" ogImage={lcp?.full} jsonld={jsonld} lcp={lcp ? { srcset: lcp.srcset, sizes: '(min-width: 1024px) 40vw, 100vw', type: 'image/webp' } : null}>
+  <article class:list={['pdp', app ? 'app' : 'std', { shoe: o.es_calzado }]} itemscope>
+    <div class="hero" style={`--nT:${nT};--scd:${sizeColD};--scm:${sizeColM}`}>
+      <div class="gal" id="gal" data-n={c0.fotos.length}>
+        <div class="gal-items" id="gal-items" data-noscrollbar>
+          {c0.fotos.length ? c0.fotos.map((f, i) => (
+            <button type="button" class:list={['gi', { main: i === 0 }]} data-i={i} aria-label={i === 0 ? `Ampliar foto de ${nombre}` : `Ver foto ${i + 1} de ${nombre}`}>
+              <img src={f.src} srcset={f.srcset} sizes={i === 0 ? '(min-width: 1024px) 40vw, 100vw' : '(min-width: 1024px) 120px, 100vw'} width={f.w} height={f.h} alt={`${nombre} ${multi ? cap(c0.n) + ', ' : ''}vista ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} decoding={i === 0 ? 'sync' : 'async'} />
+              <img src="/escudo-tc-wm.webp" alt="" aria-hidden="true" class="wm" width="300" height="300" loading="lazy" />
+            </button>
+          )) : (
+            <div class="gi main ph"><span>IMAGEN PENDIENTE<br />{nombre.toUpperCase()}</span></div>
+          )}
+        </div>
+        <div class="gal-count d-only" aria-hidden="true"><span id="gal-count">01 / {String(c0.fotos.length).padStart(2, '0')}</span>{app && <><span class="dot">·</span><span data-color-name>{c0.n}</span></>}</div>
+        <span class="gal-zoom d-only" aria-hidden="true"><span>⤢</span>AMPLIAR</span>
+        <div class="m-count m-only" aria-hidden="true" id="m-count">01 / {String(c0.fotos.length).padStart(2, '0')}</div>
+        <div class="m-zoom m-only" aria-hidden="true">⤢</div>
+        <div class="m-dots m-only" aria-hidden="true" id="m-dots">{c0.fotos.map((_, i) => <span class:list={{ on: i === 0 }}></span>)}</div>
+      </div>
+
+      <div class="info">
+        <div class="eyebrow">
+          <nav aria-label="Migas de pan" class="bc-ey">
+            <ol>
+              <li class="d-only"><a href={`/${cat.slug}/`}>{p.categoria}</a></li>
+              <li>{p.subcategoria}</li>
+            </ol>
+          </nav>
+          <span class="sku"><span class="d-only">SKU / </span><span data-sku>{c0.sku}</span></span>
+        </div>
+        <h1 class:list={['h1', { nw: !app && h1.length <= 26 }]}>{h1}</h1>
+        <p class="lead d-std">{p.descripcion}</p>
+        <div class="price price-top"><data value={p.precio_minorista}>{money(p.precio_minorista)}</data></div>
+        <div class="hr hr-a"></div>
+
+        {(multi || app) && (
+          <div class="colors">
+            <div class="row-l"><span>COLOR</span><span data-color-name class="cn">{c0.n}</span></div>
+            <div class="sw-list" role="radiogroup" aria-label="Color">
+              {colores.map((c, i) => (
+                <button type="button" class="sw" role="radio" aria-checked={i === 0 ? 'true' : 'false'} data-color={c.n} aria-label={c.n}>
+                  <span class="sw-c" style={`background:${c.sw}`}></span><span class="sw-n">{c.n}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {o.con_talles && (
+          <div class="sizes">
+            <div class="row-l sz-head"><span>TALLE</span>{sizeCalc && <button type="button" class="calc calc-top" data-open-calc><span class="d-only">CALCULÁ TU TALLE IDEAL →</span><span class="m-only">GUÍA DE TALLES →</span></button>}</div>
+            <div class="sz-grid" role="radiogroup" aria-label="Talle" id="sz-grid">
+              {tallesMax.map((t) => <button type="button" class="sz" role="radio" aria-checked="false" data-talle={t} title={`Talle ${t}`}>{t}</button>)}
+            </div>
+            <div class="sz-state-row">
+              <span class="sz-state" id="sz-state" aria-live="polite">SELECCIONAR TALLE</span>
+              {sizeCalc && <button type="button" class="calc calc-bot" data-open-calc>CALCULÁ TU TALLE IDEAL →</button>}
+            </div>
+            {o.nota_talle && <div class="sz-note">{o.nota_talle}</div>}
+            {o.consulta_whatsapp_talle && (
+              <div class="wa-note d-std"><span>¿No encontrás tu talle o color?</span><a href={waSpec} target="_blank" rel="noopener" data-wa="talle" id="wa-spec">CONSULTANOS POR WHATSAPP →</a></div>
+            )}
+          </div>
+        )}
+
+        <div class="hr hr-b d-std"></div>
+        <div class="price price-bot d-std"><data value={p.precio_minorista}>{money(p.precio_minorista)}</data></div>
+
+        <button type="button" class="btn-gold anim cta" data-add>AGREGAR AL CARRITO</button>
+        <a href={waAsk(c0.n, c0.sku)} target="_blank" rel="noopener" class="wa-ask" data-wa="ficha" id="wa-ask">CONSULTAR POR WHATSAPP</a>
+        <a href="/mayoristas/" class="ws-link"><span class="t">¿Comprás 8 unidades o más?</span><span class="g">COTIZÁ POR MAYOR →</span></a>
+        {hasKeys && (
+          <ul class:list={['keys', { 'no-d': !keysD }]}>
+            {p.caracteristicas.map((k) => <li><span class="dia" aria-hidden="true"></span>{k}</li>)}
+          </ul>
+        )}
+        <a href="#pdp-desc" class="more"><span>CONOCÉ MÁS SOBRE ESTE PRODUCTO</span><span class="ar" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+
+    <nav class="pnav" aria-label="Secciones de la ficha" data-noscrollbar>
+      {nav.map(([t, id], i) => <a href={`#${id}`}><span>{String(i + 1).padStart(2, '0')}</span>{t}</a>)}
+    </nav>
+
+    <section id="pdp-desc" class="desc" aria-labelledby="desc-h">
+      <h2 id="desc-h" class="h2 m-only-h">DESCRIPCIÓN</h2>
+      {p.descripcion_larga.length ? (
+        <div class="desc-grid">
+          <p class="desc-lead">{longLead}</p>
+          <div class="desc-rest" id="desc-rest">{longRest.map((t) => <p>{t}</p>)}</div>
+        </div>
+      ) : (
+        <p class="desc-p0">{p.descripcion}</p>
+      )}
+      {longRest.length > 0 && <button type="button" class="desc-tg m-only" id="desc-tg" aria-expanded="false" aria-controls="desc-rest">LEER DESCRIPCIÓN COMPLETA +</button>}
+    </section>
+
+    {fl > 0 && (
+      <section id="pdp-func" class="sec func" aria-labelledby="func-h">
+        <h2 id="func-h" class="h2 sec-h">PENSADA PARA EL TERRENO</h2>
+        <div class="pf d-only" style={`grid-template-columns:${pfCols}`}>
+          <div class="pf-head" style={`grid-row:${pfHeadRow}`}>
+            <div class="pf-top"><h3 class="pf-k">{funcHead.titulo}</h3><span class="pf-n">01</span></div>
+            <div>
+              {p.cifra_destacada && <div class="pf-big">{p.cifra_destacada}</div>}
+              {funcHead.destacado && p.cifra_destacada && <div class="pf-sm">{funcHead.destacado}</div>}
+              {funcHead.destacado && !p.cifra_destacada && <><div class="pf-line"></div><div class="pf-bigs">{funcHead.destacado}</div></>}
+              <p class="pf-v">{funcHead.texto}</p>
+            </div>
+          </div>
+          {funcRest.map((x, i) => (
+            <div class="pf-c">
+              <div class="pf-top"><h3 class="pf-k">{x.titulo}</h3><span class="pf-n">{String(i + 2).padStart(2, '0')}</span></div>
+              {x.destacado && <div class="pf-s">{x.destacado}</div>}
+              <p class="pf-t">{x.texto}</p>
+            </div>
+          ))}
+        </div>
+        <div class="pf-m m-only" data-noscrollbar aria-hidden="true">
+          {p.funciones.map((x, i) => (
+            <div class="pf-mc">
+              <div class="pf-mn">{String(i + 1).padStart(2, '0')}</div>
+              <div class="pf-mk">{x.titulo}</div>
+              {x.destacado && <div class="pf-ms">{x.destacado}</div>}
+              <p>{x.texto}</p>
+            </div>
+          ))}
+        </div>
+        <div class="pf-hint m-only" aria-hidden="true">DESLIZÁ PARA VER LAS {fl} →</div>
+      </section>
+    )}
+
+    {p.medidas.length > 0 && (
+      <section id="pdp-dims" class="sec" aria-labelledby="dims-h">
+        <h2 id="dims-h" class="h2 dims-h">LISTA PARA SALIR</h2>
+        <div class="pd-grid">
+          <div>
+            <div class="lbl">DIMENSIONES</div>
+            <dl class="dims">
+              {p.medidas.map((d) => <div><dd><span class="v">{d.valor}</span><span class="u">cm</span></dd><dt>{d.etiqueta}</dt></div>)}
+            </dl>
+            <div class="note">{p.medidas_nota || 'MEDIDAS APROXIMADAS'}</div>
+          </div>
+          <div class="pd-r">
+            <div>
+              <div class="lbl">USOS INDICADOS</div>
+              {p.usos_detalle.length ? (
+                <dl class="uses-d">{p.usos_detalle.map((u) => <div><dt>{u.titulo}</dt><dd>{u.texto}</dd></div>)}</dl>
+              ) : (
+                <ul class="chips">{p.usos.map((u) => <li>{u}</li>)}</ul>
+              )}
+            </div>
+            {p.incluye && <div class="incl"><span>INCLUYE</span><span>{p.incluye}</span></div>}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {dist && (
+      <section id="pdp-dist" class="sec" aria-labelledby="dist-h">
+        <h2 id="dist-h" class="h2 sec-h">{dist.titulo || 'DISTRIBUCIÓN Y USOS'}</h2>
+        <div class:list={['dist-grid', { 'has-ben': p.beneficios.length > 0 }]}>
+          <div>
+            <div class="lbl">{dist.etiqueta || 'DISTRIBUCIÓN FUNCIONAL'}</div>
+            <ol class="dist" style={`--dc:${distCols}`}>
+              {dist.items.map((d, i) => <li><span class="n">{String(i + 1).padStart(2, '0')}</span><div><h3>{d.titulo}</h3><p>{d.texto}</p></div></li>)}
+            </ol>
+          </div>
+          {(p.beneficios.length > 0 || !p.medidas.length) && (
+            <div class="dist-r">
+              {!p.medidas.length && p.usos.length > 0 && (
+                <div><div class="lbl">USOS INDICADOS</div><ul class="chips">{p.usos.map((u) => <li>{u}</li>)}</ul></div>
+              )}
+              {p.beneficios.length > 0 && (
+                <div>
+                  <div class="lbl">BENEFICIOS PRINCIPALES</div>
+                  <ul class="ben">{p.beneficios.map((b, i, a) => <li style={a.length % 2 && i === a.length - 1 ? 'grid-column:1 / -1' : ''}><h3>{b.titulo}</h3><p>{b.texto}</p></li>)}</ul>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    <section id="pdp-specs" class="sec specs-sec" aria-labelledby="specs-h">
+      <div class="specs-in">
+        <h2 id="specs-h" class="h2">ESPECIFICACIONES</h2>
+        <dl class="specs" id="specs">
+          {p.especificaciones.map((s, i) => <div class:list={{ extra: i >= 8 }}><dt>{s.k}</dt><dd>{s.v}</dd></div>)}
+        </dl>
+        {p.especificaciones.length > 8 && <button type="button" class="specs-tg m-only" id="specs-tg" aria-expanded="false">VER TODAS LAS ESPECIFICACIONES ({p.especificaciones.length}) +</button>}
+        <p class="upd">ACTUALIZADO EL <time datetime={actualizado.toISOString().slice(0, 10)}>{fecha}</time></p>
+      </div>
+    </section>
+
+    {p.faq.length > 0 && (
+      <section id="pdp-faq" class="sec specs-sec" aria-labelledby="faq-h">
+        <div class="specs-in">
+          <h2 id="faq-h" class="h2 faq-h"><span class="d-only">TODO LO QUE NECESITÁS SABER</span><span class="m-only">TODO LO QUE<br />NECESITÁS SABER</span></h2>
+          <div class="qa">
+            {p.faq.map((x) => (
+              <details>
+                <summary><h3>{x.q}</h3><span aria-hidden="true">+</span></summary>
+                <p>{x.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {guia && (
+      <aside class="sec guia" aria-label="Guía relacionada">
+        <a href={`/guias/${guia.slug}/`} class="guia-a">
+          <span class="m">GUÍA RELACIONADA · {guia.lectura}</span>
+          <span class="t">{guia.titulo}</span>
+          <span class="go">LEER GUÍA →</span>
+        </a>
+        <a href={`/${cat.slug}/`} class="guia-cat">VER TODA LA CATEGORÍA {cat.titulo} →</a>
+      </aside>
+    )}
+
+    <aside class="sec rel" aria-labelledby="rel-h">
+      <h2 id="rel-h" class="h2 rel-h">COMPLETÁ EL EQUIPO</h2>
+      <div class="rel-body">
+        <Scroller name="pdpRel" label="Productos para completar el equipo">
+          {rel.map((t) => <ProductCard t={t} class="rel-card" sizes="(min-width: 1024px) 26vw, 70vw" mobileCta={false} />)}
+        </Scroller>
+      </div>
+    </aside>
+  </article>
+
+  <div class="sticky m-only" id="sticky" hidden>
+    <div class="st-l"><div class="st-p">{money(p.precio_minorista)}</div><div class="st-s" id="st-s">{c0.n}{o.con_talles ? ' · SELECCIONAR TALLE' : ''}</div></div>
+    <button type="button" class="btn-gold anim st-b" data-add>COMPRAR</button>
+  </div>
+
+  {sizeCalc && <SizeCalc nombre={nombre} />}
+  <script type="application/json" id="pdp-data" set:html={JSON.stringify(data)} />
+</Base>
+
+<script>
+  import '../../scripts/pdp.ts';
+</script>
+
+<style>
+  .pdp { --galH: clamp(560px, calc(100vh / var(--z) - 190px), 800px); }
+  .hero { padding: 24px 40px 0; display: grid; grid-template-columns: auto minmax(0, 700px); gap: 80px; align-items: stretch; justify-content: center; }
+  .app .hero { grid-template-columns: auto minmax(380px, 480px); gap: 64px; }
+
+  /* Galería: en desktop miniaturas + principal; en mobile, carrusel con todas las fotos. */
+  .gal { position: relative; align-self: start; height: var(--galH); }
+  .gal-items { --tw: calc((var(--galH) - 40px) / 5); display: grid; grid-template-columns: var(--tw) var(--galH); grid-template-rows: repeat(var(--nT), var(--tw)); gap: 10px 12px; height: 100%; }
+  .gal[data-n='7'] .gal-items, .gal[data-n='8'] .gal-items, .gal[data-n='9'] .gal-items, .gal[data-n='10'] .gal-items { --tw: calc((var(--galH) - 10px * (var(--nT) - 1)) / var(--nT)); }
+  .gi { position: relative; padding: 0; border: 1px solid var(--border); background: var(--bg); overflow: hidden; cursor: pointer; grid-column: 1; aspect-ratio: 1 / 1; opacity: .78; transition: border-color .25s, opacity .25s; }
+  .gi:hover { border-color: var(--gold); opacity: 1; }
+  .gi img:first-child { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gi .wm { display: none; }
+  .gi.main { grid-column: 2; grid-row: 1 / -1; height: var(--galH); width: var(--galH); opacity: 1; cursor: zoom-in; background: #151715; border-color: #1C211C; }
+  .gi.main img:first-child { animation: fade .6s both; }
+  .gi.main .wm, .gi .wm { position: absolute; left: 3%; bottom: 3%; width: 30%; height: auto; opacity: .32; pointer-events: none; filter: grayscale(.2); }
+  .gi.main .wm { display: block; }
+  .gi.ph { display: flex; align-items: center; justify-content: center; cursor: default; }
+  .gal-count { position: absolute; left: calc(var(--tw, 0px) + 30px); top: 16px; display: flex; gap: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--text); text-shadow: 0 0 10px rgba(0,0,0,.8); pointer-events: none; }
+  .gal-count .dot { color: var(--muted); }
+  .gal { --tw: calc((var(--galH) - 40px) / 5); }
+  .gal-zoom { position: absolute; right: 14px; bottom: 14px; display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(26,29,27,.72); backdrop-filter: blur(6px); border: 1px solid rgba(227,178,60,.55); color: var(--gold); font-family: var(--mono); font-size: 10px; letter-spacing: .18em; line-height: 1; pointer-events: none; }
+  .gal-zoom span { font-size: 15px; }
+
+  .info { position: sticky; top: 104px; align-self: start; display: flex; flex-direction: column; }
+  .eyebrow { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: .2em; }
+  .bc-ey ol { list-style: none; display: flex; gap: 0; color: var(--gold); }
+  .bc-ey li + li::before { content: ' / '; white-space: pre; }
+  .bc-ey a { color: var(--gold); }
+  .bc-ey a:hover { color: var(--gold-hover); text-decoration: underline; text-underline-offset: 3px; }
+  .sku { color: var(--muted-2); letter-spacing: .14em; white-space: nowrap; }
+  .h1 { font-size: clamp(24px, calc(3vh / var(--z)), 32px); font-weight: 600; letter-spacing: -.04em; line-height: .98; margin: clamp(10px, calc(2vh / var(--z)), 22px) 0 0; text-wrap: balance; }
+  .h1.nw { white-space: nowrap; }
+  .app .h1 { line-height: .95; margin-top: 16px; }
+  .lead { font-size: clamp(14px, calc(1.6vh / var(--z)), 16px); line-height: 1.6; color: var(--muted); margin: clamp(10px, calc(2vh / var(--z)), 22px) 0 0; text-wrap: pretty; }
+  .shoe .lead { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .price { font-size: clamp(30px, calc(4.2vh / var(--z)), 42px); font-weight: 600; letter-spacing: -.035em; line-height: 1; }
+  .std .price-top { display: none; }
+  .app .price-top { margin-top: 20px; }
+  .hr { height: 1px; background: var(--border); }
+  .std .hr-a { margin: clamp(12px, calc(2.4vh / var(--z)), 26px) 0; }
+  .app .hr-a { margin: 24px 0; }
+  .hr-b { margin: 20px 0; }
+  .std .price-bot { margin-bottom: clamp(10px, calc(2vh / var(--z)), 22px); }
+  .app .d-std { display: none !important; }
+
+  .row-l { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: .18em; color: var(--muted); }
+  .row-l .cn { color: var(--text); }
+  .sw-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+  .sw { display: flex; align-items: center; gap: 10px; background: none; border: 1px solid var(--border); padding: 10px 14px 10px 10px; cursor: pointer; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--muted); }
+  .sw-c { width: 20px; height: 20px; border: 1px solid #2E332E; display: block; flex: none; }
+  .sw[aria-checked='true'] { border-color: var(--gold); color: var(--text); }
+  .app .sw-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .app .sw { min-width: 0; padding: 10px; font-size: 10px; letter-spacing: .1em; line-height: 1.3; text-align: left; }
+  .app .sw:hover { border-color: var(--gold); }
+  .app .sw-c { width: 22px; height: 22px; border-color: #3A403A; }
+  .app .sw-n { min-width: 0; }
+
+  .sizes { margin-top: 20px; }
+  .app .sizes { margin-top: 22px; }
+  .std .sz-head .calc-top { display: none; }
+  .sz-grid { display: grid; grid-template-columns: repeat(var(--scd), 1fr); gap: 8px; margin-top: 10px; }
+  .app .sz-grid { grid-template-columns: repeat(var(--scd), minmax(0, 1fr)); gap: 6px; margin-top: 12px; }
+  .sz { position: relative; background: transparent; border: 1px solid var(--border); color: var(--text); padding: 13px 4px; cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; overflow: hidden; }
+  .app .sz { padding: 13px 0; letter-spacing: .04em; }
+  .sz:hover { border-color: var(--gold); }
+  .sz[aria-checked='true'] { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  .sz[hidden] { display: none; }
+  .sz-state-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 10px; }
+  .app .sz-state-row { display: none; }
+  .sz-state { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); }
+  .sz-state.on { color: var(--text); }
+  .calc { background: none; border: 0; border-bottom: 1px solid var(--border); padding: 6px 0; cursor: pointer; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--muted); }
+  .calc:hover { color: var(--gold); border-color: var(--gold); }
+  .calc-top { font-size: 10px; padding: 4px 0; }
+  .sz-note { margin-top: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; line-height: 1.7; color: var(--muted-2); }
+  .wa-note { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-top: 14px; padding: 14px 16px; border: 1px solid var(--border); }
+  .wa-note span { font-size: 14px; line-height: 1.5; }
+  .wa-note a { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--gold); }
+  .wa-note a:hover { color: var(--gold-hover); }
+
+  .cta { width: 100%; padding: clamp(14px, calc(2vh / var(--z)), 20px); font-size: 13px; }
+  .app .cta { margin-top: 22px; padding: 20px; }
+  .wa-ask { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; min-height: 52px; padding: 14px 16px; border: 1px solid var(--gold); color: var(--gold); font-family: var(--mono); font-size: 12px; letter-spacing: .16em; transition: background .25s, color .25s; }
+  .wa-ask:hover { background: var(--gold); color: var(--ink); }
+  .ws-link { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 14px; margin-top: 10px; padding: 13px 16px; border: 1px solid var(--border); transition: border-color .25s; }
+  .ws-link:hover { border-color: var(--gold); color: var(--text); }
+  .ws-link .t { font-size: 14px; line-height: 1.4; }
+  .ws-link .g { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--gold); }
+  .keys { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--border); border-left: 1px solid var(--border); margin-top: clamp(10px, calc(2vh / var(--z)), 22px); }
+  .keys li { display: flex; gap: 12px; align-items: flex-start; background: var(--bg); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: clamp(9px, calc(1.4vh / var(--z)), 15px) 16px; font-size: 14px; line-height: 1.45; transition: background .25s; }
+  .keys li:hover { background: var(--surface-2); }
+  .dia { flex: none; width: 5px; height: 5px; margin-top: 7px; background: var(--gold); transform: rotate(45deg); }
+  .app .keys { margin-top: 22px; }
+  .app .keys li { gap: 10px; padding: 13px 14px; font-size: 13px; line-height: 1.4; }
+  .app .keys .dia { margin-top: 6px; }
+  .more { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: clamp(10px, calc(2vh / var(--z)), 22px); font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--gold); }
+  .app .more { margin-top: 18px; }
+  .more:hover { color: var(--gold-hover); }
+  .more .ar { font-size: 16px; line-height: 1; animation: goldpulse 2.2s ease-in-out infinite; }
+
+  .pnav { display: flex; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-top: 24px; }
+  .pnav a { flex: 1; display: flex; align-items: center; justify-content: center; gap: 12px; border-left: 1px solid var(--border); padding: 20px 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .18em; color: var(--muted); transition: color .2s, background .2s; }
+  .pnav a:first-child { border-left-color: transparent; }
+  .pnav a:hover { color: var(--gold); background: var(--surface-2); }
+  .pnav a span { color: var(--gold); }
+
+  section[id] { scroll-margin-top: 70px; }
+  .desc { padding: 48px 40px 64px; }
+  .m-only-h { display: none; }
+  .desc-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 80px; align-items: start; }
+  .desc-lead { font-size: 30px; font-weight: 500; letter-spacing: -.02em; line-height: 1.3; text-wrap: balance; }
+  .desc-rest { display: flex; flex-direction: column; gap: 20px; border-left: 1px solid var(--border); padding-left: 48px; }
+  .desc-rest p { font-size: 17px; line-height: 1.75; color: #B5BAB3; text-wrap: pretty; }
+  .desc-p0 { font-size: 19px; line-height: 1.65; color: var(--text-2); margin-top: 14px; text-wrap: pretty; }
+  .desc-tg { display: flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 10px; padding: 0; background: none; border: 0; cursor: pointer; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--gold); }
+
+  .sec { padding: 48px 40px 72px; border-top: 1px solid var(--border); }
+  .sec-h { line-height: 1.05; margin-bottom: 32px; }
+  .pf { display: grid; border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+  .pf-head { background: var(--surface-2); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
+  .pf-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .pf-k { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--gold); font-weight: 400; }
+  .pf-n { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: #6E756D; }
+  .pf-big { font-size: 120px; font-weight: 600; letter-spacing: -.05em; line-height: .9; background: var(--gold-grad); background-size: 230% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s ease-in-out infinite alternate; }
+  .pf-sm { margin-top: 14px; font-size: 16px; font-weight: 600; line-height: 1.35; }
+  .pf-line { width: 40px; height: 2px; background: var(--gold); margin-bottom: 22px; }
+  .pf-bigs { font-size: clamp(28px, calc(2.4vw / var(--z)), 40px); font-weight: 600; letter-spacing: -.035em; line-height: 1.05; text-wrap: balance; max-width: 14ch; }
+  .pf-v { margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: var(--text-2); text-wrap: pretty; max-width: 34ch; }
+  .pf-c { background: var(--bg); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background .3s; padding: 28px; display: flex; flex-direction: column; gap: 12px; min-height: 200px; }
+  .pf-c:hover { background: var(--surface-2); }
+  .pf-s { margin-top: 36px; font-size: 19px; font-weight: 600; letter-spacing: -.015em; line-height: 1.25; }
+  .pf-t { font-size: 15px; line-height: 1.6; color: var(--text-2); text-wrap: pretty; }
+
+  .dims-h { line-height: 1.05; margin-bottom: 48px; }
+  .pd-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; align-items: start; }
+  .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--gold); }
+  .dims { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 20px 0 0; }
+  .dims > div { border-top: 1px solid #2E352E; padding-top: 14px; display: flex; flex-direction: column; }
+  .dims dd { margin: 0; display: flex; align-items: baseline; gap: 6px; }
+  .dims .v { font-size: 64px; font-weight: 600; letter-spacing: -.04em; line-height: 1; }
+  .dims .u { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .dims dt { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--muted-2); margin-top: 10px; order: 2; }
+  .note { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--muted-2); margin-top: 16px; }
+  .pd-r { display: flex; flex-direction: column; gap: 28px; }
+  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chips li { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; border: 1px solid #2E352E; padding: 9px 13px; }
+  .uses-d { display: flex; flex-direction: column; margin: 12px 0 0; }
+  .uses-d > div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 6px 20px; padding: 14px 0; border-bottom: 1px solid #1C211C; }
+  .uses-d dt { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; padding-top: 3px; }
+  .uses-d dd { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted); text-wrap: pretty; }
+  .incl { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; border: 1px solid var(--gold); padding: 16px 18px; }
+  .incl span:first-child { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--gold); }
+  .incl span:last-child { font-size: 16px; font-weight: 500; }
+
+  .dist-grid { display: grid; grid-template-columns: 1fr; gap: 44px; align-items: start; }
+  .dist-grid.has-ben { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; }
+  .dist { list-style: none; display: grid; grid-template-columns: var(--dc); column-gap: 48px; margin-top: 12px; }
+  .has-ben .dist { column-gap: 0; }
+  .dist li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 6px 14px; padding: 16px 0; border-bottom: 1px solid #1C211C; }
+  .dist .n { font-family: var(--mono); font-size: 11px; color: #6E756D; padding-top: 3px; }
+  .dist div { display: flex; flex-direction: column; gap: 6px; }
+  .dist h3 { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; font-weight: 400; }
+  .dist p { font-size: 14px; line-height: 1.6; color: var(--muted); text-wrap: pretty; }
+  .dist-r { display: flex; flex-direction: column; gap: 36px; }
+  .ben { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 16px; border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+  .ben li { display: flex; flex-direction: column; gap: 8px; padding: 18px; background: var(--bg); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .ben h3 { font-size: 15px; font-weight: 600; line-height: 1.3; }
+  .ben p { font-size: 14px; line-height: 1.55; color: var(--muted); text-wrap: pretty; }
+
+  .specs-sec { padding: 48px 40px; }
+  .specs-in { display: grid; grid-template-columns: 1fr; gap: 32px; }
+  .specs { border-top: 1px solid var(--border); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 64px; margin: 0; }
+  .specs > div { display: flex; justify-content: space-between; gap: 20px; padding: 15px 0; border-bottom: 1px solid var(--surface); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; }
+  .specs dt { color: var(--muted-2); }
+  .specs dd { margin: 0; text-align: right; }
+  .specs-tg { width: 100%; min-height: 48px; background: none; border: 1px solid var(--border); cursor: pointer; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--gold); }
+  .upd { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); margin-top: -14px; }
+  .faq-h { margin-bottom: 0; }
+  .qa { border-top: 1px solid var(--border); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 64px; align-items: start; }
+  .qa details { border-bottom: 1px solid var(--border); }
+  .qa summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 26px 0; }
+  .qa summary h3 { font-size: 19px; font-weight: 500; letter-spacing: -.01em; }
+  .qa summary span { font-family: var(--mono); font-size: 14px; color: var(--gold); flex: none; animation: goldpulse 4.5s ease-in-out infinite; }
+  .qa p { max-width: 78ch; font-size: 15px; line-height: 1.8; color: var(--muted); padding: 0 0 26px; text-wrap: pretty; }
+
+  .guia { padding: 40px 40px; display: flex; gap: 16px; align-items: stretch; }
+  .guia-a { flex: 1; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 28px; padding: 24px 26px; background: #1D201E; border: 1px solid var(--border); transition: border-color .25s; }
+  .guia-a:hover { border-color: var(--gold); color: var(--text); }
+  .guia-a .m { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--faint); }
+  .guia-a .t { font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; }
+  .guia-a .go, .guia-cat { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--gold); }
+  .guia-cat { display: flex; align-items: center; padding: 0 26px; border: 1px solid var(--border); white-space: nowrap; }
+  .guia-cat:hover { border-color: var(--gold); }
+
+  .rel { padding: 48px 40px; }
+  .rel-body { margin-top: 32px; }
+  .rel :global(.rel-card) { width: calc((100% - 66px) / 3.5); min-width: calc((100% - 66px) / 3.5); }
+  .rel :global(.rel-card .pc-img) { aspect-ratio: 3 / 4; }
+  .rel :global(.rel-card:hover) { transform: none; }
+
+  .sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; background: rgba(26,29,27,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--border); padding: 12px 16px; display: flex; align-items: center; gap: 12px; animation: rise .4s var(--ease) both; }
+  .sticky[hidden] { display: none; }
+  .st-l { flex: 1; min-width: 0; }
+  .st-p { font-family: var(--mono); font-size: 15px; }
+  .st-s { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted-2); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .st-b { padding: 18px 26px; }
+
+  @media (max-width: 1023px) {
+    .hero { display: block; padding: 0; }
+    .gal { height: auto; }
+    .gal-items { display: flex; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; height: auto; }
+    .gi, .gi.main { flex: none; width: 100%; height: auto; aspect-ratio: 1 / 1; scroll-snap-align: start; scroll-snap-stop: always; border: 0; opacity: 1; background: #151715; cursor: zoom-in; }
+    .gi .wm { display: block; }
+    .m-count { position: absolute; left: 14px; top: 14px; padding: 7px 10px; background: rgba(26,29,27,.72); backdrop-filter: blur(6px); border: 1px solid rgba(232,234,230,.12); font-family: var(--mono); font-size: 10px; letter-spacing: .18em; pointer-events: none; }
+    .m-zoom { position: absolute; right: 14px; top: 14px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: rgba(26,29,27,.72); backdrop-filter: blur(6px); border: 1px solid rgba(227,178,60,.55); color: var(--gold); font-size: 15px; pointer-events: none; }
+    .m-dots { position: absolute; left: 0; right: 0; bottom: 14px; display: flex; justify-content: center; gap: 6px; pointer-events: none; }
+    .m-dots span { display: block; height: 4px; width: 6px; background: rgba(232,234,230,.45); transition: width .3s, background .3s; }
+    .m-dots span.on { width: 18px; background: var(--gold); }
+    .info { position: static; padding: 22px 18px 40px; }
+    .eyebrow { gap: 12px; font-size: 10px; letter-spacing: .16em; }
+    .bc-ey li + li::before { content: none; }
+    .sku { letter-spacing: .16em; }
+    .h1, .app .h1 { font-size: 21px; line-height: 1; margin-top: 14px; white-space: normal !important; }
+    .app .h1 { margin-top: 12px; }
+    .d-std { display: none !important; }
+    .price { font-size: 30px; }
+    .std .price-top { display: block; margin-top: 18px; }
+    .app .price-top { margin-top: 16px; }
+    .std .hr-a { display: none; }
+    .app .hr-a { margin: 20px 0; }
+    .row-l { font-size: 10px; gap: 12px; }
+    .std .colors { margin-top: 0; }
+    .sw { font-size: 10px; }
+    .app .sw-list { margin-top: 10px; }
+    .app .sw { flex-direction: column; justify-content: center; gap: 8px; min-height: 64px; padding: 10px 6px; letter-spacing: .08em; text-align: center; }
+    .std .sizes { margin-top: 16px; }
+    .app .sizes { margin-top: 20px; }
+    .sz-grid { grid-template-columns: repeat(4, 1fr); }
+    .app .sz-grid { grid-template-columns: repeat(var(--scm), minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+    .sz { padding: 12px 4px; font-size: 11px; }
+    .app .sz { min-height: 46px; padding: 0; font-size: 12px; }
+    .sz-state-row { display: block; margin-top: 8px; }
+    .calc-bot { display: block; width: 100%; text-align: left; padding: 12px 0; margin-top: 12px; }
+    .calc-top { padding: 8px 0; letter-spacing: .12em; }
+    .cta, .app .cta { margin-top: 18px; min-height: 56px; padding: 18px; font-size: 12px; box-shadow: 0 0 32px rgba(227,178,60,.45); }
+    .keys, .app .keys { margin-top: 18px; }
+    .keys li, .app .keys li { gap: 9px; padding: 12px; font-size: 13px; line-height: 1.4; }
+    .keys .dia { margin-top: 6px; }
+    .more { min-height: 48px; margin-top: 8px; }
+    .app .more { min-height: 44px; margin-top: 18px; font-size: 10px; }
+    .pnav { overflow-x: auto; gap: 8px; padding: 16px 18px; margin-top: 0; }
+    .pnav a { flex: none; gap: 8px; min-height: 40px; padding: 0 14px; background: var(--surface-2); border: 1px solid var(--border); font-size: 10px; letter-spacing: .14em; color: var(--text-2); white-space: nowrap; }
+    .pnav a:first-child { border-left-color: var(--border); }
+    .desc { padding: 36px 18px 40px; }
+    .m-only-h { display: block; line-height: 1.05; }
+    .desc-grid { display: block; }
+    .desc-lead { font-size: 19px; letter-spacing: -.01em; line-height: 1.45; margin-top: 18px; text-wrap: pretty; }
+    .desc-rest { gap: 14px; margin-top: 16px; border: 0; padding: 0; display: none; animation: fade .4s both; }
+    .desc-rest.open { display: flex; }
+    .desc-rest p { font-size: 15px; line-height: 1.7; }
+    .sec { padding: 40px 18px; }
+    .sec-h { margin-bottom: 22px; }
+    .pf-m { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -18px; padding: 0 18px; scroll-padding: 0 18px; }
+    .pf-mc { flex: none; width: 76%; scroll-snap-align: start; background: var(--surface-2); border: 1px solid var(--border); padding: 22px 18px; display: flex; flex-direction: column; gap: 12px; min-height: 170px; }
+    .pf-mn { font-family: var(--mono); font-size: 22px; font-weight: 500; color: var(--gold); line-height: 1; }
+    .pf-mk { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; }
+    .pf-ms { font-size: 15px; font-weight: 600; line-height: 1.35; }
+    .pf-mc p { font-size: 14px; line-height: 1.6; color: #B5BAB3; text-wrap: pretty; }
+    .pf-hint { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--muted-2); margin-top: 14px; }
+    .dims-h { display: none; }
+    .pd-grid, .dist-grid.has-ben { grid-template-columns: 1fr; gap: 36px; }
+    .dims .v { font-size: 44px; }
+    .uses-d > div { grid-template-columns: 1fr; }
+    .dist { grid-template-columns: 1fr; column-gap: 0; }
+    .specs-sec { padding: 36px 18px 40px; }
+    .specs-in { gap: 18px; max-width: 1400px; margin: 0 auto; }
+    .specs { grid-template-columns: 1fr; }
+    .specs > div.extra { display: none; }
+    .specs.open > div.extra { display: flex; }
+    .upd { margin-top: 0; }
+    .faq-h { line-height: 1.05; }
+    .qa { grid-template-columns: 1fr; }
+    .qa summary { padding: 22px 0; }
+    .qa summary h3 { font-size: 16px; }
+    .guia { padding: 36px 18px; flex-direction: column; }
+    .guia-a { grid-template-columns: 1fr; gap: 12px; padding: 20px 18px; }
+    .guia-a .t { font-size: 18px; }
+    .guia-cat { padding: 16px 18px; white-space: normal; }
+    .rel { padding: 36px 18px 18px; }
+    .rel-h { margin-top: 18px; }
+    .rel-body { margin-top: 32px; }
+    .rel :global(.rel-card) { width: calc(70vw / var(--z)); min-width: calc(70vw / var(--z)); }
+    .rel :global(.rel-card .pc-ver) { opacity: 1; }
+  }
+  @media (min-width: 760px) and (max-width: 1023px) {
+    .gal[data-n]:not([data-n='1']) .gi { width: calc(50% - 5px); }
+    .gal[data-n]:not([data-n='1']) .gal-items { gap: 10px; }
+  }
+</style>

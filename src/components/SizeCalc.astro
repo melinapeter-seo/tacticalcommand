@@ -1,0 +1,56 @@
+---
+// Asistente de talles (orientativo). Misma lógica que el prototipo.
+interface Props { nombre: string }
+const { nombre } = Astro.props;
+---
+<div id="calc" class="ov calc-ov" hidden role="dialog" aria-modal="true" aria-labelledby="calc-h" data-nombre={nombre}>
+  <div class="calc-box" data-stop>
+    <div class="calc-top"><span>ASISTENTE DE TALLES</span><button type="button" data-close>CERRAR ✕</button></div>
+    <h2 id="calc-h">CALCULADOR DE TALLE</h2>
+    <div class="calc-hr"></div>
+    <div class="calc-f">
+      <div>
+        <label for="sa-h" class="calc-l"><span>ALTURA / CM</span><output id="sa-h-v" for="sa-h">178</output></label>
+        <input type="range" id="sa-h" min="150" max="205" value="178" />
+      </div>
+      <div>
+        <label for="sa-w" class="calc-l"><span>PESO / KG</span><output id="sa-w-v" for="sa-w">80</output></label>
+        <input type="range" id="sa-w" min="45" max="160" value="80" />
+      </div>
+      <div>
+        <div class="calc-l" id="fit-l"><span>PREFERENCIA DE CALCE</span></div>
+        <div class="fits" role="radiogroup" aria-labelledby="fit-l">
+          <button type="button" role="radio" aria-checked="false" data-fit="0">AJUSTADO</button>
+          <button type="button" role="radio" aria-checked="true" data-fit="1">CALCE REGULAR</button>
+          <button type="button" role="radio" aria-checked="false" data-fit="2">HOLGADO</button>
+        </div>
+      </div>
+    </div>
+    <div class="calc-res"><div><div class="calc-rl">TALLE SUGERIDO</div><div class="calc-rv" id="sa-res" aria-live="polite">L</div></div></div>
+    <p class="calc-p">Recomendación orientativa basada en los datos ingresados. Para mayor precisión, consultar la tabla de medidas reales del producto.</p>
+  </div>
+</div>
+
+<style>
+  .calc-ov { position: fixed; inset: 0; z-index: 96; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; animation: fade .25s both; }
+  .calc-box { width: 100%; max-width: 520px; background: var(--bg); border: 1px solid var(--border); animation: rise .4s var(--ease) both; padding: 30px 32px 34px; }
+  .calc-top { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--faint); }
+  .calc-top button { background: none; border: 0; cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+  h2 { font-size: 27px; font-weight: 600; letter-spacing: -.02em; margin: 22px 0 0; }
+  .calc-hr { height: 1px; background: var(--border); margin: 24px 0; }
+  .calc-f { display: flex; flex-direction: column; gap: 26px; }
+  .calc-l { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--muted); }
+  .calc-l output { color: var(--text); }
+  input[type='range'] { width: 100%; margin-top: 12px; accent-color: var(--gold); }
+  .fits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+  .fits button { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 14px 6px; cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; }
+  .fits button[aria-checked='true'] { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  .calc-res { border: 1px solid var(--border); background: var(--surface); padding: 22px; margin-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .calc-rl { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--faint); }
+  .calc-rv { font-size: 44px; font-weight: 600; letter-spacing: -.03em; line-height: 1.05; margin-top: 6px; }
+  .calc-p { font-family: var(--mono); font-size: 10px; line-height: 1.9; color: var(--muted-2); margin: 18px 0 0; }
+  @media (max-width: 1023px) {
+    .calc-ov { align-items: flex-end; }
+    .calc-box { animation: sheet .42s var(--ease) both; padding: 22px 20px 30px; }
+  }
+</style>
