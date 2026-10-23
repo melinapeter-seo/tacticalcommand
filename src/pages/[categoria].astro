@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
+import { getImage } from 'astro:assets';
+import { img } from '../lib/img';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { categorias, guias, money, tarjeta, type TarjetaVista } from '../lib/data';
 import { graph, breadcrumbs, faqPage, abs, cap, desc, ORG_ID, SITE_ID } from '../lib/seo';
@@ -16,6 +18,9 @@ const brkD = c.frase.replace(/\. /, '.\n');
 const guiasCat = c.guias.map((s) => guias.find((g) => g.slug === s)).filter(Boolean) as typeof guias;
 const nombre = cap(c.titulo);
 const path = `/${c.slug}/`;
+// Preload de la imagen LCP (mismos parámetros que <Foto> para reutilizar las URLs).
+const heroMeta = await img(c.imagen);
+const heroImg = heroMeta ? await getImage({ src: heroMeta, widths: [...new Set([800, 1200, 1600].filter((w) => w < heroMeta.width).concat(heroMeta.width))], format: 'webp', quality: 60 }) : null;
 
 // "Mayoristas" en las respuestas de FAQ lleva a la sección.
 const faq = c.faq.map(({ q, a }) => {
@@ -41,9 +46,10 @@ const jsonld = graph(
   jsonld={jsonld}
   overHero
   ogImage={`/og/categorias/${c.slug}.jpg`}
+  lcp={heroImg ? { srcset: heroImg.srcSet.attribute, sizes: '100vw', type: 'image/webp' } : null}
 >
   <section class="ch">
-    <Foto src={c.imagen} alt="" sizes="100vw" class="ch-im" priority widths={[800, 1200, 1600]} />
+    <Foto src={c.imagen} alt="" sizes="100vw" class="ch-im" priority widths={[800, 1200, 1600]} quality={60} />
     <div class="ch-grad" aria-hidden="true"></div>
     <div class="ch-in">
       <Breadcrumbs items={[['Inicio', '/'], [nombre, path]]} light />
@@ -87,7 +93,7 @@ const jsonld = graph(
         <li data-i={i} data-price={t.precio} data-subs={subDe(t.clave).join('|')}>
           <a href={t.url} class="card">
             <div class="card-img">
-              {t.imagen ? <Foto src={t.imagen} alt={t.nombre} sizes="(min-width: 1024px) 23vw, (min-width: 760px) 32vw, 48vw" priority={i < 4} /> : <div class="ph"><span>IMAGEN PENDIENTE<br />{t.placeholder}</span></div>}
+              {t.imagen ? <Foto src={t.imagen} alt={t.nombre} sizes="(min-width: 1024px) 23vw, (min-width: 760px) 32vw, 48vw" /> : <div class="ph"><span>IMAGEN PENDIENTE<br />{t.placeholder}</span></div>}
             </div>
             <div class="card-b">
               <h2 class="card-n">{t.nombre}</h2>
@@ -213,7 +219,7 @@ const jsonld = graph(
   .subs-box { position: relative; flex: 1 1 auto; min-width: 0; max-width: 100%; }
   .subs { display: flex; gap: 8px; overflow-x: auto; min-width: 0; scroll-snap-type: x proximity; }
   .sub { flex: none; display: flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 16px; background: transparent; border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; white-space: nowrap; transition: border-color .2s, color .2s; }
-  .sub span { color: #5A615A; }
+  .sub span { color: var(--faint); }
   .sub:hover { border-color: var(--gold); color: #FFFFFF; }
   .sub[aria-pressed='true'] { background: rgba(227,178,60,.08); border-color: var(--gold); color: #FFFFFF; }
   .sub[aria-pressed='true'] span { color: var(--gold); }

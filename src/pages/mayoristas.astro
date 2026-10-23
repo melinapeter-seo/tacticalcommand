@@ -219,7 +219,7 @@ const data = { min: MIN, rows };
   .num.pr { min-width: 130px; } .num.un { min-width: 70px; }
   .num .k { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; color: var(--faint); }
   .num .v { font-family: var(--mono); font-size: 14px; }
-  .num.un .v { color: #5A615A; }
+  .num.un .v { color: var(--faint); }
   .row.has .num.un .v { color: var(--gold); }
   .tg { min-height: 44px; padding: 0 18px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; white-space: nowrap; flex: none; }
   .row.has .tg { border-color: var(--gold); color: var(--gold); }
@@ -247,7 +247,7 @@ const data = { min: MIN, rows };
   .panel :global(.ctl) { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
   .panel :global(.ctl button) { width: 44px; height: 44px; flex: none; background: none; border: 1px solid var(--border); color: var(--text); cursor: pointer; font-family: var(--mono); font-size: 15px; }
   .panel :global(.ctl button:hover) { border-color: var(--gold); color: var(--gold); }
-  .panel :global(.ctl output) { flex: 1; text-align: center; font-family: var(--mono); font-size: 15px; color: #5A615A; }
+  .panel :global(.ctl output) { flex: 1; text-align: center; font-family: var(--mono); font-size: 15px; color: var(--faint); }
   .panel :global(.sz.on .ctl output) { color: var(--text); }
   .panel :global(.sub) { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--border); }
   .panel :global(.sub .k) { display: block; font-family: var(--mono); font-size: 9px; letter-spacing: .18em; color: var(--faint); }
@@ -304,7 +304,7 @@ const data = { min: MIN, rows };
   .q-min-bar div { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--gold); transition: width .3s; }
   .q-wa { display: block; margin-top: 22px; padding: 19px; }
   .q-wa[hidden], #q-no[hidden] { display: none; }
-  .q-dis { margin-top: 22px; text-align: center; border: 1px solid var(--border); color: #5A615A; padding: 19px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; cursor: not-allowed; }
+  .q-dis { margin-top: 22px; text-align: center; border: 1px solid var(--border); color: var(--faint); padding: 19px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; cursor: not-allowed; }
   .q-hint { margin-top: 10px; font-size: 13px; line-height: 1.5; color: var(--muted-2); text-align: center; }
 
   @media (max-width: 1023px) {

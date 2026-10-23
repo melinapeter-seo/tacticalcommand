@@ -10,7 +10,7 @@ const lastmod = Object.fromEntries(catalogo.productos.filter((p) => p.actualizad
 export default defineConfig({
   site: SITE,
   trailingSlash: 'always',
-  build: { format: 'directory', inlineStylesheets: 'auto' },
+  build: { format: 'directory', inlineStylesheets: 'always' },
   compressHTML: true,
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   image: { responsiveStyles: false },

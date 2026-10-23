@@ -12,7 +12,7 @@
 :root {
   --bg: #1A1D1B; --surface: #222623; --surface-deep: #151816; --panel: #1C201D; --surface-2: #202421;
   --border: #2F3530; --border-soft: #232825; --border-dim: #3E453E;
-  --text: #E8EAE6; --text-2: #C3C8C1; --muted: #9AA09A; --faint: #7E887E; --ph: #5E665E; --muted-2: #8E958E;
+  --text: #E8EAE6; --text-2: #C3C8C1; --muted: #9AA09A; --faint: #878E87; --ph: #5E665E; --muted-2: #8E958E;
   --gold: #E3B23C; --gold-hover: #F5D470; --gold-bg: #221F16; --gold-line: #3A3524;
   --warn: #E8B4A0; --ok: #7FB37F; --wa: #25D366; --ink: #0D0F0D;
   --mono: 'IBM Plex Mono', ui-monospace, monospace;

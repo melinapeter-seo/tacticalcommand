@@ -93,7 +93,7 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, precio
           {c0.fotos.length ? c0.fotos.map((f, i) => (
             <button type="button" class:list={['gi', { main: i === 0 }]} data-i={i} aria-label={i === 0 ? `Ampliar foto de ${nombre}` : `Ver foto ${i + 1} de ${nombre}`}>
               <img src={f.src} srcset={f.srcset} sizes={i === 0 ? '(min-width: 1024px) 40vw, 100vw' : '(min-width: 1024px) 120px, 100vw'} width={f.w} height={f.h} alt={`${nombre} ${multi ? cap(c0.n) + ', ' : ''}vista ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} decoding={i === 0 ? 'sync' : 'async'} />
-              <img src="/escudo-tc-wm.webp" alt="" aria-hidden="true" class="wm" width="300" height="300" loading="lazy" />
+              <img src="/escudo-tc-wm.webp" alt="" aria-hidden="true" class="wm" width="240" height="303" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
             </button>
           )) : (
             <div class="gi main ph"><span>IMAGEN PENDIENTE<br />{nombre.toUpperCase()}</span></div>
@@ -455,7 +455,7 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, precio
   .pf-head { background: var(--surface-2); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
   .pf-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
   .pf-k { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--gold); font-weight: 400; }
-  .pf-n { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: #6E756D; }
+  .pf-n { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--faint); }
   .pf-big { font-size: 120px; font-weight: 600; letter-spacing: -.05em; line-height: .9; background: var(--gold-grad); background-size: 230% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s ease-in-out infinite alternate; }
   .pf-sm { margin-top: 14px; font-size: 16px; font-weight: 600; line-height: 1.35; }
   .pf-line { width: 40px; height: 2px; background: var(--gold); margin-bottom: 22px; }
@@ -492,7 +492,7 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, precio
   .dist { list-style: none; display: grid; grid-template-columns: var(--dc); column-gap: 48px; margin-top: 12px; }
   .has-ben .dist { column-gap: 0; }
   .dist li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 6px 14px; padding: 16px 0; border-bottom: 1px solid #1C211C; }
-  .dist .n { font-family: var(--mono); font-size: 11px; color: #6E756D; padding-top: 3px; }
+  .dist .n { font-family: var(--mono); font-size: 11px; color: var(--faint); padding-top: 3px; }
   .dist div { display: flex; flex-direction: column; gap: 6px; }
   .dist h3 { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; font-weight: 400; }
   .dist p { font-size: 14px; line-height: 1.6; color: var(--muted); text-wrap: pretty; }
