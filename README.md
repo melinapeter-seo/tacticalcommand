@@ -40,3 +40,10 @@ Node 22. El sitio está diseñado sobre un lienzo fijo (1718 px en desktop, 385 
 Precios reales (hoy $ 50.000 de referencia en todos; Walter los carga desde el panel), SKU definitivos, dominio, fotos de la Gafa Sport y del Parche y link de TikTok confirmado.
 
 Decisiones del cliente que difieren del handoff: el email de contacto sigue siendo el Gmail del prototipo; el seguimiento de pedidos pide solo el código (sin los 4 dígitos del teléfono), así que `action=track` en Apps Script valida solo por código; el arrepentimiento le avisa solo a Walter (el cliente ve el código en pantalla y no recibe mail).
+
+## Pendientes para el panel (fase 3)
+
+- Mensaje de WhatsApp del paso 0: sacar "y los últimos 4 dígitos de tu teléfono" (el seguimiento pide solo el código).
+- Transporte: sumar **RETIRO EN RAFAELA** y **ENVÍO DENTRO DE RAFAELA** a la lista (Andreani, OCA, Correo Argentino, Vía Cargo, Otro). Con esas dos opciones el número de guía no es obligatorio, el mensaje del paso 2 cambia ("ya está listo para retirar" / "ya salió para tu domicilio") y la página "Tu pedido" muestra ese texto en lugar de "Despachado desde Rafaela" y no muestra guía ni botón de seguimiento del transporte.
+- Al terminar el panel: guía de uso completa para Walter.
+
