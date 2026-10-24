@@ -53,5 +53,12 @@ Decisiones del cliente que difieren del handoff: el email de contacto sigue sien
 - Mensaje de WhatsApp del paso 0: sacar "y los últimos 4 dígitos de tu teléfono" (el seguimiento pide solo el código).
 - Transporte: sumar **RETIRO EN RAFAELA** y **ENVÍO DENTRO DE RAFAELA** a la lista (Andreani, OCA, Correo Argentino, Vía Cargo, Otro). Con esas dos opciones el número de guía no es obligatorio y el mensaje del paso 2 cambia ("ya está listo para retirar" / "ya salió para tu domicilio"). Ya resuelto en la API (`advanceOrder` no pide guía) y en la página de seguimiento ("Listo para retirar" / "En camino", sin guía ni botón del transporte); falta el panel.
 - El panel manda los POST como `text/plain` (Apps Script no responde el preflight de CORS).
+- **Fichas editables desde el panel** (decisión con Melina). El contenido largo de las fichas pasa del repo a la planilla (hoja `fichas`), sin cambios visibles en la web.
+  - Productos nuevos: Walter carga nombre, fotos por color, categoría (las 4 fijas), subcategoría (elige una existente o crea una nueva), colores, talles y precio. Después completa cada parte de la ficha con campos guiados: descripción corta y larga, características, especificaciones (clave / valor), preguntas frecuentes, title y description de SEO, productos relacionados. Cada campo muestra un ejemplo de una ficha de la misma categoría. Además hay un bloque libre sin límite para sus notas.
+  - Semáforo de calidad por ficha (descripción ≥ 120 caracteres, especificaciones, preguntas frecuentes, cantidad de fotos). Informa, no bloquea.
+  - Botón **«Pedirle a Melina que la arme»**: deja el producto en borrador marcado como pendiente y le avisa a Melina. Ella completa la ficha y la publica.
+  - Fichas existentes: se editan a mano, sin IA. Cada publicación guarda la versión anterior de la ficha, con un botón **«Volver a la versión anterior»**.
+  - Sin IA por ahora (evaluado: necesita cuenta de API prepaga aparte de la suscripción). La estructura queda lista para sumar un botón «Optimizar con IA» más adelante.
+- Fotos: el panel las comprime en el celular a WebP de hasta 1600 px y avisa si tienen menos de 1200 px. Walter no usa Drive.
 - Al terminar el panel: guía de uso completa para Walter.
 
