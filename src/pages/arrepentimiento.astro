@@ -4,7 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { WA, sitio } from '../lib/data';
 import { graph, breadcrumbs, abs, EMAIL } from '../lib/seo';
 
-const steps = ['Recibirás una confirmación de que tu pedido de arrepentimiento fue registrado.', 'Tactical Command verificará los datos de la compra.', 'Te indicaremos cómo realizar la devolución del producto.', 'Se coordinará el reintegro correspondiente conforme al medio de pago utilizado y la normativa aplicable.'];
+const steps = ['Al enviar la solicitud vas a ver en pantalla tu código de arrepentimiento.', 'Tactical Command verificará los datos de la compra.', 'Te indicaremos cómo realizar la devolución del producto.', 'Se coordinará el reintegro correspondiente conforme al medio de pago utilizado y la normativa aplicable.'];
 const fields = [
   { k: 'name', l: 'NOMBRE Y APELLIDO', type: 'text', ac: 'name', ph: '', wide: false },
   { k: 'email', l: 'CORREO ELECTRÓNICO UTILIZADO EN LA COMPRA', type: 'email', ac: 'email', ph: '', wide: true },
@@ -163,7 +163,7 @@ const jsonld = graph(
       <h2 class="ok-h">REGISTRAMOS TU SOLICITUD DE ARREPENTIMIENTO</h2>
       <div class="code"><span class="k">CÓDIGO DE SOLICITUD</span><span class="v">${code}</span></div>
       <dl class="kvs">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
-      <p class="ok-p">${API ? `Te enviamos una confirmación a <strong>${esc(g('email'))}</strong> con los próximos pasos.` : 'Nos comunicaremos con vos a <strong>' + esc(g('email')) + '</strong> con los próximos pasos.'} Guardá este código como constancia.</p>
+      <p class="ok-p">Nos pondremos en contacto a la brevedad a <strong>${esc(g('email'))}</strong> con los próximos pasos. Guardá este código como constancia.</p>
       <div class="ok-b"><button type="button" class="copy">COPIAR CÓDIGO</button><button type="button" class="print">IMPRIMIR CONSTANCIA</button></div>`;
     if (cid) ok.querySelectorAll('*').forEach((el) => el.setAttribute(cid, ''));
     ok.querySelector('.copy')!.addEventListener('click', (ev) => { navigator.clipboard?.writeText(code).catch(() => {}); (ev.currentTarget as HTMLElement).textContent = 'CÓDIGO COPIADO ✓'; });

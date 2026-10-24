@@ -31,7 +31,7 @@ Node 22. El sitio está diseñado sobre un lienzo fijo (1718 px en desktop, 385 
 ## Fases
 
 1. **Web pública** (esta rama): catálogo desde `src/data/`, SEO completo, deploy en Netlify.
-2. **Google Sheets + Apps Script**: la web lee el catálogo de la planilla en el build; `PUBLIC_TC_API` activa el seguimiento en vivo y el arrepentimiento con constancia por mail.
+2. **Google Sheets + Apps Script**: la web lee el catálogo de la planilla en el build; `PUBLIC_TC_API` activa el seguimiento en vivo.
 3. **Panel** (`/panel`, isla React).
 4. **Medición** (GA4 + Meta Pixel con consentimiento), backups y QA en celular real.
 
@@ -39,4 +39,4 @@ Node 22. El sitio está diseñado sobre un lienzo fijo (1718 px en desktop, 385 
 
 Precios reales (hoy $ 50.000 de referencia en todos; Walter los carga desde el panel), SKU definitivos, dominio, fotos de la Gafa Sport y del Parche y link de TikTok confirmado.
 
-Decisiones del cliente que difieren del handoff: el email de contacto sigue siendo el Gmail del prototipo; el seguimiento de pedidos pide solo el código (sin los 4 dígitos del teléfono), así que `action=track` en Apps Script valida solo por código.
+Decisiones del cliente que difieren del handoff: el email de contacto sigue siendo el Gmail del prototipo; el seguimiento de pedidos pide solo el código (sin los 4 dígitos del teléfono), así que `action=track` en Apps Script valida solo por código; el arrepentimiento le avisa solo a Walter (el cliente ve el código en pantalla y no recibe mail).
