@@ -4,3 +4,5 @@ dist/
 .netlify/
 .DS_Store
 .env
+src/data/generado/
+src/assets/tc/drive-*

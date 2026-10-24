@@ -1,9 +1,10 @@
 import type { APIRoute } from 'astro';
 import { getImage } from 'astro:assets';
-import { SITE, productos } from '../../lib/data';
+import { SITE, productos, precioDe } from '../../lib/data';
 import { img } from '../../lib/img';
 
 // Feed para Google Merchant Center (listados gratuitos): un ítem por color, agrupado por item_group_id.
+// Si un color tiene precios distintos por talle, un ítem por color y talle.
 const x = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const cap = (s: string) => s.toLowerCase().replace(/(^|\s)(\S)/g, (_m, a, b) => a + b.toUpperCase());
 
@@ -16,8 +17,10 @@ export const GET: APIRoute = async () => {
       if (!imgs.length) continue; // Merchant exige imagen
       const multi = p.colores.length > 1;
       const talles = c.talles.map((t) => t.talle);
-      items.push(`<item>
-<g:id>${x(c.sku)}</g:id>
+      const porTalle = new Set(talles.map((t) => precioDe(p, c, t))).size > 1;
+      const variantes = porTalle ? talles.map((t) => ({ id: `${c.sku}-${t}`, talles: [t], precio: precioDe(p, c, t) })) : [{ id: c.sku, talles, precio: precioDe(p, c, talles[0]) }];
+      for (const v of variantes) items.push(`<item>
+<g:id>${x(v.id)}</g:id>
 <g:item_group_id>${x(p.sku)}</g:item_group_id>
 <g:title>${x(multi ? `${p.nombre} ${cap(c.nombre)}` : p.nombre)}</g:title>
 <g:description>${x(p.descripcion)}</g:description>
@@ -25,12 +28,12 @@ export const GET: APIRoute = async () => {
 <g:image_link>${imgs[0]}</g:image_link>
 ${imgs.slice(1).map((u) => `<g:additional_image_link>${u}</g:additional_image_link>`).join('\n')}
 <g:availability>in_stock</g:availability>
-<g:price>${p.precio_minorista} ARS</g:price>
+<g:price>${v.precio} ARS</g:price>
 <g:condition>new</g:condition>
 <g:brand>Tactical Command</g:brand>
 <g:identifier_exists>no</g:identifier_exists>
 <g:color>${x(cap(c.nombre))}</g:color>
-${talles.length ? `<g:size>${x(talles.join('/'))}</g:size>` : ''}
+${v.talles.length ? `<g:size>${x(v.talles.join('/'))}</g:size>` : ''}
 <g:product_type>${x(cap(p.categoria) + ' > ' + cap(p.subcategoria))}</g:product_type>
 </item>`);
     }

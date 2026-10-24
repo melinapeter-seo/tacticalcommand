@@ -1,6 +1,6 @@
 // Contenido de /llms.txt y /llms-full.txt: qué es Tactical Command y cómo comprar, en Markdown.
-import config from '../data/config.json';
-import { SITE, productos, categorias, guias, money, sitio } from './data';
+import config from '../data/generado/config.json';
+import { SITE, productos, categorias, guias, precioTexto, rangoPrecio, sitio } from './data';
 import { EMAIL } from './seo';
 
 export function llms(full: boolean) {
@@ -21,7 +21,7 @@ export function llms(full: boolean) {
   for (const c of categorias) L.push(`- [${c.titulo}](${SITE}/${c.slug}/): ${c.descripcion}`);
   L.push('', '## Productos', '');
   for (const p of productos) {
-    L.push(`- [${p.nombre}](${SITE}/productos/${p.slug}/) — ${money(p.precio_minorista)}${p.precio_provisorio ? ' (precio de referencia, se confirma por WhatsApp)' : ''}. ${p.descripcion}`);
+    L.push(`- [${p.nombre}](${SITE}/productos/${p.slug}/) — ${precioTexto(rangoPrecio(p)).replace('DESDE', 'desde')}${p.precio_provisorio ? ' (precio de referencia, se confirma por WhatsApp)' : ''}. ${p.descripcion}`);
     if (full) {
       if (p.colores.length > 1) L.push(`  - Colores: ${p.colores.map((c) => c.nombre).join(', ')}.`);
       const t = [...new Set(p.colores.flatMap((c) => c.talles.map((x) => x.talle)))];

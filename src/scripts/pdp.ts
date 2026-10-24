@@ -1,10 +1,10 @@
 // Ficha de producto: color, talle, galería, carrito, barra fija mobile y asistente de talles.
-import { cart, waLink } from './cart';
+import { cart, money, waLink } from './cart';
 import { track } from './track';
 
 type Foto = { src: string; srcset: string; w: number; h: number; full: string; thumb: string };
-type Col = { n: string; sku: string; sw: string; talles: string[]; fotos: Foto[] };
-type Data = { slug: string; nombre: string; multi: boolean; app: boolean; conTalles: boolean; precio: number; colores: Col[] };
+type Col = { n: string; sku: string; sw: string; talles: string[]; fotos: Foto[]; precio: number; pt: Record<string, number> };
+type Data = { slug: string; nombre: string; multi: boolean; app: boolean; conTalles: boolean; colores: Col[] };
 
 const D: Data = JSON.parse(document.getElementById('pdp-data')!.textContent!);
 const $ = <T extends HTMLElement = HTMLElement>(s: string) => document.querySelector<T>(s);
@@ -17,7 +17,11 @@ let col: Col = D.colores[0];
 let talle: string | null = null;
 let order: number[] = col.fotos.map((_, i) => i);
 
-track('view_item', { producto: D.nombre, sku: col.sku, valor: D.precio });
+// Precio según color y talle (si el talle no está elegido y los precios varían, "DESDE" el menor).
+const precio = () => (talle ? col.pt[talle] ?? col.precio : Math.min(col.precio, ...col.talles.map((t) => col.pt[t])));
+const varia = () => !talle && new Set(col.talles.map((t) => col.pt[t])).size > 1;
+
+track('view_item', { producto: D.nombre, sku: col.sku, valor: precio() });
 
 // ---------- Galería ----------
 const items = $('#gal-items')!;
@@ -84,7 +88,8 @@ function syncTexts() {
   $$('[data-color-name]').forEach((e) => (e.textContent = col.n));
   $$('[data-sku]').forEach((e) => (e.textContent = col.sku));
   const a = $<HTMLAnchorElement>('#wa-ask');
-  if (a) { a.href = waAsk(); a.dataset.track = JSON.stringify({ producto: D.nombre, sku: col.sku, color: col.n, talle: talle || '', qty: 1, tipo: 'minorista', valor: D.precio }); }
+  if (a) { a.href = waAsk(); a.dataset.track = JSON.stringify({ producto: D.nombre, sku: col.sku, color: col.n, talle: talle || '', qty: 1, tipo: 'minorista', valor: precio() }); }
+  $$<HTMLDataElement>('[data-precio]').forEach((e) => { e.value = String(precio()); e.textContent = (varia() ? 'DESDE ' : '') + money(precio()); });
   const sp = $<HTMLAnchorElement>('#wa-spec');
   if (sp) sp.href = waLink(`Hola Tactical Command! Quiero consultar disponibilidad de ${D.nombre} en color ${col.n.toLowerCase()}${talle ? `, talle ${talle}` : ''}.`);
   const st = $('#sz-state');
@@ -129,8 +134,8 @@ $$('[data-add]').forEach((b) => b.addEventListener('click', () => {
     return;
   }
   const f = col.fotos[0];
-  cart.add({ n: D.nombre, sku: col.sku, img: f ? f.thumb : null, variant: D.conTalles ? `${col.n} · TALLE ${talle}` : col.n, qty: 1, mp: D.precio });
-  track('add_to_cart', { producto: D.nombre, sku: col.sku, color: col.n, talle: talle || '', valor: D.precio });
+  cart.add({ n: D.nombre, sku: col.sku, img: f ? f.thumb : null, variant: D.conTalles ? `${col.n} · TALLE ${talle}` : col.n, qty: 1, mp: precio() });
+  track('add_to_cart', { producto: D.nombre, sku: col.sku, color: col.n, talle: talle || '', valor: precio() });
   w.tcOpen?.('cart');
 }));
 

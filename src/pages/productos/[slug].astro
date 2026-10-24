@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import Scroller from '../../components/Scroller.astro';
 import SizeCalc from '../../components/SizeCalc.astro';
-import { productos, categoriaDeProducto, guias, money, relacionados, tarjeta, WA, type Producto, type TarjetaVista } from '../../lib/data';
+import { productos, categoriaDeProducto, guias, precioDe, precioTexto, rangoPrecio, relacionados, tarjeta, WA, type Producto, type TarjetaVista } from '../../lib/data';
 import { fotosVista } from '../../lib/fotos';
 import { graph, breadcrumbs, faqPage, abs, cap, desc, ORG_ID } from '../../lib/seo';
 
@@ -22,10 +22,12 @@ const sizeCalc = o.con_talles && !o.es_calzado;
 const hasKeys = p.caracteristicas.length > 0;
 const keysD = hasKeys && !o.es_calzado;
 
-// Datos por color para el script de la ficha (fotos optimizadas, talles, SKU).
+// Datos por color para el script de la ficha (fotos optimizadas, talles, SKU, precio por talle).
 const colores = await Promise.all(p.colores.map(async (c) => ({
   n: c.nombre, sku: c.sku, sw: c.muestra, talles: c.talles.map((t) => t.talle), fotos: await fotosVista(c.fotos),
+  precio: precioDe(p, c), pt: Object.fromEntries(c.talles.map((t) => [t.talle, precioDe(p, c, t.talle)])),
 })));
+const r0 = rangoPrecio(p, p.colores[0]);
 const c0 = colores[0];
 const tallesMax = c0.talles;
 const nT = Math.max(c0.fotos.length - 1, 1);
@@ -56,8 +58,8 @@ const fecha = actualizado.toLocaleDateString('es-AR', { day: '2-digit', month: '
 
 // JSON-LD: ProductGroup con una variante (Product + Offer) por color.
 const validUntil = new Date(hoy.getFullYear(), hoy.getMonth() + 3, 0).toISOString().slice(0, 10);
-const offer = (sku: string) => ({
-  '@type': 'Offer', price: p.precio_minorista, priceCurrency: 'ARS', availability: 'https://schema.org/InStock', itemCondition: 'https://schema.org/NewCondition',
+const offer = (sku: string, price: number) => ({
+  '@type': 'Offer', price, priceCurrency: 'ARS', availability: 'https://schema.org/InStock', itemCondition: 'https://schema.org/NewCondition',
   priceValidUntil: validUntil, url: abs(path), seller: { '@id': ORG_ID },
   shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AR' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'DAY' } }, shippingRate: { '@type': 'MonetaryAmount', currency: 'ARS', description: 'A cargo del comprador; se cotiza por WhatsApp' } },
   hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'AR', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays: 10, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/FreeReturn', merchantReturnLink: abs('/arrepentimiento/') },
@@ -72,18 +74,23 @@ const jsonld = graph(
     variesBy: [multi && 'https://schema.org/color', o.con_talles && 'https://schema.org/size'].filter(Boolean),
     image: colores.flatMap((c) => c.fotos.map((f) => abs(f.full))).slice(0, 10),
     additionalProperty: props,
-    hasVariant: colores.map((c) => ({
-      '@type': 'Product', name: multi ? `${nombre} ${cap(c.n)}` : nombre, sku: c.sku, color: cap(c.n), url: abs(path) + (multi ? `?color=${encodeURIComponent(c.n)}` : ''),
-      image: c.fotos.map((f) => abs(f.full)), ...(c.talles.length ? { size: c.talles.join(', ') } : {}), offers: offer(c.sku),
-    })),
+    // Una variante por color; si el color tiene precios distintos por talle, una por color y talle.
+    hasVariant: colores.flatMap((c) => {
+      const v = { '@type': 'Product', name: multi ? `${nombre} ${cap(c.n)}` : nombre, sku: c.sku, color: cap(c.n), url: abs(path) + (multi ? `?color=${encodeURIComponent(c.n)}` : ''), image: c.fotos.map((f) => abs(f.full)) };
+      const precios = new Set(c.talles.map((t) => c.pt[t]));
+      if (precios.size > 1) return c.talles.map((t) => ({ ...v, name: `${v.name} talle ${t}`, sku: `${c.sku}-${t}`, size: t, offers: offer(`${c.sku}-${t}`, c.pt[t]) }));
+      return [{ ...v, ...(c.talles.length ? { size: c.talles.join(', ') } : {}), offers: offer(c.sku, c.talles.length ? c.pt[c.talles[0]] : c.precio) }];
+    }),
   },
   breadcrumbs([['Inicio', '/'], [cap(cat.titulo), `/${cat.slug}/`], [nombre, path]]),
   faqPage(p.faq),
 );
 const title = p.seo.titulo ? `${p.seo.titulo} | Tactical Command` : `${nombre} | Tactical Command`;
-const description = desc(p.seo.descripcion || p.descripcion);
+// Descripciones cortas cargadas en la planilla: se completan para que el snippet no quede pobre.
+const descBase = p.seo.descripcion || p.descripcion;
+const description = desc(descBase.length >= 80 ? descBase : `${descBase.replace(/\.?$/, '.')} Envíos a todo el país desde Rafaela, Santa Fe. Consultas por WhatsApp.`);
 const lcp = c0.fotos[0];
-const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, precio: p.precio_minorista, provisorio: p.precio_provisorio, colores, waNum: '5493492649494' };
+const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, provisorio: p.precio_provisorio, colores, waNum: '5493492649494' };
 ---
 <Base title={title} description={description} path={path} ogType="product" ogImage={`/og/productos/${p.slug}.jpg`} jsonld={jsonld} lcp={lcp ? { srcset: lcp.srcset, sizes: '(min-width: 1024px) 40vw, 100vw', type: 'image/webp' } : null}>
   <article class:list={['pdp', app ? 'app' : 'std', { shoe: o.es_calzado }]} itemscope>
@@ -118,7 +125,7 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, precio
         </div>
         <h1 class:list={['h1', { nw: !app && h1.length <= 26 }]}>{h1}</h1>
         <p class="lead d-std">{p.descripcion}</p>
-        <div class="price price-top"><data value={p.precio_minorista}>{money(p.precio_minorista)}</data></div>
+        <div class="price price-top"><data value={r0.min} data-precio>{precioTexto(r0)}</data></div>
         <div class="hr hr-a"></div>
 
         {(multi || app) && (
@@ -152,7 +159,7 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, precio
         )}
 
         <div class="hr hr-b d-std"></div>
-        <div class="price price-bot d-std"><data value={p.precio_minorista}>{money(p.precio_minorista)}</data></div>
+        <div class="price price-bot d-std"><data value={r0.min} data-precio>{precioTexto(r0)}</data></div>
 
         <button type="button" class="btn-gold anim cta" data-add>AGREGAR AL CARRITO</button>
         <a href={waAsk(c0.n, c0.sku)} target="_blank" rel="noopener" class="wa-ask" data-wa="ficha" id="wa-ask">CONSULTAR POR WHATSAPP</a>
@@ -320,7 +327,7 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, precio
   </article>
 
   <div class="sticky m-only" id="sticky" hidden>
-    <div class="st-l"><div class="st-p">{money(p.precio_minorista)}</div><div class="st-s" id="st-s">{c0.n}{o.con_talles ? ' · SELECCIONAR TALLE' : ''}</div></div>
+    <div class="st-l"><div class="st-p"><data value={r0.min} data-precio>{precioTexto(r0)}</data></div><div class="st-s" id="st-s">{c0.n}{o.con_talles ? ' · SELECCIONAR TALLE' : ''}</div></div>
     <button type="button" class="btn-gold anim st-b" data-add>COMPRAR</button>
   </div>
 

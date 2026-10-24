@@ -4,10 +4,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build && node scripts/postbuild.mjs",
+    "dev": "npm run sync && astro dev",
+    "build": "npm run sync && astro build && node scripts/postbuild.mjs",
     "preview": "astro preview",
-    "check:seo": "node scripts/check-seo.mjs"
+    "check:seo": "node scripts/check-seo.mjs",
+    "sync": "node scripts/sincronizar-catalogo.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

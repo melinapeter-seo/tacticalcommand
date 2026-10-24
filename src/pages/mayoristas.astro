@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import config from '../data/config.json';
-import { productos, money, WA } from '../lib/data';
+import config from '../data/generado/config.json';
+import { productos, precioDe, precioTexto, rangoPrecio, WA } from '../lib/data';
 import { fotosVista } from '../lib/fotos';
 import { graph, breadcrumbs, faqPage, abs, ORG_ID } from '../lib/seo';
 
@@ -13,11 +13,12 @@ const rows = await Promise.all(
     .slice()
     .sort((a, b) => CATS.indexOf(a.categoria) - CATS.indexOf(b.categoria))
     .map(async (p) => ({
-      slug: p.slug, n: p.titulo.join(' ').replace(/\s+/g, ' ').trim(), sku: p.sku, cat: p.categoria, price: p.precio_minorista, to: `/productos/${p.slug}/`,
+      slug: p.slug, n: p.titulo.join(' ').replace(/\s+/g, ' ').trim(), sku: p.sku, cat: p.categoria, price: rangoPrecio(p), to: `/productos/${p.slug}/`,
       colors: await Promise.all(p.colores.map(async (c) => ({
         n: c.nombre, sw: c.muestra, sku: c.sku,
         g: (await fotosVista(c.fotos)).map((f) => ({ t: f.thumb, s: f.src, ss: f.srcset, f: f.full })),
-        sizes: !p.opciones.con_talles ? [{ t: 'UNIDAD', sp: false }] : c.talles.length ? c.talles.map((t) => ({ t: t.talle, sp: t.estado === 'consultar' })) : [{ t: 'TALLE', sp: true }],
+        // Precio por talle (planilla): talle → color → producto.
+        sizes: !p.opciones.con_talles ? [{ t: 'UNIDAD', sp: false, p: precioDe(p, c) }] : c.talles.length ? c.talles.map((t) => ({ t: t.talle, sp: t.estado === 'consultar', p: precioDe(p, c, t.talle) })) : [{ t: 'TALLE', sp: true, p: precioDe(p, c) }],
       }))),
     })),
 );
@@ -98,7 +99,7 @@ const data = { min: MIN, rows };
                 </div>
                 <div class="aside">
                   <div class="nums">
-                    <div class="num pr"><span class="k">PRECIO PUBLICADO / UN.</span><span class="v"><data value={r.price}>{money(r.price)}</data></span></div>
+                    <div class="num pr"><span class="k">PRECIO PUBLICADO / UN.</span><span class="v"><data value={r.price.min}>{precioTexto(r.price)}</data></span></div>
                     <div class="num un"><span class="k">EN PEDIDO</span><span class="v" data-units>—</span></div>
                   </div>
                   <button type="button" class="tg" data-toggle aria-expanded="false">CARGAR CANTIDADES +</button>

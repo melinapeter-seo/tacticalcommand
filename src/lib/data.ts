@@ -1,11 +1,11 @@
-import catalogo from '../data/catalog.json';
-import categoriasJson from '../data/categorias.json';
+import catalogo from '../data/generado/catalog.json';
+import categoriasJson from '../data/generado/categorias.json';
 import guiasJson from '../data/guias.json';
 import legalesJson from '../data/legales.json';
 import sitioJson from '../data/sitio.json';
 
 export type Talle = { talle: string; estado: string };
-export type Color = { nombre: string; sku: string; muestra: string; fotos: string[]; talles: Talle[] };
+export type Color = { nombre: string; sku: string; muestra: string; fotos: string[]; talles: Talle[]; precio?: number | null; precios_talle?: Record<string, number> };
 export type Tarjeta = { clave: string; nombre: string; color: string | null; imagen: string | null; rota?: string[] };
 export type Producto = (typeof catalogo.productos)[number] & { colores: Color[]; tarjetas: Tarjeta[] };
 export type Categoria = (typeof categoriasJson)[number];
@@ -23,6 +23,20 @@ export const categoriaDeProducto = (p: Producto) => categorias.find((c) => c.tit
 
 export const money = (n: number) => '$ ' + n.toLocaleString('es-AR');
 
+/** Precio efectivo (planilla): el del talle, si no el del color, si no el del producto. */
+export function precioDe(p: Producto, c: Color, talle?: string | null): number {
+  const t = talle ? c.precios_talle?.[talle] : undefined;
+  return t ?? c.precio ?? p.precio_minorista;
+}
+/** Precio mínimo de un color (o de todo el producto) y si varía según la elección. */
+export function rangoPrecio(p: Producto, c?: Color) {
+  const ps = (c ? [c] : p.colores).flatMap((x) => (x.talles.length ? x.talles.map((t) => precioDe(p, x, t.talle)) : [precioDe(p, x)]));
+  const min = Math.min(...ps);
+  return { min, varia: ps.some((v) => v !== min) };
+}
+/** "$ 50.000" o "DESDE $ 45.000" si el precio cambia según talle o color. */
+export const precioTexto = (r: { min: number; varia: boolean }) => (r.varia ? 'DESDE ' : '') + money(r.min);
+
 export const WA = (t: string) => `https://wa.me/${sitio.whatsapp}?text=${encodeURIComponent(t)}`;
 export const WA_CONSULTA = WA('Hola Tactical Command! Quiero hacer una consulta.');
 
@@ -39,7 +53,7 @@ export function tarjeta(clave: string) {
   return {
     clave, nombre: t.nombre, categoria: p.categoria, sku: t.color ? col.sku : p.sku, url, slug: p.slug,
     imagen: t.imagen || col.fotos[0] || null, rota: t.rota || null,
-    precio: p.precio_minorista, placeholder: p.nombre.toUpperCase(),
+    precio: rangoPrecio(p, t.color ? col : undefined), placeholder: p.nombre.toUpperCase(),
   };
 }
 export type TarjetaVista = NonNullable<ReturnType<typeof tarjeta>>;

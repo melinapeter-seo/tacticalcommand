@@ -2,7 +2,7 @@
 // Tarjeta de producto (una por color). Se usa en la home, en "Completá el equipo" y en las guías.
 import Foto from './Foto.astro';
 import { getImage } from 'astro:assets';
-import { money, type TarjetaVista } from '../lib/data';
+import { precioTexto, type TarjetaVista } from '../lib/data';
 import { img } from '../lib/img';
 interface Props { t: TarjetaVista; class?: string; sizes?: string; mobileCta?: boolean }
 const { t, class: cls = '', sizes = '(min-width: 1024px) 22vw, 70vw', mobileCta = true } = Astro.props;
@@ -20,7 +20,7 @@ const rota = t.rota ? await Promise.all(t.rota.map(async (f) => (await getImage(
   </div>
   <div class="pc-meta"><span>{t.categoria}</span><span>{t.sku}</span></div>
   <div class="pc-n">{t.nombre}</div>
-  <div class="pc-p"><data value={t.precio}>{money(t.precio)}</data></div>
+  <div class="pc-p"><data value={t.precio.min}>{precioTexto(t.precio)}</data></div>
   {mobileCta && <span class="pc-cta m-only" aria-hidden="true">VER PRODUCTO →</span>}
 </a>
 

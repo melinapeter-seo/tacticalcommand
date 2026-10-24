@@ -4,7 +4,7 @@ import Foto from '../components/Foto.astro';
 import { getImage } from 'astro:assets';
 import { img } from '../lib/img';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { categorias, guias, money, tarjeta, type TarjetaVista } from '../lib/data';
+import { categorias, guias, money, precioTexto, tarjeta, type TarjetaVista } from '../lib/data';
 import { graph, breadcrumbs, faqPage, abs, cap, desc, ORG_ID, SITE_ID } from '../lib/seo';
 
 export function getStaticPaths() {
@@ -90,14 +90,14 @@ const jsonld = graph(
     </div>
     <ul class="grid" id="grid">
       {items.map((t, i) => (
-        <li data-i={i} data-price={t.precio} data-subs={subDe(t.clave).join('|')}>
+        <li data-i={i} data-price={t.precio.min} data-subs={subDe(t.clave).join('|')}>
           <a href={t.url} class="card">
             <div class="card-img">
               {t.imagen ? <Foto src={t.imagen} alt={t.nombre} sizes="(min-width: 1024px) 23vw, (min-width: 760px) 32vw, 48vw" /> : <div class="ph"><span>IMAGEN PENDIENTE<br />{t.placeholder}</span></div>}
             </div>
             <div class="card-b">
               <h2 class="card-n">{t.nombre}</h2>
-              <div class="card-f"><data value={t.precio}>{money(t.precio)}</data><span aria-hidden="true">VER →</span></div>
+              <div class="card-f"><data value={t.precio.min}>{precioTexto(t.precio)}</data><span aria-hidden="true">VER →</span></div>
             </div>
           </a>
         </li>
