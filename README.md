@@ -11,7 +11,12 @@ npm install
 npm run dev        # http://localhost:4321
 npm run build      # genera dist/ (incluye scripts/postbuild.mjs)
 npm run check:seo  # valida title, description, canonical, H1 y JSON-LD de cada página
+npm run test:api   # prueba el Apps Script contra el simulador (sin Google)
+npm run semilla    # regenera apps-script/Semilla.gs desde src/data/
+node scripts/simulador-apps-script.mjs   # API simulada en :8790 (PIN 123456), para el panel
 ```
+
+`dev` y `build` corren antes `npm run sync`: con `PUBLIC_TC_API` lee la planilla publicada; sin ella usa `src/data/`.
 
 Node 22. El sitio está diseñado sobre un lienzo fijo (1718 px en desktop, 385 px en mobile) y se escala con `zoom`, igual que el prototipo (ver `src/layouts/Base.astro`).
 
@@ -19,7 +24,9 @@ Node 22. El sitio está diseñado sobre un lienzo fijo (1718 px en desktop, 385 
 
 | Ruta | Qué hay |
 |---|---|
-| `src/data/catalog.json` | Fuente única del catálogo (productos, colores, talles, tarjetas). |
+| `src/data/catalog.json` | Catálogo base: contenido largo de las fichas (textos, specs, FAQ, guía, tarjetas). La planilla manda en nombre, categoría, SKU, descripción, precios, colores, fotos, talles, visibilidad y orden. |
+| `src/data/generado/` | Lo que usa la web: planilla + catálogo base (lo arma `scripts/sincronizar-catalogo.mjs`, no se versiona). |
+| `apps-script/` | API de la planilla (`Codigo.gs`), semilla generada (`Semilla.gs`) y guía de instalación (`INSTALAR.md`). |
 | `src/data/categorias.json`, `guias.json`, `legales.json`, `sitio.json` | Contenido de categorías, guías, legales y datos del sitio. |
 | `src/data/config.json` | Condiciones mayoristas (equivale a la hoja `config`). |
 | `scripts/catalogo-desde-prototipo.mjs` | Regenera los JSON desde el prototipo (`design/Tactical Command v2.dc.html`). |
@@ -31,7 +38,7 @@ Node 22. El sitio está diseñado sobre un lienzo fijo (1718 px en desktop, 385 
 ## Fases
 
 1. **Web pública** (esta rama): catálogo desde `src/data/`, SEO completo, deploy en Netlify.
-2. **Google Sheets + Apps Script**: la web lee el catálogo de la planilla en el build; `PUBLIC_TC_API` activa el seguimiento en vivo.
+2. **Google Sheets + Apps Script**: la web lee el catálogo de la planilla en el build; `PUBLIC_TC_API` activa el seguimiento en vivo. Instalación: [`apps-script/INSTALAR.md`](apps-script/INSTALAR.md).
 3. **Panel** (`/panel`, isla React).
 4. **Medición** (GA4 + Meta Pixel con consentimiento), backups y QA en celular real.
 
@@ -44,6 +51,7 @@ Decisiones del cliente que difieren del handoff: el email de contacto sigue sien
 ## Pendientes para el panel (fase 3)
 
 - Mensaje de WhatsApp del paso 0: sacar "y los últimos 4 dígitos de tu teléfono" (el seguimiento pide solo el código).
-- Transporte: sumar **RETIRO EN RAFAELA** y **ENVÍO DENTRO DE RAFAELA** a la lista (Andreani, OCA, Correo Argentino, Vía Cargo, Otro). Con esas dos opciones el número de guía no es obligatorio, el mensaje del paso 2 cambia ("ya está listo para retirar" / "ya salió para tu domicilio") y la página "Tu pedido" muestra ese texto en lugar de "Despachado desde Rafaela" y no muestra guía ni botón de seguimiento del transporte.
+- Transporte: sumar **RETIRO EN RAFAELA** y **ENVÍO DENTRO DE RAFAELA** a la lista (Andreani, OCA, Correo Argentino, Vía Cargo, Otro). Con esas dos opciones el número de guía no es obligatorio y el mensaje del paso 2 cambia ("ya está listo para retirar" / "ya salió para tu domicilio"). Ya resuelto en la API (`advanceOrder` no pide guía) y en la página de seguimiento ("Listo para retirar" / "En camino", sin guía ni botón del transporte); falta el panel.
+- El panel manda los POST como `text/plain` (Apps Script no responde el preflight de CORS).
 - Al terminar el panel: guía de uso completa para Walter.
 

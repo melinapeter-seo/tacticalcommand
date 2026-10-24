@@ -134,6 +134,11 @@ const jsonld = graph(
   const LABEL = ['COMPRA CONFIRMADA', 'EN PREPARACIÓN', 'DESPACHADO', 'ENTREGADO'];
   const HEAD = ['RECIBIMOS TU COMPRA.', 'ESTAMOS PREPARANDO TU PEDIDO.', 'TU PEDIDO YA FUE DESPACHADO.', 'TU PEDIDO FUE ENTREGADO.'];
   const MSG = ['La compra está confirmada. El próximo paso es controlar y armar el pedido.', 'Estamos controlando los productos y armando el pedido en Rafaela.', 'El pedido salió desde Rafaela, Santa Fe, y ya cuenta con información de seguimiento.', 'El pedido llegó a destino. ¡Gracias por comprar en Tactical Command!'];
+  // Retiro o envío dentro de Rafaela: sin guía ni transportista, con su propio texto en el paso 3.
+  const LOCAL: Record<string, { step: string; label: string; head: string; msg: string }> = {
+    'RETIRO EN RAFAELA': { step: 'LISTO PARA RETIRAR', label: 'LISTO PARA RETIRAR', head: 'TU PEDIDO ESTÁ LISTO PARA RETIRAR.', msg: 'El pedido ya está listo para retirar en Rafaela. Coordinamos el día y horario por WhatsApp.' },
+    'ENVÍO DENTRO DE RAFAELA': { step: 'EN CAMINO', label: 'EN CAMINO', head: 'TU PEDIDO ESTÁ EN CAMINO A TU DOMICILIO.', msg: 'El pedido ya salió para tu domicilio en Rafaela.' },
+  };
   const CARRIER: Record<string, string> = { ANDREANI: 'https://www.andreani.com/#!/informacionEnvio/', OCA: 'https://www.oca.com.ar/Busquedas/Envios', 'CORREO ARGENTINO': 'https://www.correoargentino.com.ar/formularios/e-commerce', 'VÍA CARGO': 'https://www.viacargo.com.ar/' };
   const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
   const fmt = (iso?: string) => iso ? new Date(iso).toLocaleString('es-AR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).toUpperCase().replace(',', ' ·') : '';
@@ -158,10 +163,11 @@ const jsonld = graph(
       if (!j.ok) { error('NO ENCONTRAMOS ESE PEDIDO.', 'Revisá que el código esté escrito exactamente como aparece en tu confirmación de compra.', code); return; }
       const d = j.data; const st = Math.max(0, Math.min(3, +d.estado || 0)); const f = d.fechas || [];
       const last = [...f].reverse().find(Boolean);
-      const steps = STEPS.map((s, i) => { const done = i < st || (i === st && st === 3), cur = i === st && st < 3; return `<li><span class="mk" style="color:${done ? '#4A5D4B' : cur ? '#E3B23C' : '#3E453E'}">${done ? '✓' : cur ? '●' : '○'}</span><span style="color:${cur ? '#E8EAE6' : '#878E87'}">${s}</span>${f[i] ? `<span class="fd">${esc(fmt(f[i]))}</span>` : ''}</li>`; }).join('');
+      const loc = LOCAL[String(d.transporte || '').toUpperCase()];
+      const steps = STEPS.map((s, i) => (loc && i === 2 ? loc.step : s)).map((s, i) => { const done = i < st || (i === st && st === 3), cur = i === st && st < 3; return `<li><span class="mk" style="color:${done ? '#4A5D4B' : cur ? '#E3B23C' : '#3E453E'}">${done ? '✓' : cur ? '●' : '○'}</span><span style="color:${cur ? '#E8EAE6' : '#878E87'}">${s}</span>${f[i] ? `<span class="fd">${esc(fmt(f[i]))}</span>` : ''}</li>`; }).join('');
       const link = d.transporte && CARRIER[String(d.transporte).toUpperCase()];
-      const ship = st >= 2 && d.guia ? `<div class="r-ship"><div class="r-l">SEGUIMIENTO DEL ENVÍO</div><div class="r-kv"><div><div class="k">TRANSPORTISTA</div><div>${esc(d.transporte || 'A CONFIRMAR')}</div></div><div><div class="k">CÓDIGO DE SEGUIMIENTO</div><div>${esc(d.guia)}</div></div></div>${link ? `<a class="r-go" href="${link}" target="_blank" rel="noopener">SEGUIR ENVÍO →</a>` : ''}</div>` : '';
-      html(`<div class="r-box"><div class="r-top"><div><div class="k">PEDIDO</div><div class="v">${esc(d.codigo)}</div></div><div><div class="k">STATUS</div><div class="v g">${LABEL[st]}</div></div><div><div class="k">ÚLTIMA ACTUALIZACIÓN</div><div class="v">${esc(fmt(last))}</div></div></div><div class="r-body"><div class="r-h">${HEAD[st]}</div><p>${MSG[st]}</p><ol class="r-steps">${steps}</ol>${ship}</div></div>`);
+      const ship = !loc && st >= 2 && d.guia ? `<div class="r-ship"><div class="r-l">SEGUIMIENTO DEL ENVÍO</div><div class="r-kv"><div><div class="k">TRANSPORTISTA</div><div>${esc(d.transporte || 'A CONFIRMAR')}</div></div><div><div class="k">CÓDIGO DE SEGUIMIENTO</div><div>${esc(d.guia)}</div></div></div>${link ? `<a class="r-go" href="${link}" target="_blank" rel="noopener">SEGUIR ENVÍO →</a>` : ''}</div>` : '';
+      html(`<div class="r-box"><div class="r-top"><div><div class="k">PEDIDO</div><div class="v">${esc(d.codigo)}</div></div><div><div class="k">STATUS</div><div class="v g">${loc && st === 2 ? loc.label : LABEL[st]}</div></div><div><div class="k">ÚLTIMA ACTUALIZACIÓN</div><div class="v">${esc(fmt(last))}</div></div></div><div class="r-body"><div class="r-h">${loc && st === 2 ? loc.head : HEAD[st]}</div><p>${loc && st === 2 ? loc.msg : MSG[st]}</p><ol class="r-steps">${steps}</ol>${ship}</div></div>`);
     } catch {
       error('NO PUDIMOS CONSULTAR EL PEDIDO.', 'La conexión tardó demasiado. Probá de nuevo en unos segundos o escribinos por WhatsApp.', code);
     } finally {

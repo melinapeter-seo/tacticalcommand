@@ -126,7 +126,7 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
     }
     p.opciones = { ...p.opciones, con_talles: colores.some((c) => c.talles.length > 0) };
     if (p.opciones.con_talles && !p.opciones.columnas_talle) p.opciones.columnas_talle = Math.min(Math.max(...colores.map((c) => c.talles.length)), 9);
-    // Una tarjeta por color: se reutilizan las curadas (clave, nombre, foto de portada) y se crean las que falten.
+    // Una tarjeta por color: se reutilizan las curadas (clave y nombre) y se crean las que falten.
     const viejas = b ? b.tarjetas : [];
     // Los colores que ya existían sin tarjeta propia (ej. Uniforme Gris Topo Ripstop) siguen sin tarjeta.
     const sinTarjeta = new Set((b?.colores || []).map((c) => c.nombre).filter((n) => b.colores.length > 1 && !viejas.some((x) => x.color === n)));
@@ -136,7 +136,7 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
       const clave = t?.clave || `${p.slug}--${i}`;
       tarjetaSlug[clave] = p.slug;
       const nombreTarjeta = t && b && nombre === b.nombre ? t.nombre : colores.length > 1 ? `${nombre} ${titleCase(c.nombre.replace(' · ', ' '))}` : nombre;
-      return [{ clave, nombre: nombreTarjeta, color: colores.length > 1 ? c.nombre : t?.color ?? null, imagen: (t?.imagen && c.fotos.includes(t.imagen) ? t.imagen : c.fotos[0]) || null }];
+      return [{ clave, nombre: nombreTarjeta, color: colores.length > 1 ? c.nombre : t?.color ?? null, imagen: c.fotos[0] || null }]; // portada = primera foto del color, como la ficha
     });
     // Tarjeta extra de portada (ej. Gore-Tex que rota fotos de todos los colores).
     for (const t of viejas) if (t.rota) { p.tarjetas.push(t); tarjetaSlug[t.clave] = p.slug; }

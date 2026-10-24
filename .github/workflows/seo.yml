@@ -1,4 +1,4 @@
-name: Build y chequeo SEO
+name: Build, API y chequeo SEO
 on:
   pull_request:
   push:
@@ -13,5 +13,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run test:api
+      - name: Semilla.gs al día con src/data
+        run: npm run semilla && git diff --exit-code apps-script/Semilla.gs
       - run: npm run build
       - run: npm run check:seo

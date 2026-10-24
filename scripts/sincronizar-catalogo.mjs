@@ -32,7 +32,7 @@ async function pedir(params, ms = 25000) {
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const d = await r.json();
   if (d.ok === false) throw new Error(d.error || 'respuesta con error');
-  return d;
+  return d.data ?? d; // { ok, data } (Apps Script)
 }
 
 /** La respuesta tiene que traer productos con al menos una variante; si no, no se publica. */
@@ -56,8 +56,8 @@ async function bajarFotos(api) {
     if (await existe(destino)) continue;
     if (!(await existe(enCache))) {
       try {
-        const { data } = await pedir({ action: 'photo', id }, 60000);
-        await sharp(Buffer.from(data, 'base64')).rotate().resize({ width: 2000, withoutEnlargement: true }).webp({ quality: 90 }).toFile(enCache);
+        const { base64 } = await pedir({ action: 'photo', id }, 60000);
+        await sharp(Buffer.from(base64, 'base64')).rotate().resize({ width: 2000, withoutEnlargement: true }).webp({ quality: 90 }).toFile(enCache);
         nuevas++;
       } catch (e) {
         console.warn(`[catálogo] no se pudo bajar la foto ${id}: ${e.message}`);
