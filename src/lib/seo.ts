@@ -4,7 +4,7 @@ import { SITE, sitio } from './data';
 export const ORG_ID = `${SITE}/#org`;
 export const SITE_ID = `${SITE}/#website`;
 export const WALTER_ID = `${SITE}/nosotros/#walter`;
-export const EMAIL = 'info@tacticalcommand.com.ar';
+export const EMAIL = sitio.email;
 export const TEL = '+54-9-3492-649494';
 
 export const abs = (p: string) => (p.startsWith('http') ? p : SITE + p);

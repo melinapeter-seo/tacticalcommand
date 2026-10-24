@@ -24,7 +24,7 @@ const jsonld = graph(
   breadcrumbs([['Inicio', '/'], ['Tu pedido', path]]),
 );
 ---
-<Base title="Envíos, seguimiento y cambios | Tactical Command" description="Consultá el estado de tu pedido, plazos de envío desde Rafaela a todo el país, cambios y devoluciones. Seguimiento con tu código y los últimos 4 dígitos de tu teléfono." path={path} jsonld={jsonld}>
+<Base title="Envíos, seguimiento y cambios | Tactical Command" description="Consultá el estado de tu pedido, plazos de envío desde Rafaela a todo el país, cambios y devoluciones. Seguimiento con tu código de pedido." path={path} jsonld={jsonld}>
   <section class="top" aria-labelledby="sh-h1">
     <div class="top-grid">
       <div class="top-l">
@@ -34,15 +34,9 @@ const jsonld = graph(
       </div>
 
       <form class="trk" id="trk" data-api={api} novalidate>
-        <div class="trk-f">
-          <label for="trk-code">CÓDIGO DE PEDIDO</label>
-          <input id="trk-code" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="TC-XXXX-XXXX" required />
-        </div>
+        <label for="trk-code">CÓDIGO DE PEDIDO</label>
         <div class="trk-row">
-          <div class="trk-f trk-tel">
-            <label for="trk-tel">ÚLTIMOS 4 DÍGITOS DE TU TELÉFONO</label>
-            <input id="trk-tel" name="tel4" inputmode="numeric" autocomplete="tel-local-suffix" maxlength="4" pattern="[0-9]{4}" placeholder="0000" required />
-          </div>
+          <input id="trk-code" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="TC-XXXX-XXXX" required />
           <button type="submit" class="btn-gold anim trk-btn" id="trk-btn">CONSULTAR PEDIDO →</button>
         </div>
         <div class="trk-help">Lo recibiste por WhatsApp al confirmar tu compra.</div>
@@ -152,17 +146,16 @@ const jsonld = graph(
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const code = (form.code.value || '').trim().toUpperCase();
-    const tel4 = (form.tel4.value || '').replace(/\D/g, '');
-    if (!code || tel4.length !== 4) { error('FALTAN DATOS.', 'Ingresá el código de pedido y los últimos 4 dígitos del teléfono con el que compraste.', code); return; }
+    if (!code) { error('FALTA EL CÓDIGO.', 'Ingresá el código de pedido que recibiste por WhatsApp al confirmar tu compra.', code); return; }
     track('track_order', { codigo: code });
     if (!API) { error('EL SEGUIMIENTO EN LÍNEA ESTARÁ DISPONIBLE MUY PRONTO.', 'Mientras tanto, escribinos por WhatsApp con tu código y te contamos en qué paso está tu pedido.', code); return; }
     btn.disabled = true; btn.textContent = 'BUSCANDO TU PEDIDO…';
     html(`<div class="r-box r-skel"><div class="sk w40"></div><div class="sk w70"></div>${STEPS.map(() => '<div class="sk row"></div>').join('')}</div>`);
     const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 10000);
     try {
-      const r = await fetch(`${API}?action=track&code=${encodeURIComponent(code)}&tel4=${tel4}`, { signal: ctl.signal });
+      const r = await fetch(`${API}?action=track&code=${encodeURIComponent(code)}`, { signal: ctl.signal });
       const j = await r.json();
-      if (!j.ok) { error('CÓDIGO O TELÉFONO INCORRECTOS.', 'Revisá que el código esté escrito exactamente como aparece en tu confirmación de compra y que los 4 dígitos correspondan al teléfono con el que compraste.', code); return; }
+      if (!j.ok) { error('NO ENCONTRAMOS ESE PEDIDO.', 'Revisá que el código esté escrito exactamente como aparece en tu confirmación de compra.', code); return; }
       const d = j.data; const st = Math.max(0, Math.min(3, +d.estado || 0)); const f = d.fechas || [];
       const last = [...f].reverse().find(Boolean);
       const steps = STEPS.map((s, i) => { const done = i < st || (i === st && st === 3), cur = i === st && st < 3; return `<li><span class="mk" style="color:${done ? '#4A5D4B' : cur ? '#E3B23C' : '#3E453E'}">${done ? '✓' : cur ? '●' : '○'}</span><span style="color:${cur ? '#E8EAE6' : '#878E87'}">${s}</span>${f[i] ? `<span class="fd">${esc(fmt(f[i]))}</span>` : ''}</li>`; }).join('');
@@ -186,11 +179,11 @@ const jsonld = graph(
   .h1 span { display: block; animation: mask .9s .1s var(--ease) both; }
   .lead-p { width: 0; min-width: 100%; font-size: 17px; line-height: 1.75; color: var(--text-2); margin: 26px 0 0; text-wrap: pretty; }
   .trk { border: 1px solid var(--border); background: var(--surface); padding: 30px; display: flex; flex-direction: column; gap: 14px; }
-  .trk-f { display: flex; flex-direction: column; gap: 14px; flex: 1; min-width: 160px; }
+  .trk label { display: block; }
   .trk label { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--muted); }
-  .trk input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 16px 14px; font-family: var(--mono); font-size: 14px; letter-spacing: .08em; border-radius: 0; }
+  .trk input { flex: 1; min-width: 180px; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 16px 14px; font-family: var(--mono); font-size: 14px; letter-spacing: .08em; border-radius: 0; }
   .trk input:focus-visible { border-color: var(--gold); outline-offset: 0; }
-  .trk-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+  .trk-row { display: flex; gap: 12px; flex-wrap: wrap; }
   .trk-btn { padding: 16px 22px; letter-spacing: .14em; white-space: nowrap; min-height: 52px; }
   .trk-btn:disabled { opacity: .7; cursor: progress; }
   .trk-help { font-size: 12px; color: var(--muted-2); line-height: 1.6; }

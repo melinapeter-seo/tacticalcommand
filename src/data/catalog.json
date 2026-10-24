@@ -1951,12 +1951,6 @@
      "nombre": "Uniforme Táctico Gris Topo",
      "color": "GRIS TOPO · GABARDINA",
      "imagen": "uni-gt-1.webp"
-    },
-    {
-     "clave": "uniforme-tactico--2",
-     "nombre": "Uniforme Táctico Gris Topo Ripstop",
-     "color": "GRIS TOPO · RIPSTOP",
-     "imagen": "uni-gt-1.webp"
     }
    ]
   },
@@ -5205,8 +5199,8 @@
    "subcategoria": "CAMPERAS",
    "sku": "TC-GTEX-001",
    "orden": 180,
-   "precio_minorista": 189900,
-   "precio_transferencia": 164900,
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
    "precio_provisorio": true,
    "migas": "Inicio / Indumentaria / Camperas / Campera Gore-Tex",
    "seo": {
@@ -5670,7 +5664,6 @@
   "guantes": "#",
   "gorra": "#",
   "cinto": "#",
-  "cuello": "#",
-  "uniforme-tactico--2": "uniforme-tactico"
+  "cuello": "#"
  }
 }

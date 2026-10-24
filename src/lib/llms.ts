@@ -13,7 +13,7 @@ export function llms(full: boolean) {
   L.push(`- Cómo se compra: se elige producto, color y talle en la web y se envía el pedido por WhatsApp (${sitio.whatsapp_texto}). Por WhatsApp se confirman stock, precio final, forma de pago y envío. No hay pago online.`);
   L.push(`- Venta mayorista: desde ${config.ws_minimo} unidades combinables entre productos, colores y talles. El precio mayorista final se confirma por WhatsApp. Portal: ${SITE}/mayoristas/`);
   L.push(`- Envíos: a todo el país desde Rafaela, a domicilio o a sucursal. ${config.ws_envio}.`);
-  L.push(`- Seguimiento de pedidos: ${SITE}/envios/ (con el código de pedido y los últimos 4 dígitos del teléfono).`);
+  L.push(`- Seguimiento de pedidos: ${SITE}/envios/ (con el código de pedido que se recibe por WhatsApp).`);
   L.push(`- Arrepentimiento: 10 días corridos, sin motivo y sin costo (Ley 24.240). ${SITE}/arrepentimiento/`);
   L.push(`- Contacto: WhatsApp ${sitio.whatsapp_texto} · ${EMAIL}`);
   L.push('- Horario: lunes a viernes de 8 a 12 y de 16 a 20 hs; sábados y domingos de 9 a 15 hs.', '');

@@ -11,8 +11,8 @@ import { graph, org, website, abs } from '../lib/seo';
 
 const destacados = DESTACADOS.map(tarjeta).filter(Boolean) as TarjetaVista[];
 
-// Reseñas: solo las fotos que existen (el prototipo referenciaba algunas que nunca se subieron).
-const resenas = ['RESEÑA 1.webp', 'resena-13.webp', 'RESEÑA 2.webp', 'RESEÑA 3.webp', 'RESEÑA 4.webp', 'RESEÑA 5.webp', 'RESEÑA 6.webp', 'RESEÑA 7.webp', 'RESEÑA 8.webp', 'RESEÑA 9.webp', 'RESEÑA 10.webp', 'RESEÑA 11.webp', 'RESEÑA 12.webp']
+// Reseñas: solo las fotos que existen. RESEÑA 3 es la misma foto que resena-13, por eso no se repite.
+const resenas = ['RESEÑA 1.webp', 'resena-13.webp', 'RESEÑA 2.webp', 'RESEÑA 4.webp', 'RESEÑA 5.webp', 'RESEÑA 6.webp', 'RESEÑA 7.webp', 'RESEÑA 8.webp', 'RESEÑA 9.webp', 'RESEÑA 10.webp', 'RESEÑA 11.webp', 'RESEÑA 12.webp']
   .filter((f) => hasImg(f))
   .map((f, i) => ({ f, alt: f === 'resena-13.webp' ? 'Cliente de Tactical Command con campera y uniforme táctico' : `Cliente de Tactical Command con su compra (${i + 1})` }));
 

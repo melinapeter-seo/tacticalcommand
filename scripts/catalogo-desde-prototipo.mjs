@@ -38,7 +38,7 @@ const usadas = new Set([
 
 const productos = Object.entries(D.PDPS).map(([slug, p], orden) => {
   const [categoria, subcategoria = ''] = (p.eyebrow || '').split(' / ');
-  const precio = p.mp || PRECIO_PROVISORIO;
+  const precio = PRECIO_PROVISORIO; // precio de referencia para todos; los reales se cargan desde el panel
   const colores = p.colors.map((c) => {
     const listados = [...c.ok, ...c.off, ...c.req, ...c.spec];
     const todos = [...ORDEN_TALLES.filter((t) => listados.includes(t)), ...listados.filter((t, i) => !ORDEN_TALLES.includes(t) && listados.indexOf(t) === i).sort((a, b) => parseFloat(a) - parseFloat(b))];
@@ -57,7 +57,7 @@ const productos = Object.entries(D.PDPS).map(([slug, p], orden) => {
     });
   return {
     slug, nombre: p.crumbs.split(' / ').pop(), titulo: [p.n1, p.n2], categoria, subcategoria, sku: p.sku, orden: (orden + 1) * 10,
-    precio_minorista: precio, precio_transferencia: p.tr || precio, precio_provisorio: precio === PRECIO_PROVISORIO || slug === 'campera-gtex-outdoor',
+    precio_minorista: precio, precio_transferencia: precio, precio_provisorio: true,
     migas: p.crumbs, seo: { titulo: p.seoT || null, descripcion: p.seoD || null },
     descripcion: p.p0, descripcion_larga: p.long || [], caracteristicas: p.keys || [],
     funciones: (p.func || []).map(([titulo, texto, destacado]) => ({ titulo, texto, destacado: destacado || null })),
@@ -79,24 +79,7 @@ const productos = Object.entries(D.PDPS).map(([slug, p], orden) => {
   };
 });
 
-// Regla acordada con el cliente: una tarjeta por color. Si a un color le falta tarjeta, se crea
-// y se ubica en la categoría junto a las demás tarjetas del mismo producto.
 const tarjetaSlug = Object.fromEntries(Object.entries(D.PROD).map(([k, v]) => [k, slugDe(v.to)]));
-const titulo = (t) => t.toLowerCase().replace(/(^|\s)(\S)/g, (m, a, b) => a + b.toUpperCase());
-for (const p of productos) {
-  const conTarjeta = new Set(p.tarjetas.map((t) => t.color).filter(Boolean));
-  if (p.colores.length < 2) continue;
-  p.colores.forEach((c, i) => {
-    if (conTarjeta.has(c.nombre)) return;
-    const clave = `${p.slug}--${i}`, hermana = p.tarjetas[p.tarjetas.length - 1];
-    p.tarjetas.push({ clave, nombre: `${p.nombre} ${titulo(c.nombre.replace(' · ', ' '))}`, color: c.nombre, imagen: c.fotos[0] || null });
-    tarjetaSlug[clave] = p.slug;
-    for (const cat of Object.values(D.CATS)) {
-      const listas = [cat.items, ...Object.values(cat.subMap || {})];
-      for (const l of listas) { const j = l.indexOf(hermana.clave); if (j >= 0) l.splice(j + 1, 0, clave); }
-    }
-  });
-}
 const categorias = Object.entries(D.CATS).map(([slug, c]) => ({
   slug, titulo: c.t, numero: c.i, imagen: foto(c.img), seo_titulo: c.seoT || null, descripcion: c.d, frase: c.brk,
   subcategorias: c.subs, sub_mapa: c.subMap || {}, tarjetas: c.items,
@@ -121,10 +104,7 @@ const sitio = {
   redes: D.TC_SOCIAL, cookies: D.CK_CATS, enlaces_legales: D.LINKS.map(([t, to]) => ({ t, url: ruta(to).replace('/blog/', '/guias/') })),
 };
 
-// El handoff pide usar el email del dominio en lugar del Gmail del prototipo.
-const EMAIL = 'info@tacticalcommand.com.ar';
-const conEmail = (v) => JSON.parse(JSON.stringify(v).replaceAll(D.TC_MAIL, EMAIL));
-const out = (f, v0) => { const v = conEmail(v0); fs.writeFileSync(`src/data/${f}`, JSON.stringify(v, null, 1) + '\n'); console.log(f, Array.isArray(v) ? v.length : Object.keys(v).length); };
+const out = (f, v) => { fs.writeFileSync(`src/data/${f}`, JSON.stringify(v, null, 1) + '\n'); console.log(f, Array.isArray(v) ? v.length : Object.keys(v).length); };
 out('catalog.json', { _nota: 'Fuente única del catálogo. Generado desde el prototipo con scripts/catalogo-desde-prototipo.mjs; en la fase 2 se reemplaza por la lectura de Google Sheets con la misma forma. El estado de stock NO se muestra en la web.', productos, tarjeta_slug: tarjetaSlug });
 out('categorias.json', categorias);
 out('guias.json', guias);
