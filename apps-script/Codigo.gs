@@ -2,8 +2,9 @@
  * Tactical Command — API sobre la planilla (Google Apps Script, Web App).
  *
  * Públicas (GET):  catalog · track · photo
- * Privadas (POST con token del login): login · getAll · saveDraft · publish · discardDraft ·
- *   createOrder · advanceOrder · undoStep · setGuia · markNotified · upsertClient · createClient · uploadPhoto
+ * Privadas (POST con token del login): login · getAll · saveDraft · saveProduct · deleteProduct · restoreVersion ·
+ *   publish · discardDraft · createOrder · advanceOrder · undoStep · setGuia · markNotified · upsertClient · createClient ·
+ *   uploadPhoto · changePin
  * Respuesta: { ok: true, data } o { ok: false, error }.
  *
  * Script Properties: PIN (lo carga el menú «Configurar PIN»), TOKEN_SECRET (lo genera `instalar`),
@@ -30,15 +31,21 @@ function instalar() {
   const vacia = (n) => hoja(n).getLastRow() < 2;
   ['productos', 'productos_draft'].forEach((n) => { if (vacia(n)) escribir(n, SEMILLA.productos); });
   ['variantes', 'variantes_draft'].forEach((n) => { if (vacia(n)) escribir(n, SEMILLA.variantes); });
-  ['config', 'config_draft'].forEach((n) => { if (vacia(n)) escribirConfig(n, SEMILLA.config); });
+  ['fichas', 'fichas_draft'].forEach((n) => { if (vacia(n)) escribir(n, SEMILLA.fichas); });
+  // Config: se cargan las claves que falten (instalaciones anteriores no tenían destacados, reseñas ni aviso).
+  ['config', 'config_draft'].forEach((n) => {
+    const actual = leerConfig(n);
+    const faltan = Object.keys(SEMILLA.config).filter((k) => !(k in actual));
+    if (faltan.length) escribirConfig(n, Object.assign({}, actual, Object.fromEntries(faltan.map((k) => [k, SEMILLA.config[k]]))));
+  });
   // Las hojas publicadas no se editan a mano: se reemplazan al publicar.
-  ['productos', 'variantes', 'config'].forEach((n) => {
+  ['productos', 'variantes', 'config', 'fichas'].forEach((n) => {
     const h = hoja(n);
     h.setTabColor('#4A5D4B');
     h.getRange('A1').setNote('No editar: esta hoja se reemplaza al publicar. Los cambios van en ' + n + '_draft y se publican desde el menú Tactical Command.');
     if (!h.getProtections(SpreadsheetApp.ProtectionType.SHEET).length) h.protect().setDescription('Se reemplaza al publicar').setWarningOnly(true);
   });
-  ['productos_draft', 'variantes_draft', 'config_draft'].forEach((n) => hoja(n).setTabColor('#E3B23C'));
+  ['productos_draft', 'variantes_draft', 'config_draft', 'fichas_draft'].forEach((n) => hoja(n).setTabColor('#E3B23C'));
   const hoja1 = ss.getSheetByName('Hoja 1') || ss.getSheetByName('Sheet1');
   if (hoja1 && hoja1.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(hoja1);
 
@@ -64,6 +71,9 @@ const hojas = () => ({
   productos_draft: COLUMNAS.productos,
   variantes: COLUMNAS.variantes,
   variantes_draft: COLUMNAS.variantes,
+  fichas: COLUMNAS.fichas,
+  fichas_draft: COLUMNAS.fichas,
+  historial: ['fecha', 'slug', 'datos'], // versiones publicadas anteriores de cada producto (últimas 5)
   config: ['clave', 'valor'],
   config_draft: ['clave', 'valor'],
   pedidos: ['codigo', 'fecha_alta', 'cliente_id', 'nombre', 'telefono', 'items', 'destino', 'entrega', 'tipo', 'estado',
@@ -72,7 +82,8 @@ const hojas = () => ({
   clientes: ['id', 'nombre', 'telefono', 'localidad', 'tipo', 'cuit', 'nota', 'alta'],
 });
 const NUMERICAS = ['precio', 'orden', 'idx', 'estado', 'total_ref'];
-const BOOLEANAS = ['visible', 'agotado', 'avisado_0', 'avisado_1', 'avisado_2', 'avisado_3'];
+const BOOLEANAS = ['visible', 'agotado', 'avisado_0', 'avisado_1', 'avisado_2', 'avisado_3', 'pendiente'];
+const VERSIONES = 5;
 const CATEGORIAS = ['INDUMENTARIA', 'EQUIPOS TÁCTICOS', 'CALZADO', 'ACCESORIOS'];
 const TRANSPORTES = ['ANDREANI', 'OCA', 'CORREO ARGENTINO', 'VÍA CARGO', 'OTRO', 'RETIRO EN RAFAELA', 'ENVÍO DENTRO DE RAFAELA'];
 const LOCALES = ['RETIRO EN RAFAELA', 'ENVÍO DENTRO DE RAFAELA']; // sin guía
@@ -102,6 +113,10 @@ function doPost(e) {
     const acciones = {
       getAll: () => todo(),
       saveDraft: () => conLock(() => guardarBorrador(b)),
+      saveProduct: () => conLock(() => guardarProducto(b)),
+      deleteProduct: () => conLock(() => borrarProducto(b.slug)),
+      restoreVersion: () => conLock(() => restaurarVersion(b.slug)),
+      changePin: () => cambiarPin(b.actual, b.nuevo),
       publish: () => conLock(() => publicar()),
       discardDraft: () => conLock(() => descartarBorrador()),
       createOrder: () => conLock(() => crearPedido(b)),
@@ -216,7 +231,10 @@ function catalogo() {
   if (enCache) return JSON.parse(enCache);
   const productos = leer('productos').filter((p) => p.visible === true && p.slug);
   const slugs = new Set(productos.map((p) => p.slug));
-  const data = { productos, variantes: leer('variantes').filter((v) => slugs.has(v.slug)), config: leerConfig('config') };
+  const data = {
+    productos, variantes: leer('variantes').filter((v) => slugs.has(v.slug)),
+    fichas: leer('fichas').filter((f) => slugs.has(f.slug)).map((f) => ({ slug: f.slug, contenido: f.contenido })), config: leerConfig('config'),
+  };
   const txt = JSON.stringify(data);
   if (txt.length < 95000) cache.put('catalog', txt, 60);
   return data;
@@ -297,6 +315,8 @@ function todo() {
   return {
     productos: leer('productos'), variantes: leer('variantes'), config: leerConfig('config'),
     productos_draft: leer('productos_draft'), variantes_draft: leer('variantes_draft'), config_draft: leerConfig('config_draft'),
+    fichas: leer('fichas'), fichas_draft: leer('fichas_draft'),
+    versiones: leer('historial').reduce((m, h) => { (m[h.slug] = m[h.slug] || []).push(h.fecha); return m; }, {}),
     pedidos: leer('pedidos').map((p) => Object.assign(p, { items: json(p.items, []) })),
     clientes: leer('clientes'),
   };
@@ -310,8 +330,67 @@ function guardarBorrador(b) {
   validarCatalogo(productos, variantes);
   if (b.productos) escribir('productos_draft', productos);
   if (b.variantes) escribir('variantes_draft', variantes);
+  if (b.fichas) escribir('fichas_draft', b.fichas.map(limpiarFicha));
   if (b.config) escribirConfig('config_draft', Object.assign(leerConfig('config_draft'), b.config));
   return { cambios: contarCambios() };
+}
+
+function limpiarFicha(f) {
+  const c = typeof f.contenido === 'string' ? f.contenido : JSON.stringify(f.contenido || {});
+  if (c.length > 45000) throw new Error(`La ficha de «${f.slug}» es demasiado larga.`);
+  return { slug: String(f.slug), contenido: c, pendiente: f.pendiente === true, notas: String(f.notas || '') };
+}
+
+/** Guarda un producto en el borrador: su fila, sus colores y su ficha. `slugAnterior` permite renombrar uno nuevo. */
+function guardarProducto(b) {
+  const p = b.producto || {};
+  const slug = String(p.slug || '');
+  const ant = String(b.slugAnterior || slug);
+  const orig = leer('productos_draft');
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) throw new Error('El nombre del producto no genera una dirección válida.');
+  if (slug !== ant && orig.some((x) => x.slug === slug)) throw new Error(`Ya existe otro producto con la dirección «${slug}» (slug repetido). Cambiá el nombre.`);
+  const fuera = (x) => x.slug !== ant;
+  const productos = orig.filter(fuera);
+  const pos = orig.findIndex((x) => x.slug === ant);
+  productos.splice(pos < 0 ? productos.length : Math.min(pos, productos.length), 0, Object.assign({}, p, { slug }));
+  const variantes = leer('variantes_draft').filter(fuera).concat((b.variantes || []).map((v, i) => Object.assign({}, v, { slug, idx: i })));
+  validarCatalogo(productos, variantes);
+  const fichas = leer('fichas_draft').filter(fuera).concat([limpiarFicha(Object.assign({}, b.ficha || {}, { slug }))]);
+  escribir('productos_draft', productos);
+  escribir('variantes_draft', variantes);
+  escribir('fichas_draft', fichas);
+  return { slug, cambios: contarCambios() };
+}
+
+/** Quita un producto del borrador (desaparece de la web al publicar). */
+function borrarProducto(slug) {
+  const s = String(slug || '');
+  if (!leer('productos_draft').some((x) => x.slug === s)) throw new Error('No existe ese producto.');
+  escribir('productos_draft', leer('productos_draft').filter((x) => x.slug !== s));
+  escribir('variantes_draft', leer('variantes_draft').filter((x) => x.slug !== s));
+  escribir('fichas_draft', leer('fichas_draft').filter((x) => x.slug !== s));
+  return { cambios: contarCambios() };
+}
+
+/** Lleva al borrador la versión publicada anterior de un producto (queda para revisar y publicar). */
+function restaurarVersion(slug) {
+  const s = String(slug || '');
+  const hist = leer('historial').filter((h) => h.slug === s).sort((a, b) => String(b.fecha).localeCompare(String(a.fecha)));
+  if (!hist.length) throw new Error('Este producto no tiene una versión anterior guardada.');
+  const d = json(hist[0].datos, null);
+  if (!d || !d.producto) throw new Error('La versión guardada está dañada.');
+  guardarProducto({ producto: d.producto, variantes: d.variantes || [], ficha: d.ficha || { contenido: '{}' } });
+  return { fecha: hist[0].fecha, cambios: contarCambios() };
+}
+
+/** Cambia el PIN desde el panel. Cierra las demás sesiones y devuelve una nueva para quien lo cambió. */
+function cambiarPin(actual, nuevo) {
+  if (String(actual || '') !== prop('PIN')) throw new Error('El PIN actual no es correcto.');
+  if (!/^\d{6,12}$/.test(String(nuevo || ''))) throw new Error('El PIN nuevo tiene que tener entre 6 y 12 números.');
+  const props = PropertiesService.getScriptProperties();
+  props.setProperty('PIN', String(nuevo));
+  props.setProperty('TOKEN_SECRET', Utilities.getUuid() + Utilities.getUuid());
+  return login(nuevo);
 }
 
 function validarCatalogo(productos, variantes) {
@@ -349,6 +428,7 @@ function contarCambios() {
   };
   return dif('productos_draft', 'productos', (r) => r.slug)
     + dif('variantes_draft', 'variantes', (r) => r.slug + '|' + r.idx)
+    + dif('fichas_draft', 'fichas', (r) => r.slug)
     + dif('config_draft', 'config', (r) => r.clave);
 }
 
@@ -359,18 +439,28 @@ function publicar() {
   const antes = new Map(leer('productos').map((p) => [p.slug, JSON.stringify(p)]));
   const hoy = ahora().slice(0, 10);
   const vAntes = leer('variantes');
+  const fichas = leer('fichas_draft');
+  const fAntes = leer('fichas');
+  const pAntes = leer('productos');
   // `actualizado` = fecha del último cambio de cada producto (se ve en la ficha).
   productos.forEach((p) => {
     const vs = JSON.stringify(variantes.filter((v) => v.slug === p.slug));
     const vsAntes = JSON.stringify(vAntes.filter((v) => v.slug === p.slug));
     const sinFecha = (o) => JSON.stringify(Object.assign({}, o, { actualizado: '' }));
     const prev = antes.get(p.slug);
-    if (!prev || sinFecha(JSON.parse(prev)) !== sinFecha(p) || vs !== vsAntes) p.actualizado = hoy;
+    const fi = JSON.stringify(fichas.find((f) => f.slug === p.slug) || null);
+    const fiAntes = JSON.stringify(fAntes.find((f) => f.slug === p.slug) || null);
+    if (!prev || sinFecha(JSON.parse(prev)) !== sinFecha(p) || vs !== vsAntes || fi !== fiAntes) {
+      p.actualizado = hoy;
+      // Versión anterior para «Volver a la versión anterior» del panel.
+      if (prev) guardarVersion(p.slug, { producto: pAntes.find((x) => x.slug === p.slug), variantes: vAntes.filter((v) => v.slug === p.slug), ficha: fAntes.find((f) => f.slug === p.slug) || null });
+    }
   });
   const cambiados = productos.filter((p) => p.actualizado === hoy).map((p) => p.slug);
   escribir('productos_draft', productos);
   escribir('productos', productos);
   escribir('variantes', variantes);
+  escribir('fichas', fichas);
   const cfg = Object.assign(leerConfig('config_draft'), { ultima_publicacion: ahora() });
   escribirConfig('config', cfg);
   escribirConfig('config_draft', cfg);
@@ -380,9 +470,19 @@ function publicar() {
   return { ultima_publicacion: cfg.ultima_publicacion, build };
 }
 
+function guardarVersion(slug, datos) {
+  const txt = JSON.stringify(datos);
+  if (txt.length > 45000) return; // fichas enormes: no se guarda versión
+  const hist = leer('historial').concat([{ fecha: ahora(), slug, datos: txt }]);
+  const deEste = hist.filter((h) => h.slug === slug).sort((x, y) => String(y.fecha).localeCompare(String(x.fecha)));
+  const borrar = new Set(deEste.slice(VERSIONES).map((h) => h.fecha + h.slug));
+  escribir('historial', hist.filter((h) => !borrar.has(h.fecha + h.slug)));
+}
+
 function descartarBorrador() {
   escribir('productos_draft', leer('productos'));
   escribir('variantes_draft', leer('variantes'));
+  escribir('fichas_draft', leer('fichas'));
   escribirConfig('config_draft', leerConfig('config'));
   return { cambios: 0 };
 }
@@ -576,7 +676,9 @@ function subirFoto(b) {
   const mime = /^image\/(webp|jpeg|png)$/.test(b.mime) ? b.mime : 'image/webp';
   const nombre = `${slug}-${Number(b.idx) || 0}-${Date.now()}.${mime.split('/')[1].replace('jpeg', 'jpg')}`;
   const f = carpeta(['fotos', slug]).createFile(Utilities.newBlob(Utilities.base64Decode(datos), mime, nombre));
-  return { fileId: f.getId(), nombre };
+  // Con link público el panel muestra la miniatura; la web igual la baja y la optimiza en el build.
+  try { f.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW); } catch (e) { /* dominios que no lo permiten */ }
+  return { fileId: f.getId(), nombre, url: 'https://lh3.googleusercontent.com/d/' + f.getId() + '=w800' };
 }
 
 // ---------- Menú dentro de la planilla ----------

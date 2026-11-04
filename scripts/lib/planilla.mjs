@@ -4,11 +4,16 @@
 // Columnas: design/HANDOFF.md › Google Sheets. `variantes.talles` es un agregado: talles propios del color
 // (vacío = los del producto), necesario para la Campera Gore-Tex (Azul Noche llega hasta 3XL).
 // `productos.talles_ninos`: números de niños del calzado, que la ficha muestra en una fila aparte.
+// `fichas.contenido`: el contenido largo de la ficha en JSON (lo edita el panel): descripción larga, características,
+// especificaciones y preguntas frecuentes. `pendiente` marca las fichas que Walter le pidió armar a Melina.
 
 export const COLS = {
   productos: ['slug', 'nombre', 'categoria', 'subcategoria', 'sku', 'descripcion', 'visible', 'precio', 'talles', 'talles_ninos', 'orden', 'actualizado'],
   variantes: ['slug', 'idx', 'nombre', 'sku', 'swatch', 'fotos', 'precio', 'precios_talle', 'agotados', 'agotado', 'talles'],
+  fichas: ['slug', 'contenido', 'pendiente', 'notas'],
 };
+/** Campos de la ficha que viven en la hoja `fichas` (la descripción corta está en `productos`). */
+export const CAMPOS_FICHA = ['descripcion_larga', 'caracteristicas', 'especificaciones', 'faq'];
 
 const ORDEN_TALLES = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL', '6XL'];
 const ordenarTalles = (ts) => [...new Set(ts)].sort((a, b) => {
@@ -38,8 +43,9 @@ export function ordenes(catalogo, categorias) {
 /** Repo → filas de la planilla. */
 export function aFilas(catalogo, categorias, config, hoy = new Date().toISOString().slice(0, 10)) {
   const ord = ordenes(catalogo, categorias);
-  const productos = [], variantes = [];
+  const productos = [], variantes = [], fichas = [];
   for (const p of catalogo.productos) {
+    fichas.push({ slug: p.slug, contenido: JSON.stringify(Object.fromEntries(CAMPOS_FICHA.map((k) => [k, p[k]]))), pendiente: false, notas: '' });
     const adultos = (c) => c.talles.filter((t) => !t.ninos).map((t) => t.talle);
     const tallesProd = ordenarTalles(p.colores.flatMap(adultos));
     const ninos = ordenarTalles(p.colores.flatMap((c) => c.talles.filter((t) => t.ninos).map((t) => t.talle)));
@@ -57,7 +63,12 @@ export function aFilas(catalogo, categorias, config, hoy = new Date().toISOStrin
       });
     });
   }
-  return { productos, variantes, config: { ws_minimo: config.ws_minimo, ws_envio: config.ws_envio, ws_texto: config.ws_texto, envio_rafaela: config.envio_rafaela, soporte_whatsapp: config.soporte_whatsapp, ultima_publicacion: '' } };
+  const cfg = {
+    ws_minimo: config.ws_minimo, ws_envio: config.ws_envio, ws_texto: config.ws_texto, envio_rafaela: config.envio_rafaela,
+    soporte_whatsapp: config.soporte_whatsapp, destacados: JSON.stringify(config.destacados || []), resenas: JSON.stringify(config.resenas || []),
+    aviso_activo: false, aviso_texto: '', ultima_publicacion: '',
+  };
+  return { productos, variantes, fichas, config: cfg };
 }
 
 const titleCase = (t) => t.toLowerCase().replace(/(^|\s)(\S)/g, (_m, a, b) => a + b.toUpperCase());
@@ -111,6 +122,10 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
       opciones: { es_calzado: categoria === 'CALZADO', es_indumentaria: categoria === 'INDUMENTARIA', consulta_whatsapp_talle: false, info_altura: false, columnas_talle: null, nota_talle: null, proporcion_foto: null },
     };
     if (b && nombre !== b.nombre) p.titulo = [nombre.toUpperCase()];
+    // Contenido largo editado en el panel (hoja `fichas`): pisa al del repo.
+    const ficha = json((api.fichas || []).find((f) => f.slug === r.slug)?.contenido, null);
+    const conFicha = ficha && typeof ficha === 'object';
+    if (conFicha) for (const k of CAMPOS_FICHA) if (Array.isArray(ficha[k])) p[k] = ficha[k].filter((x) => (typeof x === 'string' ? x.trim() : Object.values(x).every((y) => String(y).trim())));
     const migas = ['Inicio', cat ? titleCase(cat.titulo) : titleCase(categoria), titleCase(r.subcategoria || ''), nombre].filter(Boolean).join(' / ');
     const sinCambios = b && b.nombre === nombre && b.categoria === categoria && b.subcategoria === String(r.subcategoria || '').trim().toUpperCase();
     Object.assign(p, {
@@ -122,7 +137,7 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
       colores,
     });
     // Producto nuevo (solo en la planilla): especificaciones mínimas para que la sección no quede vacía.
-    if (!b) {
+    if (!b && !p.especificaciones.length) {
       const tallesTodos = ordenarTalles(colores.flatMap((c) => c.talles.map((t) => t.talle)));
       p.especificaciones = [
         { k: 'PRODUCTO', v: nombre },
@@ -174,8 +189,10 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
       const p = productos.find((x) => x.slug === tarjetaSlug[k]);
       const sub = Object.keys(sub_mapa).find((s) => p.subcategoria.startsWith(s.replace(/S$/, '')));
       if (sub) sub_mapa[sub].push(k);
+      else if (p.subcategoria) (sub_mapa[p.subcategoria] ||= []).push(k); // subcategoría nueva creada en el panel: suma su filtro
     }
-    return { ...c, tarjetas: claves, sub_mapa };
+    const subcategorias = [...c.subcategorias, ...Object.keys(sub_mapa).filter((s) => !c.subcategorias.includes(s))];
+    return { ...c, tarjetas: claves, sub_mapa, subcategorias };
   });
 
   const cfg = api.config || {};
@@ -186,6 +203,12 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
     envio_rafaela: num(cfg.envio_rafaela) ?? 5000,
     soporte_whatsapp: String(cfg.soporte_whatsapp || '5493492686435'),
     ws_texto: cfg.ws_texto || '',
+    // Panel › Más: destacados de la home ("slug" o "slug|COLOR"), reseñas ({foto, alt}) y franja de aviso.
+    destacados: json(cfg.destacados, null),
+    resenas: json(cfg.resenas, null),
+    aviso_activo: bool(cfg.aviso_activo),
+    aviso_texto: String(cfg.aviso_texto || '').trim(),
   };
+  for (const k of ['destacados', 'resenas']) if (!Array.isArray(config[k])) delete config[k]; // sin dato: queda el del repo
   return { catalogo: { ...base, _nota: 'Generado en el build desde la planilla (ver scripts/sincronizar-catalogo.mjs).', productos, tarjeta_slug: tarjetaSlug }, categorias, config };
 }

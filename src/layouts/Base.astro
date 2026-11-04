@@ -85,6 +85,15 @@ const robots = noindex ? 'noindex,nofollow' : 'index,follow,max-image-preview:la
   <body>
     <a href="#contenido" class="skip">Saltar al contenido</a>
     <Header overHero={overHero} path={path} />
+    <!-- Franja de aviso (panel): el contenido baja lo que mida la franja. -->
+    <script is:inline>
+      (function () {
+        var a = document.getElementById('aviso');
+        if (!a) return;
+        var f = function () { document.documentElement.style.setProperty('--aviso-h', a.offsetHeight + 'px'); };
+        f(); window.addEventListener('resize', f);
+      })();
+    </script>
     <main id="contenido" class="main">
       <slot />
     </main>
@@ -97,5 +106,5 @@ const robots = noindex ? 'noindex,nofollow' : 'index,follow,max-image-preview:la
 </html>
 
 <style>
-  .main { padding-top: var(--header-h); }
+  .main { padding-top: calc(var(--header-h) + var(--aviso-h, 0px)); }
 </style>

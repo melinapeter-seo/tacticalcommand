@@ -5,15 +5,15 @@ import Foto from '../components/Foto.astro';
 import Social from '../components/Social.astro';
 import ProductCard from '../components/ProductCard.astro';
 import Scroller from '../components/Scroller.astro';
-import { categorias, DESTACADOS, tarjeta, type TarjetaVista } from '../lib/data';
+import { categorias, DESTACADOS, RESENAS, tarjeta, type TarjetaVista } from '../lib/data';
+import { hasImg } from '../lib/img';
 import { img, hasImg } from '../lib/img';
 import { graph, org, website, abs } from '../lib/seo';
 
 const destacados = DESTACADOS.map(tarjeta).filter(Boolean) as TarjetaVista[];
 
-// Reseñas (Garantía de satisfacción): las 13 fotos del diseño, en su orden.
-const resenas = Array.from({ length: 13 }, (_, i) => `resena-${i + 1}.webp`)
-  .map((f, i) => ({ f, alt: i === 1 ? 'Cliente de Tactical Command con campera y uniforme táctico' : `Cliente de Tactical Command con su compra (${i + 1})` }));
+// Reseñas (Garantía de satisfacción): desde la planilla; se omiten las fotos que no estén.
+const resenas = RESENAS.filter((r) => hasImg(r.foto)).map((r) => ({ f: r.foto, alt: r.alt }));
 
 const criterios = [
   { i: '01', t: 'CONSTRUCCIÓN', d: 'Revisamos terminaciones, costuras y estructura de la prenda o del equipo antes de incorporarlo al catálogo.' },

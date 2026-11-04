@@ -49,6 +49,10 @@ function validar(d) {
 async function bajarFotos(api) {
   const ids = new Set();
   for (const v of api.variantes) for (const f of String(v.fotos || '').split('|')) { const id = idDrive(f); if (id) ids.add(id); }
+  // Fotos de clientes (Garantía de satisfacción) subidas desde el panel.
+  let resenas = [];
+  try { resenas = JSON.parse(api.config?.resenas || '[]'); } catch { /* sin reseñas */ }
+  for (const r of resenas) { const id = idDrive(r.foto || ''); if (id) ids.add(id); }
   await fs.mkdir(path.join(CACHE, 'fotos'), { recursive: true });
   let nuevas = 0;
   for (const id of ids) {
@@ -117,6 +121,7 @@ async function main() {
   };
 
   const { catalogo, categorias, config } = combinar(api, base, categoriasBase, resolverFoto);
+  if (config.resenas) config.resenas = config.resenas.map((r) => ({ ...r, foto: resolverFoto(r.foto) })).filter((r) => r.foto);
   const conValor = Object.entries(config).filter(([, v]) => v !== '' && v != null);
   await generar(catalogo, categorias, { ...configBase, ...Object.fromEntries(conValor) });
   log(`${catalogo.productos.length} productos desde la ${origen}.`);

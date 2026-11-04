@@ -61,8 +61,19 @@ export function tarjeta(clave: string) {
 }
 export type TarjetaVista = NonNullable<ReturnType<typeof tarjeta>>;
 
-/** Tarjetas destacadas de la home (orden del prototipo). */
-export const DESTACADOS = ['gtexng', 'mocam', 'altama', 'unimp', 'cintocy', 'mocb70c', 'pantr', 'gafas', 'shemagh', 'gtexod', 'unigt', 'moc45vm', 'sombrero', 'chalmlmc', 'bandng'];
+/** Tarjetas destacadas de la home: hoja `config` › destacados ("slug" o "slug|COLOR"), editable desde el panel. */
+export const DESTACADOS = (configJson.destacados as string[]).flatMap((d) => {
+  const [slug, color] = d.split('|');
+  const p = productos.find((x) => x.slug === slug);
+  const t = p && (p.tarjetas.find((x) => !x.rota && (!color || x.color === color)) || p.tarjetas.find((x) => !x.rota));
+  return t ? [t.clave] : [];
+});
+
+/** Fotos de clientes de «Garantía de satisfacción» (hoja `config` › resenas). */
+export const RESENAS = configJson.resenas as { foto: string; alt: string }[];
+
+/** Franja de aviso arriba de todo (Panel › Más › Aviso en la web). */
+export const AVISO = configJson.aviso_activo && configJson.aviso_texto ? configJson.aviso_texto : '';
 
 /** "Completá el equipo": 2 tarjetas por cada otra categoría, priorizando las relacionadas (lógica del prototipo). */
 export function relacionados(p: Producto) {

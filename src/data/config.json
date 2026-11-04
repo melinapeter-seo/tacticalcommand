@@ -4,5 +4,78 @@
  "ws_envio": "Rafaela {envio_rafaela} · resto del país a coordinar por WhatsApp",
  "ws_texto": "Pedido mínimo de 8 unidades, combinables entre productos, colores y talles. El precio final y el costo de envío se confirman por WhatsApp.",
  "envio_rafaela": 5000,
- "soporte_whatsapp": "5493492686435"
+ "soporte_whatsapp": "5493492686435",
+ "destacados": [
+  "campera-gtex-outdoor|NEGRO",
+  "mochila-tactica-assault-50l|MULTICAM",
+  "borcegos-tacticos-altama-negros",
+  "uniforme-tactico|MARPAT · RIPSTOP",
+  "cinto-tactico|COYOTE",
+  "bolso-mochila-tactica-70l|COYOTE",
+  "pantalon-cargo-tactico-ripstop-negro",
+  "gafa-tactica-sport-lentes-intercambiables",
+  "shemagh|VERDE MILITAR",
+  "campera-gtex-outdoor|VERDE OD / OLIVA",
+  "uniforme-tactico|GRIS TOPO · GABARDINA",
+  "mochila-tactica-45l|VERDE MILITAR",
+  "sombrero-de-monte-tactico|WOODLAND",
+  "bajo-chaleco-manga-larga-multicam",
+  "bandolera-tactica-cruzada-negra"
+ ],
+ "resenas": [
+  {
+   "foto": "resena-1.webp",
+   "alt": "Cliente de Tactical Command con su compra (1)"
+  },
+  {
+   "foto": "resena-2.webp",
+   "alt": "Cliente de Tactical Command con campera y uniforme táctico"
+  },
+  {
+   "foto": "resena-3.webp",
+   "alt": "Cliente de Tactical Command con su compra (3)"
+  },
+  {
+   "foto": "resena-4.webp",
+   "alt": "Cliente de Tactical Command con su compra (4)"
+  },
+  {
+   "foto": "resena-5.webp",
+   "alt": "Cliente de Tactical Command con su compra (5)"
+  },
+  {
+   "foto": "resena-6.webp",
+   "alt": "Cliente de Tactical Command con su compra (6)"
+  },
+  {
+   "foto": "resena-7.webp",
+   "alt": "Cliente de Tactical Command con su compra (7)"
+  },
+  {
+   "foto": "resena-8.webp",
+   "alt": "Cliente de Tactical Command con su compra (8)"
+  },
+  {
+   "foto": "resena-9.webp",
+   "alt": "Cliente de Tactical Command con su compra (9)"
+  },
+  {
+   "foto": "resena-10.webp",
+   "alt": "Cliente de Tactical Command con su compra (10)"
+  },
+  {
+   "foto": "resena-11.webp",
+   "alt": "Cliente de Tactical Command con su compra (11)"
+  },
+  {
+   "foto": "resena-12.webp",
+   "alt": "Cliente de Tactical Command con su compra (12)"
+  },
+  {
+   "foto": "resena-13.webp",
+   "alt": "Cliente de Tactical Command con su compra (13)"
+  }
+ ],
+ "aviso_activo": false,
+ "aviso_texto": ""
 }

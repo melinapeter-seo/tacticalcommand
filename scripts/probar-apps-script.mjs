@@ -26,10 +26,10 @@ assert.ok(estado.props.TOKEN_SECRET);
 falla(post({ action: 'login', pin: '1' }), /no está configurado/, 'sin PIN');
 estado.props.PIN = '246810';
 falla(post({ action: 'login', pin: '000000' }), /incorrecto/, 'PIN malo');
-const { token } = ok(post({ action: 'login', pin: '246810' }), 'login');
+let { token } = ok(post({ action: 'login', pin: '246810' }), 'login');
 falla(post({ action: 'getAll', token: 'x.y' }), /Sesión inválida/, 'token falso');
 falla(post({ action: 'getAll', token: '1.' + token.split('.')[1] }), /Sesión inválida/, 'token con otro vencimiento');
-const P = (action, b = {}) => post({ action, token, ...b });
+const P = (action, b = {}) => post({ action, token, ...b }); // usa el token vigente
 
 // Borrador y publicación
 const todo = ok(P('getAll'), 'getAll');
@@ -69,6 +69,53 @@ pd2.find((p) => p.slug === 'shemagh').visible = false;
 ok(P('saveDraft', { productos: pd2 }), 'ocultar');
 ok(P('discardDraft'), 'descartar');
 assert.equal(ok(P('getAll'), 'getAll').productos_draft.find((p) => p.slug === 'shemagh').visible, true);
+
+// Fichas: guardar un producto, historial al publicar y volver a la versión anterior
+let all0 = ok(P('getAll'), 'getAll fichas');
+assert.equal(all0.fichas_draft.length, semilla.p, 'una ficha por producto');
+const prodS = all0.productos_draft.find((x) => x.slug === 'shemagh');
+const varS = all0.variantes_draft.filter((x) => x.slug === 'shemagh');
+const fichaS = all0.fichas_draft.find((x) => x.slug === 'shemagh');
+const cont = JSON.parse(fichaS.contenido);
+cont.faq.push({ q: '¿Se puede lavar?', a: 'Sí, a mano.' });
+let r = ok(P('saveProduct', { producto: { ...prodS, nombre: 'Shemagh Táctico Árabe' }, variantes: varS, ficha: { contenido: cont, pendiente: true, notas: 'armala vos' } }), 'saveProduct');
+assert.ok(r.cambios >= 2);
+let all1 = ok(P('getAll'), 'getAll tras saveProduct');
+assert.equal(all1.productos_draft.findIndex((x) => x.slug === 'shemagh'), all0.productos_draft.findIndex((x) => x.slug === 'shemagh'), 'conserva la posición');
+assert.equal(all1.fichas_draft.find((x) => x.slug === 'shemagh').pendiente, true);
+falla(P('saveProduct', { producto: { ...prodS, slug: 'shemagh', nombre: '' }, variantes: varS, ficha: {} }), /falta el nombre/, 'producto sin nombre');
+ok(P('publish'), 'publish ficha');
+let cat3 = ok(get({ action: 'catalog' }), 'catalog con fichas');
+assert.equal(JSON.parse(cat3.fichas.find((x) => x.slug === 'shemagh').contenido).faq.at(-1).q, '¿Se puede lavar?');
+assert.ok(ok(P('getAll'), 'versiones').versiones['shemagh'].length >= 1, 'se guardó la versión anterior');
+r = ok(P('restoreVersion', { slug: 'shemagh' }), 'restoreVersion');
+let all2 = ok(P('getAll'), 'getAll tras restaurar');
+assert.equal(all2.productos_draft.find((x) => x.slug === 'shemagh').nombre, prodS.nombre, 'vuelve el nombre anterior');
+assert.ok(!JSON.parse(all2.fichas_draft.find((x) => x.slug === 'shemagh').contenido).faq.some((f) => f.q === '¿Se puede lavar?'), 'vuelve la ficha anterior');
+falla(P('restoreVersion', { slug: 'parche-bordado-bandera-argentina' }), /no tiene una versión anterior/, 'sin versión');
+ok(P('discardDraft'), 'descartar restauración');
+// Producto nuevo con slug provisorio que se renombra, y borrado
+const nuevoP = { slug: 'producto-nuevo', nombre: 'Rodilleras Tácticas', categoria: 'ACCESORIOS', subcategoria: 'PROTECCIÓN', sku: 'TC-ROD', descripcion: 'Rodilleras.', visible: false, precio: 35000, talles: '', talles_ninos: '', orden: 9999, actualizado: '' };
+ok(P('saveProduct', { producto: nuevoP, variantes: [{ nombre: 'NEGRO', sku: 'TC-ROD-NG', swatch: '#111', fotos: '', precio: '', precios_talle: '', agotados: '', agotado: false, talles: '' }], ficha: { contenido: { faq: [] } } }), 'nuevo');
+ok(P('saveProduct', { slugAnterior: 'producto-nuevo', producto: { ...nuevoP, slug: 'rodilleras-tacticas' }, variantes: [{ nombre: 'NEGRO', sku: 'TC-ROD-NG', swatch: '#111' }], ficha: { contenido: {} } }), 'renombrar');
+let all3 = ok(P('getAll'), 'getAll nuevo');
+assert.ok(all3.productos_draft.some((x) => x.slug === 'rodilleras-tacticas') && !all3.productos_draft.some((x) => x.slug === 'producto-nuevo'));
+assert.equal(all3.variantes_draft.filter((x) => x.slug === 'rodilleras-tacticas').length, 1);
+falla(P('saveProduct', { slugAnterior: 'rodilleras-tacticas', producto: { ...nuevoP, slug: 'shemagh' }, variantes: [{ nombre: 'N', sku: 'x' }], ficha: {} }), /repetido/, 'slug repetido al renombrar');
+ok(P('deleteProduct', { slug: 'rodilleras-tacticas' }), 'borrar');
+assert.ok(!ok(P('getAll'), 'getAll borrado').productos_draft.some((x) => x.slug === 'rodilleras-tacticas'));
+// Config nueva: destacados, reseñas y aviso
+const cfgN = ok(get({ action: 'catalog' }), 'catalog config').config;
+assert.ok(JSON.parse(cfgN.destacados).length > 0 && JSON.parse(cfgN.resenas).length === 13);
+// Cambiar el PIN: invalida las sesiones anteriores
+falla(P('changePin', { actual: '000000', nuevo: '135790' }), /actual no es correcto/, 'PIN actual malo');
+falla(P('changePin', { actual: '246810', nuevo: '12' }), /entre 6 y 12/, 'PIN nuevo corto');
+const ses = ok(P('changePin', { actual: '246810', nuevo: '135790' }), 'changePin');
+falla(P('getAll'), /Sesión inválida/, 'el token viejo ya no sirve');
+const token2 = ses.token;
+ok(post({ action: 'getAll', token: token2 }), 'token nuevo');
+ok(post({ action: 'login', pin: '135790' }), 'login con PIN nuevo');
+token = token2;
 
 // Pedidos
 falla(P('createOrder', { cliente: { nombre: 'Ana', telefono: '123' }, items: [{ n: 'x', qty: 1 }] }), /8 dígitos/, 'teléfono corto');
@@ -137,5 +184,17 @@ assert.equal(nb, 12);
 // Hojas: sin filas fantasma por las casillas
 assert.equal(estado.hojas.productos.getLastRow(), semilla.p + 1);
 assert.equal(estado.hojas.pedidos.getLastRow(), 3);
+
+// Migración: una planilla instalada antes (sin fichas ni claves nuevas de config) se completa al reinstalar
+const sim2 = crearSimulador({ props: { PIN: '111111' } });
+sim2.ctx.instalar();
+delete sim2.estado.hojas.fichas; delete sim2.estado.hojas.fichas_draft;
+vm.runInContext("escribirConfig('config', { ws_minimo: 9 })", sim2.ctx);
+sim2.ctx.instalar();
+const mig = vm.runInContext("({ f: leer('fichas').length, cfg: leerConfig('config') })", sim2.ctx);
+assert.equal(mig.f, semilla.p, 'crea y carga las fichas');
+assert.equal(Number(mig.cfg.ws_minimo), 9, 'no pisa lo que ya estaba');
+assert.ok('destacados' in mig.cfg && 'aviso_activo' in mig.cfg, 'agrega las claves que faltaban');
+n += 3;
 
 console.log(`Apps Script: ${n} comprobaciones OK.`);
