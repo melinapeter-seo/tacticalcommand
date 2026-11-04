@@ -3,7 +3,7 @@
  *
  * Públicas (GET):  catalog · track · photo
  * Privadas (POST con token del login): login · getAll · saveDraft · saveProduct · deleteProduct · restoreVersion ·
- *   publish · discardDraft · createOrder · advanceOrder · undoStep · setGuia · markNotified · upsertClient · createClient ·
+ *   publish · discardDraft · createOrder · advanceOrder · undoStep · setGuia · markNotified · deleteOrder · upsertClient · createClient ·
  *   uploadPhoto · changePin
  * Respuesta: { ok: true, data } o { ok: false, error }.
  *
@@ -124,6 +124,7 @@ function doPost(e) {
       undoStep: () => conLock(() => deshacerPaso(b.code)),
       setGuia: () => conLock(() => cargarGuia(b.code, b.transporte || b.carrier, b.guia)),
       markNotified: () => conLock(() => marcarAvisado(b.code, b.stage)),
+      deleteOrder: () => conLock(() => borrarPedido(b.code)),
       upsertClient: () => conLock(() => guardarCliente(b.cliente)),
       createClient: () => conLock(() => crearCliente(b.cliente)),
       uploadPhoto: () => subirFoto(b),
@@ -628,6 +629,14 @@ function marcarAvisado(code, stage) {
   const cambios = {};
   cambios['avisado_' + s] = true;
   return guardarPedido(p.codigo, cambios);
+}
+
+/** Borra un pedido (ej. uno de prueba o cargado por error). El código deja de funcionar en el seguimiento. */
+function borrarPedido(code) {
+  const p = pedido(code);
+  escribir('pedidos', leer('pedidos').filter((x) => x.codigo !== p.codigo));
+  CacheService.getScriptCache().remove('trk:' + p.codigo);
+  return { codigo: p.codigo };
 }
 
 // ---------- Clientes ----------

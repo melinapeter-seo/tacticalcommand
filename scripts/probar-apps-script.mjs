@@ -154,6 +154,13 @@ assert.equal(d.avisado_3, true);
 assert.equal(ok(P('setGuia', { code: p1.codigo, transporte: 'OCA', guia: 'AB1' }), 'setGuia').transporte, 'OCA');
 const all = ok(P('getAll'), 'getAll');
 assert.equal(all.pedidos.length, 2);
+// Borrar un pedido
+const { pedido: p3 } = ok(P('createOrder', { cliente: { nombre: 'Martín', telefono: '3492 556677' }, items: [{ n: 'Cinto', qty: 1, price: 1 }] }), 'pedido de prueba');
+ok(get({ action: 'track', code: p3.codigo }), 'track antes de borrar');
+ok(P('deleteOrder', { code: p3.codigo }), 'deleteOrder');
+falla(get({ action: 'track', code: p3.codigo }), /No encontramos/, 'el seguimiento ya no lo encuentra');
+falla(P('deleteOrder', { code: p3.codigo }), /No existe/, 'borrar dos veces');
+assert.equal(ok(P('getAll'), 'getAll tras borrar').pedidos.length, 2);
 assert.equal(all.pedidos[0].items[0].qty, 2, 'ítems como objeto');
 
 // Clientes

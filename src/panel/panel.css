@@ -278,3 +278,6 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 }
 .con-barra .acciones-fijas { bottom: calc(62px + 62px + env(safe-area-inset-bottom)); }
 @media (min-width: 900px) { .con-barra .acciones-fijas { bottom: 66px; } }
+
+.acciones-sec { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-top: 10px; }
+.acciones-sec .b-txt:last-child { color: var(--red); }

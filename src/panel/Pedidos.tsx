@@ -105,6 +105,12 @@ function DetallePedido({ p, volver }: { p: Pedido; volver: () => void }) {
     if (!(await confirmar({ titulo: '¿Deshacer el último paso?', texto: `El pedido vuelve a «${nombrePaso(p, p.estado - 1)}».`, si: 'Deshacer', peligro: true }))) return;
     aplicar(await hacer(() => llamar<Pedido>('undoStep', { code: codigo }), 'Paso deshecho'));
   }
+  async function eliminar() {
+    if (!(await confirmar({ titulo: `¿Eliminar el pedido ${codigo}?`, texto: 'Se borra de la planilla y el código deja de funcionar en el seguimiento. No se puede deshacer.', si: 'Eliminar pedido', peligro: true }))) return;
+    if (!(await hacer(() => llamar('deleteOrder', { code: codigo }), 'Pedido eliminado'))) return;
+    setTodo((d) => ({ ...d, pedidos: d.pedidos.filter((x) => x.codigo !== codigo) }));
+    volver();
+  }
   const marcarAvisado = async () => aplicar(await hacer(() => llamar<Pedido>('markNotified', { code: codigo, stage: p.estado }), 'Marcado como avisado'));
 
   return (
@@ -182,7 +188,10 @@ function DetallePedido({ p, volver }: { p: Pedido; volver: () => void }) {
         <a className="b b-sec" href={linkWhatsApp(p.telefono, mensaje(p, 0, sitio))} target="_blank" rel="noopener">Reenviar el código por WhatsApp</a>
       </div>
 
-      {p.estado > 0 && <Boton tipo="txt" onClick={deshacer}>↶ Deshacer el último paso</Boton>}
+      <div className="acciones-sec">
+        {p.estado > 0 && <Boton tipo="txt" onClick={deshacer} disabled={ocupado}>↶ Deshacer el último paso</Boton>}
+        <Boton tipo="txt" onClick={eliminar} disabled={ocupado}>Eliminar pedido</Boton>
+      </div>
     </section>
   );
 }
