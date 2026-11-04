@@ -1,0 +1,10 @@
+import { createRequire } from 'node:module';
+const { chromium } = createRequire(import.meta.url)('playwright');
+const [html, out] = process.argv.slice(2);
+const b = await chromium.launch();
+const pg = await b.newPage();
+await pg.goto('file://' + html, { waitUntil: 'networkidle' });
+await pg.evaluate(() => document.fonts.ready);
+await pg.pdf({ path: out, format: 'A4', printBackground: true, preferCSSPageSize: true });
+await b.close();
+console.log('ok', out);
