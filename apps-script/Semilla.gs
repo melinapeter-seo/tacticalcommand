@@ -102,12 +102,12 @@ const SEMILLA = {
    "actualizado": ""
   },
   {
-   "slug": "borcego-tactico-estilo-511-negro",
-   "nombre": "Borcego Táctico Estilo 5.11 Negro",
+   "slug": "borcego-tactico-511-negro",
+   "nombre": "Borcego Táctico 5.11 Negro",
    "categoria": "CALZADO",
    "subcategoria": "BORCEGOS TÁCTICOS",
    "sku": "TC-BOR-511-NG",
-   "descripcion": "Borcego táctico negro de estilo 5.11, con diseño de caña alta, ajuste frontal mediante cordones y cierre lateral para facilitar la colocación. Cuenta con ojales superiores de refuerzo, paneles combinados con costuras reforzadas y suela con dibujo profundo para favorecer el agarre. Es una opción versátil para jornadas de trabajo, actividades al aire libre y uso cotidiano. Disponible en talles 44 y 45, según stock.",
+   "descripcion": "Borcego táctico 5.11 negro, con diseño de caña alta, ajuste frontal mediante cordones y cierre lateral para facilitar la colocación. Cuenta con ojales superiores de refuerzo, paneles combinados con costuras reforzadas y suela con dibujo profundo para favorecer el agarre. Es una opción versátil para jornadas de trabajo, actividades al aire libre y uso cotidiano. Disponible en talles 44 y 45, según stock.",
    "visible": true,
    "precio": 50000,
    "talles": "44,45",
@@ -585,7 +585,7 @@ const SEMILLA = {
    "talles": ""
   },
   {
-   "slug": "borcego-tactico-estilo-511-negro",
+   "slug": "borcego-tactico-511-negro",
    "idx": 0,
    "nombre": "NEGRO",
    "sku": "TC-BOR-511-NG",

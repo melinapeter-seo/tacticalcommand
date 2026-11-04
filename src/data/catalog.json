@@ -2440,11 +2440,11 @@
    ]
   },
   {
-   "slug": "borcego-tactico-estilo-511-negro",
-   "nombre": "Borcego Táctico Estilo 5.11 Negro",
+   "slug": "borcego-tactico-511-negro",
+   "nombre": "Borcego Táctico 5.11 Negro",
    "titulo": [
     "BORCEGO TÁCTICO",
-    "ESTILO 5.11 NEGRO"
+    "5.11 NEGRO"
    ],
    "categoria": "CALZADO",
    "subcategoria": "BORCEGOS TÁCTICOS",
@@ -2453,14 +2453,14 @@
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
-   "migas": "Inicio / Calzado / Borcegos tácticos / Borcego Táctico Estilo 5.11 Negro",
+   "migas": "Inicio / Calzado / Borcegos tácticos / Borcego Táctico 5.11 Negro",
    "seo": {
     "titulo": null,
     "descripcion": null
    },
-   "descripcion": "Borcego táctico negro de estilo 5.11, con diseño de caña alta, ajuste frontal mediante cordones y cierre lateral para facilitar la colocación. Cuenta con ojales superiores de refuerzo, paneles combinados con costuras reforzadas y suela con dibujo profundo para favorecer el agarre. Es una opción versátil para jornadas de trabajo, actividades al aire libre y uso cotidiano. Disponible en talles 44 y 45, según stock.",
+   "descripcion": "Borcego táctico 5.11 negro, con diseño de caña alta, ajuste frontal mediante cordones y cierre lateral para facilitar la colocación. Cuenta con ojales superiores de refuerzo, paneles combinados con costuras reforzadas y suela con dibujo profundo para favorecer el agarre. Es una opción versátil para jornadas de trabajo, actividades al aire libre y uso cotidiano. Disponible en talles 44 y 45, según stock.",
    "descripcion_larga": [
-    "El borcego táctico negro estilo 5.11 presenta un diseño de caña alta pensado para acompañar jornadas de trabajo, actividades outdoor y uso diario.",
+    "El borcego táctico 5.11 negro presenta un diseño de caña alta pensado para acompañar jornadas de trabajo, actividades outdoor y uso diario.",
     "Su construcción combina sectores de cuero y otros materiales, con paneles integrados mediante costuras reforzadas. El sistema de ajuste frontal con cordones permite sujetar el calzado al pie, mientras que el cierre lateral facilita su colocación y retiro.",
     "Incorpora ojales superiores de refuerzo y una suela con dibujo profundo, diseñada para favorecer el agarre durante el desplazamiento. Su diseño combina características funcionales con una estética táctica versátil.",
     "Se comercializa como un producto no original, de calidad comercial premium. Está disponible en color negro y en talles 44 y 45, sujetos a disponibilidad.",
@@ -2523,8 +2523,8 @@
      "v": "Borcego táctico"
     },
     {
-     "k": "DISEÑO",
-     "v": "Estilo 5.11"
+     "k": "MODELO",
+     "v": "5.11"
     },
     {
      "k": "COLOR",
@@ -2577,12 +2577,12 @@
    ],
    "faq": [
     {
-     "q": "¿Qué es el borcego táctico estilo 5.11?",
+     "q": "¿Qué es el borcego táctico 5.11?",
      "a": "Es un borcego negro de caña alta, con cordones frontales, cierre lateral y suela con dibujo profundo. Se comercializa como producto no original."
     },
     {
      "q": "¿El borcego es original 5.11?",
-     "a": "No. Es un producto no original de estilo 5.11. No debe confundirse con un artículo fabricado o comercializado oficialmente por esa marca."
+     "a": "No. Es un producto no original. No debe confundirse con un artículo fabricado o comercializado oficialmente por la marca 5.11."
     },
     {
      "q": "¿De qué material está confeccionado?",
@@ -2665,7 +2665,7 @@
    "tarjetas": [
     {
      "clave": "b511",
-     "nombre": "Borcego Táctico Estilo 5.11 Negro",
+     "nombre": "Borcego Táctico 5.11 Negro",
      "color": null,
      "imagen": "b511-1.webp"
     }
@@ -6323,7 +6323,7 @@
   "shemagh": "shemagh",
   "shemng": "shemagh",
   "shemmr": "shemagh",
-  "b511": "borcego-tactico-estilo-511-negro",
+  "b511": "borcego-tactico-511-negro",
   "ranger": "borcego-tactico-ranger-negro",
   "altama": "borcegos-tacticos-altama-negros",
   "chelco": "bajo-chaleco-manga-larga-negro",

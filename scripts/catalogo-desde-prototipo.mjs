@@ -109,9 +109,19 @@ const sitio = {
 };
 
 // Decisiones del cliente que el prototipo no tiene: URLs sin marca y talles del sombrero.
-const RENOMBRAR = { 'cinto-tactico-cobra': 'cinto-tactico', 'borcego-tactico-511-negro': 'borcego-tactico-estilo-511-negro' };
+const RENOMBRAR = { 'cinto-tactico-cobra': 'cinto-tactico' };
 // El costo de envío en Rafaela se edita en la hoja `config` (envio_rafaela); el build reemplaza la marca.
-const TEXTOS = [['Los talles se consultan por WhatsApp antes de realizar la compra.', 'Disponible en talles del XS al 2XL.'], ['$5.000', '{envio_rafaela}']];
+const TEXTOS = [
+  ['Los talles se consultan por WhatsApp antes de realizar la compra.', 'Disponible en talles del XS al 2XL.'],
+  ['$5.000', '{envio_rafaela}'],
+  // El borcego 5.11 va sin «estilo» en el nombre; se mantiene la aclaración de que no es original.
+  ['No. Es un producto no original de estilo 5.11. No debe confundirse con un artículo fabricado o comercializado oficialmente por esa marca.',
+    'No. Es un producto no original. No debe confundirse con un artículo fabricado o comercializado oficialmente por la marca 5.11.'],
+  ['Borcego táctico negro de estilo 5.11,', 'Borcego táctico 5.11 negro,'],
+  ['El borcego táctico negro estilo 5.11', 'El borcego táctico 5.11 negro'],
+  ['{"k":"DISEÑO","v":"Estilo 5.11"}', '{"k":"MODELO","v":"5.11"}'],
+  ['táctico estilo 5.11', 'táctico 5.11'], ['Táctico Estilo 5.11', 'Táctico 5.11'], ['ESTILO 5.11', '5.11'],
+];
 const ajustar = (v) => {
   let j = JSON.stringify(v);
   for (const [a, b] of Object.entries(RENOMBRAR)) j = j.split(a).join(b);
