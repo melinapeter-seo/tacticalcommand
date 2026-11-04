@@ -44,7 +44,9 @@ Node 22. El sitio está diseñado sobre un lienzo fijo (1718 px en desktop, 385 
 
 ## Pendientes con el cliente
 
-Precios reales (hoy $ 50.000 de referencia en todos; Walter los carga desde el panel), SKU definitivos, dominio, fotos de la Gafa Sport y del Parche y link de TikTok confirmado.
+Precios reales (hoy $ 50.000 de referencia en todos; Walter los carga desde el panel), SKU definitivos, dominio y fotos de la Gafa Sport.
+
+El costo de envío dentro de Rafaela está en la hoja `config` (`envio_rafaela`): los textos llevan la marca `{envio_rafaela}` y el build la reemplaza.
 
 Decisiones del cliente que difieren del handoff: el email de contacto sigue siendo el Gmail del prototipo; el seguimiento de pedidos pide solo el código (sin los 4 dígitos del teléfono), así que `action=track` en Apps Script valida solo por código; el arrepentimiento le avisa solo a Walter (el cliente ve el código en pantalla y no recibe mail).
 

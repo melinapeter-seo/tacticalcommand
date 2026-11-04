@@ -1,10 +1,11 @@
 import catalogo from '../data/generado/catalog.json';
 import categoriasJson from '../data/generado/categorias.json';
 import guiasJson from '../data/guias.json';
-import legalesJson from '../data/legales.json';
+import legalesJson from '../data/generado/legales.json';
+import configJson from '../data/generado/config.json';
 import sitioJson from '../data/sitio.json';
 
-export type Talle = { talle: string; estado: string };
+export type Talle = { talle: string; estado: string; ninos?: boolean };
 export type Color = { nombre: string; sku: string; muestra: string; fotos: string[]; talles: Talle[]; precio?: number | null; precios_talle?: Record<string, number> };
 export type Tarjeta = { clave: string; nombre: string; color: string | null; imagen: string | null; rota?: string[] };
 export type Producto = (typeof catalogo.productos)[number] & { colores: Color[]; tarjetas: Tarjeta[] };
@@ -22,6 +23,8 @@ export const producto = (slug: string) => productos.find((p) => p.slug === slug)
 export const categoriaDeProducto = (p: Producto) => categorias.find((c) => c.titulo === p.categoria)!;
 
 export const money = (n: number) => '$ ' + n.toLocaleString('es-AR');
+/** Costo de envío dentro de Rafaela (hoja `config`), con el formato de los textos: "$5.000". */
+export const ENVIO_RAFAELA = '$' + configJson.envio_rafaela.toLocaleString('es-AR');
 
 /** Precio efectivo (planilla): el del talle, si no el del color, si no el del producto. */
 export function precioDe(p: Producto, c: Color, talle?: string | null): number {

@@ -1,6 +1,7 @@
 // Prueba la API del Apps Script contra el simulador (sin Google): instalación, catálogo, borrador y publicación,
 // login, pedidos, seguimiento, clientes y fotos.   node scripts/probar-apps-script.mjs
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
 import { crearSimulador } from './simulador-apps-script.mjs';
 
 const sim = crearSimulador({ props: { DEPLOY_HOOK_URL: 'https://api.netlify.com/build_hooks/x', SITE_URL: 'https://tacticalcommand.com.ar' } });
@@ -13,8 +14,10 @@ const falla = (r, re, msg) => { assert.equal(r.ok, false, msg); assert.match(r.e
 ctx.instalar();
 ctx.instalar(); // se puede correr dos veces sin duplicar
 const cat = ok(get({ action: 'catalog' }), 'catalog');
-assert.equal(cat.productos.length, 18);
-assert.equal(cat.variantes.length, 37);
+const semilla = vm.runInContext('({ p: SEMILLA.productos.length, v: SEMILLA.variantes.length })', ctx);
+assert.ok(semilla.p > 0);
+assert.equal(cat.productos.length, semilla.p);
+assert.equal(cat.variantes.length, semilla.v);
 assert.equal(Number(cat.config.ws_minimo), 8);
 assert.equal(cat.productos[0].visible, true);
 assert.ok(estado.props.TOKEN_SECRET);
@@ -132,7 +135,7 @@ let nb = 0; for (const it = backups.getFiles(); it.hasNext(); it.next()) nb++;
 assert.equal(nb, 12);
 
 // Hojas: sin filas fantasma por las casillas
-assert.equal(estado.hojas.productos.getLastRow(), 19);
+assert.equal(estado.hojas.productos.getLastRow(), semilla.p + 1);
 assert.equal(estado.hojas.pedidos.getLastRow(), 3);
 
 console.log(`Apps Script: ${n} comprobaciones OK.`);

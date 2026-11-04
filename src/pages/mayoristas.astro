@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import config from '../data/generado/config.json';
-import { productos, precioDe, precioTexto, rangoPrecio, WA } from '../lib/data';
+import { ENVIO_RAFAELA, productos, precioDe, precioTexto, rangoPrecio, WA } from '../lib/data';
 import { fotosVista } from '../lib/fotos';
 import { graph, breadcrumbs, faqPage, abs, ORG_ID } from '../lib/seo';
 
@@ -29,7 +29,7 @@ const qa = [
   { q: '¿Quién puede solicitar una cotización mayorista?', a: 'Comercios, revendedores y compradores profesionales pueden preparar una solicitud mayorista.' },
   { q: '¿La cotización confirma el stock?', a: 'No. La disponibilidad publicada es orientativa y el stock final debe validarse.' },
   { q: '¿Puedo pedir más unidades que las disponibles?', a: 'Sí. Se puede solicitar una cantidad superior a la publicada, pero las unidades adicionales quedan sujetas a confirmación.' },
-  { q: '¿Realizan envíos mayoristas?', a: 'Sí. Coordinamos envíos desde Rafaela según volumen y destino. El costo de envío está a cargo del comprador y se informa por WhatsApp.' },
+  { q: '¿Realizan envíos mayoristas?', a: `Sí. Coordinamos envíos desde Rafaela según volumen y destino. El costo de envío está a cargo del comprador: dentro de Rafaela tiene un valor de ${ENVIO_RAFAELA} y para el resto del país se coordina por WhatsApp.` },
   { q: '¿Puedo solicitar talles especiales?', a: 'Algunos productos admiten talles especiales o confección por pedido. Deben confirmarse previamente.' },
 ];
 const path = '/mayoristas/';
@@ -142,7 +142,7 @@ const data = { min: MIN, rows };
       <div class="q-lines" id="q-lines"></div>
       <div class="q-sum">
         <div><span class="k">SUBTOTAL A PRECIO PUBLICADO</span><span id="q-total">$ 0</span></div>
-        <div><span class="k">ENVÍO</span><span class="ship"><span class="g">A CARGO DEL COMPRADOR</span><span class="s">SE COTIZA POR WHATSAPP</span></span></div>
+        <div><span class="k">ENVÍO</span><span class="ship"><span class="g">A CARGO DEL COMPRADOR</span><span class="s">RAFAELA {ENVIO_RAFAELA} · RESTO DEL PAÍS COSTO A COORDINAR POR WHATSAPP</span></span></div>
         <div class="fin"><span>PRECIO MAYORISTA</span><span class="g">SE CONFIRMA POR WHATSAPP</span></div>
       </div>
       <p class="q-p">Los montos corresponden a los precios publicados de cada artículo. El precio mayorista del total de tu compra, el stock y el envío se confirman en el siguiente paso, por WhatsApp.</p>

@@ -1,7 +1,8 @@
 ---
 // Asistente de talles (orientativo). Misma lógica que el prototipo.
-interface Props { nombre: string }
-const { nombre } = Astro.props;
+// Sombreros: un solo dato, el perímetro de cabeza.
+interface Props { nombre: string; sombrero?: boolean }
+const { nombre, sombrero = false } = Astro.props;
 ---
 <div id="calc" class="ov calc-ov" hidden role="dialog" aria-modal="true" aria-labelledby="calc-h" data-nombre={nombre}>
   <div class="calc-box" data-stop>
@@ -9,6 +10,13 @@ const { nombre } = Astro.props;
     <h2 id="calc-h">CALCULADOR DE TALLE</h2>
     <div class="calc-hr"></div>
     <div class="calc-f">
+      {sombrero ? (
+      <div>
+        <label for="sa-c" class="calc-l"><span>PERÍMETRO DE CABEZA / CM</span><output id="sa-c-v" for="sa-c">57</output></label>
+        <input type="range" id="sa-c" min="52" max="64" value="57" />
+        <p class="calc-tip">Medí con una cinta métrica alrededor de la cabeza, por encima de las cejas y las orejas.</p>
+      </div>
+      ) : (<>
       <div>
         <label for="sa-h" class="calc-l"><span>ALTURA / CM</span><output id="sa-h-v" for="sa-h">178</output></label>
         <input type="range" id="sa-h" min="150" max="205" value="178" />
@@ -25,9 +33,12 @@ const { nombre } = Astro.props;
           <button type="button" role="radio" aria-checked="false" data-fit="2">HOLGADO</button>
         </div>
       </div>
+      </>)}
     </div>
-    <div class="calc-res"><div><div class="calc-rl">TALLE SUGERIDO</div><div class="calc-rv" id="sa-res" aria-live="polite">L</div></div></div>
-    <p class="calc-p">Recomendación orientativa basada en los datos ingresados. Para mayor precisión, consultar la tabla de medidas reales del producto.</p>
+    <div class="calc-res"><div><div class="calc-rl">TALLE SUGERIDO</div><div class="calc-rv" id="sa-res" aria-live="polite">{sombrero ? 'M' : 'L'}</div></div></div>
+    <p class="calc-p">{sombrero
+      ? 'Recomendación orientativa según el perímetro de cabeza. Si estás entre dos talles, elegí el mayor; el cordón ajustable ayuda a fijarlo.'
+      : 'Recomendación orientativa basada en los datos ingresados. Para mayor precisión, consultar la tabla de medidas reales del producto.'}</p>
   </div>
 </div>
 
@@ -48,6 +59,7 @@ const { nombre } = Astro.props;
   .calc-res { border: 1px solid var(--border); background: var(--surface); padding: 22px; margin-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .calc-rl { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--faint); }
   .calc-rv { font-size: 44px; font-weight: 600; letter-spacing: -.03em; line-height: 1.05; margin-top: 6px; }
+  .calc-tip { font-family: var(--mono); font-size: 10px; line-height: 1.8; color: var(--muted-2); margin: 12px 0 0; }
   .calc-p { font-family: var(--mono); font-size: 10px; line-height: 1.9; color: var(--muted-2); margin: 18px 0 0; }
   @media (max-width: 1023px) {
     .calc-ov { align-items: flex-end; }

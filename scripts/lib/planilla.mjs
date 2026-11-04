@@ -3,9 +3,10 @@
 // - combinar(): respuesta de la API (`catalog`) + contenido largo del repo → catálogo que usa la web.
 // Columnas: design/HANDOFF.md › Google Sheets. `variantes.talles` es un agregado: talles propios del color
 // (vacío = los del producto), necesario para la Campera Gore-Tex (Azul Noche llega hasta 3XL).
+// `productos.talles_ninos`: números de niños del calzado, que la ficha muestra en una fila aparte.
 
 export const COLS = {
-  productos: ['slug', 'nombre', 'categoria', 'subcategoria', 'sku', 'descripcion', 'visible', 'precio', 'talles', 'orden', 'actualizado'],
+  productos: ['slug', 'nombre', 'categoria', 'subcategoria', 'sku', 'descripcion', 'visible', 'precio', 'talles', 'talles_ninos', 'orden', 'actualizado'],
   variantes: ['slug', 'idx', 'nombre', 'sku', 'swatch', 'fotos', 'precio', 'precios_talle', 'agotados', 'agotado', 'talles'],
 };
 
@@ -39,13 +40,15 @@ export function aFilas(catalogo, categorias, config, hoy = new Date().toISOStrin
   const ord = ordenes(catalogo, categorias);
   const productos = [], variantes = [];
   for (const p of catalogo.productos) {
-    const tallesProd = ordenarTalles(p.colores.flatMap((c) => c.talles.map((t) => t.talle)));
+    const adultos = (c) => c.talles.filter((t) => !t.ninos).map((t) => t.talle);
+    const tallesProd = ordenarTalles(p.colores.flatMap(adultos));
+    const ninos = ordenarTalles(p.colores.flatMap((c) => c.talles.filter((t) => t.ninos).map((t) => t.talle)));
     productos.push({
       slug: p.slug, nombre: p.nombre, categoria: p.categoria, subcategoria: p.subcategoria, sku: p.sku, descripcion: p.descripcion,
-      visible: true, precio: p.precio_minorista, talles: tallesProd.join(','), orden: ord[p.slug] ?? p.orden, actualizado: hoy,
+      visible: true, precio: p.precio_minorista, talles: tallesProd.join(','), talles_ninos: ninos.join(','), orden: ord[p.slug] ?? p.orden, actualizado: hoy,
     });
     p.colores.forEach((c, idx) => {
-      const propios = c.talles.map((t) => t.talle);
+      const propios = adultos(c);
       variantes.push({
         slug: p.slug, idx, nombre: c.nombre, sku: c.sku, swatch: c.muestra, fotos: c.fotos.join('|'),
         precio: c.precio ?? '', precios_talle: c.precios_talle && Object.keys(c.precios_talle).length ? JSON.stringify(c.precios_talle) : '',
@@ -54,7 +57,7 @@ export function aFilas(catalogo, categorias, config, hoy = new Date().toISOStrin
       });
     });
   }
-  return { productos, variantes, config: { ws_minimo: config.ws_minimo, ws_envio: config.ws_envio, ws_texto: config.ws_texto, ultima_publicacion: '' } };
+  return { productos, variantes, config: { ws_minimo: config.ws_minimo, ws_envio: config.ws_envio, ws_texto: config.ws_texto, envio_rafaela: config.envio_rafaela, soporte_whatsapp: config.soporte_whatsapp, ultima_publicacion: '' } };
 }
 
 const titleCase = (t) => t.toLowerCase().replace(/(^|\s)(\S)/g, (_m, a, b) => a + b.toUpperCase());
@@ -78,6 +81,7 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
   for (const r of filas) {
     const b = porSlug[r.slug];
     const tallesProd = ordenarTalles(csv(r.talles));
+    const ninos = ordenarTalles(csv(r.talles_ninos));
     const vars = api.variantes.filter((v) => v.slug === r.slug).sort((x, y) => (num(x.idx) ?? 0) - (num(y.idx) ?? 0));
     const colores = vars.map((v) => {
       const propios = csv(v.talles);
@@ -87,7 +91,10 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
         nombre: String(v.nombre).trim(), sku: String(v.sku || r.sku).trim(), muestra: v.swatch || '#2F3530',
         fotos: String(v.fotos || '').split('|').map((x) => x.trim()).filter(Boolean).map(resolverFoto).filter(Boolean),
         // El estado de stock se conserva pero la web no lo muestra (decisión con Walter).
-        talles: talles.map((t) => ({ talle: t, estado: agotados.includes(t) ? 'agotado' : 'disponible' })),
+        talles: [
+          ...talles.map((t) => ({ talle: t, estado: agotados.includes(t) ? 'agotado' : 'disponible' })),
+          ...ninos.map((t) => ({ talle: t, estado: agotados.includes(t) ? 'agotado' : 'disponible', ninos: true })),
+        ],
         agotado: bool(v.agotado),
         precio: num(v.precio), precios_talle: json(v.precios_talle, {}),
       };
@@ -125,7 +132,7 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
       ];
     }
     p.opciones = { ...p.opciones, con_talles: colores.some((c) => c.talles.length > 0) };
-    if (p.opciones.con_talles && !p.opciones.columnas_talle) p.opciones.columnas_talle = Math.min(Math.max(...colores.map((c) => c.talles.length)), 9);
+    if (p.opciones.con_talles && !p.opciones.columnas_talle) p.opciones.columnas_talle = Math.min(Math.max(...colores.map((c) => c.talles.filter((t) => !t.ninos).length)), 9);
     // Una tarjeta por color: se reutilizan las curadas (clave y nombre) y se crean las que falten.
     const viejas = b ? b.tarjetas : [];
     // Los colores que ya existían sin tarjeta propia (ej. Uniforme Gris Topo Ripstop) siguen sin tarjeta.
@@ -175,7 +182,9 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
   const config = {
     _nota: 'Generado desde la hoja `config` de la planilla.',
     ws_minimo: num(cfg.ws_minimo) ?? 8,
-    ws_envio: cfg.ws_envio || 'A cargo del comprador · se cotiza por WhatsApp',
+    ws_envio: cfg.ws_envio || 'Rafaela {envio_rafaela} · resto del país a coordinar por WhatsApp',
+    envio_rafaela: num(cfg.envio_rafaela) ?? 5000,
+    soporte_whatsapp: String(cfg.soporte_whatsapp || '5493492686435'),
     ws_texto: cfg.ws_texto || '',
   };
   return { catalogo: { ...base, _nota: 'Generado en el build desde la planilla (ver scripts/sincronizar-catalogo.mjs).', productos, tarjeta_slug: tarjetaSlug }, categorias, config };

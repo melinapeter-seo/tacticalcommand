@@ -1,6 +1,8 @@
 {
  "_nota": "Equivale a la hoja `config` de la planilla. En la fase 2 se lee de Google Sheets.",
  "ws_minimo": 8,
- "ws_envio": "A cargo del comprador · se cotiza por WhatsApp",
- "ws_texto": "Pedido mínimo de 8 unidades, combinables entre productos, colores y talles. El precio final y el costo de envío se confirman por WhatsApp."
+ "ws_envio": "Rafaela {envio_rafaela} · resto del país a coordinar por WhatsApp",
+ "ws_texto": "Pedido mínimo de 8 unidades, combinables entre productos, colores y talles. El precio final y el costo de envío se confirman por WhatsApp.",
+ "envio_rafaela": 5000,
+ "soporte_whatsapp": "5493492686435"
 }

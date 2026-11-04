@@ -6,3 +6,7 @@
 # (reemplazar NOMBRE-DEL-SITIO por el subdominio .netlify.app).
 # https://www.tacticalcommand.com.ar/*        https://tacticalcommand.com.ar/:splat  301!
 # https://NOMBRE-DEL-SITIO.netlify.app/*      https://tacticalcommand.com.ar/:splat  301!
+
+# El cinto dejó de llamarse "Cobra" (noviembre 2026)
+/productos/cinto-tactico-cobra/  /productos/cinto-tactico/  301
+/productos/cinto-tactico-cobra   /productos/cinto-tactico/  301

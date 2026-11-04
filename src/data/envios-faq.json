@@ -53,7 +53,7 @@
    },
    {
     "q": "¿Quién paga el envío?",
-    "a": "El costo de envío está a cargo del comprador y se informa por WhatsApp antes de confirmar la compra."
+    "a": "El costo de envío está a cargo del comprador: dentro de Rafaela tiene un valor de {envio_rafaela} y para el resto del país se coordina por WhatsApp antes de confirmar la compra."
    },
    {
     "q": "¿Puedo consultar el costo del envío antes de comprar?",

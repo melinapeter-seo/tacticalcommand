@@ -337,7 +337,7 @@
     "gafas"
    ],
    "relacionados": [
-    "cinto-tactico-cobra",
+    "cinto-tactico",
     "mochila-tactica-45l",
     "pantalon-cargo-tactico-ripstop-negro",
     "gafa-tactica-sport-lentes-intercambiables"
@@ -350,6 +350,7 @@
    "opciones": {
     "con_talles": false,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": false,
     "consulta_whatsapp_talle": false,
     "info_altura": false,
@@ -668,7 +669,7 @@
     "mochila-tactica-45l",
     "bandolera-tactica-cruzada-negra",
     "shemagh",
-    "cinto-tactico-cobra"
+    "cinto-tactico"
    ],
    "guia": {
     "url": "/guias/que-es-el-sistema-molle/",
@@ -678,6 +679,7 @@
    "opciones": {
     "con_talles": false,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": false,
     "consulta_whatsapp_talle": false,
     "info_altura": false,
@@ -1104,6 +1106,7 @@
    "opciones": {
     "con_talles": false,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": false,
     "consulta_whatsapp_talle": false,
     "info_altura": true,
@@ -1206,7 +1209,7 @@
    ],
    "caracteristicas": [
     "Capacidad de 45 litros",
-    "6 colores y patrones",
+    "Resistente al agua",
     "Sistema MOLLE",
     "Respaldo y tiradores acolchados",
     "Broche pectoral y cinturón lumbar",
@@ -1467,7 +1470,7 @@
    ],
    "relacionados": [
     "bandolera-tactica-cruzada-negra",
-    "cinto-tactico-cobra",
+    "cinto-tactico",
     "shemagh",
     "bolso-mochila-tactica-70l"
    ],
@@ -1479,6 +1482,7 @@
    "opciones": {
     "con_talles": false,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": false,
     "consulta_whatsapp_talle": false,
     "info_altura": false,
@@ -1615,8 +1619,8 @@
    "slug": "uniforme-tactico",
    "nombre": "Uniforme Táctico",
    "titulo": [
-    "UNIFORME TÁCTICO",
-    "MARPAT · GRIS TOPO"
+    "UNIFORME",
+    "TÁCTICO"
    ],
    "categoria": "INDUMENTARIA",
    "subcategoria": "UNIFORMES",
@@ -1803,7 +1807,7 @@
     "sombrero"
    ],
    "relacionados": [
-    "cinto-tactico-cobra",
+    "cinto-tactico",
     "borcegos-tacticos-altama-negros",
     "bajo-chaleco-manga-larga-negro",
     "sombrero-de-monte-tactico"
@@ -1816,6 +1820,7 @@
    "opciones": {
     "con_talles": true,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": true,
     "consulta_whatsapp_talle": true,
     "info_altura": false,
@@ -1955,11 +1960,11 @@
    ]
   },
   {
-   "slug": "cinto-tactico-cobra",
-   "nombre": "Cinto Táctico Cobra",
+   "slug": "cinto-tactico",
+   "nombre": "Cinto Táctico",
    "titulo": [
-    "CINTO TÁCTICO",
-    "COBRA"
+    "CINTO",
+    "TÁCTICO"
    ],
    "categoria": "ACCESORIOS",
    "subcategoria": "CINTURONES TÁCTICOS",
@@ -1968,34 +1973,34 @@
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
-   "migas": "Inicio / Accesorios / Cinturones tácticos / Cinto Táctico Cobra",
+   "migas": "Inicio / Accesorios / Cinturones tácticos / Cinto Táctico",
    "seo": {
     "titulo": null,
     "descripcion": null
    },
-   "descripcion": "Cinto táctico regulable con cinta textil de alta resistencia tipo Cordura, hebilla metálica de apertura rápida y anilla triangular lateral para sujetar accesorios compatibles. Pensado para uso diario, tareas operativas, entrenamiento y actividades outdoor. Disponible en negro, coyote y verde oliva.",
+   "descripcion": "Cinto táctico regulable con cinta textil de alta resistencia de cordura, hebilla metálica de apertura rápida y anilla triangular lateral para sujetar accesorios compatibles. Pensado para uso diario, tareas operativas, entrenamiento y actividades outdoor. Disponible en negro, coyote y verde oliva.",
    "descripcion_larga": [
-    "El cinto táctico Cobra es un cinturón regulable diseñado para complementar el equipamiento de uso diario, operativo y outdoor. Está confeccionado con cinta textil resistente tipo Cordura y cuenta con una hebilla metálica de cierre y liberación rápida, de estilo Cobra.",
+    "El cinto táctico es un cinturón regulable diseñado para complementar el equipamiento de uso diario, operativo y outdoor. Está confeccionado con cinta textil resistente de cordura y cuenta con una hebilla metálica de cierre y liberación rápida.",
     "Incorpora una anilla triangular lateral que permite sujetar un mosquetón, una correa u otros accesorios compatibles. Su sistema de regulación permite adaptar el largo al usuario, mientras que el extremo cuenta con un mecanismo de ajuste y sujeción para mantener ordenada la cinta sobrante.",
     "Por su diseño práctico y funcional, es una alternativa para quienes buscan un cinturón táctico regulable para uso diario, entrenamiento, tareas operativas y actividades al aire libre.",
     "Se encuentra disponible en tres colores: negro, coyote y verde oliva."
    ],
    "caracteristicas": [
     "Hebilla metálica de liberación rápida",
-    "Cinta textil tipo Cordura",
-    "Largo regulable",
+    "Cinta textil de cordura",
+    "Largo regulable hasta 112 cm",
     "Anilla triangular para accesorios",
     "Sujeción de la cinta sobrante",
     "Negro, coyote y verde oliva"
    ],
    "funciones": [
     {
-     "titulo": "HEBILLA COBRA",
+     "titulo": "HEBILLA METÁLICA",
      "texto": "Hebilla metálica que permite cerrar y liberar el cinturón de forma rápida.",
      "destacado": "Apertura rápida"
     },
     {
-     "titulo": "CINTA TIPO CORDURA",
+     "titulo": "CINTA DE CORDURA",
      "texto": "Cinta textil de alta resistencia.",
      "destacado": null
     },
@@ -2042,7 +2047,7 @@
    "especificaciones": [
     {
      "k": "PRODUCTO",
-     "v": "Cinto táctico Cobra"
+     "v": "Cinto táctico"
     },
     {
      "k": "TIPO",
@@ -2050,15 +2055,15 @@
     },
     {
      "k": "MATERIAL DE LA CINTA",
-     "v": "Textil resistente tipo Cordura"
+     "v": "Textil resistente de cordura"
+    },
+    {
+     "k": "LARGO",
+     "v": "Regulable hasta 112 cm"
     },
     {
      "k": "HEBILLA",
      "v": "Metálica, de apertura rápida"
-    },
-    {
-     "k": "ESTILO DE HEBILLA",
-     "v": "Cobra"
     },
     {
      "k": "ANILLA LATERAL",
@@ -2079,19 +2084,19 @@
    ],
    "faq": [
     {
-     "q": "¿Qué es un cinto táctico Cobra?",
+     "q": "¿Qué es un cinto táctico?",
      "a": "Es un cinturón regulable con cinta textil resistente, hebilla metálica de apertura rápida y anilla triangular lateral para sujetar accesorios compatibles."
     },
     {
      "q": "¿De qué material está hecho?",
-     "a": "La cinta está confeccionada en material textil de alta resistencia tipo Cordura."
+     "a": "La cinta está confeccionada en material textil de alta resistencia de cordura."
     },
     {
      "q": "¿Qué tipo de hebilla tiene?",
-     "a": "Cuenta con una hebilla metálica de cierre y liberación rápida, de estilo Cobra."
+     "a": "Cuenta con una hebilla metálica de cierre y liberación rápida."
     },
     {
-     "q": "¿El cinto táctico Cobra es regulable?",
+     "q": "¿El cinto táctico es regulable?",
      "a": "Sí. Su largo se puede ajustar para adaptarlo al usuario."
     },
     {
@@ -2131,6 +2136,7 @@
    "opciones": {
     "con_talles": false,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": false,
     "consulta_whatsapp_talle": false,
     "info_altura": false,
@@ -2146,7 +2152,8 @@
      "fotos": [
       "cin-ng-1.webp",
       "cin-ng-2.webp",
-      "cin-ng-3.webp"
+      "cin-ng-3.webp",
+      "cin-ng-4.webp"
      ],
      "talles": []
     },
@@ -2157,7 +2164,8 @@
      "fotos": [
       "cin-cy-1.webp",
       "cin-cy-2.webp",
-      "cin-cy-3.webp"
+      "cin-cy-3.webp",
+      "cin-cy-4.webp"
      ],
      "talles": []
     },
@@ -2168,7 +2176,8 @@
      "fotos": [
       "cin-vo-1.webp",
       "cin-vo-2.webp",
-      "cin-vo-3.webp"
+      "cin-vo-3.webp",
+      "cin-vo-4.webp"
      ],
      "talles": []
     }
@@ -2176,19 +2185,19 @@
    "tarjetas": [
     {
      "clave": "cintomt",
-     "nombre": "Cinto Táctico Cobra Negro",
+     "nombre": "Cinto Táctico Negro",
      "color": "NEGRO",
      "imagen": "cin-ng-1.webp"
     },
     {
      "clave": "cintocy",
-     "nombre": "Cinto Táctico Cobra Coyote",
+     "nombre": "Cinto Táctico Coyote",
      "color": "COYOTE",
      "imagen": "cin-cy-1.webp"
     },
     {
      "clave": "cintovo",
-     "nombre": "Cinto Táctico Cobra Verde Oliva",
+     "nombre": "Cinto Táctico Verde Oliva",
      "color": "VERDE OLIVA",
      "imagen": "cin-vo-1.webp"
     }
@@ -2218,6 +2227,7 @@
     "El shemagh táctico es un pañuelo tipo árabe diseñado para ofrecer distintas formas de uso en actividades al aire libre, camping, trekking, trabajo y uso diario.",
     "Su diseño tejido incorpora detalles geométricos y terminaciones con flecos. Gracias a su formato versátil, puede colocarse sobre la cabeza, alrededor del cuello o utilizarse para cubrir parcialmente el rostro, según las preferencias y necesidades de cada actividad.",
     "Es un accesorio práctico para complementar el equipo táctico y outdoor sin limitarse a una única forma de colocación.",
+    "Está confeccionado en 100% algodón y mide 110 x 110 cm.",
     "Está disponible en tres colores: verde militar, negro y marrón."
    ],
    "caracteristicas": [
@@ -2226,7 +2236,9 @@
     "Terminaciones con flecos",
     "Cabeza, cuello o rostro",
     "Uso táctico y outdoor",
-    "Verde militar, negro y marrón"
+    "Verde militar, negro y marrón",
+    "100% algodón",
+    "Tamaño 110 x 110 cm"
    ],
    "funciones": [
     {
@@ -2290,6 +2302,14 @@
      "v": "Pañuelo tipo árabe"
     },
     {
+     "k": "MATERIAL",
+     "v": "100% algodón"
+    },
+    {
+     "k": "TAMAÑO",
+     "v": "110 x 110 cm"
+    },
+    {
      "k": "DISEÑO",
      "v": "Tejido con detalles geométricos"
     },
@@ -2320,6 +2340,10 @@
      "a": "Puede utilizarse en actividades outdoor, camping, trekking, trabajo, uso táctico y uso diario."
     },
     {
+     "q": "¿De qué material es y cuánto mide?",
+     "a": "Es 100% algodón y mide 110 x 110 cm."
+    },
+    {
      "q": "¿Qué colores están disponibles?",
      "a": "Este modelo se ofrece en verde militar, negro y marrón."
     },
@@ -2348,6 +2372,7 @@
    "opciones": {
     "con_talles": false,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": false,
     "consulta_whatsapp_talle": false,
     "info_altura": false,
@@ -2415,6 +2440,554 @@
    ]
   },
   {
+   "slug": "borcego-tactico-estilo-511-negro",
+   "nombre": "Borcego Táctico Estilo 5.11 Negro",
+   "titulo": [
+    "BORCEGO TÁCTICO",
+    "ESTILO 5.11 NEGRO"
+   ],
+   "categoria": "CALZADO",
+   "subcategoria": "BORCEGOS TÁCTICOS",
+   "sku": "TC-BOR-511-NG",
+   "orden": 80,
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "precio_provisorio": true,
+   "migas": "Inicio / Calzado / Borcegos tácticos / Borcego Táctico Estilo 5.11 Negro",
+   "seo": {
+    "titulo": null,
+    "descripcion": null
+   },
+   "descripcion": "Borcego táctico negro de estilo 5.11, con diseño de caña alta, ajuste frontal mediante cordones y cierre lateral para facilitar la colocación. Cuenta con ojales superiores de refuerzo, paneles combinados con costuras reforzadas y suela con dibujo profundo para favorecer el agarre. Es una opción versátil para jornadas de trabajo, actividades al aire libre y uso cotidiano. Disponible en talles 44 y 45, según stock.",
+   "descripcion_larga": [
+    "El borcego táctico negro estilo 5.11 presenta un diseño de caña alta pensado para acompañar jornadas de trabajo, actividades outdoor y uso diario.",
+    "Su construcción combina sectores de cuero y otros materiales, con paneles integrados mediante costuras reforzadas. El sistema de ajuste frontal con cordones permite sujetar el calzado al pie, mientras que el cierre lateral facilita su colocación y retiro.",
+    "Incorpora ojales superiores de refuerzo y una suela con dibujo profundo, diseñada para favorecer el agarre durante el desplazamiento. Su diseño combina características funcionales con una estética táctica versátil.",
+    "Se comercializa como un producto no original, de calidad comercial premium. Está disponible en color negro y en talles 44 y 45, sujetos a disponibilidad.",
+    "La elección del calzado debe contemplar las condiciones del terreno y los requisitos específicos de cada actividad laboral."
+   ],
+   "caracteristicas": [
+    "Diseño táctico de caña alta",
+    "Cordones frontales + cierre lateral",
+    "Ojales superiores reforzados",
+    "Suela con dibujo profundo"
+   ],
+   "funciones": [
+    {
+     "titulo": "CAÑA ALTA",
+     "texto": "Proporciona mayor cobertura alrededor del tobillo.",
+     "destacado": "Cobertura"
+    },
+    {
+     "titulo": "AJUSTE FRONTAL CON CORDONES",
+     "texto": "Permite regular la sujeción del calzado al pie.",
+     "destacado": null
+    },
+    {
+     "titulo": "CIERRE LATERAL",
+     "texto": "Facilita la colocación y el retiro del borcego.",
+     "destacado": null
+    },
+    {
+     "titulo": "OJALES SUPERIORES DE REFUERZO",
+     "texto": "Forman parte del sistema de ajuste frontal.",
+     "destacado": null
+    },
+    {
+     "titulo": "PANELES COMBINADOS",
+     "texto": "Integran distintos sectores del diseño mediante costuras reforzadas.",
+     "destacado": null
+    },
+    {
+     "titulo": "SUELA CON DIBUJO PROFUNDO",
+     "texto": "Diseñada para favorecer el agarre durante el desplazamiento.",
+     "destacado": null
+    }
+   ],
+   "cifra_destacada": null,
+   "usos": [
+    "Jornadas de trabajo",
+    "Actividades al aire libre",
+    "Uso cotidiano",
+    "Calzado de caña alta"
+   ],
+   "usos_detalle": [],
+   "medidas": [],
+   "medidas_nota": null,
+   "incluye": null,
+   "distribucion": null,
+   "beneficios": [],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Borcego táctico"
+    },
+    {
+     "k": "DISEÑO",
+     "v": "Estilo 5.11"
+    },
+    {
+     "k": "COLOR",
+     "v": "Negro"
+    },
+    {
+     "k": "MATERIALES",
+     "v": "Cuero y otros materiales"
+    },
+    {
+     "k": "CAÑA",
+     "v": "Alta"
+    },
+    {
+     "k": "AJUSTE FRONTAL",
+     "v": "Cordones"
+    },
+    {
+     "k": "CIERRE LATERAL",
+     "v": "Sí"
+    },
+    {
+     "k": "OJALES",
+     "v": "Superiores reforzados"
+    },
+    {
+     "k": "COSTURAS",
+     "v": "Reforzadas"
+    },
+    {
+     "k": "SUELA",
+     "v": "Dibujo profundo"
+    },
+    {
+     "k": "CALIDAD",
+     "v": "Comercial premium"
+    },
+    {
+     "k": "NROS DE CALZADO",
+     "v": "44 y 45"
+    },
+    {
+     "k": "PRODUCTO ORIGINAL 5.11",
+     "v": "No"
+    },
+    {
+     "k": "USOS RECOMENDADOS",
+     "v": "Trabajo, outdoor y uso cotidiano"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es el borcego táctico estilo 5.11?",
+     "a": "Es un borcego negro de caña alta, con cordones frontales, cierre lateral y suela con dibujo profundo. Se comercializa como producto no original."
+    },
+    {
+     "q": "¿El borcego es original 5.11?",
+     "a": "No. Es un producto no original de estilo 5.11. No debe confundirse con un artículo fabricado o comercializado oficialmente por esa marca."
+    },
+    {
+     "q": "¿De qué material está confeccionado?",
+     "a": "Combina sectores de cuero con otros materiales, con paneles integrados mediante costuras reforzadas."
+    },
+    {
+     "q": "¿El borcego tiene cierre lateral?",
+     "a": "Sí. Incorpora un cierre lateral que facilita la colocación y el retiro del calzado."
+    },
+    {
+     "q": "¿Cómo se ajusta al pie?",
+     "a": "Cuenta con un sistema de ajuste frontal mediante cordones y ojales superiores de refuerzo."
+    },
+    {
+     "q": "¿Cómo es la suela?",
+     "a": "Tiene un dibujo profundo, diseñado para favorecer el agarre durante el desplazamiento."
+    },
+    {
+     "q": "¿Para qué actividades se recomienda?",
+     "a": "Está pensado para jornadas de trabajo, actividades al aire libre y uso cotidiano."
+    },
+    {
+     "q": "¿En qué color está disponible?",
+     "a": "Este modelo se ofrece en color negro."
+    },
+    {
+     "q": "¿Qué números hay disponibles?",
+     "a": "Los números disponibles son 44 y 45. La disponibilidad se confirma por WhatsApp al momento de la compra."
+    }
+   ],
+   "relacionados_tarjetas": [
+    "altama",
+    "ranger",
+    "pantr",
+    "cintomt"
+   ],
+   "relacionados": [
+    "borcegos-tacticos-altama-negros",
+    "borcego-tactico-ranger-negro",
+    "pantalon-cargo-tactico-ripstop-negro",
+    "cinto-tactico"
+   ],
+   "guia": {
+    "url": "/guias/cordura-y-lona-diferencias/",
+    "titulo": "CORDURA Y LONA: QUÉ DIFERENCIAS HAY EN MOCHILAS Y BOLSOS",
+    "imagen": null
+   },
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": true,
+    "es_sombrero": false,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false,
+    "info_altura": false,
+    "columnas_talle": 5,
+    "nota_talle": null,
+    "proporcion_foto": "1 / 1"
+   },
+   "colores": [
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-BOR-511-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "b511-1.webp",
+      "b511-2.webp"
+     ],
+     "talles": [
+      {
+       "talle": "44",
+       "estado": "disponible"
+      },
+      {
+       "talle": "45",
+       "estado": "disponible"
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "b511",
+     "nombre": "Borcego Táctico Estilo 5.11 Negro",
+     "color": null,
+     "imagen": "b511-1.webp"
+    }
+   ]
+  },
+  {
+   "slug": "borcego-tactico-ranger-negro",
+   "nombre": "Borcego Táctico Ranger Negro",
+   "titulo": [
+    "BORCEGO TÁCTICO",
+    "RANGER NEGRO"
+   ],
+   "categoria": "CALZADO",
+   "subcategoria": "BORCEGOS TÁCTICOS",
+   "sku": "TC-BOR-RNG-NG",
+   "orden": 90,
+   "precio_minorista": 50000,
+   "precio_transferencia": 50000,
+   "precio_provisorio": true,
+   "migas": "Inicio / Calzado / Borcegos tácticos / Borcego Táctico Ranger Negro",
+   "seo": {
+    "titulo": null,
+    "descripcion": null
+   },
+   "descripcion": "Borcego táctico Ranger color negro, confeccionado con cuero de 2 mm de espesor, Cordura respirable y malla resistente en la parte superior. Incorpora suela antideslizante de alto agarre, plantilla EVA confort y sistema térmico regulable. Su diseño ligero y flexible está pensado para uso diario, fuerzas policiales y empresas de seguridad. Nros del 36 al 44 (adultos) y del 30 al 35 (niños).",
+   "descripcion_larga": [
+    "El borcego táctico Ranger negro está diseñado para acompañar jornadas de uso diario y actividades laborales que requieren un calzado resistente, flexible y funcional.",
+    "Su confección combina sectores de cuero de 2 mm de espesor con tela Cordura respirable y malla resistente en la parte superior, en una estructura pensada para brindar resistencia y comodidad durante el uso. Se ajusta con cordones y cuenta con cierre lateral para calzarlo y sacarlo con mayor rapidez.",
+    "Cuenta con una suela antideslizante de alto agarre, diseñada para favorecer la tracción durante el desplazamiento, y una plantilla EVA confort que aporta amortiguación. Además, incorpora un sistema térmico regulable.",
+    "Su construcción ligera y flexible lo convierte en una alternativa para fuerzas policiales, empresas de seguridad y personas que necesitan un borcego táctico para sus actividades cotidianas.",
+    "La elección del calzado debe considerar las condiciones del terreno, la duración de la jornada y los requisitos específicos de cada actividad."
+   ],
+   "caracteristicas": [
+    "Cuero de 2 mm + Cordura respirable",
+    "Cierre lateral",
+    "Suela antideslizante de alto agarre",
+    "Plantilla EVA confort"
+   ],
+   "funciones": [
+    {
+     "titulo": "CUERO DE 2 MM",
+     "texto": "Sectores de cuero de 2 mm de espesor que aportan resistencia a la construcción del calzado.",
+     "destacado": "Resistencia"
+    },
+    {
+     "titulo": "CORDURA RESPIRABLE",
+     "texto": "Tela Cordura respirable que complementa los sectores de cuero.",
+     "destacado": null
+    },
+    {
+     "titulo": "MALLA RESISTENTE",
+     "texto": "Malla resistente ubicada en la parte superior del borcego.",
+     "destacado": null
+    },
+    {
+     "titulo": "CIERRE LATERAL",
+     "texto": "Cierre lateral que facilita calzarse y sacarse el borcego, complementando el ajuste con cordones.",
+     "destacado": null
+    },
+    {
+     "titulo": "SISTEMA TÉRMICO REGULABLE",
+     "texto": "Sistema térmico regulable incorporado al calzado.",
+     "destacado": null
+    },
+    {
+     "titulo": "SUELA ANTIDESLIZANTE",
+     "texto": "Suela de alto agarre, diseñada para favorecer la tracción durante el desplazamiento.",
+     "destacado": null
+    },
+    {
+     "titulo": "PLANTILLA EVA CONFORT",
+     "texto": "Aporta amortiguación y comodidad durante el uso.",
+     "destacado": null
+    },
+    {
+     "titulo": "LIGERO Y FLEXIBLE",
+     "texto": "Construcción pensada para facilitar el movimiento y acompañar el uso cotidiano.",
+     "destacado": null
+    }
+   ],
+   "cifra_destacada": null,
+   "usos": [
+    "Fuerzas policiales",
+    "Empresas de seguridad",
+    "Actividades laborales",
+    "Uso diario"
+   ],
+   "usos_detalle": [],
+   "medidas": [],
+   "medidas_nota": null,
+   "incluye": null,
+   "distribucion": null,
+   "beneficios": [],
+   "especificaciones": [
+    {
+     "k": "PRODUCTO",
+     "v": "Borcego táctico"
+    },
+    {
+     "k": "MODELO",
+     "v": "Ranger"
+    },
+    {
+     "k": "COLOR",
+     "v": "Negro"
+    },
+    {
+     "k": "MATERIAL PRINCIPAL",
+     "v": "Cuero de 2 mm"
+    },
+    {
+     "k": "MATERIAL COMPLEMENTARIO",
+     "v": "Cordura respirable"
+    },
+    {
+     "k": "PARTE SUPERIOR",
+     "v": "Malla resistente"
+    },
+    {
+     "k": "AJUSTE",
+     "v": "Cordones + cierre lateral"
+    },
+    {
+     "k": "SISTEMA TÉRMICO",
+     "v": "Regulable"
+    },
+    {
+     "k": "SUELA",
+     "v": "Antideslizante de alto agarre"
+    },
+    {
+     "k": "PLANTILLA",
+     "v": "EVA confort"
+    },
+    {
+     "k": "CONSTRUCCIÓN",
+     "v": "Ligera y flexible"
+    },
+    {
+     "k": "CALIDAD",
+     "v": "Premium"
+    },
+    {
+     "k": "NROS DE CALZADO",
+     "v": "36 al 44 (adultos) y 30 al 35 (niños)"
+    },
+    {
+     "k": "USOS RECOMENDADOS",
+     "v": "Seguridad, fuerzas policiales y uso diario"
+    }
+   ],
+   "faq": [
+    {
+     "q": "¿Qué es el borcego táctico Ranger negro?",
+     "a": "Es un borcego táctico de color negro, diseñado para uso diario y actividades laborales. Combina cuero de 2 mm, Cordura respirable y malla resistente en la parte superior."
+    },
+    {
+     "q": "¿De qué material está hecho?",
+     "a": "Está confeccionado con sectores de cuero de 2 mm de espesor, tela Cordura respirable y malla resistente en la parte superior."
+    },
+    {
+     "q": "¿Tiene cierre lateral?",
+     "a": "Sí. Incorpora un cierre lateral que facilita calzarse y sacarse el borcego, además del ajuste con cordones."
+    },
+    {
+     "q": "¿Qué tipo de suela tiene?",
+     "a": "Cuenta con una suela antideslizante de alto agarre, diseñada para favorecer la tracción durante el desplazamiento."
+    },
+    {
+     "q": "¿Qué plantilla incorpora?",
+     "a": "Tiene una plantilla EVA confort, pensada para aportar amortiguación y comodidad durante el uso."
+    },
+    {
+     "q": "¿El borcego Ranger es ligero y flexible?",
+     "a": "Sí. Su construcción es ligera y flexible, pensada para acompañar el uso cotidiano."
+    },
+    {
+     "q": "¿Qué significa que tenga sistema térmico regulable?",
+     "a": "El borcego incorpora un sistema térmico regulable. Si necesitás más detalle sobre su funcionamiento, consultanos por WhatsApp antes de comprar."
+    },
+    {
+     "q": "¿Para qué actividades se recomienda?",
+     "a": "Está pensado para fuerzas policiales, empresas de seguridad, actividades laborales y uso diario."
+    },
+    {
+     "q": "¿En qué color está disponible?",
+     "a": "Este modelo se ofrece en color negro."
+    },
+    {
+     "q": "¿Qué números hay disponibles?",
+     "a": "Los números van del 36 al 44 (adultos) y del 30 al 35 (niños). La disponibilidad de cada número se confirma por WhatsApp al momento de la compra."
+    },
+    {
+     "q": "¿El borcego es impermeable?",
+     "a": "No se ofrece como impermeable. La Cordura respirable no implica por sí sola impermeabilidad."
+    },
+    {
+     "q": "¿Tiene puntera de seguridad?",
+     "a": "No se ofrece con puntera de seguridad. Si la necesitás para una actividad laboral específica, consultanos por WhatsApp."
+    }
+   ],
+   "relacionados_tarjetas": [
+    "altama",
+    "pantr",
+    "cintomt",
+    "unimp"
+   ],
+   "relacionados": [
+    "borcegos-tacticos-altama-negros",
+    "pantalon-cargo-tactico-ripstop-negro",
+    "cinto-tactico",
+    "uniforme-tactico"
+   ],
+   "guia": {
+    "url": "/guias/cordura-y-lona-diferencias/",
+    "titulo": "CORDURA Y LONA: QUÉ DIFERENCIAS HAY EN MOCHILAS Y BOLSOS",
+    "imagen": null
+   },
+   "opciones": {
+    "con_talles": true,
+    "es_calzado": true,
+    "es_sombrero": false,
+    "es_indumentaria": false,
+    "consulta_whatsapp_talle": false,
+    "info_altura": false,
+    "columnas_talle": 9,
+    "nota_talle": null,
+    "proporcion_foto": "1 / 1"
+   },
+   "colores": [
+    {
+     "nombre": "NEGRO",
+     "sku": "TC-BOR-RNG-NG",
+     "muestra": "#17191A",
+     "fotos": [
+      "ranger-1.webp",
+      "ranger-2.webp",
+      "ranger-3.webp",
+      "ranger-4.webp",
+      "ranger-5.webp",
+      "ranger-6.webp"
+     ],
+     "talles": [
+      {
+       "talle": "36",
+       "estado": "disponible"
+      },
+      {
+       "talle": "37",
+       "estado": "disponible"
+      },
+      {
+       "talle": "38",
+       "estado": "disponible"
+      },
+      {
+       "talle": "39",
+       "estado": "disponible"
+      },
+      {
+       "talle": "40",
+       "estado": "disponible"
+      },
+      {
+       "talle": "41",
+       "estado": "disponible"
+      },
+      {
+       "talle": "42",
+       "estado": "disponible"
+      },
+      {
+       "talle": "43",
+       "estado": "disponible"
+      },
+      {
+       "talle": "44",
+       "estado": "disponible"
+      },
+      {
+       "talle": "30",
+       "estado": "disponible",
+       "ninos": true
+      },
+      {
+       "talle": "31",
+       "estado": "disponible",
+       "ninos": true
+      },
+      {
+       "talle": "32",
+       "estado": "disponible",
+       "ninos": true
+      },
+      {
+       "talle": "33",
+       "estado": "disponible",
+       "ninos": true
+      },
+      {
+       "talle": "34",
+       "estado": "disponible",
+       "ninos": true
+      },
+      {
+       "talle": "35",
+       "estado": "disponible",
+       "ninos": true
+      }
+     ]
+    }
+   ],
+   "tarjetas": [
+    {
+     "clave": "ranger",
+     "nombre": "Borcego Táctico Ranger Negro",
+     "color": null,
+     "imagen": "ranger-1.webp"
+    }
+   ]
+  },
+  {
    "slug": "borcegos-tacticos-altama-negros",
    "nombre": "Borcego Táctico Altama Negro",
    "titulo": [
@@ -2424,7 +2997,7 @@
    "categoria": "CALZADO",
    "subcategoria": "BORCEGOS TÁCTICOS",
    "sku": "TC-BOR-ALT-NG",
-   "orden": 80,
+   "orden": 100,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
@@ -2534,8 +3107,8 @@
      "v": "Robusta, con dibujo profundo"
     },
     {
-     "k": "TALLES",
-     "v": "37 al 45"
+     "k": "NROS DE CALZADO",
+     "v": "36 al 45 (adultos) y 30 al 35 (niños)"
     },
     {
      "k": "USOS RECOMENDADOS",
@@ -2556,8 +3129,8 @@
      "a": "Este modelo está disponible en color negro."
     },
     {
-     "q": "¿Qué talles hay disponibles?",
-     "a": "Los talles informados van del 37 al 45. La disponibilidad de cada número se confirma por WhatsApp al momento de la compra."
+     "q": "¿Qué números hay disponibles?",
+     "a": "Los números van del 36 al 45 (adultos) y del 30 al 35 (niños). La disponibilidad de cada número se confirma por WhatsApp al momento de la compra."
     },
     {
      "q": "¿El borcego tiene caña alta?",
@@ -2577,16 +3150,16 @@
     }
    ],
    "relacionados_tarjetas": [
+    "ranger",
     "pantr",
     "cintomt",
-    "unimp",
-    "chelco"
+    "unimp"
    ],
    "relacionados": [
+    "borcego-tactico-ranger-negro",
     "pantalon-cargo-tactico-ripstop-negro",
-    "cinto-tactico-cobra",
-    "uniforme-tactico",
-    "bajo-chaleco-manga-larga-negro"
+    "cinto-tactico",
+    "uniforme-tactico"
    ],
    "guia": {
     "url": "/guias/cordura-y-lona-diferencias/",
@@ -2596,10 +3169,11 @@
    "opciones": {
     "con_talles": true,
     "es_calzado": true,
+    "es_sombrero": false,
     "es_indumentaria": false,
     "consulta_whatsapp_talle": false,
     "info_altura": false,
-    "columnas_talle": 9,
+    "columnas_talle": 10,
     "nota_talle": null,
     "proporcion_foto": "1 / 1"
    },
@@ -2609,12 +3183,16 @@
      "sku": "TC-BOR-ALT-NG",
      "muestra": "#17191A",
      "fotos": [
-      "altama-1.webp",
       "altama-2.webp",
+      "altama-1.webp",
       "altama-3.webp",
       "altama-4.webp"
      ],
      "talles": [
+      {
+       "talle": "36",
+       "estado": "disponible"
+      },
       {
        "talle": "37",
        "estado": "disponible"
@@ -2650,6 +3228,36 @@
       {
        "talle": "45",
        "estado": "disponible"
+      },
+      {
+       "talle": "30",
+       "estado": "disponible",
+       "ninos": true
+      },
+      {
+       "talle": "31",
+       "estado": "disponible",
+       "ninos": true
+      },
+      {
+       "talle": "32",
+       "estado": "disponible",
+       "ninos": true
+      },
+      {
+       "talle": "33",
+       "estado": "disponible",
+       "ninos": true
+      },
+      {
+       "talle": "34",
+       "estado": "disponible",
+       "ninos": true
+      },
+      {
+       "talle": "35",
+       "estado": "disponible",
+       "ninos": true
       }
      ]
     }
@@ -2659,7 +3267,7 @@
      "clave": "altama",
      "nombre": "Borcego Táctico Altama Negro",
      "color": null,
-     "imagen": "altama-1.webp"
+     "imagen": "altama-2.webp"
     }
    ]
   },
@@ -2673,7 +3281,7 @@
    "categoria": "INDUMENTARIA",
    "subcategoria": "BAJO CHALECOS",
    "sku": "TC-BCH-ML-NG",
-   "orden": 90,
+   "orden": 110,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
@@ -2695,7 +3303,7 @@
     "Cuello Mao con abrojo",
     "Cremallera frontal",
     "2 bolsillos con cierre + Velcro",
-    "Talles M a 3XL"
+    "Talles S a 3XL"
    ],
    "funciones": [
     {
@@ -2813,7 +3421,7 @@
     },
     {
      "k": "TALLES",
-     "v": "M, L, XL, 2XL y 3XL"
+     "v": "S, M, L, XL, 2XL y 3XL"
     },
     {
      "k": "CALIDAD",
@@ -2859,7 +3467,7 @@
     },
     {
      "q": "¿Qué talles hay disponibles?",
-     "a": "El modelo está disponible en M, L, XL, 2XL y 3XL, sujeto a disponibilidad de stock."
+     "a": "El modelo está disponible en S, M, L, XL, 2XL y 3XL, sujeto a disponibilidad de stock."
     },
     {
      "q": "¿Para qué se puede usar el Bajo Chaleco?",
@@ -2874,7 +3482,7 @@
    ],
    "relacionados": [
     "pantalon-cargo-tactico-ripstop-negro",
-    "cinto-tactico-cobra",
+    "cinto-tactico",
     "borcegos-tacticos-altama-negros",
     "campera-gtex-outdoor"
    ],
@@ -2886,10 +3494,11 @@
    "opciones": {
     "con_talles": true,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": true,
     "consulta_whatsapp_talle": true,
     "info_altura": false,
-    "columnas_talle": 5,
+    "columnas_talle": 6,
     "nota_talle": null,
     "proporcion_foto": "1 / 1"
    },
@@ -2906,6 +3515,10 @@
       "chmln-5.webp"
      ],
      "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
       {
        "talle": "M",
        "estado": "disponible"
@@ -2948,7 +3561,7 @@
    "categoria": "INDUMENTARIA",
    "subcategoria": "BAJO CHALECOS",
    "sku": "TC-BCH-MC-NG",
-   "orden": 100,
+   "orden": 120,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
@@ -2962,7 +3575,7 @@
     "El Bajo Chaleco Manga Corta Negro es una prenda de indumentaria funcional diseñada para brindar comodidad durante el trabajo y actividades en épocas de temperaturas más altas.",
     "Está confeccionado en tela Ripstop de algodón, poliéster y licra y cuenta con manga corta, lo que lo convierte en una opción adecuada para el verano.",
     "Su diseño incorpora cuello Mao con abrojo y cremallera, además de dos bolsillos con cierres y Velcro para facilitar el acceso y organización de elementos durante el uso.",
-    "El modelo está disponible en talles M a 3XL y se presenta en color negro."
+    "El modelo está disponible en talles S a 3XL y se presenta en color negro."
    ],
    "caracteristicas": [
     "Manga corta, ideal para verano",
@@ -2970,7 +3583,7 @@
     "Algodón + poliéster + licra",
     "Cuello Mao con abrojo + cremallera",
     "2 bolsillos con cierre + Velcro",
-    "Talles M a 3XL"
+    "Talles S a 3XL"
    ],
    "funciones": [
     {
@@ -3092,7 +3705,7 @@
     },
     {
      "k": "TALLES",
-     "v": "M, L, XL, 2XL y 3XL"
+     "v": "S, M, L, XL, 2XL y 3XL"
     },
     {
      "k": "CALIDAD",
@@ -3142,7 +3755,7 @@
     },
     {
      "q": "¿Qué talles están disponibles?",
-     "a": "Está disponible en talles M, L, XL, 2XL y 3XL, sujeto a disponibilidad de stock."
+     "a": "Está disponible en talles S, M, L, XL, 2XL y 3XL, sujeto a disponibilidad de stock."
     },
     {
      "q": "¿Para qué se puede usar el Bajo Chaleco?",
@@ -3157,7 +3770,7 @@
    ],
    "relacionados": [
     "pantalon-cargo-tactico-ripstop-negro",
-    "cinto-tactico-cobra",
+    "cinto-tactico",
     "borcegos-tacticos-altama-negros",
     "gafa-tactica-sport-lentes-intercambiables"
    ],
@@ -3169,10 +3782,11 @@
    "opciones": {
     "con_talles": true,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": true,
     "consulta_whatsapp_talle": true,
     "info_altura": false,
-    "columnas_talle": 5,
+    "columnas_talle": 6,
     "nota_talle": null,
     "proporcion_foto": "1 / 1"
    },
@@ -3189,6 +3803,10 @@
       "chmc-5.webp"
      ],
      "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
       {
        "talle": "M",
        "estado": "disponible"
@@ -3231,14 +3849,14 @@
    "categoria": "INDUMENTARIA",
    "subcategoria": "BAJO CHALECOS",
    "sku": "TC-BCH-ML-MC",
-   "orden": 110,
+   "orden": 130,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
    "migas": "Inicio / Indumentaria / Bajo chalecos / Bajo Chaleco Manga Larga Multicam",
    "seo": {
     "titulo": "Bajo Chaleco Manga Larga Multicam | Tactical Command",
-    "descripcion": "Bajo chaleco manga larga Multicam con cuello Mao, cierre frontal y bolsillos con velcro para parches. Talles M a 3XL. Ideal para servicio, caza, camping y outdoor."
+    "descripcion": "Bajo chaleco manga larga Multicam con cuello Mao, cierre frontal y bolsillos con velcro para parches. Talles S a 3XL. Ideal para servicio, caza, camping y outdoor."
    },
    "descripcion": "Bajo chaleco de manga larga en patrón Multicam, confeccionado en una combinación de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, mientras que las mangas están confeccionadas en tela gabardina e incorporan bolsillos con cierre de velcro para colocar parches.",
    "descripcion_larga": [
@@ -3254,7 +3872,7 @@
     "Algodón + poliéster + licra",
     "Cuello Mao con abrojo + cremallera",
     "2 bolsillos con velcro para parches",
-    "Talles M a 3XL"
+    "Talles S a 3XL"
    ],
    "funciones": [
     {
@@ -3397,7 +4015,7 @@
     },
     {
      "k": "TALLES",
-     "v": "M, L, XL, 2XL y 3XL"
+     "v": "S, M, L, XL, 2XL y 3XL"
     }
    ],
    "faq": [
@@ -3446,7 +4064,7 @@
    ],
    "relacionados": [
     "pantalon-cargo-tactico-ripstop-negro",
-    "cinto-tactico-cobra",
+    "cinto-tactico",
     "borcegos-tacticos-altama-negros",
     "sombrero-de-monte-tactico"
    ],
@@ -3458,10 +4076,11 @@
    "opciones": {
     "con_talles": true,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": true,
     "consulta_whatsapp_talle": true,
     "info_altura": false,
-    "columnas_talle": 5,
+    "columnas_talle": 6,
     "nota_talle": null,
     "proporcion_foto": "1 / 1"
    },
@@ -3479,6 +4098,10 @@
       "chmlmc-6.webp"
      ],
      "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
       {
        "talle": "M",
        "estado": "disponible"
@@ -3521,14 +4144,14 @@
    "categoria": "INDUMENTARIA",
    "subcategoria": "BAJO CHALECOS",
    "sku": "TC-BCH-MC-MC",
-   "orden": 120,
+   "orden": 140,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
    "migas": "Inicio / Indumentaria / Bajo chalecos / Bajo Chaleco Manga Corta Multicam",
    "seo": {
     "titulo": "Bajo Chaleco Manga Corta Multicam | Tactical Command",
-    "descripcion": "Bajo chaleco manga corta Multicam con cuello Mao, cierre frontal y bolsillos con velcro para parches. Talles M a 3XL. Ideal para verano, servicio, caza, camping y outdoor."
+    "descripcion": "Bajo chaleco manga corta Multicam con cuello Mao, cierre frontal y bolsillos con velcro para parches. Talles S a 3XL. Ideal para verano, servicio, caza, camping y outdoor."
    },
    "descripcion": "Bajo chaleco de manga corta en patrón Multicam, confeccionado en una combinación de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, mientras que las mangas están confeccionadas en tela gabardina e incorporan bolsillos con cierre de velcro para colocar parches. Su manga corta lo hace ideal para el verano.",
    "descripcion_larga": [
@@ -3545,7 +4168,7 @@
     "Cuello Mao con abrojo + cremallera",
     "2 bolsillos con velcro para parches",
     "Ideal para verano",
-    "Talles M a 3XL"
+    "Talles S a 3XL"
    ],
    "funciones": [
     {
@@ -3689,7 +4312,7 @@
     },
     {
      "k": "TALLES",
-     "v": "M, L, XL, 2XL y 3XL"
+     "v": "S, M, L, XL, 2XL y 3XL"
     }
    ],
    "faq": [
@@ -3742,7 +4365,7 @@
    ],
    "relacionados": [
     "pantalon-cargo-tactico-ripstop-negro",
-    "cinto-tactico-cobra",
+    "cinto-tactico",
     "borcegos-tacticos-altama-negros",
     "gafa-tactica-sport-lentes-intercambiables"
    ],
@@ -3754,10 +4377,11 @@
    "opciones": {
     "con_talles": true,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": true,
     "consulta_whatsapp_talle": true,
     "info_altura": false,
-    "columnas_talle": 5,
+    "columnas_talle": 6,
     "nota_talle": null,
     "proporcion_foto": "1 / 1"
    },
@@ -3775,6 +4399,10 @@
       "chmcmc-6.webp"
      ],
      "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
       {
        "talle": "M",
        "estado": "disponible"
@@ -3817,7 +4445,7 @@
    "categoria": "ACCESORIOS",
    "subcategoria": "PARCHES E INSIGNIAS",
    "sku": "TC-PAR-ARG",
-   "orden": 130,
+   "orden": 150,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
@@ -3835,6 +4463,7 @@
    ],
    "caracteristicas": [
     "Diseño bordado de la bandera argentina",
+    "Con abrojo + velcro",
     "Dos alternativas de fijación",
     "Compatible con superficies de velcro",
     "Personaliza uniformes, mochilas y gorras",
@@ -3990,6 +4619,7 @@
    "opciones": {
     "con_talles": false,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": false,
     "consulta_whatsapp_talle": false,
     "info_altura": false,
@@ -4002,7 +4632,13 @@
      "nombre": "BANDERA ARGENTINA",
      "sku": "TC-PAR-ARG",
      "muestra": "#74ACDF",
-     "fotos": [],
+     "fotos": [
+      "parche-arg-1.webp",
+      "parche-arg-2.webp",
+      "parche-arg-3.webp",
+      "parche-arg-4.webp",
+      "parche-arg-5.webp"
+     ],
      "talles": []
     }
    ],
@@ -4011,7 +4647,7 @@
      "clave": "parchear",
      "nombre": "Parche Bordado Bandera Argentina",
      "color": null,
-     "imagen": null
+     "imagen": "parche-arg-1.webp"
     }
    ]
   },
@@ -4019,13 +4655,13 @@
    "slug": "sombrero-de-monte-tactico",
    "nombre": "Sombrero de Monte",
    "titulo": [
-    "SOMBRERO DE MONTE",
-    "WOODLAND · MULTICAM"
+    "SOMBRERO",
+    "DE MONTE"
    ],
    "categoria": "ACCESORIOS",
    "subcategoria": "SOMBREROS Y GORROS",
    "sku": "TC-SOM-BOO",
-   "orden": 140,
+   "orden": 160,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
@@ -4038,7 +4674,7 @@
    "descripcion_larga": [
     "El sombrero de monte táctico tipo boonie es un accesorio de indumentaria outdoor pensado para acompañar actividades al aire libre y complementar el equipamiento táctico.",
     "Su diseño incorpora un ala amplia con costuras reforzadas, una banda perimetral con presillas en la copa y ojales laterales de ventilación. Además, cuenta con un cordón de sujeción con ajuste para ayudar a mantener el sombrero en su posición durante el uso.",
-    "Está disponible en dos estampados camuflados: Woodland y Multicam. Los talles se consultan por WhatsApp antes de realizar la compra.",
+    "Está disponible en dos estampados camuflados: Woodland y Multicam. Disponible en talles del XS al 2XL.",
     "Por su diseño funcional, es una opción para camping, pesca, trekking, caza y otras actividades outdoor."
    ],
    "caracteristicas": [
@@ -4179,12 +4815,13 @@
     "imagen": null
    },
    "opciones": {
-    "con_talles": false,
+    "con_talles": true,
     "es_calzado": false,
+    "es_sombrero": true,
     "es_indumentaria": false,
     "consulta_whatsapp_talle": false,
     "info_altura": false,
-    "columnas_talle": null,
+    "columnas_talle": 6,
     "nota_talle": null,
     "proporcion_foto": "5 / 6"
    },
@@ -4197,7 +4834,32 @@
       "som-wd-1.webp",
       "som-wd-2.webp"
      ],
-     "talles": []
+     "talles": [
+      {
+       "talle": "XS",
+       "estado": "disponible"
+      },
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      }
+     ]
     },
     {
      "nombre": "MULTICAM",
@@ -4207,7 +4869,32 @@
       "som-mc-1.webp",
       "som-mc-2.webp"
      ],
-     "talles": []
+     "talles": [
+      {
+       "talle": "XS",
+       "estado": "disponible"
+      },
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      }
+     ]
     }
    ],
    "tarjetas": [
@@ -4235,7 +4922,7 @@
    "categoria": "ACCESORIOS",
    "subcategoria": "GAFAS",
    "sku": "TC-GAF-SPT",
-   "orden": 150,
+   "orden": 170,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
@@ -4244,28 +4931,29 @@
     "titulo": null,
     "descripcion": null
    },
-   "descripcion": "Gafa táctica de diseño envolvente con set de lentes intercambiables y accesorios para sujeción, protección y limpieza. Incluye lente negro polarizado con protección UV, adaptador óptico, correa de sujeción, estuche rígido termoformado, funda y paño de limpieza. Producto no original, de calidad Premium.",
+   "descripcion": "Gafa táctica de diseño envolvente con set de lentes intercambiables y accesorios para sujeción, protección y limpieza. Incluye lente negro polarizado con protección UV, adaptador óptico, 2 correas de sujeción, estuche rígido termoformado, funda y paño de limpieza. Producto no original, de calidad Premium.",
    "descripcion_larga": [
     "Las Gafas Tácticas Oakley - Set Completo son un conjunto versátil pensado para acompañar actividades al aire libre y el uso diario.",
-    "Su diseño envolvente ofrece una cobertura amplia y cuenta con diferentes lentes intercambiables para adaptar la gafa según el estilo o la actividad.",
-    "El set incluye un lente negro polarizado con protección UV, además de otros lentes intercambiables en distintos tonos que no cuentan con protección UV.",
-    "Para complementar su uso, incorpora un adaptador óptico, correa de sujeción, estuche rígido termoformado, funda y paño de limpieza.",
+    "Su diseño envolvente ofrece una cobertura amplia y cuenta con 5 lentes intercambiables para adaptar la gafa según el estilo o la actividad.",
+    "El set incluye un lente negro polarizado con protección UV, además de otros 4 lentes intercambiables en distintos tonos que no cuentan con protección UV.",
+    "Para complementar su uso, incorpora un adaptador óptico, correas de sujeción, estuche rígido termoformado, funda y paño de limpieza.",
     "Es una opción práctica para actividades como ciclismo, pesca, trekking, camping y polígono, además del uso diario.",
     "Es un producto no original, de calidad Premium."
    ],
    "caracteristicas": [
     "Diseño envolvente sport",
-    "Lentes intercambiables",
+    "5 lentes intercambiables",
     "Lente negro polarizado con UV",
     "Adaptador óptico",
-    "Correa de sujeción",
+    "Correas de sujeción",
     "Estuche rígido termoformado",
+    "Funda y paño de limpieza",
     "Calidad Premium · producto no original"
    ],
    "funciones": [
     {
      "titulo": "LENTE NEGRO POLARIZADO",
-     "texto": "El lente negro incluido cuenta con polarización y protección UV. Los demás lentes intercambiables del set no cuentan con protección UV.",
+     "texto": "El lente negro incluido cuenta con polarización y protección UV. Los otros 4 lentes intercambiables del set no cuentan con protección UV.",
      "destacado": "Polarizado + protección UV"
     },
     {
@@ -4275,7 +4963,7 @@
     },
     {
      "titulo": "LENTES INTERCAMBIABLES",
-     "texto": "Permite cambiar los lentes incluidos según el estilo o actividad.",
+     "texto": "Incluye 5 lentes intercambiables que permiten cambiar según el estilo o actividad.",
      "destacado": "Distintos tonos"
     },
     {
@@ -4290,7 +4978,7 @@
     },
     {
      "titulo": "SISTEMA DE SUJECIÓN",
-     "texto": "Incluye correa de sujeción para mantener la gafa asegurada durante su uso.",
+     "texto": "Incluye 2 correas de sujeción para mantener la gafa asegurada durante su uso.",
      "destacado": "Correa incluida"
     },
     {
@@ -4322,7 +5010,7 @@
       "texto": "Diseño envolvente."
      },
      {
-      "titulo": "LENTES INTERCAMBIABLES",
+      "titulo": "5 LENTES INTERCAMBIABLES",
       "texto": "En distintos tonos. Solo el lente negro polarizado cuenta con protección UV."
      },
      {
@@ -4330,8 +5018,8 @@
       "texto": "Incluido en el set."
      },
      {
-      "titulo": "CORREA DE SUJECIÓN",
-      "texto": "Para mantener la gafa asegurada durante su uso."
+      "titulo": "CORREAS DE SUJECIÓN",
+      "texto": "Son 2, para mantener la gafa asegurada durante su uso."
      },
      {
       "titulo": "ESTUCHE RÍGIDO TERMOFORMADO",
@@ -4367,7 +5055,7 @@
     },
     {
      "k": "LENTES",
-     "v": "Intercambiables"
+     "v": "5 lentes intercambiables"
     },
     {
      "k": "LENTE PRINCIPAL",
@@ -4387,7 +5075,7 @@
     },
     {
      "k": "SUJECIÓN",
-     "v": "Correa de sujeción"
+     "v": "2 correas de sujeción"
     },
     {
      "k": "ESTUCHE",
@@ -4425,15 +5113,15 @@
    "faq": [
     {
      "q": "¿Qué incluye el set de gafas tácticas?",
-     "a": "El set incluye una gafa de diseño sport, lentes intercambiables en distintos tonos, adaptador óptico, correa de sujeción, estuche rígido termoformado, funda y paño de limpieza."
+     "a": "El set incluye una gafa de diseño sport, 5 lentes intercambiables en distintos tonos, adaptador óptico, 2 correas de sujeción, estuche rígido termoformado, funda y paño de limpieza."
     },
     {
      "q": "¿Las gafas tienen lentes intercambiables?",
-     "a": "Sí. El set incluye lentes intercambiables en distintos tonos."
+     "a": "Sí. El set incluye 5 lentes intercambiables en distintos tonos."
     },
     {
      "q": "¿Todos los lentes tienen protección UV?",
-     "a": "No. El lente negro polarizado cuenta con protección UV, mientras que los demás lentes intercambiables no cuentan con protección UV."
+     "a": "No. El lente negro polarizado cuenta con protección UV, mientras que los otros 4 lentes intercambiables no cuentan con protección UV."
     },
     {
      "q": "¿La gafa tiene lente polarizado?",
@@ -4448,8 +5136,8 @@
      "a": "Sí. El set incluye un adaptador óptico."
     },
     {
-     "q": "¿La gafa incluye correa de sujeción?",
-     "a": "Sí. Incluye una correa de sujeción."
+     "q": "¿La gafa incluye correas de sujeción?",
+     "a": "Sí. Incluye 2 correas de sujeción."
     },
     {
      "q": "¿Tiene estuche?",
@@ -4489,7 +5177,7 @@
    "relacionados": [
     "shemagh",
     "sombrero-de-monte-tactico",
-    "cinto-tactico-cobra",
+    "cinto-tactico",
     "bandolera-tactica-cruzada-negra"
    ],
    "guia": {
@@ -4500,6 +5188,7 @@
    "opciones": {
     "con_talles": false,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": false,
     "consulta_whatsapp_talle": false,
     "info_altura": true,
@@ -4540,7 +5229,7 @@
    "categoria": "INDUMENTARIA",
    "subcategoria": "PANTALONES TÁCTICOS",
    "sku": "TC-PAN-RS-WD",
-   "orden": 160,
+   "orden": 180,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
@@ -4780,7 +5469,7 @@
     "sombrero"
    ],
    "relacionados": [
-    "cinto-tactico-cobra",
+    "cinto-tactico",
     "borcegos-tacticos-altama-negros",
     "bajo-chaleco-manga-larga-multicam",
     "sombrero-de-monte-tactico"
@@ -4793,6 +5482,7 @@
    "opciones": {
     "con_talles": true,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": true,
     "consulta_whatsapp_talle": true,
     "info_altura": false,
@@ -4859,7 +5549,7 @@
    "categoria": "INDUMENTARIA",
    "subcategoria": "PANTALONES TÁCTICOS",
    "sku": "TC-PAN-RS-NG",
-   "orden": 170,
+   "orden": 190,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
@@ -4868,19 +5558,19 @@
     "titulo": null,
     "descripcion": null
    },
-   "descripcion": "Pantalón cargo táctico unisex confeccionado en tela Ripstop negra, liviana y resistente, diseñado para brindar comodidad, resistencia y practicidad durante la jornada. Cuenta con múltiples bolsillos funcionales, porta cargador 9 mm, cintura elastizada, rodillas articuladas y costuras reforzadas. Su material es repelente al agua.",
+   "descripcion": "Pantalón cargo táctico unisex confeccionado en tela Ripstop negra, liviana y resistente, diseñado para brindar comodidad, resistencia y practicidad durante la jornada. Cuenta con múltiples bolsillos funcionales, bolsillos porta cargador 9 mm, cintura elastizada, rodillas articuladas y costuras reforzadas. Su material es repelente al agua.",
    "descripcion_larga": [
     "El Pantalón Cargo Táctico Ripstop Negro está diseñado para brindar comodidad, resistencia y practicidad durante la jornada.",
     "Está confeccionado en tela Ripstop liviana y resistente, en color negro, y cuenta con múltiples bolsillos funcionales con cierre y solapa, pensados para facilitar la organización y el acceso al equipamiento.",
-    "Incorpora un bolsillo porta cargador 9 mm con prendedores, además de cintura elastizada para favorecer un ajuste más cómodo y rodillas articuladas que permiten mayor libertad de movimiento.",
+    "Incorpora bolsillos porta cargador 9 mm con prendedores, además de cintura elastizada para favorecer un ajuste más cómodo y rodillas articuladas que permiten mayor libertad de movimiento.",
     "Las costuras reforzadas aportan una construcción preparada para un uso exigente, mientras que el material repelente al agua brinda una característica adicional de protección frente a la humedad.",
     "Su diseño funcional y versátil lo hace especialmente indicado para personal de seguridad, fuerzas policiales, polígono y uso diario.",
     "Disponible en talles S, M, L, XL, 2XL y 3XL."
    ],
    "caracteristicas": [
     "Tela Ripstop",
-    "8 bolsillos",
-    "Porta cargador 9 mm",
+    "Bolsillos",
+    "Bolsillos porta cargador 9 mm",
     "Cintura elastizada",
     "Rodillas articuladas",
     "Repelente al agua"
@@ -4892,13 +5582,13 @@
      "destacado": "Liviana y resistente"
     },
     {
-     "titulo": "8 BOLSILLOS",
+     "titulo": "BOLSILLOS",
      "texto": "Distribución funcional de bolsillos para transportar y organizar diferentes elementos.",
      "destacado": "Organización y acceso"
     },
     {
-     "titulo": "PORTA CARGADOR 9 MM",
-     "texto": "Bolsillo lateral específico para cargador 9 mm, con prendedores para su sujeción.",
+     "titulo": "BOLSILLOS PORTA CARGADOR 9 MM",
+     "texto": "Bolsillos laterales específicos para cargador 9 mm, con prendedores para su sujeción.",
      "destacado": "Bolsillo lateral específico"
     },
     {
@@ -4946,11 +5636,11 @@
     "items": [
      {
       "titulo": "BOLSILLOS",
-      "texto": "8 bolsillos funcionales: frontales, traseros, laterales y porta cargador 9 mm. Los bolsillos funcionales cuentan con cierre y solapa."
+      "texto": "Bolsillos funcionales: frontales, traseros, laterales y porta cargador 9 mm. Los bolsillos funcionales cuentan con cierre y solapa."
      },
      {
-      "titulo": "PORTA CARGADOR 9 MM",
-      "texto": "Bolsillo lateral específico para porta cargador 9 mm, equipado con prendedores."
+      "titulo": "BOLSILLOS PORTA CARGADOR 9 MM",
+      "texto": "Bolsillos laterales específicos para cargador 9 mm, equipados con prendedores."
      },
      {
       "titulo": "CINTURA",
@@ -5023,7 +5713,7 @@
     },
     {
      "k": "BOLSILLOS",
-     "v": "8"
+     "v": "Sí"
     },
     {
      "k": "BOLSILLOS FUNCIONALES",
@@ -5034,7 +5724,7 @@
      "v": "Sí"
     },
     {
-     "k": "PORTA CARGADOR",
+     "k": "BOLSILLOS PORTA CARGADOR",
      "v": "9 mm"
     },
     {
@@ -5077,15 +5767,15 @@
     },
     {
      "q": "¿Cuántos bolsillos tiene?",
-     "a": "Cuenta con 8 bolsillos funcionales para transportar diferentes elementos."
+     "a": "Cuenta con bolsillos funcionales para transportar diferentes elementos."
     },
     {
      "q": "¿Los bolsillos tienen cierre?",
      "a": "Sí. Los bolsillos funcionales cuentan con cierre y solapa."
     },
     {
-     "q": "¿Tiene porta cargador?",
-     "a": "Sí. Incorpora un bolsillo porta cargador 9 mm con prendedores."
+     "q": "¿Tiene bolsillos porta cargador?",
+     "a": "Sí. Incorpora bolsillos porta cargador 9 mm con prendedores."
     },
     {
      "q": "¿La cintura es elastizada?",
@@ -5119,7 +5809,7 @@
     "bandng"
    ],
    "relacionados": [
-    "cinto-tactico-cobra",
+    "cinto-tactico",
     "borcegos-tacticos-altama-negros",
     "bajo-chaleco-manga-larga-negro",
     "bandolera-tactica-cruzada-negra"
@@ -5132,6 +5822,7 @@
    "opciones": {
     "con_talles": true,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": true,
     "consulta_whatsapp_talle": true,
     "info_altura": false,
@@ -5198,7 +5889,7 @@
    "categoria": "INDUMENTARIA",
    "subcategoria": "CAMPERAS",
    "sku": "TC-GTEX-001",
-   "orden": 180,
+   "orden": 200,
    "precio_minorista": 50000,
    "precio_transferencia": 50000,
    "precio_provisorio": true,
@@ -5443,6 +6134,7 @@
    "opciones": {
     "con_talles": true,
     "es_calzado": false,
+    "es_sombrero": false,
     "es_indumentaria": true,
     "consulta_whatsapp_talle": true,
     "info_altura": false,
@@ -5625,12 +6317,14 @@
  "tarjeta_slug": {
   "unimp": "uniforme-tactico",
   "unigt": "uniforme-tactico",
-  "cintomt": "cinto-tactico-cobra",
-  "cintocy": "cinto-tactico-cobra",
-  "cintovo": "cinto-tactico-cobra",
+  "cintomt": "cinto-tactico",
+  "cintocy": "cinto-tactico",
+  "cintovo": "cinto-tactico",
   "shemagh": "shemagh",
   "shemng": "shemagh",
   "shemmr": "shemagh",
+  "b511": "borcego-tactico-estilo-511-negro",
+  "ranger": "borcego-tactico-ranger-negro",
   "altama": "borcegos-tacticos-altama-negros",
   "chelco": "bajo-chaleco-manga-larga-negro",
   "chalmc": "bajo-chaleco-manga-corta-negro",

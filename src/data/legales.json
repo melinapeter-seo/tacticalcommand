@@ -333,7 +333,10 @@
       "p": "El costo de envío está a cargo del comprador."
      },
      {
-      "p": "El costo del envío dependerá del destino, modalidad seleccionada, características del pedido y tarifa vigente del servicio de transporte."
+      "p": "Dentro de Rafaela, el envío tiene un valor de {envio_rafaela}. Para el resto del país, el costo se coordina por WhatsApp."
+     },
+     {
+      "p": "Fuera de Rafaela, el costo del envío dependerá del destino, modalidad seleccionada, características del pedido y tarifa vigente del servicio de transporte."
      },
      {
       "p": "El importe será informado por WhatsApp antes de confirmar la compra."

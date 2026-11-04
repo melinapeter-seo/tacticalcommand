@@ -88,10 +88,18 @@ async function main() {
     }
   }
 
+  // Textos con datos que se editan en la hoja `config`: {envio_rafaela} → "$5.000".
+  const generar = async (catalogo, categorias, config) => {
+    const marcas = { envio_rafaela: '$' + Number(config.envio_rafaela || 0).toLocaleString('es-AR') };
+    const llenar = (v) => JSON.parse(JSON.stringify(v).replace(/\{(\w+)\}/g, (m, k) => marcas[k] ?? m));
+    await escribir(path.join(SALIDA, 'catalog.json'), llenar(catalogo));
+    await escribir(path.join(SALIDA, 'categorias.json'), llenar(categorias));
+    await escribir(path.join(SALIDA, 'config.json'), llenar(config));
+    for (const f of ['legales.json', 'envios-faq.json']) await escribir(path.join(SALIDA, f), llenar(await leer(path.join(DATA, f))));
+  };
+
   if (!api) {
-    await escribir(path.join(SALIDA, 'catalog.json'), base);
-    await escribir(path.join(SALIDA, 'categorias.json'), categoriasBase);
-    await escribir(path.join(SALIDA, 'config.json'), configBase);
+    await generar(base, categoriasBase, configBase);
     log(API ? 'sin planilla disponible: se usa el catálogo del repo.' : 'PUBLIC_TC_API vacío: se usa el catálogo del repo.');
     return;
   }
@@ -108,10 +116,8 @@ async function main() {
   };
 
   const { catalogo, categorias, config } = combinar(api, base, categoriasBase, resolverFoto);
-  await escribir(path.join(SALIDA, 'catalog.json'), catalogo);
-  await escribir(path.join(SALIDA, 'categorias.json'), categorias);
   const conValor = Object.entries(config).filter(([, v]) => v !== '' && v != null);
-  await escribir(path.join(SALIDA, 'config.json'), { ...configBase, ...Object.fromEntries(conValor) });
+  await generar(catalogo, categorias, { ...configBase, ...Object.fromEntries(conValor) });
   log(`${catalogo.productos.length} productos desde la ${origen}.`);
 }
 

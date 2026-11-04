@@ -1,5 +1,5 @@
 ---
-import { NAV, indiceBusqueda } from '../lib/data';
+import { ENVIO_RAFAELA, NAV, indiceBusqueda } from '../lib/data';
 const idx = indiceBusqueda();
 const x = `<svg viewBox="0 0 24 24" fill="none" stroke="#E3B23C" stroke-width="2" stroke-linecap="round" style="width:8px;height:8px" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>`;
 ---
@@ -31,7 +31,7 @@ const x = `<svg viewBox="0 0 24 24" fill="none" stroke="#E3B23C" stroke-width="2
     <div class="dr-list" id="cart-list"></div>
     <div class="dr-foot">
       <div class="dr-row"><span style="color:#9AA09A">SUBTOTAL</span><span id="cart-total">A CONFIRMAR</span></div>
-      <div class="dr-row dr-ship"><span>ENVÍO</span><span class="dr-ship-v"><span style="color:#C3C8C1">A CARGO DEL COMPRADOR</span><span>SE COTIZA POR WHATSAPP</span></span></div>
+      <div class="dr-row dr-ship"><span>ENVÍO</span><span class="dr-ship-v"><span style="color:#C3C8C1">A CARGO DEL COMPRADOR</span><span>RAFAELA {ENVIO_RAFAELA} · RESTO DEL PAÍS COSTO A COORDINAR POR WHATSAPP</span></span></div>
       <div id="cart-cta" hidden>
         <a id="cart-wa" href="#" target="_blank" rel="noopener" class="btn-gold anim dr-wa" data-wa="carrito">ENVIAR PEDIDO POR WHATSAPP →</a>
         <div class="dr-how">

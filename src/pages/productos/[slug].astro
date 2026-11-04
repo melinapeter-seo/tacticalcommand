@@ -24,12 +24,17 @@ const keysD = hasKeys && !o.es_calzado;
 
 // Datos por color para el script de la ficha (fotos optimizadas, talles, SKU, precio por talle).
 const colores = await Promise.all(p.colores.map(async (c) => ({
-  n: c.nombre, sku: c.sku, sw: c.muestra, talles: c.talles.map((t) => t.talle), fotos: await fotosVista(c.fotos),
+  n: c.nombre, sku: c.sku, sw: c.muestra, fotos: await fotosVista(c.fotos),
+  // Calzado: los números de niños van en una fila aparte.
+  talles: c.talles.filter((t) => !t.ninos).map((t) => t.talle), ninos: c.talles.filter((t) => t.ninos).map((t) => t.talle),
   precio: precioDe(p, c), pt: Object.fromEntries(c.talles.map((t) => [t.talle, precioDe(p, c, t.talle)])),
 })));
 const r0 = rangoPrecio(p, p.colores[0]);
 const c0 = colores[0];
 const tallesMax = c0.talles;
+const ninosMax = c0.ninos;
+const lblTalle = o.es_calzado ? 'NROS DE CALZADO' : 'TALLE';
+const sinTalle = o.es_calzado ? 'SELECCIONE SU NRO' : 'SELECCIONAR TALLE';
 const nT = Math.max(c0.fotos.length - 1, 1);
 const sizeColD = o.columnas_talle || 6;
 const sizeColM = c0.talles.length % 4 === 0 ? 4 : 3;
@@ -77,9 +82,11 @@ const jsonld = graph(
     // Una variante por color; si el color tiene precios distintos por talle, una por color y talle.
     hasVariant: colores.flatMap((c) => {
       const v = { '@type': 'Product', name: multi ? `${nombre} ${cap(c.n)}` : nombre, sku: c.sku, color: cap(c.n), url: abs(path) + (multi ? `?color=${encodeURIComponent(c.n)}` : ''), image: c.fotos.map((f) => abs(f.full)) };
-      const precios = new Set(c.talles.map((t) => c.pt[t]));
-      if (precios.size > 1) return c.talles.map((t) => ({ ...v, name: `${v.name} talle ${t}`, sku: `${c.sku}-${t}`, size: t, offers: offer(`${c.sku}-${t}`, c.pt[t]) }));
-      return [{ ...v, ...(c.talles.length ? { size: c.talles.join(', ') } : {}), offers: offer(c.sku, c.talles.length ? c.pt[c.talles[0]] : c.precio) }];
+      const tt = [...c.talles, ...c.ninos];
+      const nom = (t: string) => (c.ninos.includes(t) ? `${t} (niños)` : t);
+      const precios = new Set(tt.map((t) => c.pt[t]));
+      if (precios.size > 1) return tt.map((t) => ({ ...v, name: `${v.name} ${o.es_calzado ? 'número' : 'talle'} ${nom(t)}`, sku: `${c.sku}-${t}`, size: nom(t), offers: offer(`${c.sku}-${t}`, c.pt[t]) }));
+      return [{ ...v, ...(tt.length ? { size: tt.map(nom).join(', ') } : {}), offers: offer(c.sku, tt.length ? c.pt[tt[0]] : c.precio) }];
     }),
   },
   breadcrumbs([['Inicio', '/'], [cap(cat.titulo), `/${cat.slug}/`], [nombre, path]]),
@@ -90,7 +97,7 @@ const title = p.seo.titulo ? `${p.seo.titulo} | Tactical Command` : `${nombre} |
 const descBase = p.seo.descripcion || p.descripcion;
 const description = desc(descBase.length >= 80 ? descBase : `${descBase.replace(/\.?$/, '.')} Envíos a todo el país desde Rafaela, Santa Fe. Consultas por WhatsApp.`);
 const lcp = c0.fotos[0];
-const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, provisorio: p.precio_provisorio, colores, waNum: '5493492649494' };
+const data = { slug: p.slug, nombre, multi, app, shoe: o.es_calzado, conTalles: o.con_talles, provisorio: p.precio_provisorio, colores, waNum: '5493492649494' };
 ---
 <Base title={title} description={description} path={path} ogType="product" ogImage={`/og/productos/${p.slug}.jpg`} jsonld={jsonld} lcp={lcp ? { srcset: lcp.srcset, sizes: '(min-width: 1024px) 40vw, 100vw', type: 'image/webp' } : null}>
   <article class:list={['pdp', app ? 'app' : 'std', { shoe: o.es_calzado }]} itemscope>
@@ -124,7 +131,8 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, provis
           <span class="sku"><span class="d-only">SKU / </span><span data-sku>{c0.sku}</span></span>
         </div>
         <h1 class:list={['h1', { nw: !app && h1.length <= 26 }]}>{h1}</h1>
-        <p class="lead d-std">{p.descripcion}</p>
+        <p class="lead d-std" id="lead">{p.descripcion}</p>
+        <button type="button" class="ver-mas d-std" id="lead-mas" aria-controls="lead" aria-expanded="false" hidden>VER MÁS +</button>
         <div class="price price-top"><data value={r0.min} data-precio>{precioTexto(r0)}</data></div>
         <div class="hr hr-a"></div>
 
@@ -143,12 +151,20 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, provis
 
         {o.con_talles && (
           <div class="sizes">
-            <div class="row-l sz-head"><span>TALLE</span>{sizeCalc && <button type="button" class="calc calc-top" data-open-calc><span class="d-only">CALCULÁ TU TALLE IDEAL →</span><span class="m-only">GUÍA DE TALLES →</span></button>}</div>
-            <div class="sz-grid" role="radiogroup" aria-label="Talle" id="sz-grid">
-              {tallesMax.map((t) => <button type="button" class="sz" role="radio" aria-checked="false" data-talle={t} title={`Talle ${t}`}>{t}</button>)}
+            <div class="row-l sz-head"><span>{lblTalle}</span>{sizeCalc && <button type="button" class="calc calc-top" data-open-calc><span class="d-only">CALCULÁ TU TALLE IDEAL →</span><span class="m-only">GUÍA DE TALLES →</span></button>}</div>
+            <div class="sz-grid" role="radiogroup" aria-label={o.es_calzado ? 'Número' : 'Talle'} id="sz-grid">
+              {tallesMax.map((t) => <button type="button" class="sz" role="radio" aria-checked="false" data-talle={t} title={o.es_calzado ? `Nro ${t}` : `Talle ${t}`}>{t}</button>)}
             </div>
+            {ninosMax.length > 0 && (
+              <div class="kids">
+                <div class="kids-l" id="kids-l">NIÑOS · NROS DISPONIBLES</div>
+                <div class="sz-grid kids-grid" role="radiogroup" aria-labelledby="kids-l">
+                  {ninosMax.map((t) => <button type="button" class="sz" role="radio" aria-checked="false" data-talle={t} title={`Nro ${t} (niños)`}>{t}</button>)}
+                </div>
+              </div>
+            )}
             <div class="sz-state-row">
-              <span class="sz-state" id="sz-state" aria-live="polite">SELECCIONAR TALLE</span>
+              <span class="sz-state" id="sz-state" aria-live="polite">{sinTalle}</span>
               {sizeCalc && <button type="button" class="calc calc-bot" data-open-calc>CALCULÁ TU TALLE IDEAL →</button>}
             </div>
             {o.nota_talle && <div class="sz-note">{o.nota_talle}</div>}
@@ -327,11 +343,11 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, provis
   </article>
 
   <div class="sticky m-only" id="sticky" hidden>
-    <div class="st-l"><div class="st-p"><data value={r0.min} data-precio>{precioTexto(r0)}</data></div><div class="st-s" id="st-s">{c0.n}{o.con_talles ? ' · SELECCIONAR TALLE' : ''}</div></div>
+    <div class="st-l"><div class="st-p"><data value={r0.min} data-precio>{precioTexto(r0)}</data></div><div class="st-s" id="st-s">{c0.n}{o.con_talles ? ` · ${sinTalle}` : ''}</div></div>
     <button type="button" class="btn-gold anim st-b" data-add>COMPRAR</button>
   </div>
 
-  {sizeCalc && <SizeCalc nombre={nombre} />}
+  {sizeCalc && <SizeCalc nombre={nombre} sombrero={o.es_sombrero} />}
   <script type="application/json" id="pdp-data" set:html={JSON.stringify(data)} />
 </Base>
 
@@ -374,7 +390,10 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, provis
   .h1.nw { white-space: nowrap; }
   .app .h1 { line-height: .95; margin-top: 16px; }
   .lead { font-size: clamp(14px, calc(1.6vh / var(--z)), 16px); line-height: 1.6; color: var(--muted); margin: clamp(10px, calc(2vh / var(--z)), 22px) 0 0; text-wrap: pretty; }
-  .shoe .lead { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  /* Calzado: descripción corta de hasta 3 líneas y «VER MÁS» si no entra (lo decide pdp.ts). Nunca queda cortada sin el botón. */
+  :global(.js) .lead.recorte { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .ver-mas { align-self: flex-start; display: block; text-align: left; background: none; border: 0; padding: 0; margin-top: 8px; cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--gold); }
+  .ver-mas[hidden] { display: none; }
   .price { font-size: clamp(30px, calc(4.2vh / var(--z)), 42px); font-weight: 600; letter-spacing: -.035em; line-height: 1; }
   .std .price-top { display: none; }
   .app .price-top { margin-top: 20px; }
@@ -407,6 +426,9 @@ const data = { slug: p.slug, nombre, multi, app, conTalles: o.con_talles, provis
   .sz:hover { border-color: var(--gold); }
   .sz[aria-checked='true'] { background: var(--gold); border-color: var(--gold); color: var(--ink); }
   .sz[hidden] { display: none; }
+  .kids { margin-top: 12px; }
+  .kids-l { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; color: var(--gold); }
+  .sz-grid.kids-grid { grid-template-columns: repeat(6, 1fr); }
   .sz-state-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 10px; }
   .app .sz-state-row { display: none; }
   .sz-state { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); }

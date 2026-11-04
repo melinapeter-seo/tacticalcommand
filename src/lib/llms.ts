@@ -6,7 +6,7 @@ import { EMAIL } from './seo';
 export function llms(full: boolean) {
   const L: string[] = [];
   L.push('# Tactical Command', '');
-  L.push('> Tienda argentina de indumentaria, equipos tácticos, calzado y accesorios para fuerzas de seguridad, trabajo, entrenamiento y outdoor. Opera desde 2012 en Rafaela, Santa Fe, vende por menor y por mayor y hace envíos a todo el país.', '');
+  L.push('> Tienda argentina de indumentaria, equipos tácticos, calzado y accesorios para fuerzas de seguridad, trabajo, entrenamiento y outdoor. Opera desde 2012 en Rafaela, Santa Fe, vende por menor y por mayor y realiza envíos a todo el país.', '');
   L.push('## Datos clave', '');
   L.push('- Ubicación: Rafaela, Santa Fe, Argentina (opera de forma digital; sin local a la calle).');
   L.push('- En el rubro desde: 2012.');

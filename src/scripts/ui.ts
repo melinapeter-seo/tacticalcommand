@@ -127,6 +127,47 @@ if (motion && 'IntersectionObserver' in window) {
     el.classList.add('rv-wait');
     io.observe(el);
   });
+
+  // Aparición suave de títulos, textos, imágenes y celdas de grillas que están fuera de la pantalla al cargar
+  // (diseño de noviembre 2026). Se saltean menús, overlays, carruseles y lo que ya tiene su propia animación.
+  const main = document.querySelector('main');
+  const vh = window.innerHeight, mob = window.innerWidth < 1024;
+  const esGrilla = new Map<Element, boolean>(), esFijo = new Map<Element, boolean>();
+  const grilla = (el: Element | null) => !!el && (esGrilla.has(el) ? esGrilla.get(el)! : (esGrilla.set(el, getComputedStyle(el).display.includes('grid')), esGrilla.get(el)!));
+  const fijo = (el: Element): boolean => {
+    for (let a: Element | null = el.parentElement; a && a !== main; a = a.parentElement) {
+      if (!esFijo.has(a)) { const cs = getComputedStyle(a); esFijo.set(a, /fixed|sticky/.test(cs.position) || /auto|scroll/.test(cs.overflowX)); }
+      if (esFijo.get(a)) return true;
+    }
+    return false;
+  };
+  const io2 = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const el = e.target as HTMLElement, ms = 900 + (parseFloat(el.dataset.rvd || '0'));
+    el.style.opacity = ''; el.style.translate = '';
+    io2.unobserve(el);
+    // Al terminar se quita la transición para no pisar las de hover del CSS.
+    setTimeout(() => { el.style.transition = ''; delete el.dataset.rvd; }, ms + 50);
+  }), { rootMargin: '0px 0px -4% 0px', threshold: 0.01 });
+  const sel = 'h1,h2,h3,p,img,video,table,details';
+  const SKIP = 'header,nav,.ov,dialog,[hidden],[data-noscrollbar],[data-reveal],[data-noreveal],#sticky';
+  // Primero se mide todo y después se escribe, para no forzar un recálculo de estilos por elemento.
+  const elegidos: HTMLElement[] = [];
+  main?.querySelectorAll<HTMLElement>('*').forEach((el) => {
+    if (!(el.matches(sel) || grilla(el.parentElement)) || el.closest(SKIP) || fijo(el)) return;
+    if (elegidos.some((x) => x.contains(el))) return; // sus hijos no se animan aparte
+    const r = el.getBoundingClientRect();
+    if (r.top < vh * 0.92 || (!r.width && !r.height)) return;
+    elegidos.push(el);
+  });
+  elegidos.forEach((el) => {
+    const ix = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) % 6 : 0;
+    el.dataset.rvd = String(ix * 70);
+    el.style.opacity = '0';
+    el.style.translate = `0 ${mob ? 18 : 28}px`;
+    el.style.transition = `opacity .9s cubic-bezier(.22,1,.36,1) ${ix * 70}ms, translate .9s cubic-bezier(.22,1,.36,1) ${ix * 70}ms`;
+    io2.observe(el);
+  });
 }
 
 // ---------- Carruseles horizontales con flechas ----------

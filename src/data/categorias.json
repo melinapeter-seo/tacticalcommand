@@ -75,7 +75,7 @@
       "Ripstop de algodón, poliéster y licra",
       "Trabajo y uso bajo chaleco",
       "Cuello Mao con abrojo y cremallera, 2 bolsillos con cierre y Velcro",
-      "Negro y Multicam · M a 3XL"
+      "Negro y Multicam · S a 3XL"
      ]
     },
     {
@@ -85,7 +85,7 @@
       "Ripstop de algodón, poliéster y licra",
       "Verano y trabajo",
       "Manga corta, cuello Mao con abrojo y cremallera",
-      "Negro y Multicam · M a 3XL"
+      "Negro y Multicam · S a 3XL"
      ]
     },
     {
@@ -94,7 +94,7 @@
      "celdas": [
       "Ripstop repelente al agua",
       "Trabajo, camping, caza y uso diario",
-      "Bolsillos cargo y costuras reforzadas; el negro suma porta cargador 9 mm y cintura elastizada",
+      "Bolsillos cargo y costuras reforzadas; el negro suma bolsillos porta cargador 9 mm y cintura elastizada",
       "Negro y Woodland · S a 3XL"
      ]
     },
@@ -117,11 +117,7 @@
    },
    {
     "q": "¿Qué es un bajo chaleco?",
-    "a": "Es una prenda pensada para usar debajo del chaleco. Los de Tactical Command son de Ripstop de algodón, poliéster y licra, con cuello Mao con abrojo y cremallera, y dos bolsillos con cierre y Velcro. Hay manga larga (negro y Multicam) y manga corta (negro), en talles M a 3XL."
-   },
-   {
-    "q": "¿Qué diferencia hay entre los dos pantalones cargo?",
-    "a": "Los dos son de tela Ripstop repelente al agua, con bolsillos cargo y costuras reforzadas, en talles S a 3XL. El negro es unisex y suma 8 bolsillos, porta cargador 9 mm, cintura elastizada y rodillas articuladas. El Woodland tiene bolsillos cargo con botones y solapa."
+    "a": "Es una prenda pensada para usar debajo del chaleco. Los de Tactical Command son de Ripstop de algodón, poliéster y licra, con cuello Mao con abrojo y cremallera, y dos bolsillos con cierre y Velcro. Hay manga larga (negro y Multicam) y manga corta (negro), en talles S a 3XL."
    },
    {
     "q": "¿Qué incluye el uniforme táctico?",
@@ -133,7 +129,7 @@
    },
    {
     "q": "¿Hacen envíos a todo el país?",
-    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador y se informa por WhatsApp antes de confirmar la compra."
+    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador: dentro de Rafaela tiene un valor de {envio_rafaela} y para el resto del país se coordina por WhatsApp antes de confirmar la compra."
    },
    {
     "q": "¿Venden por mayor?",
@@ -273,7 +269,7 @@
    },
    {
     "q": "¿Hacen envíos a todo el país?",
-    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador y se informa por WhatsApp antes de confirmar la compra."
+    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador: dentro de Rafaela tiene un valor de {envio_rafaela} y para el resto del país se coordina por WhatsApp antes de confirmar la compra."
    },
    {
     "q": "¿Venden por mayor?",
@@ -290,8 +286,8 @@
   "titulo": "CALZADO",
   "numero": "03",
   "imagen": "calzado-v2.webp",
-  "seo_titulo": "Borcegos tácticos de caña alta",
-  "descripcion": "Borcegos tácticos de caña alta, confeccionados con cuero vacuno y Cordura respirable, con cordones, ojales reforzados y suela robusta de dibujo profundo. Pensados para seguridad, uso táctico y actividades al aire libre. Talles del 37 al 45, con envío desde Rafaela a todo el país.",
+  "seo_titulo": "Borcegos tácticos Altama y Ranger",
+  "descripcion": "Borcegos tácticos de cuero y Cordura respirable: el Altama, de caña alta y suela de dibujo profundo, y el Ranger, ligero y flexible, con suela antideslizante y plantilla EVA. Pensados para seguridad, fuerzas policiales, uso táctico y diario. Números del 30 al 45 (niños y adultos), con envío desde Rafaela a todo el país.",
   "frase": "Seleccionamos cada borcego por su construcción: materiales de capellada, caña, sistema de ajuste y suela con buena tracción para uso prolongado.",
   "subcategorias": [
    "TODO",
@@ -299,21 +295,25 @@
   ],
   "sub_mapa": {
    "BORCEGOS": [
-    "altama"
+    "altama",
+    "ranger",
+    "b511"
    ]
   },
   "tarjetas": [
-   "altama"
+   "altama",
+   "ranger",
+   "b511"
   ],
   "comparativa": null,
   "faq": [
    {
     "q": "¿Qué borcegos tácticos tienen?",
-    "a": "Por ahora, el Borcego Táctico Altama Negro: caña alta, cuero vacuno y Cordura respirable, cordones con ojales reforzados y suela robusta con dibujo profundo."
+    "a": "Dos modelos en negro. El Altama: caña alta, cuero vacuno y Cordura respirable, cordones con ojales reforzados y suela robusta con dibujo profundo. El Ranger: cuero de 2 mm, Cordura respirable y malla, cierre lateral, suela antideslizante de alto agarre, plantilla EVA confort y sistema térmico regulable."
    },
    {
     "q": "¿Qué talles hay?",
-    "a": "Del 37 al 45. La disponibilidad de cada número se confirma por WhatsApp al momento de la compra."
+    "a": "Adultos: Altama del 36 al 45 y Ranger del 36 al 44. Niños: del 30 al 35. La disponibilidad de cada número se confirma por WhatsApp al momento de la compra."
    },
    {
     "q": "¿Para qué sirve un borcego de caña alta?",
@@ -321,11 +321,11 @@
    },
    {
     "q": "¿De qué material están hechos?",
-    "a": "El Altama combina sectores de cuero vacuno con Cordura respirable, una combinación orientada a la resistencia y la comodidad durante el uso."
+    "a": "El Altama combina sectores de cuero vacuno con Cordura respirable. El Ranger combina cuero de 2 mm de espesor, Cordura respirable y malla resistente en la parte superior."
    },
    {
     "q": "¿Hacen envíos a todo el país?",
-    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador y se informa por WhatsApp antes de confirmar la compra."
+    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador: dentro de Rafaela tiene un valor de {envio_rafaela} y para el resto del país se coordina por WhatsApp antes de confirmar la compra."
    },
    {
     "q": "¿Venden por mayor?",
@@ -340,7 +340,7 @@
   "numero": "04",
   "imagen": "accesorios-v2.webp",
   "seo_titulo": "Accesorios tácticos: gafas, cintos, shemagh y sombreros",
-  "descripcion": "Accesorios tácticos para completar el equipo: gafa sport con lentes intercambiables, cinto táctico Cobra con hebilla metálica de apertura rápida, shemagh tipo árabe y sombrero de monte tipo boonie. Pensados para uso diario, trabajo, tareas operativas y actividades outdoor, con envío desde Rafaela a todo el país.",
+  "descripcion": "Accesorios tácticos para completar el equipo: gafa sport con 5 lentes intercambiables y 2 correas de sujeción, cinto táctico con hebilla metálica de apertura rápida, shemagh tipo árabe y sombrero de monte tipo boonie. Pensados para uso diario, trabajo, tareas operativas y actividades outdoor, con envío desde Rafaela a todo el país.",
   "frase": "Seleccionamos cada accesorio por su función concreta dentro del equipo: protección visual, sujeción, cobertura y versatilidad de uso.",
   "subcategorias": [
    "TODO",
@@ -388,11 +388,11 @@
   "faq": [
    {
     "q": "¿Qué incluye el set de gafas tácticas?",
-    "a": "Una gafa de diseño sport, lentes intercambiables en distintos tonos, adaptador óptico, correa de sujeción, estuche rígido termoformado, funda y paño de limpieza. Solo el lente negro polarizado cuenta con protección UV."
+    "a": "Una gafa de diseño sport, 5 lentes intercambiables en distintos tonos, adaptador óptico, 2 correas de sujeción, estuche rígido termoformado, funda y paño de limpieza. Solo el lente negro polarizado cuenta con protección UV."
    },
    {
-    "q": "¿Qué es un cinto táctico Cobra?",
-    "a": "Es un cinturón regulable con cinta textil tipo Cordura, hebilla metálica de cierre y liberación rápida estilo Cobra y anilla triangular lateral para sujetar accesorios compatibles. Viene en negro, coyote y verde oliva."
+    "q": "¿Qué es un cinto táctico?",
+    "a": "Es un cinturón regulable con cinta textil de cordura, hebilla metálica de cierre y liberación rápida y anilla triangular lateral para sujetar accesorios compatibles. Viene en negro, coyote y verde oliva."
    },
    {
     "q": "¿Para qué sirve un shemagh?",
@@ -404,7 +404,7 @@
    },
    {
     "q": "¿Hacen envíos a todo el país?",
-    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador y se informa por WhatsApp antes de confirmar la compra."
+    "a": "Sí. Despachamos desde Rafaela, Santa Fe, a todo el país. El costo de envío está a cargo del comprador: dentro de Rafaela tiene un valor de {envio_rafaela} y para el resto del país se coordina por WhatsApp antes de confirmar la compra."
    },
    {
     "q": "¿Venden por mayor?",

@@ -70,6 +70,7 @@ const robots = noindex ? 'noindex,nofollow' : 'index,follow,max-image-preview:la
     <script is:inline>
       (function () {
         var d = document.documentElement;
+        d.classList.add('js'); // con JS, los textos largos se recortan con un botón «VER MÁS»; sin JS se ven completos
         function z() {
           var w = window.innerWidth, k = w >= 1024 ? w / 1890 * 1.1 : w < 760 ? w / 385 : w / (385 + (w - 385) * 0.45);
           d.style.zoom = String(k);

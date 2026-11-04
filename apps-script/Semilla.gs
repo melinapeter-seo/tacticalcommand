@@ -1,5 +1,5 @@
 // Generado por scripts/generar-semilla.mjs a partir de src/data/. No editar a mano.
-const COLUMNAS = {"productos":["slug","nombre","categoria","subcategoria","sku","descripcion","visible","precio","talles","orden","actualizado"],"variantes":["slug","idx","nombre","sku","swatch","fotos","precio","precios_talle","agotados","agotado","talles"]};
+const COLUMNAS = {"productos":["slug","nombre","categoria","subcategoria","sku","descripcion","visible","precio","talles","talles_ninos","orden","actualizado"],"variantes":["slug","idx","nombre","sku","swatch","fotos","precio","precios_talle","agotados","agotado","talles"]};
 const INDEXNOW_KEY = "1812fd1788a18675031ad2819a2ffe64";
 const SEMILLA = {
  "productos": [
@@ -13,6 +13,7 @@ const SEMILLA = {
    "visible": true,
    "precio": 50000,
    "talles": "",
+   "talles_ninos": "",
    "orden": 140,
    "actualizado": ""
   },
@@ -26,6 +27,7 @@ const SEMILLA = {
    "visible": true,
    "precio": 50000,
    "talles": "",
+   "talles_ninos": "",
    "orden": 100,
    "actualizado": ""
   },
@@ -39,6 +41,7 @@ const SEMILLA = {
    "visible": true,
    "precio": 50000,
    "talles": "",
+   "talles_ninos": "",
    "orden": 70,
    "actualizado": ""
   },
@@ -52,6 +55,7 @@ const SEMILLA = {
    "visible": true,
    "precio": 50000,
    "talles": "",
+   "talles_ninos": "",
    "orden": 10,
    "actualizado": ""
   },
@@ -65,19 +69,21 @@ const SEMILLA = {
    "visible": true,
    "precio": 50000,
    "talles": "S,M,L,XL,2XL,3XL",
+   "talles_ninos": "",
    "orden": 100,
    "actualizado": ""
   },
   {
-   "slug": "cinto-tactico-cobra",
-   "nombre": "Cinto Táctico Cobra",
+   "slug": "cinto-tactico",
+   "nombre": "Cinto Táctico",
    "categoria": "ACCESORIOS",
    "subcategoria": "CINTURONES TÁCTICOS",
    "sku": "TC-CIN-COB",
-   "descripcion": "Cinto táctico regulable con cinta textil de alta resistencia tipo Cordura, hebilla metálica de apertura rápida y anilla triangular lateral para sujetar accesorios compatibles. Pensado para uso diario, tareas operativas, entrenamiento y actividades outdoor. Disponible en negro, coyote y verde oliva.",
+   "descripcion": "Cinto táctico regulable con cinta textil de alta resistencia de cordura, hebilla metálica de apertura rápida y anilla triangular lateral para sujetar accesorios compatibles. Pensado para uso diario, tareas operativas, entrenamiento y actividades outdoor. Disponible en negro, coyote y verde oliva.",
    "visible": true,
    "precio": 50000,
    "talles": "",
+   "talles_ninos": "",
    "orden": 40,
    "actualizado": ""
   },
@@ -91,7 +97,36 @@ const SEMILLA = {
    "visible": true,
    "precio": 50000,
    "talles": "",
+   "talles_ninos": "",
    "orden": 70,
+   "actualizado": ""
+  },
+  {
+   "slug": "borcego-tactico-estilo-511-negro",
+   "nombre": "Borcego Táctico Estilo 5.11 Negro",
+   "categoria": "CALZADO",
+   "subcategoria": "BORCEGOS TÁCTICOS",
+   "sku": "TC-BOR-511-NG",
+   "descripcion": "Borcego táctico negro de estilo 5.11, con diseño de caña alta, ajuste frontal mediante cordones y cierre lateral para facilitar la colocación. Cuenta con ojales superiores de refuerzo, paneles combinados con costuras reforzadas y suela con dibujo profundo para favorecer el agarre. Es una opción versátil para jornadas de trabajo, actividades al aire libre y uso cotidiano. Disponible en talles 44 y 45, según stock.",
+   "visible": true,
+   "precio": 50000,
+   "talles": "44,45",
+   "talles_ninos": "",
+   "orden": 30,
+   "actualizado": ""
+  },
+  {
+   "slug": "borcego-tactico-ranger-negro",
+   "nombre": "Borcego Táctico Ranger Negro",
+   "categoria": "CALZADO",
+   "subcategoria": "BORCEGOS TÁCTICOS",
+   "sku": "TC-BOR-RNG-NG",
+   "descripcion": "Borcego táctico Ranger color negro, confeccionado con cuero de 2 mm de espesor, Cordura respirable y malla resistente en la parte superior. Incorpora suela antideslizante de alto agarre, plantilla EVA confort y sistema térmico regulable. Su diseño ligero y flexible está pensado para uso diario, fuerzas policiales y empresas de seguridad. Nros del 36 al 44 (adultos) y del 30 al 35 (niños).",
+   "visible": true,
+   "precio": 50000,
+   "talles": "36,37,38,39,40,41,42,43,44",
+   "talles_ninos": "30,31,32,33,34,35",
+   "orden": 20,
    "actualizado": ""
   },
   {
@@ -103,7 +138,8 @@ const SEMILLA = {
    "descripcion": "Borcego táctico Altama color negro, confeccionado con sectores de cuero vacuno y Cordura respirable. Su diseño de caña alta, cordones con ojales reforzados y suela robusta con dibujo profundo lo convierte en una opción para tareas de seguridad, uso táctico y actividades al aire libre.",
    "visible": true,
    "precio": 50000,
-   "talles": "37,38,39,40,41,42,43,44,45",
+   "talles": "36,37,38,39,40,41,42,43,44,45",
+   "talles_ninos": "30,31,32,33,34,35",
    "orden": 10,
    "actualizado": ""
   },
@@ -116,7 +152,8 @@ const SEMILLA = {
    "descripcion": "Bajo Chaleco de manga larga en color negro, confeccionado en tela Ripstop de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, además de dos bolsillos con cierres y Velcro. Una prenda funcional y cómoda para el trabajo y otras actividades.",
    "visible": true,
    "precio": 50000,
-   "talles": "M,L,XL,2XL,3XL",
+   "talles": "S,M,L,XL,2XL,3XL",
+   "talles_ninos": "",
    "orden": 60,
    "actualizado": ""
   },
@@ -129,7 +166,8 @@ const SEMILLA = {
    "descripcion": "Bajo Chaleco de manga corta en color negro, confeccionado en tela Ripstop de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera, además de dos bolsillos con cierres y Velcro. Una prenda funcional y cómoda para el verano y el trabajo.",
    "visible": true,
    "precio": 50000,
-   "talles": "M,L,XL,2XL,3XL",
+   "talles": "S,M,L,XL,2XL,3XL",
+   "talles_ninos": "",
    "orden": 70,
    "actualizado": ""
   },
@@ -142,7 +180,8 @@ const SEMILLA = {
    "descripcion": "Bajo chaleco de manga larga en patrón Multicam, confeccionado en una combinación de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, mientras que las mangas están confeccionadas en tela gabardina e incorporan bolsillos con cierre de velcro para colocar parches.",
    "visible": true,
    "precio": 50000,
-   "talles": "M,L,XL,2XL,3XL",
+   "talles": "S,M,L,XL,2XL,3XL",
+   "talles_ninos": "",
    "orden": 40,
    "actualizado": ""
   },
@@ -155,7 +194,8 @@ const SEMILLA = {
    "descripcion": "Bajo chaleco de manga corta en patrón Multicam, confeccionado en una combinación de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, mientras que las mangas están confeccionadas en tela gabardina e incorporan bolsillos con cierre de velcro para colocar parches. Su manga corta lo hace ideal para el verano.",
    "visible": true,
    "precio": 50000,
-   "talles": "M,L,XL,2XL,3XL",
+   "talles": "S,M,L,XL,2XL,3XL",
+   "talles_ninos": "",
    "orden": 50,
    "actualizado": ""
   },
@@ -169,6 +209,7 @@ const SEMILLA = {
    "visible": true,
    "precio": 50000,
    "talles": "",
+   "talles_ninos": "",
    "orden": 100,
    "actualizado": ""
   },
@@ -181,7 +222,8 @@ const SEMILLA = {
    "descripcion": "Sombrero de monte táctico tipo boonie, diseñado para acompañar actividades al aire libre como camping, pesca, trekking y caza. Cuenta con ala amplia con costuras reforzadas, banda perimetral con presillas, ojales laterales de ventilación y cordón de sujeción ajustable. Disponible en estampado Woodland o Multicam.",
    "visible": true,
    "precio": 50000,
-   "talles": "",
+   "talles": "XS,S,M,L,XL,2XL",
+   "talles_ninos": "",
    "orden": 20,
    "actualizado": ""
   },
@@ -191,10 +233,11 @@ const SEMILLA = {
    "categoria": "ACCESORIOS",
    "subcategoria": "GAFAS",
    "sku": "TC-GAF-SPT",
-   "descripcion": "Gafa táctica de diseño envolvente con set de lentes intercambiables y accesorios para sujeción, protección y limpieza. Incluye lente negro polarizado con protección UV, adaptador óptico, correa de sujeción, estuche rígido termoformado, funda y paño de limpieza. Producto no original, de calidad Premium.",
+   "descripcion": "Gafa táctica de diseño envolvente con set de lentes intercambiables y accesorios para sujeción, protección y limpieza. Incluye lente negro polarizado con protección UV, adaptador óptico, 2 correas de sujeción, estuche rígido termoformado, funda y paño de limpieza. Producto no original, de calidad Premium.",
    "visible": true,
    "precio": 50000,
    "talles": "",
+   "talles_ninos": "",
    "orden": 10,
    "actualizado": ""
   },
@@ -208,6 +251,7 @@ const SEMILLA = {
    "visible": true,
    "precio": 50000,
    "talles": "S,M,L,XL,2XL,3XL",
+   "talles_ninos": "",
    "orden": 90,
    "actualizado": ""
   },
@@ -217,10 +261,11 @@ const SEMILLA = {
    "categoria": "INDUMENTARIA",
    "subcategoria": "PANTALONES TÁCTICOS",
    "sku": "TC-PAN-RS-NG",
-   "descripcion": "Pantalón cargo táctico unisex confeccionado en tela Ripstop negra, liviana y resistente, diseñado para brindar comodidad, resistencia y practicidad durante la jornada. Cuenta con múltiples bolsillos funcionales, porta cargador 9 mm, cintura elastizada, rodillas articuladas y costuras reforzadas. Su material es repelente al agua.",
+   "descripcion": "Pantalón cargo táctico unisex confeccionado en tela Ripstop negra, liviana y resistente, diseñado para brindar comodidad, resistencia y practicidad durante la jornada. Cuenta con múltiples bolsillos funcionales, bolsillos porta cargador 9 mm, cintura elastizada, rodillas articuladas y costuras reforzadas. Su material es repelente al agua.",
    "visible": true,
    "precio": 50000,
    "talles": "S,M,L,XL,2XL,3XL",
+   "talles_ninos": "",
    "orden": 80,
    "actualizado": ""
   },
@@ -234,6 +279,7 @@ const SEMILLA = {
    "visible": true,
    "precio": 50000,
    "talles": "S,M,L,XL,2XL,3XL,4XL,5XL",
+   "talles_ninos": "",
    "orden": 10,
    "actualizado": ""
   }
@@ -461,12 +507,12 @@ const SEMILLA = {
    "talles": ""
   },
   {
-   "slug": "cinto-tactico-cobra",
+   "slug": "cinto-tactico",
    "idx": 0,
    "nombre": "NEGRO",
    "sku": "TC-CIN-COB-NG",
    "swatch": "#17191A",
-   "fotos": "cin-ng-1.webp|cin-ng-2.webp|cin-ng-3.webp",
+   "fotos": "cin-ng-1.webp|cin-ng-2.webp|cin-ng-3.webp|cin-ng-4.webp",
    "precio": "",
    "precios_talle": "",
    "agotados": "",
@@ -474,12 +520,12 @@ const SEMILLA = {
    "talles": ""
   },
   {
-   "slug": "cinto-tactico-cobra",
+   "slug": "cinto-tactico",
    "idx": 1,
    "nombre": "COYOTE",
    "sku": "TC-CIN-COB-CY",
    "swatch": "#8A6E4B",
-   "fotos": "cin-cy-1.webp|cin-cy-2.webp|cin-cy-3.webp",
+   "fotos": "cin-cy-1.webp|cin-cy-2.webp|cin-cy-3.webp|cin-cy-4.webp",
    "precio": "",
    "precios_talle": "",
    "agotados": "",
@@ -487,12 +533,12 @@ const SEMILLA = {
    "talles": ""
   },
   {
-   "slug": "cinto-tactico-cobra",
+   "slug": "cinto-tactico",
    "idx": 2,
    "nombre": "VERDE OLIVA",
    "sku": "TC-CIN-COB-VO",
    "swatch": "#4F5638",
-   "fotos": "cin-vo-1.webp|cin-vo-2.webp|cin-vo-3.webp",
+   "fotos": "cin-vo-1.webp|cin-vo-2.webp|cin-vo-3.webp|cin-vo-4.webp",
    "precio": "",
    "precios_talle": "",
    "agotados": "",
@@ -539,12 +585,38 @@ const SEMILLA = {
    "talles": ""
   },
   {
+   "slug": "borcego-tactico-estilo-511-negro",
+   "idx": 0,
+   "nombre": "NEGRO",
+   "sku": "TC-BOR-511-NG",
+   "swatch": "#17191A",
+   "fotos": "b511-1.webp|b511-2.webp",
+   "precio": "",
+   "precios_talle": "",
+   "agotados": "",
+   "agotado": false,
+   "talles": ""
+  },
+  {
+   "slug": "borcego-tactico-ranger-negro",
+   "idx": 0,
+   "nombre": "NEGRO",
+   "sku": "TC-BOR-RNG-NG",
+   "swatch": "#17191A",
+   "fotos": "ranger-1.webp|ranger-2.webp|ranger-3.webp|ranger-4.webp|ranger-5.webp|ranger-6.webp",
+   "precio": "",
+   "precios_talle": "",
+   "agotados": "",
+   "agotado": false,
+   "talles": ""
+  },
+  {
    "slug": "borcegos-tacticos-altama-negros",
    "idx": 0,
    "nombre": "NEGRO",
    "sku": "TC-BOR-ALT-NG",
    "swatch": "#17191A",
-   "fotos": "altama-1.webp|altama-2.webp|altama-3.webp|altama-4.webp",
+   "fotos": "altama-2.webp|altama-1.webp|altama-3.webp|altama-4.webp",
    "precio": "",
    "precios_talle": "",
    "agotados": "",
@@ -609,7 +681,7 @@ const SEMILLA = {
    "nombre": "BANDERA ARGENTINA",
    "sku": "TC-PAR-ARG",
    "swatch": "#74ACDF",
-   "fotos": "",
+   "fotos": "parche-arg-1.webp|parche-arg-2.webp|parche-arg-3.webp|parche-arg-4.webp|parche-arg-5.webp",
    "precio": "",
    "precios_talle": "",
    "agotados": "",
@@ -723,8 +795,10 @@ const SEMILLA = {
  ],
  "config": {
   "ws_minimo": 8,
-  "ws_envio": "A cargo del comprador · se cotiza por WhatsApp",
+  "ws_envio": "Rafaela {envio_rafaela} · resto del país a coordinar por WhatsApp",
   "ws_texto": "Pedido mínimo de 8 unidades, combinables entre productos, colores y talles. El precio final y el costo de envío se confirman por WhatsApp.",
+  "envio_rafaela": 5000,
+  "soporte_whatsapp": "5493492686435",
   "ultima_publicacion": ""
  }
 };

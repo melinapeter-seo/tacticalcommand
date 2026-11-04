@@ -25,7 +25,7 @@ const foto = (p) => (typeof p === 'string' && p.startsWith('uploads/') ? p.repla
 const slugDe = (to) => (to || '').replace(/^#\/productos\//, '').split(/[/?]/)[0];
 const colorDe = (to) => { const m = (to || '').match(/[?&]color=([^&]+)/); return m ? decodeURIComponent(m[1]) : null; };
 const ruta = (to) => (to || '').replace(/^#/, '').replace(/\?.*$/, '');
-const ORDEN_TALLES = ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL', '6XL'];
+const ORDEN_TALLES = ['XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL', '6XL'];
 const PRECIO_PROVISORIO = 50000;
 
 // Tarjetas de listado: una por clave de PROD que aparezca en alguna categoría, en la home o en relacionados.
@@ -41,11 +41,15 @@ const productos = Object.entries(D.PDPS).map(([slug, p], orden) => {
   const precio = PRECIO_PROVISORIO; // precio de referencia para todos; los reales se cargan desde el panel
   const colores = p.colors.map((c) => {
     const listados = [...c.ok, ...c.off, ...c.req, ...c.spec];
+    const ninos = c.kids || []; // calzado: números de niños, que la ficha muestra en una fila aparte
     const todos = [...ORDEN_TALLES.filter((t) => listados.includes(t)), ...listados.filter((t, i) => !ORDEN_TALLES.includes(t) && listados.indexOf(t) === i).sort((a, b) => parseFloat(a) - parseFloat(b))];
     return {
       nombre: c.n, sku: c.sku || p.sku, muestra: c.sw,
       fotos: c.g.map(foto).filter(Boolean),
-      talles: todos.map((t) => ({ talle: t, estado: c.off.includes(t) ? 'agotado' : c.req.includes(t) ? 'bajo_pedido' : c.spec.includes(t) ? 'consultar' : 'disponible' })),
+      talles: [
+        ...todos.map((t) => ({ talle: t, estado: c.off.includes(t) ? 'agotado' : c.req.includes(t) ? 'bajo_pedido' : c.spec.includes(t) ? 'consultar' : 'disponible' })),
+        ...ninos.map((t) => ({ talle: t, estado: 'disponible', ninos: true })),
+      ],
     };
   });
   const tarjetas = Object.entries(D.PROD)
@@ -72,7 +76,7 @@ const productos = Object.entries(D.PDPS).map(([slug, p], orden) => {
     relacionados: [...new Set((p.related || []).map((k) => slugDe(D.PROD[k] && D.PROD[k].to)).filter(Boolean))],
     guia: p.guide ? { url: ruta(p.guide).replace('/blog/', '/guias/'), titulo: p.guideT || null, imagen: foto(p.guideImg) } : null,
     opciones: {
-      con_talles: !p.noSizes, es_calzado: !!p.shoe, es_indumentaria: !!p.apparel, consulta_whatsapp_talle: !!p.waNote,
+      con_talles: !p.noSizes, es_calzado: !!p.shoe, es_sombrero: !!p.hat, es_indumentaria: !!p.apparel, consulta_whatsapp_talle: !!p.waNote,
       info_altura: !!p.tallInfo, columnas_talle: p.sizeCols || null, nota_talle: p.sizeNote || null, proporcion_foto: p.ar || null,
     },
     colores, tarjetas,
@@ -104,7 +108,17 @@ const sitio = {
   redes: D.TC_SOCIAL, cookies: D.CK_CATS, enlaces_legales: D.LINKS.map(([t, to]) => ({ t, url: ruta(to).replace('/blog/', '/guias/') })),
 };
 
-const out = (f, v) => { fs.writeFileSync(`src/data/${f}`, JSON.stringify(v, null, 1) + '\n'); console.log(f, Array.isArray(v) ? v.length : Object.keys(v).length); };
+// Decisiones del cliente que el prototipo no tiene: URLs sin marca y talles del sombrero.
+const RENOMBRAR = { 'cinto-tactico-cobra': 'cinto-tactico', 'borcego-tactico-511-negro': 'borcego-tactico-estilo-511-negro' };
+// El costo de envío en Rafaela se edita en la hoja `config` (envio_rafaela); el build reemplaza la marca.
+const TEXTOS = [['Los talles se consultan por WhatsApp antes de realizar la compra.', 'Disponible en talles del XS al 2XL.'], ['$5.000', '{envio_rafaela}']];
+const ajustar = (v) => {
+  let j = JSON.stringify(v);
+  for (const [a, b] of Object.entries(RENOMBRAR)) j = j.split(a).join(b);
+  for (const [a, b] of TEXTOS) j = j.split(a).join(b);
+  return JSON.parse(j);
+};
+const out = (f, v0) => { const v = ajustar(v0); fs.writeFileSync(`src/data/${f}`, JSON.stringify(v, null, 1) + '\n'); console.log(f, Array.isArray(v) ? v.length : Object.keys(v).length); };
 out('catalog.json', { _nota: 'Fuente única del catálogo. Generado desde el prototipo con scripts/catalogo-desde-prototipo.mjs; en la fase 2 se reemplaza por la lectura de Google Sheets con la misma forma. El estado de stock NO se muestra en la web.', productos, tarjeta_slug: tarjetaSlug });
 out('categorias.json', categorias);
 out('guias.json', guias);
