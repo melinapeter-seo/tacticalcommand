@@ -11,6 +11,52 @@
  * Las columnas de productos/variantes y la semilla están en Semilla.gs (generado desde el repo).
  */
 
+// ---------- Instalación (primera función: es la que el editor ofrece para «Ejecutar») ----------
+/** Crea las hojas que falten, carga la semilla si están vacías, da formato y crea los triggers. Se puede correr de nuevo. */
+function instalar() {
+  const ss = libro();
+  Object.keys(hojas()).forEach((nombre) => {
+    let h = ss.getSheetByName(nombre);
+    if (!h) h = ss.insertSheet(nombre);
+    const cols = hojas()[nombre];
+    h.getRange(1, 1, 1, cols.length).setValues([cols]).setFontWeight('bold').setBackground('#151816').setFontColor('#E3B23C');
+    h.setFrozenRows(1);
+    // Texto plano en todo salvo números y casillas: así teléfonos, talles, SKU y fechas no se reformatean.
+    cols.forEach((c, i) => {
+      if (BOOLEANAS.includes(c)) return;
+      h.getRange(2, i + 1, Math.max(h.getMaxRows() - 1, 1), 1).setNumberFormat(NUMERICAS.includes(c) ? '0' : '@');
+    });
+  });
+  const vacia = (n) => hoja(n).getLastRow() < 2;
+  ['productos', 'productos_draft'].forEach((n) => { if (vacia(n)) escribir(n, SEMILLA.productos); });
+  ['variantes', 'variantes_draft'].forEach((n) => { if (vacia(n)) escribir(n, SEMILLA.variantes); });
+  ['config', 'config_draft'].forEach((n) => { if (vacia(n)) escribirConfig(n, SEMILLA.config); });
+  // Las hojas publicadas no se editan a mano: se reemplazan al publicar.
+  ['productos', 'variantes', 'config'].forEach((n) => {
+    const h = hoja(n);
+    h.setTabColor('#4A5D4B');
+    h.getRange('A1').setNote('No editar: esta hoja se reemplaza al publicar. Los cambios van en ' + n + '_draft y se publican desde el menú Tactical Command.');
+    if (!h.getProtections(SpreadsheetApp.ProtectionType.SHEET).length) h.protect().setDescription('Se reemplaza al publicar').setWarningOnly(true);
+  });
+  ['productos_draft', 'variantes_draft', 'config_draft'].forEach((n) => hoja(n).setTabColor('#E3B23C'));
+  const hoja1 = ss.getSheetByName('Hoja 1') || ss.getSheetByName('Sheet1');
+  if (hoja1 && hoja1.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(hoja1);
+
+  const props = PropertiesService.getScriptProperties();
+  if (!props.getProperty('TOKEN_SECRET')) props.setProperty('TOKEN_SECRET', Utilities.getUuid() + Utilities.getUuid());
+  borrarTriggers('backupSemanal');
+  ScriptApp.newTrigger('backupSemanal').timeBased().onWeekDay(ScriptApp.WeekDay.MONDAY).atHour(4).create();
+  carpeta(['fotos']);
+  carpeta(['backups']);
+
+  const falta = ['PIN', 'DEPLOY_HOOK_URL'].filter((k) => !props.getProperty(k));
+  const msg = 'Instalación lista.' + (falta.length ? ' Falta configurar: ' + falta.join(' y ') + ' (menú Tactical Command).' : '');
+  // Aviso que no frena la ejecución: un alert() corrido desde el editor queda esperando «Aceptar» en la planilla.
+  Logger.log(msg);
+  try { libro().toast(msg, 'Tactical Command', 15); } catch (e) { /* sin planilla abierta */ }
+}
+
+
 // ---------- Estructura ----------
 // Función y no constante: Apps Script ejecuta cada archivo por separado y COLUMNAS vive en Semilla.gs.
 const hojas = () => ({
@@ -584,48 +630,6 @@ function menuHook() {
 }
 
 // ---------- Instalación y backups ----------
-/** Crea las hojas que falten, carga la semilla si están vacías, da formato y crea los triggers. Se puede correr de nuevo. */
-function instalar() {
-  const ss = libro();
-  Object.keys(hojas()).forEach((nombre) => {
-    let h = ss.getSheetByName(nombre);
-    if (!h) h = ss.insertSheet(nombre);
-    const cols = hojas()[nombre];
-    h.getRange(1, 1, 1, cols.length).setValues([cols]).setFontWeight('bold').setBackground('#151816').setFontColor('#E3B23C');
-    h.setFrozenRows(1);
-    // Texto plano en todo salvo números y casillas: así teléfonos, talles, SKU y fechas no se reformatean.
-    cols.forEach((c, i) => {
-      if (BOOLEANAS.includes(c)) return;
-      h.getRange(2, i + 1, Math.max(h.getMaxRows() - 1, 1), 1).setNumberFormat(NUMERICAS.includes(c) ? '0' : '@');
-    });
-  });
-  const vacia = (n) => hoja(n).getLastRow() < 2;
-  ['productos', 'productos_draft'].forEach((n) => { if (vacia(n)) escribir(n, SEMILLA.productos); });
-  ['variantes', 'variantes_draft'].forEach((n) => { if (vacia(n)) escribir(n, SEMILLA.variantes); });
-  ['config', 'config_draft'].forEach((n) => { if (vacia(n)) escribirConfig(n, SEMILLA.config); });
-  // Las hojas publicadas no se editan a mano: se reemplazan al publicar.
-  ['productos', 'variantes', 'config'].forEach((n) => {
-    const h = hoja(n);
-    h.setTabColor('#4A5D4B');
-    h.getRange('A1').setNote('No editar: esta hoja se reemplaza al publicar. Los cambios van en ' + n + '_draft y se publican desde el menú Tactical Command.');
-    if (!h.getProtections(SpreadsheetApp.ProtectionType.SHEET).length) h.protect().setDescription('Se reemplaza al publicar').setWarningOnly(true);
-  });
-  ['productos_draft', 'variantes_draft', 'config_draft'].forEach((n) => hoja(n).setTabColor('#E3B23C'));
-  const hoja1 = ss.getSheetByName('Hoja 1') || ss.getSheetByName('Sheet1');
-  if (hoja1 && hoja1.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(hoja1);
-
-  const props = PropertiesService.getScriptProperties();
-  if (!props.getProperty('TOKEN_SECRET')) props.setProperty('TOKEN_SECRET', Utilities.getUuid() + Utilities.getUuid());
-  borrarTriggers('backupSemanal');
-  ScriptApp.newTrigger('backupSemanal').timeBased().onWeekDay(ScriptApp.WeekDay.MONDAY).atHour(4).create();
-  carpeta(['fotos']);
-  carpeta(['backups']);
-
-  const falta = ['PIN', 'DEPLOY_HOOK_URL'].filter((k) => !props.getProperty(k));
-  const msg = 'Instalación lista.' + (falta.length ? ' Falta configurar: ' + falta.join(' y ') + ' (menú Tactical Command).' : '');
-  try { SpreadsheetApp.getUi().alert(msg); } catch (e) { Logger.log(msg); }
-}
-
 /** Copia semanal de la planilla en TC/backups/AAAA-MM-DD; conserva las últimas 12. */
 function backupSemanal() {
   const dir = carpeta(['backups']);

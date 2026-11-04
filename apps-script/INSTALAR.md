@@ -18,7 +18,7 @@ Al terminar, la web lee el catálogo de la planilla y el seguimiento de pedidos 
 
 ## 3. Instalar
 
-1. En la barra del editor, en el menú desplegable de funciones, elegí **instalar** y tocá **Ejecutar**.
+1. En la barra del editor, a la derecha de **Depurar**, está el desplegable de funciones: tiene que decir **instalar** (si dice otra cosa, abrilo y elegila). Tocá **Ejecutar**. Tarda menos de un minuto; al terminar, la planilla muestra el aviso «Instalación lista».
 2. Google pide permisos: **Revisar permisos** › elegí la cuenta › aparece "Google no verificó esta app" › **Configuración avanzada** › **Ir a Tactical Command API (no seguro)** › **Permitir**. Es normal: la app es tuya y no está publicada en Google.
 3. Cuando termine ("Ejecución completada"), volvé a la pestaña de la planilla y **recargala**. Vas a ver las hojas creadas y cargadas con el catálogo actual, y un menú nuevo **Tactical Command**.
 
