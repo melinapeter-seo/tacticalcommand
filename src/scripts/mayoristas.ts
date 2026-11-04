@@ -3,7 +3,7 @@ import { money, waLink } from './cart';
 import { track } from './track';
 
 type Img = { t: string; s: string; ss: string; f: string };
-type Size = { t: string; sp: boolean; p: number };
+type Size = { t: string; sp: boolean; p: number; k?: boolean }; // k: número de niños (calzado)
 type Color = { n: string; sw: string; sku: string; g: Img[]; sizes: Size[] };
 type Row = { slug: string; n: string; sku: string; cat: string; price: { min: number; varia: boolean }; to: string; colors: Color[] };
 const D: { min: number; rows: Row[] } = JSON.parse(document.getElementById('ws-data')!.textContent!);
@@ -41,8 +41,8 @@ function renderPanel(art: HTMLElement) {
     <div class="r">
       ${r.colors.length > 1 ? `<div><div class="lbl"><span>COLOR</span></div><div class="cols">${r.colors.map((x) => { const u = unitsOf(r, x); return `<button type="button" class="cb" data-c="${esc(x.n)}" aria-pressed="${x === c}"><i style="background:${x.sw}"></i>${esc(x.n)}${u ? `<b>${p2(u)}</b>` : ''}</button>`; }).join('')}</div></div>` : ''}
       <div>
-        <div class="lbl"><span>${c.sizes[0].t === 'UNIDAD' ? 'CANTIDAD' : 'CANTIDADES POR TALLE'}</span><span style="color:#9AA09A">${esc(c.n)}</span></div>
-        <div class="szs">${c.sizes.map((z) => { const k = `${r.slug}|${c.n}|${z.t}`, v = q(k); return `<div class="sz${v ? ' on' : ''}"><div class="szt"><span>${esc(z.t)}</span>${z.sp ? '<em>A CONFIRMAR</em>' : ''}</div><div class="ctl"><button type="button" data-k="${esc(k)}" data-d="-1" aria-label="Restar ${esc(z.t)}">−</button><output aria-live="polite">${p2(v)}</output><button type="button" data-k="${esc(k)}" data-d="1" aria-label="Sumar ${esc(z.t)}">+</button></div></div>`; }).join('')}</div>
+        <div class="lbl"><span>${c.sizes[0].t === 'UNIDAD' ? 'CANTIDAD' : r.cat === 'CALZADO' ? 'CANTIDADES POR NÚMERO' : 'CANTIDADES POR TALLE'}</span><span style="color:#9AA09A">${esc(c.n)}</span></div>
+        <div class="szs">${c.sizes.map((z) => { const k = `${r.slug}|${c.n}|${z.t}`, v = q(k); return `<div class="sz${v ? ' on' : ''}"><div class="szt"><span>${esc(z.t)}</span>${z.k ? '<em>NIÑOS</em>' : ''}${z.sp ? '<em>A CONFIRMAR</em>' : ''}</div><div class="ctl"><button type="button" data-k="${esc(k)}" data-d="-1" aria-label="Restar ${esc(z.t)}">−</button><output aria-live="polite">${p2(v)}</output><button type="button" data-k="${esc(k)}" data-d="1" aria-label="Sumar ${esc(z.t)}">+</button></div></div>`; }).join('')}</div>
         ${c.sizes.some((z) => z.sp) ? '<div style="margin-top:10px;font-family:var(--mono);font-size:10px;line-height:1.8;color:#9AA09A">Los talles marcados A CONFIRMAR se validan antes de aprobar el pedido.</div>' : ''}
       </div>
       <div class="sub"><div><span class="k">${ru ? `SUBTOTAL · ${ru} UN.` : 'SUBTOTAL'}</span><span class="v">${ru ? money(subOf(r)) : '—'}</span></div>${ru ? '<button type="button" class="clr">VACIAR ARTÍCULO</button>' : ''}</div>
@@ -70,7 +70,7 @@ function lines() {
   const out: { n: string; v: string; qty: number; unit: string; sub: string; total: number }[] = [];
   for (const r of D.rows) for (const c of r.colors) for (const z of c.sizes) {
     const v = q(`${r.slug}|${c.n}|${z.t}`);
-    if (v) out.push({ n: r.n, v: z.t === 'UNIDAD' ? c.n : `${c.n} / ${z.t}`, qty: v, unit: money(z.p), sub: money(v * z.p), total: v * z.p });
+    if (v) out.push({ n: r.n, v: z.t === 'UNIDAD' ? c.n : `${c.n} / ${z.t}${z.k ? ' (NIÑOS)' : ''}`, qty: v, unit: money(z.p), sub: money(v * z.p), total: v * z.p });
   }
   return out;
 }

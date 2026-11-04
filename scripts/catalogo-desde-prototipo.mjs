@@ -122,6 +122,18 @@ const TEXTOS = [
   ['Borcego táctico negro de estilo 5.11,', 'Borcego táctico 5.11 negro,'],
   ['El borcego táctico negro estilo 5.11', 'El borcego táctico 5.11 negro'],
   ['{"k":"DISEÑO","v":"Estilo 5.11"}', '{"k":"MODELO","v":"5.11"}'],
+  ['Disponible en talles 44 y 45, según stock.', 'Disponible en números 44 y 45, según stock.'],
+  ['color negro y en talles 44 y 45, sujetos a disponibilidad.', 'color negro y en números 44 y 45, sujetos a disponibilidad.'],
+  // Categoría Calzado: el prototipo la describe con dos modelos; se suma el 5.11.
+  ['"seo_titulo":"Borcegos tácticos Altama y Ranger"', '"seo_titulo":"Borcegos tácticos Altama, Ranger y 5.11"'],
+  ['y el Ranger, ligero y flexible, con suela antideslizante y plantilla EVA. Pensados',
+    'el Ranger, ligero y flexible, con suela antideslizante y plantilla EVA, y el 5.11, de caña alta con cierre lateral. Pensados'],
+  ['Dos modelos en negro. El Altama:', 'Tres modelos en negro. El Altama:'],
+  ['El Ranger: cuero de 2 mm, Cordura respirable y malla, cierre lateral, suela antideslizante de alto agarre, plantilla EVA confort y sistema térmico regulable."}', 'El Ranger: cuero de 2 mm, Cordura respirable y malla, cierre lateral, suela antideslizante de alto agarre, plantilla EVA confort y sistema térmico regulable. El 5.11: caña alta, cordones frontales con ojales superiores reforzados, cierre lateral y suela con dibujo profundo; se comercializa como producto no original."}'],
+  ['"q":"¿Qué talles hay?","a":"Adultos: Altama del 36 al 45 y Ranger del 36 al 44. Niños: del 30 al 35.',
+    '"q":"¿Qué números hay?","a":"Adultos: Altama del 36 al 45, Ranger del 36 al 44 y 5.11 en 44 y 45. Niños (Altama y Ranger): del 30 al 35.'],
+  ['El Ranger combina cuero de 2 mm de espesor, Cordura respirable y malla resistente en la parte superior."}',
+    'El Ranger combina cuero de 2 mm de espesor, Cordura respirable y malla resistente en la parte superior. El 5.11 combina cuero y otros materiales, con paneles de costuras reforzadas."}'],
   ['táctico estilo 5.11', 'táctico 5.11'], ['Táctico Estilo 5.11', 'Táctico 5.11'], ['ESTILO 5.11', '5.11'],
 ];
 const ajustar = (v) => {

@@ -286,8 +286,8 @@
   "titulo": "CALZADO",
   "numero": "03",
   "imagen": "calzado-v2.webp",
-  "seo_titulo": "Borcegos tácticos Altama y Ranger",
-  "descripcion": "Borcegos tácticos de cuero y Cordura respirable: el Altama, de caña alta y suela de dibujo profundo, y el Ranger, ligero y flexible, con suela antideslizante y plantilla EVA. Pensados para seguridad, fuerzas policiales, uso táctico y diario. Números del 30 al 45 (niños y adultos), con envío desde Rafaela a todo el país.",
+  "seo_titulo": "Borcegos tácticos Altama, Ranger y 5.11",
+  "descripcion": "Borcegos tácticos de cuero y Cordura respirable: el Altama, de caña alta y suela de dibujo profundo, el Ranger, ligero y flexible, con suela antideslizante y plantilla EVA, y el 5.11, de caña alta con cierre lateral. Pensados para seguridad, fuerzas policiales, uso táctico y diario. Números del 30 al 45 (niños y adultos), con envío desde Rafaela a todo el país.",
   "frase": "Seleccionamos cada borcego por su construcción: materiales de capellada, caña, sistema de ajuste y suela con buena tracción para uso prolongado.",
   "subcategorias": [
    "TODO",
@@ -309,11 +309,11 @@
   "faq": [
    {
     "q": "¿Qué borcegos tácticos tienen?",
-    "a": "Dos modelos en negro. El Altama: caña alta, cuero vacuno y Cordura respirable, cordones con ojales reforzados y suela robusta con dibujo profundo. El Ranger: cuero de 2 mm, Cordura respirable y malla, cierre lateral, suela antideslizante de alto agarre, plantilla EVA confort y sistema térmico regulable."
+    "a": "Tres modelos en negro. El Altama: caña alta, cuero vacuno y Cordura respirable, cordones con ojales reforzados y suela robusta con dibujo profundo. El Ranger: cuero de 2 mm, Cordura respirable y malla, cierre lateral, suela antideslizante de alto agarre, plantilla EVA confort y sistema térmico regulable. El 5.11: caña alta, cordones frontales con ojales superiores reforzados, cierre lateral y suela con dibujo profundo; se comercializa como producto no original."
    },
    {
-    "q": "¿Qué talles hay?",
-    "a": "Adultos: Altama del 36 al 45 y Ranger del 36 al 44. Niños: del 30 al 35. La disponibilidad de cada número se confirma por WhatsApp al momento de la compra."
+    "q": "¿Qué números hay?",
+    "a": "Adultos: Altama del 36 al 45, Ranger del 36 al 44 y 5.11 en 44 y 45. Niños (Altama y Ranger): del 30 al 35. La disponibilidad de cada número se confirma por WhatsApp al momento de la compra."
    },
    {
     "q": "¿Para qué sirve un borcego de caña alta?",
@@ -321,7 +321,7 @@
    },
    {
     "q": "¿De qué material están hechos?",
-    "a": "El Altama combina sectores de cuero vacuno con Cordura respirable. El Ranger combina cuero de 2 mm de espesor, Cordura respirable y malla resistente en la parte superior."
+    "a": "El Altama combina sectores de cuero vacuno con Cordura respirable. El Ranger combina cuero de 2 mm de espesor, Cordura respirable y malla resistente en la parte superior. El 5.11 combina cuero y otros materiales, con paneles de costuras reforzadas."
    },
    {
     "q": "¿Hacen envíos a todo el país?",

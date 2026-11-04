@@ -18,7 +18,7 @@ const rows = await Promise.all(
         n: c.nombre, sw: c.muestra, sku: c.sku,
         g: (await fotosVista(c.fotos)).map((f) => ({ t: f.thumb, s: f.src, ss: f.srcset, f: f.full })),
         // Precio por talle (planilla): talle → color → producto.
-        sizes: !p.opciones.con_talles ? [{ t: 'UNIDAD', sp: false, p: precioDe(p, c) }] : c.talles.length ? c.talles.map((t) => ({ t: t.talle, sp: t.estado === 'consultar', p: precioDe(p, c, t.talle) })) : [{ t: 'TALLE', sp: true, p: precioDe(p, c) }],
+        sizes: !p.opciones.con_talles ? [{ t: 'UNIDAD', sp: false, p: precioDe(p, c) }] : c.talles.length ? c.talles.map((t) => ({ t: t.talle, sp: t.estado === 'consultar', p: precioDe(p, c, t.talle), ...(t.ninos ? { k: true } : {}) })) : [{ t: 'TALLE', sp: true, p: precioDe(p, c) }],
       }))),
     })),
 );

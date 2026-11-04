@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import Scroller from '../../components/Scroller.astro';
 import SizeCalc from '../../components/SizeCalc.astro';
-import { productos, categoriaDeProducto, guias, precioDe, precioTexto, rangoPrecio, relacionados, tarjeta, WA, type Producto, type TarjetaVista } from '../../lib/data';
+import { ENVIO_RAFAELA, productos, categoriaDeProducto, guias, precioDe, precioTexto, rangoPrecio, relacionados, tarjeta, WA, type Producto, type TarjetaVista } from '../../lib/data';
 import { fotosVista } from '../../lib/fotos';
 import { graph, breadcrumbs, faqPage, abs, cap, desc, ORG_ID } from '../../lib/seo';
 
@@ -66,7 +66,7 @@ const validUntil = new Date(hoy.getFullYear(), hoy.getMonth() + 3, 0).toISOStrin
 const offer = (sku: string, price: number) => ({
   '@type': 'Offer', price, priceCurrency: 'ARS', availability: 'https://schema.org/InStock', itemCondition: 'https://schema.org/NewCondition',
   priceValidUntil: validUntil, url: abs(path), seller: { '@id': ORG_ID },
-  shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AR' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'DAY' } }, shippingRate: { '@type': 'MonetaryAmount', currency: 'ARS', description: 'A cargo del comprador; se cotiza por WhatsApp' } },
+  shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AR' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'DAY' } }, shippingRate: { '@type': 'MonetaryAmount', currency: 'ARS', description: `A cargo del comprador: dentro de Rafaela ${ENVIO_RAFAELA}; resto del país, se coordina por WhatsApp` } },
   hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'AR', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays: 10, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/FreeReturn', merchantReturnLink: abs('/arrepentimiento/') },
   ...(sku ? { sku } : {}),
 });

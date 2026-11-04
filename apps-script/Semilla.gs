@@ -107,7 +107,7 @@ const SEMILLA = {
    "categoria": "CALZADO",
    "subcategoria": "BORCEGOS TÁCTICOS",
    "sku": "TC-BOR-511-NG",
-   "descripcion": "Borcego táctico 5.11 negro, con diseño de caña alta, ajuste frontal mediante cordones y cierre lateral para facilitar la colocación. Cuenta con ojales superiores de refuerzo, paneles combinados con costuras reforzadas y suela con dibujo profundo para favorecer el agarre. Es una opción versátil para jornadas de trabajo, actividades al aire libre y uso cotidiano. Disponible en talles 44 y 45, según stock.",
+   "descripcion": "Borcego táctico 5.11 negro, con diseño de caña alta, ajuste frontal mediante cordones y cierre lateral para facilitar la colocación. Cuenta con ojales superiores de refuerzo, paneles combinados con costuras reforzadas y suela con dibujo profundo para favorecer el agarre. Es una opción versátil para jornadas de trabajo, actividades al aire libre y uso cotidiano. Disponible en números 44 y 45, según stock.",
    "visible": true,
    "precio": 50000,
    "talles": "44,45",
