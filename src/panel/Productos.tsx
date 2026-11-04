@@ -144,6 +144,11 @@ function Editor({ slug, volver }: { slug: string; volver: () => void }) {
         <span>{p.visible ? 'Visible en la web' : 'Oculto en la web'}</span>
       </label>
 
+      <div className="tarjeta tarjeta-ayuda">
+        <h2>¿Preferís que la arme Melina?</h2>
+        <p className="ayuda">Cargá lo básico (nombre, fotos, colores) y mandale un aviso. El producto queda oculto hasta que se publique.</p>
+        <Boton onClick={pedirMelina}>Pedirle a Melina que la arme</Boton>
+      </div>
       <Semaforo p={p} />
 
       <div className="tarjeta">
@@ -248,12 +253,6 @@ function Editor({ slug, volver }: { slug: string; volver: () => void }) {
           </div>
         ))}
         <Boton tipo="txt" onClick={() => setFicha({ faq: [...p.ficha.faq, { q: '', a: '' }] })}>+ Agregar pregunta</Boton>
-      </div>
-
-      <div className="tarjeta tarjeta-ayuda">
-        <h2>¿Preferís que la arme Melina?</h2>
-        <p className="ayuda">Cargá lo básico (nombre, fotos, colores) y mandale un aviso. El producto queda oculto hasta que se publique.</p>
-        <Boton onClick={pedirMelina}>Pedirle a Melina que la arme</Boton>
       </div>
 
       {cambiado && (
