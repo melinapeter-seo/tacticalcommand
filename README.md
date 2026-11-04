@@ -63,5 +63,8 @@ Decisiones del cliente que difieren del handoff: el email de contacto sigue sien
   - Fichas existentes: se editan a mano, sin IA. Cada publicación guarda la versión anterior de la ficha, con un botón **«Volver a la versión anterior»**.
   - Sin IA por ahora (evaluado: necesita cuenta de API prepaga aparte de la suscripción). La estructura queda lista para sumar un botón «Optimizar con IA» más adelante.
 - Fotos: el panel las comprime en el celular a WebP de hasta 1600 px y avisa si tienen menos de 1200 px. Walter no usa Drive.
+- **Además** (decisión con Melina): destacados de la home (cuáles y en qué orden), aviso en la web (franja superior con texto propio que se prende y apaga), resumen del negocio (ventas del mes, pedidos, productos más pedidos, minoristas/mayoristas, pedidos sin avisar), cambiar el PIN y fotos de clientes para «Garantía de satisfacción».
+- Fuera del panel a propósito: textos de categorías, guías y preguntas generales (SEO, pasan por Melina), stock visible y datos de contacto.
+- **Diseño del panel**: tema claro, una sola tipografía (Inter Tight; mono solo para códigos y SKU), mobile primero con barra inferior de 5 secciones, botones grandes, campos de 16 px, una acción principal dorada por pantalla, lenguaje simple («Cambios sin publicar», «Avisarle al cliente»), color solo con significado y confirmación antes de lo importante. Antes de construir todo: versión navegable de login, pedidos (lista y detalle) y editor de producto para aprobar.
 - Al terminar el panel: guía de uso completa para Walter.
 

@@ -1,0 +1,20 @@
+---
+// Panel de gestión de Walter (isla React). Privado: noindex, fuera del sitemap y bloqueado en robots.txt.
+import App from '../../panel/App';
+import '../../panel/panel.css';
+---
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#F5F5F2" />
+    <title>Panel · Tactical Command</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="preload" href="/fonts/inter-tight-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <App client:only="react" />
+  </body>
+</html>

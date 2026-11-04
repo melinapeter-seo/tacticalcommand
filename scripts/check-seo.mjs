@@ -5,7 +5,8 @@ import path from 'node:path';
 
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
 const errores = [];
-const pages = walk('dist').filter((f) => f.endsWith('.html'));
+// El panel es privado (noindex): no se evalúa.
+const pages = walk('dist').filter((f) => f.endsWith('.html') && !f.startsWith(path.join('dist', 'panel')));
 
 for (const f of pages) {
   const h = fs.readFileSync(f, 'utf8');

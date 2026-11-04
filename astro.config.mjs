@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import catalogo from './src/data/catalog.json' with { type: 'json' };
+import react from '@astrojs/react';
+// Catálogo ya combinado con la planilla (lo genera `npm run sync` antes del build).
+import catalogo from './src/data/generado/catalog.json' with { type: 'json' };
 
 const SITE = 'https://tacticalcommand.com.ar';
 
@@ -15,6 +17,7 @@ export default defineConfig({
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   image: { responsiveStyles: false },
   integrations: [
+    react(), // solo el panel (/panel) usa React
     sitemap({
       filter: (page) => !/\/(panel|api|arrepentimiento\/confirmacion|404)\//.test(page),
       serialize: (item) => (lastmod[item.url] ? { ...item, lastmod: lastmod[item.url] } : item),
