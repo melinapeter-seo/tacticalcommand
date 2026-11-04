@@ -13,7 +13,8 @@ const DATA = path.join(RAIZ, 'src/data');
 const SALIDA = path.join(DATA, 'generado');
 const FOTOS = path.join(RAIZ, 'src/assets/tc');
 const CACHE = path.join(RAIZ, 'node_modules/.cache/tc');
-const API = (process.env.PUBLIC_TC_API || '').trim();
+// Mismo arreglo que src/lib/api.ts: sin el `/u/N/` de la sesión de Google ni nada después de `/exec`.
+const API = (process.env.PUBLIC_TC_API || '').trim().replace(/\/macros\/u\/\d+\//, '/macros/').replace(/(\/exec)[/?#].*$/, '$1');
 
 const leer = async (f) => JSON.parse(await fs.readFile(f, 'utf8'));
 const escribir = (f, d) => fs.writeFile(f, JSON.stringify(d, null, 2) + '\n');

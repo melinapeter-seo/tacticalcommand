@@ -1,4 +1,5 @@
 ---
+import { API } from '../lib/api';
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { WA, sitio } from '../lib/data';
@@ -13,7 +14,7 @@ const fields = [
   { k: 'prod', l: 'PRODUCTO/S QUE QUERÉS DEVOLVER', type: 'text', ac: 'off', ph: '', wide: true },
 ];
 const path = '/arrepentimiento/';
-const api = import.meta.env.PUBLIC_TC_API || '';
+const api = API;
 const wa = WA('Hola, tengo una consulta sobre el botón de arrepentimiento.');
 const mail = `mailto:${EMAIL}?subject=${encodeURIComponent('Consulta sobre el botón de arrepentimiento')}`;
 const jsonld = graph(
