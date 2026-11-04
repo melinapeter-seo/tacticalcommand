@@ -12,8 +12,7 @@ export type Cliente = { id: string; nombre: string; telefono: string; localidad:
 export type Foto = { id: string; url: string };
 export type Color = { nombre: string; sku: string; muestra: string; fotos: Foto[]; talles: string[]; ninos: string[]; precio: number | null; precios_talle: Record<string, number> };
 export type Ficha = { descripcion: string; descripcion_larga: string[]; caracteristicas: string[]; especificaciones: { k: string; v: string }[]; faq: { q: string; a: string }[] };
-export type Producto = { slug: string; nombre: string; categoria: string; subcategoria: string; sku: string; visible: boolean; precio: number; orden: number; ficha: Ficha; colores: Color[] };
-export type Datos = { productos: Producto[]; pedidos: Pedido[]; clientes: Cliente[]; config: { ws_minimo: number; envio_rafaela: number; soporte_whatsapp: string } };
+export type Producto = { slug: string; nombre: string; categoria: string; subcategoria: string; sku: string; visible: boolean; precio: number; orden: number; actualizado: string; pendiente: boolean; notas: string; ficha: Ficha; colores: Color[] };
 
 export const CATEGORIAS = ['INDUMENTARIA', 'EQUIPOS TÁCTICOS', 'CALZADO', 'ACCESORIOS'];
 export const TRANSPORTES = ['ANDREANI', 'OCA', 'CORREO ARGENTINO', 'VÍA CARGO', 'OTRO', 'RETIRO EN RAFAELA', 'ENVÍO DENTRO DE RAFAELA'];
@@ -93,12 +92,12 @@ export function calidad(p: Producto) {
 }
 
 /** Comprime una foto en el celular antes de subirla: WebP de hasta 1600 px. */
-export async function comprimirFoto(file: File): Promise<{ url: string; ancho: number; alto: number; chica: boolean }> {
+export async function comprimirFoto(file: File): Promise<{ url: string; blob: Blob; ancho: number; alto: number; chica: boolean }> {
   const bmp = await createImageBitmap(file);
   const k = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
   const c = document.createElement('canvas');
   c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
   c.getContext('2d')!.drawImage(bmp, 0, 0, c.width, c.height);
   const blob: Blob = await new Promise((r) => c.toBlob((b) => r(b!), 'image/webp', 0.86));
-  return { url: URL.createObjectURL(blob), ancho: bmp.width, alto: bmp.height, chica: Math.min(bmp.width, bmp.height) < 1200 };
+  return { url: URL.createObjectURL(blob), blob, ancho: bmp.width, alto: bmp.height, chica: Math.min(bmp.width, bmp.height) < 1200 };
 }

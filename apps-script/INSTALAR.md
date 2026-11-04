@@ -70,3 +70,16 @@ Menú **Tactical Command › Configurar PIN del panel**. Entre 6 y 12 números. 
 - **Si la planilla no responde** durante un build, la web se publica con la última versión buena del catálogo; nunca queda vacía.
 - **Pasarle todo a Walter** (más adelante): él hace una copia de la planilla en su cuenta (Archivo › Hacer una copia, que copia también el código), repite los pasos 3 a 6 y se cambia `PUBLIC_TC_API` en Netlify. Los PIN y el Build Hook se vuelven a cargar desde el menú.
 - **IndexNow** (aviso a Bing de los cambios): queda listo para cuando la web esté en tacticalcommand.com.ar. En el editor, **Configuración del proyecto › Propiedades de la secuencia de comandos**, agregar `SITE_URL` = `https://tacticalcommand.com.ar`.
+
+---
+
+## Actualizar a la versión del panel (fase 3)
+
+Hacelo una vez, con la cuenta contacto@melinapeter.com.ar. Los pedidos, clientes y precios que ya cargaste no se tocan.
+
+1. Abrí la planilla › **Extensiones › Apps Script**.
+2. En `Código.gs`: borrá todo y pegá la versión nueva de [`apps-script/Codigo.gs`](https://github.com/melinapeter-seo/tacticalcommand/blob/main/apps-script/Codigo.gs) (botón **Copy raw file**). Guardá.
+3. En `Semilla.gs`: lo mismo con [`apps-script/Semilla.gs`](https://github.com/melinapeter-seo/tacticalcommand/blob/main/apps-script/Semilla.gs). Guardá.
+4. Con **instalar** elegido en el desplegable, tocá **Ejecutar**. Crea las hojas nuevas (`fichas`, `fichas_draft`, `historial`) y suma a `config` lo que falte (destacados, fotos de clientes, aviso). Si Google pide permisos nuevos, aceptalos igual que la primera vez.
+5. **Implementar › Gestionar implementaciones › ✏️ (editar) › Versión: Nueva versión › Implementar**. Así la dirección `/exec` sigue siendo la misma y no hay que tocar Netlify.
+6. Entrá a `https://tacticalcommand.netlify.app/panel/` con el PIN. Si arriba dice «Falta actualizar el código de la planilla», el paso 5 no quedó hecho.

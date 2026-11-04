@@ -1,13 +1,25 @@
 // Piezas comunes del panel: contexto, botones, campos, confirmación y aviso breve.
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import type { Datos } from './datos';
+import type { Producto } from './datos';
+import type { FotosRepo, Todo } from './modelo';
 
+export type Ir = (seccion: string, extra?: Record<string, unknown>) => void;
 export type Ctx = {
-  datos: Datos;
-  setDatos: (f: (d: Datos) => Datos) => void;
+  todo: Todo;
+  /** Productos del borrador y de lo publicado, ya convertidos para el panel. */
+  bor: Producto[];
+  pub: Producto[];
+  fotos: FotosRepo;
+  setTodo: (f: (d: Todo) => Todo) => void;
+  recargar: () => Promise<void>;
+  /** Corre una llamada a la API con indicador de «guardando» y muestra el error si falla. */
+  hacer: <T>(fn: () => Promise<T>, ok?: string) => Promise<T | undefined>;
+  ocupado: boolean;
   aviso: (t: string) => void;
   confirmar: (o: { titulo: string; texto?: string; si: string; peligro?: boolean }) => Promise<boolean>;
   sitio: string;
+  ir: Ir;
+  destino: Record<string, unknown>;
 };
 export const PanelCtx = createContext<Ctx>(null!);
 export const usePanel = () => useContext(PanelCtx);
@@ -79,6 +91,7 @@ export function Icono({ n }: { n: string }) {
     productos: <><rect x="4" y="4" width="7" height="7" rx="1.5" /><rect x="13" y="4" width="7" height="7" rx="1.5" /><rect x="4" y="13" width="7" height="7" rx="1.5" /><rect x="13" y="13" width="7" height="7" rx="1.5" /></>,
     precios: <><path d="M12 3v18M16.5 7.5c-.7-1.4-2.4-2.2-4.5-2.2-2.6 0-4.3 1.3-4.3 3.2 0 4.4 9 2.4 9 6.8 0 2-1.9 3.4-4.7 3.4-2.3 0-4.2-.9-4.9-2.5" /></>,
     mas: <><circle cx="5" cy="12" r="1.6" /><circle cx="12" cy="12" r="1.6" /><circle cx="19" cy="12" r="1.6" /></>,
+    flecha: <path d="M9 6l6 6-6 6" />,
   };
   return <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d[n]}</svg>;
 }

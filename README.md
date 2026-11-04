@@ -27,6 +27,7 @@ Node 22. El sitio está diseñado sobre un lienzo fijo (1718 px en desktop, 385 
 | `src/data/catalog.json` | Catálogo base: contenido largo de las fichas (textos, specs, FAQ, guía, tarjetas). La planilla manda en nombre, categoría, SKU, descripción, precios, colores, fotos, talles, visibilidad y orden. |
 | `src/data/generado/` | Lo que usa la web: planilla + catálogo base (lo arma `scripts/sincronizar-catalogo.mjs`, no se versiona). |
 | `apps-script/` | API de la planilla (`Codigo.gs`), semilla generada (`Semilla.gs`) y guía de instalación (`INSTALAR.md`). |
+| `src/panel/` | Panel de Walter (React, `/panel/`): pedidos, clientes, productos, precios y ajustes de la web. Se prueba con `node scripts/simulador-apps-script.mjs` y `PUBLIC_TC_API=http://localhost:8790 npm run dev`. |
 | `src/data/categorias.json`, `guias.json`, `legales.json`, `sitio.json` | Contenido de categorías, guías, legales y datos del sitio. |
 | `src/data/config.json` | Condiciones mayoristas (equivale a la hoja `config`). |
 | `scripts/catalogo-desde-prototipo.mjs` | Regenera los JSON desde el prototipo (`design/Tactical Command v2.dc.html`). |
@@ -39,7 +40,7 @@ Node 22. El sitio está diseñado sobre un lienzo fijo (1718 px en desktop, 385 
 
 1. **Web pública** (esta rama): catálogo desde `src/data/`, SEO completo, deploy en Netlify.
 2. **Google Sheets + Apps Script**: la web lee el catálogo de la planilla en el build; `PUBLIC_TC_API` activa el seguimiento en vivo. Instalación: [`apps-script/INSTALAR.md`](apps-script/INSTALAR.md).
-3. **Panel** (`/panel`, isla React).
+3. **Panel** (`/panel/`, isla React): hecho. Actualización de la planilla: [`apps-script/INSTALAR.md`](apps-script/INSTALAR.md) › «Actualizar a la versión del panel».
 4. **Medición** (GA4 + Meta Pixel con consentimiento), backups y QA en celular real.
 
 ## Pendientes con el cliente

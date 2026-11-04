@@ -1,7 +1,9 @@
 // Pedidos: lista con búsqueda y filtros, detalle con pasos y aviso por WhatsApp, y alta en 3 pasos.
-import { useMemo, useState } from 'react';
+// Se guardan al instante en la planilla (no pasan por borrador).
+import { useEffect, useMemo, useState } from 'react';
 import type { Pedido, Item, Cliente } from './datos';
-import { FECHAS, LOCALES, cap, QUE_SIGUE, TRANSPORTES, avisado, digitos, faltaAvisar, fecha, fechaHora, linkWhatsApp, mensaje, money, nombrePaso, nuevoCodigo } from './datos';
+import { llamar } from './api';
+import { FECHAS, LOCALES, cap, QUE_SIGUE, TRANSPORTES, avisado, digitos, faltaAvisar, fecha, fechaHora, linkWhatsApp, mensaje, money, nombrePaso } from './datos';
 import { Boton, Campo, Encabezado, usePanel } from './ui';
 
 const FILTROS = [
@@ -12,11 +14,13 @@ const FILTROS = [
 ];
 
 export default function Pedidos() {
-  const [abierto, setAbierto] = useState<string | null>(null);
-  const [nuevo, setNuevo] = useState(false);
-  if (nuevo) return <NuevoPedido cerrar={(codigo) => { setNuevo(false); if (codigo) setAbierto(codigo); }} />;
+  const { destino } = usePanel();
+  const [abierto, setAbierto] = useState<string | null>((destino.abrir as string) || null);
+  const [nuevo, setNuevo] = useState<Partial<Cliente> | null>((destino.nuevoPara as Cliente) || null);
+  useEffect(() => { setAbierto((destino.abrir as string) || null); setNuevo((destino.nuevoPara as Cliente) || null); }, [destino]);
+  if (nuevo) return <NuevoPedido para={nuevo} cerrar={(codigo) => { setNuevo(null); if (codigo) setAbierto(codigo); }} />;
   if (abierto) return <Detalle codigo={abierto} volver={() => setAbierto(null)} />;
-  return <Lista abrir={setAbierto} crear={() => setNuevo(true)} />;
+  return <Lista abrir={setAbierto} crear={() => setNuevo({})} />;
 }
 
 function Estado({ p }: { p: Pedido }) {
@@ -24,7 +28,7 @@ function Estado({ p }: { p: Pedido }) {
 }
 
 function Lista({ abrir, crear }: { abrir: (c: string) => void; crear: () => void }) {
-  const { datos } = usePanel();
+  const { todo: datos } = usePanel();
   const [q, setQ] = useState('');
   const [f, setF] = useState('todos');
   const sinAvisar = datos.pedidos.filter(faltaAvisar).length;
@@ -69,12 +73,20 @@ function Lista({ abrir, crear }: { abrir: (c: string) => void; crear: () => void
 }
 
 function Detalle({ codigo, volver }: { codigo: string; volver: () => void }) {
-  const { datos, setDatos, aviso, confirmar, sitio } = usePanel();
-  const p = datos.pedidos.find((x) => x.codigo === codigo)!;
+  const { todo } = usePanel();
+  const p = todo.pedidos.find((x) => x.codigo === codigo);
+  if (!p) return <section className="sec"><Encabezado titulo="Pedido no encontrado" volver={volver} /></section>;
+  return <DetallePedido p={p} volver={volver} />;
+}
+
+function DetallePedido({ p, volver }: { p: Pedido; volver: () => void }) {
+  const { setTodo, hacer, confirmar, sitio, ocupado, ir, todo } = usePanel();
+  const codigo = p.codigo;
   const [transporte, setTransporte] = useState(p.transporte || '');
   const [guia, setGuia] = useState(p.guia || '');
   const [err, setErr] = useState('');
-  const guardar = (cambios: Partial<Pedido>) => setDatos((d) => ({ ...d, pedidos: d.pedidos.map((x) => (x.codigo === codigo ? { ...x, ...cambios } : x)) }));
+  // Cada acción va a la planilla; con la respuesta se actualiza el pedido en pantalla.
+  const aplicar = (nuevo?: Pedido) => { if (nuevo) setTodo((d) => ({ ...d, pedidos: d.pedidos.map((x) => (x.codigo === codigo ? nuevo : x)) })); };
   const sig = p.estado + 1;
   const local = LOCALES.includes(transporte);
   const pideTransporte = sig === 2;
@@ -86,23 +98,21 @@ function Detalle({ codigo, volver }: { codigo: string; volver: () => void }) {
     if (pideTransporte && !local && !guia.trim()) return setErr('Cargá el número de guía.');
     const prox = nombrePaso({ transporte }, sig);
     if (!(await confirmar({ titulo: `¿Pasar a «${prox}»?`, texto: 'Después vas a poder avisarle al cliente con el mensaje ya escrito.', si: `Sí, pasar a ${prox.toLowerCase()}` }))) return;
-    guardar({ estado: sig, [FECHAS[sig]]: new Date().toISOString(), ...(pideTransporte ? { transporte, guia: local ? '' : guia.trim() } : {}) });
-    aviso(`Pedido en «${prox}»`);
+    aplicar(await hacer(() => llamar<Pedido>('advanceOrder', { code: codigo, ...(pideTransporte ? { transporte, guia: local ? '' : guia.trim() } : {}) }), `Pedido en «${prox}»`));
     scrollTo(0, 0);
   }
   async function deshacer() {
     if (!(await confirmar({ titulo: '¿Deshacer el último paso?', texto: `El pedido vuelve a «${nombrePaso(p, p.estado - 1)}».`, si: 'Deshacer', peligro: true }))) return;
-    guardar({ estado: p.estado - 1, [FECHAS[p.estado]]: '', [`avisado_${p.estado}`]: false });
-    aviso('Paso deshecho');
+    aplicar(await hacer(() => llamar<Pedido>('undoStep', { code: codigo }), 'Paso deshecho'));
   }
-  const marcarAvisado = () => { guardar({ [`avisado_${p.estado}`]: true }); aviso('Marcado como avisado'); };
+  const marcarAvisado = async () => aplicar(await hacer(() => llamar<Pedido>('markNotified', { code: codigo, stage: p.estado }), 'Marcado como avisado'));
 
   return (
     <section className="sec">
       <Encabezado titulo={p.nombre} volver={volver} />
       <div className="codigo-g">
         <span className="cod cod-g">{p.codigo}</span>
-        <Boton tipo="txt" onClick={() => { navigator.clipboard?.writeText(p.codigo); aviso('Código copiado'); }}>Copiar</Boton>
+        <Boton tipo="txt" onClick={() => { navigator.clipboard?.writeText(p.codigo); hacer(async () => true, 'Código copiado'); }}>Copiar</Boton>
       </div>
 
       <div className="tarjeta">
@@ -124,7 +134,7 @@ function Detalle({ codigo, volver }: { codigo: string; volver: () => void }) {
           <p className="ayuda">El mensaje ya está escrito. Se abre WhatsApp con el número de {p.nombre.split(' ')[0]}.</p>
           <pre className="msg">{msg}</pre>
           <a className="b b-wa" href={linkWhatsApp(p.telefono, msg)} target="_blank" rel="noopener" onClick={marcarAvisado}>Enviar por WhatsApp</a>
-          <Boton tipo="txt" onClick={marcarAvisado}>Ya le avisé de otra forma</Boton>
+          <Boton tipo="txt" onClick={marcarAvisado} disabled={ocupado}>Ya le avisé de otra forma</Boton>
         </div>
       )}
 
@@ -144,7 +154,7 @@ function Detalle({ codigo, volver }: { codigo: string; volver: () => void }) {
             </>
           )}
           {err && <p className="campo-err" role="alert">{err}</p>}
-          <Boton tipo="pri" onClick={avanzar}>Pasar a «{nombrePaso({ transporte }, sig)}»</Boton>
+          <Boton tipo="pri" onClick={avanzar} disabled={ocupado}>{ocupado ? 'Guardando…' : `Pasar a «${nombrePaso({ transporte }, sig)}»`}</Boton>
         </div>
       )}
 
@@ -162,7 +172,7 @@ function Detalle({ codigo, volver }: { codigo: string; volver: () => void }) {
       </div>
 
       <div className="tarjeta">
-        <h2>Cliente</h2>
+        <h2>Cliente {todo.clientes.some((c) => c.id === p.cliente_id) && <Boton tipo="txt" onClick={() => ir('clientes', { abrir: p.cliente_id })}>Ver ficha →</Boton>}</h2>
         <dl className="datos">
           <div><dt>WhatsApp</dt><dd>{p.telefono}</dd></div>
           <div><dt>Destino</dt><dd>{p.destino || '—'} · {p.entrega === 'SUCURSAL' ? 'a sucursal' : 'a domicilio'}</dd></div>
@@ -177,9 +187,10 @@ function Detalle({ codigo, volver }: { codigo: string; volver: () => void }) {
   );
 }
 
-function NuevoPedido({ cerrar }: { cerrar: (codigo?: string) => void }) {
-  const { datos, setDatos, aviso } = usePanel();
-  const [cli, setCli] = useState({ nombre: '', telefono: '', destino: '', entrega: 'DOMICILIO', tipo: 'MINORISTA' });
+function NuevoPedido({ para, cerrar }: { para: Partial<Cliente>; cerrar: (codigo?: string) => void }) {
+  const { todo, pub, setTodo, hacer, ocupado } = usePanel();
+  const datos = { clientes: todo.clientes, productos: pub.filter((p) => p.visible), config: { ws_minimo: Number(todo.config.ws_minimo) || 8 } };
+  const [cli, setCli] = useState({ nombre: para.nombre || '', telefono: para.telefono || '', destino: para.localidad || '', entrega: 'DOMICILIO', tipo: para.tipo || 'MINORISTA' });
   const [items, setItems] = useState<Item[]>([]);
   const [sel, setSel] = useState({ slug: '', color: '', talle: '', qty: 1 });
   const [nota, setNota] = useState('');
@@ -202,22 +213,19 @@ function NuevoPedido({ cerrar }: { cerrar: (codigo?: string) => void }) {
     setSel({ slug: '', color: '', talle: '', qty: 1 });
     setErr('');
   }
-  function guardar() {
+  async function guardar() {
     if (!cli.nombre.trim()) return setErr('Falta el nombre.');
     if (digitos(cli.telefono).length < 8) return setErr('El WhatsApp tiene que tener al menos 8 números.');
     if (!items.length) return setErr('Sumá al menos un producto.');
-    const codigo = nuevoCodigo(new Set(datos.pedidos.map((p) => p.codigo)));
-    const existente = datos.clientes.find((c) => digitos(c.telefono).slice(-10) === digitos(cli.telefono).slice(-10));
-    const cliente: Cliente = existente || { id: 'c' + (datos.clientes.length + 1), nombre: cli.nombre.trim(), telefono: cli.telefono.trim(), localidad: cli.destino, tipo: cli.tipo, cuit: '', nota: '', alta: new Date().toISOString() };
-    const ahora = new Date().toISOString();
-    const pedido: Pedido = {
-      codigo, fecha_alta: ahora, cliente_id: cliente.id, nombre: cli.nombre.trim(), telefono: cli.telefono.trim(), items, destino: cli.destino, entrega: cli.entrega, tipo: cli.tipo,
-      estado: 0, f_confirmado: ahora, f_preparacion: '', f_despacho: '', f_entrega: '', avisado_0: false, avisado_1: false, avisado_2: false, avisado_3: false,
-      transporte: '', guia: '', total_ref: total, nota,
-    };
-    setDatos((d) => ({ ...d, pedidos: [pedido, ...d.pedidos], clientes: existente ? d.clientes : [...d.clientes, cliente] }));
-    aviso(`Pedido ${codigo} creado`);
-    cerrar(codigo);
+    setErr('');
+    const r = await hacer(() => llamar<{ pedido: Pedido; cliente: Cliente }>('createOrder', {
+      cliente: { nombre: cli.nombre.trim(), telefono: cli.telefono.trim(), localidad: cli.destino, tipo: cli.tipo },
+      destino: cli.destino, entrega: cli.entrega, tipo: cli.tipo, items, nota,
+    }));
+    if (!r) return;
+    setTodo((d) => ({ ...d, pedidos: [r.pedido, ...d.pedidos], clientes: d.clientes.some((c) => c.id === r.cliente.id) ? d.clientes : [...d.clientes, r.cliente] }));
+    hacer(async () => true, `Pedido ${r.pedido.codigo} creado`);
+    cerrar(r.pedido.codigo);
   }
 
   return (
@@ -279,7 +287,7 @@ function NuevoPedido({ cerrar }: { cerrar: (codigo?: string) => void }) {
       </div>
 
       {err && <p className="campo-err" role="alert">{err}</p>}
-      <div className="acciones-fijas"><Boton tipo="pri" onClick={guardar}>Guardar pedido</Boton></div>
+      <div className="acciones-fijas"><Boton tipo="pri" onClick={guardar} disabled={ocupado}>{ocupado ? 'Guardando…' : 'Guardar pedido'}</Boton></div>
     </section>
   );
 }

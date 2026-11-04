@@ -1,14 +1,18 @@
 // Productos: lista y editor de ficha (datos, colores y fotos, ficha guiada, semáforo de calidad).
+// Los cambios van al borrador de la planilla y se ven en la web al publicar.
 import { useMemo, useState } from 'react';
-import type { Color, Ficha, Producto } from './datos';
+import type { Color, Ficha, Foto, Producto } from './datos';
 import { CATEGORIAS, calidad, cap, comprimirFoto, linkWhatsApp, money } from './datos';
+import { aFilas, slugDe } from './modelo';
+import { llamar } from './api';
 import { Boton, Campo, Encabezado, usePanel } from './ui';
 
-const slugDe = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const NUEVO = '__nuevo';
 
 export default function Productos() {
   const [abierto, setAbierto] = useState<string | null>(null);
-  if (abierto) return <Editor slug={abierto} volver={() => setAbierto(null)} />;
+  const [vuelta, setVuelta] = useState(0); // fuerza a releer el producto (ej. después de volver a una versión)
+  if (abierto) return <Editor key={abierto + vuelta} slug={abierto} abrir={(s) => { setAbierto(s); setVuelta((v) => v + 1); }} volver={() => setAbierto(null)} />;
   return <Lista abrir={setAbierto} />;
 }
 
@@ -25,29 +29,16 @@ function Semaforo({ p, chico }: { p: Producto; chico?: boolean }) {
 }
 
 function Lista({ abrir }: { abrir: (s: string) => void }) {
-  const { datos, setDatos, aviso } = usePanel();
+  const { bor, pub } = usePanel();
   const [q, setQ] = useState('');
   const [cat, setCat] = useState('');
-  const lista = useMemo(() => datos.productos
-    .filter((p) => (!cat || p.categoria === cat) && (!q.trim() || (p.nombre + ' ' + p.sku).toLowerCase().includes(q.trim().toLowerCase()))), [datos.productos, q, cat]);
-
-  function crear() {
-    const base = 'producto-nuevo';
-    let slug = base, i = 2;
-    while (datos.productos.some((p) => p.slug === slug)) slug = `${base}-${i++}`;
-    const p: Producto = {
-      slug, nombre: '', categoria: 'ACCESORIOS', subcategoria: '', sku: '', visible: false, precio: 50000, orden: 9999,
-      ficha: { descripcion: '', descripcion_larga: [''], caracteristicas: [''], especificaciones: [{ k: '', v: '' }], faq: [{ q: '', a: '' }] },
-      colores: [{ nombre: 'NEGRO', sku: '', muestra: '#17191A', fotos: [], talles: [], ninos: [], precio: null, precios_talle: {} }],
-    };
-    setDatos((d) => ({ ...d, productos: [p, ...d.productos] }));
-    aviso('Producto nuevo (oculto hasta que lo publiques)');
-    abrir(slug);
-  }
+  const lista = useMemo(() => bor
+    .filter((p) => (!cat || p.categoria === cat) && (!q.trim() || (p.nombre + ' ' + p.sku).toLowerCase().includes(q.trim().toLowerCase()))), [bor, q, cat]);
+  const sinPublicar = (p: Producto) => JSON.stringify(p) !== JSON.stringify(pub.find((x) => x.slug === p.slug));
 
   return (
     <section className="sec">
-      <Encabezado titulo="Productos" texto="Editá nombre, fotos, colores, talles y la ficha de cada producto. Los cambios se ven en la web cuando los publicás." accion={<Boton tipo="pri" onClick={crear}>+ Nuevo producto</Boton>} />
+      <Encabezado titulo="Productos" texto="Editá nombre, fotos, colores, talles y la ficha de cada producto. Los cambios se ven en la web cuando los publicás." accion={<Boton tipo="pri" onClick={() => abrir(NUEVO)}>+ Nuevo producto</Boton>} />
       <input className="buscar" type="search" placeholder="Buscar por nombre o SKU" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Buscar productos" />
       <div className="chips">
         <button type="button" className="chip" aria-selected={!cat} onClick={() => setCat('')}>Todos</button>
@@ -57,15 +48,23 @@ function Lista({ abrir }: { abrir: (s: string) => void }) {
         {lista.map((p) => (
           <li key={p.slug}>
             <button type="button" className="fila fila-prod" onClick={() => abrir(p.slug)}>
-              <span className="mini">{p.colores[0]?.fotos[0] ? <img src={p.colores[0].fotos[0].url} alt="" loading="lazy" /> : <span className="mini-v">Sin foto</span>}</span>
+              <span className="mini">{p.colores[0]?.fotos[0]?.url ? <img src={p.colores[0].fotos[0].url} alt="" loading="lazy" /> : <span className="mini-v">Sin foto</span>}</span>
               <span className="fila-txt">
                 <span className="fila-n">{p.nombre || 'Producto sin nombre'}</span>
                 <span className="fila-d">{cap(p.categoria)} · {p.colores.length} {p.colores.length === 1 ? 'color' : 'colores'} · {money(p.precio)}</span>
-                <span className="fila-p">{!p.visible && <span className="tag tag-o">Oculto</span>}<Semaforo p={p} chico /></span>
+                <span className="fila-p">
+                  <span className="tags">
+                    {!p.visible && <span className="tag tag-o">Oculto</span>}
+                    {p.pendiente && <span className="tag tag-m">Pedido a Melina</span>}
+                    {sinPublicar(p) && <span className="tag tag-p">Sin publicar</span>}
+                  </span>
+                  <Semaforo p={p} chico />
+                </span>
               </span>
             </button>
           </li>
         ))}
+        {!lista.length && <li className="vacio">No hay productos con ese filtro.</li>}
       </ul>
     </section>
   );
@@ -88,25 +87,44 @@ function ListaTextos({ valores, cambiar, placeholder, multilinea, agregar }: { v
   );
 }
 
-function Editor({ slug, volver }: { slug: string; volver: () => void }) {
-  const { datos, setDatos, aviso, confirmar } = usePanel();
-  const original = datos.productos.find((p) => p.slug === slug)!;
-  const [p, setP] = useState<Producto>(() => structuredClone(original));
+const productoNuevo = (): Producto => ({
+  slug: '', nombre: '', categoria: 'ACCESORIOS', subcategoria: '', sku: '', visible: false, precio: 50000, orden: 9999, actualizado: '', pendiente: false, notas: '',
+  ficha: { descripcion: '', descripcion_larga: [''], caracteristicas: [''], especificaciones: [{ k: '', v: '' }], faq: [{ q: '', a: '' }] },
+  colores: [{ nombre: 'NEGRO', sku: '', muestra: '#17191A', fotos: [], talles: [], ninos: [], precio: null, precios_talle: {} }],
+});
+
+const aBase64 = (b: Blob) => new Promise<string>((r) => { const f = new FileReader(); f.onload = () => r(String(f.result).split(',')[1]); f.readAsDataURL(b); });
+
+function Editor({ slug, abrir, volver }: { slug: string; abrir: (s: string) => void; volver: () => void }) {
+  const { todo, bor, pub, recargar, hacer, ocupado, aviso, confirmar } = usePanel();
+  const esNuevo = slug === NUEVO;
+  const original = useMemo(() => (esNuevo ? productoNuevo() : bor.find((p) => p.slug === slug)), [slug]);
+  const [p, setP] = useState<Producto>(() => structuredClone(original || productoNuevo()));
   const [abiertoColor, setAbiertoColor] = useState(0);
   const [nuevaSub, setNuevaSub] = useState(false);
+  const [subiendo, setSubiendo] = useState(false);
+  if (!original) return <section className="sec"><Encabezado titulo="Producto no encontrado" volver={volver} /></section>;
+  const publicado = pub.some((x) => x.slug === slug);
   const cambiado = JSON.stringify(p) !== JSON.stringify(original);
-  const subcats = [...new Set(datos.productos.filter((x) => x.categoria === p.categoria).map((x) => x.subcategoria).filter(Boolean))];
-  const ejemplo = datos.productos.find((x) => x.categoria === p.categoria && x.slug !== p.slug && calidad(x).nivel === 'ok');
+  const subcats = [...new Set(bor.filter((x) => x.categoria === p.categoria).map((x) => x.subcategoria).filter(Boolean))];
+  const ejemplo = bor.find((x) => x.categoria === p.categoria && x.slug !== p.slug && calidad(x).nivel === 'ok');
   const calzado = p.categoria === 'CALZADO';
+  const versiones = todo.versiones[slug]?.length || 0;
   const set = (c: Partial<Producto>) => setP({ ...p, ...c });
   const setFicha = (c: Partial<Ficha>) => setP({ ...p, ficha: { ...p.ficha, ...c } });
   const setColor = (i: number, c: Partial<Color>) => setP({ ...p, colores: p.colores.map((x, j) => (j === i ? { ...x, ...c } : x)) });
 
-  function guardar() {
-    if (!p.nombre.trim()) return aviso('Falta el nombre del producto');
-    const final = { ...p, slug: p.slug.startsWith('producto-nuevo') && p.nombre.trim() ? slugDe(p.nombre) : p.slug };
-    setDatos((d) => ({ ...d, productos: d.productos.map((x) => (x.slug === slug ? final : x)) }));
-    aviso('Guardado. Queda en «Cambios sin publicar».');
+  /** Guarda en el borrador. Un producto todavía no publicado toma su dirección (slug) del nombre. */
+  async function guardar(extra: Partial<Producto> = {}) {
+    const final = { ...p, ...extra };
+    if (!final.nombre.trim()) { aviso('Falta el nombre del producto'); return false; }
+    if (!final.colores.length || final.colores.some((c) => !c.nombre.trim())) { aviso('Cada color necesita un nombre'); return false; }
+    final.slug = publicado ? slug : slugDe(final.nombre);
+    const r = await hacer(() => llamar('saveProduct', { ...aFilas(final), slugAnterior: esNuevo ? '' : slug }), 'Guardado. Queda en «Cambios sin publicar».');
+    if (!r) return false;
+    await recargar();
+    abrir(final.slug); // vuelve a abrir con lo guardado: el botón «Guardar» desaparece
+    return true;
   }
   async function salir() {
     if (cambiado && !(await confirmar({ titulo: '¿Salir sin guardar?', texto: 'Los cambios de esta ficha se pierden.', si: 'Salir sin guardar', peligro: true }))) return;
@@ -114,14 +132,20 @@ function Editor({ slug, volver }: { slug: string; volver: () => void }) {
   }
   async function subirFotos(i: number, files: FileList | null) {
     if (!files?.length) return;
-    const nuevas = [], chicas: string[] = [];
-    for (const f of Array.from(files)) {
-      const r = await comprimirFoto(f);
-      nuevas.push({ id: 'nueva-' + Math.random().toString(36).slice(2), url: r.url });
-      if (r.chica) chicas.push(f.name);
-    }
+    setSubiendo(true);
+    const nuevas: Foto[] = [], chicas: string[] = [];
+    try {
+      for (const f of Array.from(files)) {
+        const r = await comprimirFoto(f);
+        const sub = await hacer(async () => llamar<{ fileId: string; url: string }>('uploadPhoto', { slug: slugDe(p.nombre) || 'nuevos', idx: i, base64: await aBase64(r.blob), mime: 'image/webp' }));
+        if (!sub) break;
+        nuevas.push({ id: sub.fileId, url: r.url });
+        if (r.chica) chicas.push(f.name);
+      }
+    } finally { setSubiendo(false); }
+    if (!nuevas.length) return;
     setColor(i, { fotos: [...p.colores[i].fotos, ...nuevas] });
-    aviso(chicas.length ? `Fotos agregadas. Ojo: ${chicas.length === 1 ? 'una es chica' : chicas.length + ' son chicas'} (menos de 1200 px).` : `${nuevas.length === 1 ? 'Foto agregada' : nuevas.length + ' fotos agregadas'}`);
+    aviso(chicas.length ? `Fotos subidas. Ojo: ${chicas.length === 1 ? 'una es chica' : chicas.length + ' son chicas'} (menos de 1200 px).` : `${nuevas.length === 1 ? 'Foto subida' : nuevas.length + ' fotos subidas'}. Guardá los cambios.`);
   }
   const mover = (i: number, k: number, d: number) => {
     const f = [...p.colores[i].fotos];
@@ -130,10 +154,19 @@ function Editor({ slug, volver }: { slug: string; volver: () => void }) {
     [f[k], f[j]] = [f[j], f[k]];
     setColor(i, { fotos: f });
   };
-  const pedirMelina = () => {
-    const txt = `Hola Melina! Walter acá. ¿Me armás la ficha de "${p.nombre || 'un producto nuevo'}"?\nCategoría: ${cap(p.categoria)}${p.subcategoria ? ' / ' + cap(p.subcategoria) : ''}\nColores: ${p.colores.map((c) => cap(c.nombre)).join(', ')}\nQuedó en el panel como borrador.`;
-    window.open(linkWhatsApp(datos.config.soporte_whatsapp, txt), '_blank', 'noopener');
-  };
+  async function pedirMelina() {
+    if (!(await guardar({ pendiente: true }))) return;
+    const txt = `Hola Melina! Walter acá. ¿Me armás la ficha de "${p.nombre}"?\nCategoría: ${cap(p.categoria)}${p.subcategoria ? ' / ' + cap(p.subcategoria) : ''}\nColores: ${p.colores.map((c) => cap(c.nombre)).join(', ')}${p.notas.trim() ? `\n\nLo que sé del producto:\n${p.notas.trim()}` : ''}\n\nQuedó en el panel como borrador.`;
+    window.open(linkWhatsApp(String(todo.config.soporte_whatsapp || '5493492686435'), txt), '_blank', 'noopener');
+  }
+  async function volverVersion() {
+    if (!(await confirmar({ titulo: '¿Volver a la versión anterior?', texto: 'La ficha vuelve a como estaba antes de la última publicación. Queda en «Cambios sin publicar» para que la revises.', si: 'Volver a la anterior' }))) return;
+    if (await hacer(() => llamar('restoreVersion', { slug }), 'Listo: es la versión anterior. Revisala y publicá.')) { await recargar(); abrir(slug); }
+  }
+  async function eliminar() {
+    if (!(await confirmar({ titulo: `¿Eliminar «${p.nombre}»?`, texto: publicado ? 'Al publicar deja de verse en la web y su página desaparece. Si es temporal, conviene ocultarlo.' : 'Se borra del borrador.', si: 'Eliminar producto', peligro: true }))) return;
+    if (await hacer(() => llamar('deleteProduct', { slug }), 'Producto eliminado del borrador')) { await recargar(); volver(); }
+  }
 
   return (
     <section className="sec sec-editor">
@@ -143,11 +176,20 @@ function Editor({ slug, volver }: { slug: string; volver: () => void }) {
         <span className="int-v" aria-hidden="true" />
         <span>{p.visible ? 'Visible en la web' : 'Oculto en la web'}</span>
       </label>
+      {publicado && <p className="ayuda dir">Dirección: <a href={`/productos/${slug}/`} target="_blank" rel="noopener">/productos/{slug}/</a></p>}
 
       <div className="tarjeta tarjeta-ayuda">
         <h2>¿Preferís que la arme Melina?</h2>
-        <p className="ayuda">Cargá lo básico (nombre, fotos, colores) y mandale un aviso. El producto queda oculto hasta que se publique.</p>
-        <Boton onClick={pedirMelina}>Pedirle a Melina que la arme</Boton>
+        {p.pendiente ? (
+          <p className="ayuda">Ya se lo pediste. Cuando la arme, el producto aparece en «Cambios sin publicar».</p>
+        ) : (
+          <p className="ayuda">Cargá lo básico (nombre, fotos, colores), contale lo que sepas y mandale un aviso. El producto queda oculto hasta que se publique.</p>
+        )}
+        <Campo label="Lo que sabés del producto" ayuda="Material, medidas, para qué sirve… como te salga."><textarea rows={3} value={p.notas} onChange={(e) => set({ notas: e.target.value })} /></Campo>
+        <div className="dos dos-b">
+          <Boton onClick={pedirMelina} disabled={ocupado}>{p.pendiente ? 'Volver a avisarle' : 'Pedirle a Melina que la arme'}</Boton>
+          {p.pendiente && <Boton tipo="txt" onClick={() => guardar({ pendiente: false })} disabled={ocupado}>Marcar como resuelto</Boton>}
+        </div>
       </div>
       <Semaforo p={p} />
 
@@ -202,9 +244,9 @@ function Editor({ slug, volver }: { slug: string; volver: () => void }) {
                       </div>
                     </figure>
                   ))}
-                  <label className="foto foto-mas">
-                    <input type="file" accept="image/*" multiple onChange={(e) => { subirFotos(i, e.target.files); e.target.value = ''; }} />
-                    <span>+ Foto</span>
+                  <label className="foto foto-mas" aria-busy={subiendo}>
+                    <input type="file" accept="image/*" multiple disabled={subiendo} onChange={(e) => { subirFotos(i, e.target.files); e.target.value = ''; }} />
+                    <span>{subiendo ? 'Subiendo…' : '+ Foto'}</span>
                   </label>
                 </div>
                 <Campo label={calzado ? 'Números de adulto' : 'Talles'} ayuda={calzado ? 'Separados por coma. Ej.: 38, 39, 40' : 'Separados por coma. Ej.: S, M, L, XL. Vacío si no tiene talles.'}>
@@ -255,9 +297,15 @@ function Editor({ slug, volver }: { slug: string; volver: () => void }) {
         <Boton tipo="txt" onClick={() => setFicha({ faq: [...p.ficha.faq, { q: '', a: '' }] })}>+ Agregar pregunta</Boton>
       </div>
 
-      {cambiado && (
+      <div className="tarjeta tarjeta-ayuda">
+        <h2>Otras acciones</h2>
+        {versiones > 0 && <Boton onClick={volverVersion} disabled={ocupado}>Volver a la versión anterior</Boton>}
+        {!esNuevo && <Boton tipo="txt" onClick={eliminar} disabled={ocupado}>Eliminar producto</Boton>}
+      </div>
+
+      {(cambiado || esNuevo) && (
         <div className="acciones-fijas">
-          <Boton tipo="pri" onClick={guardar}>Guardar cambios</Boton>
+          <Boton tipo="pri" onClick={() => guardar()} disabled={ocupado || subiendo}>{subiendo ? 'Subiendo fotos…' : ocupado ? 'Guardando…' : esNuevo ? 'Crear producto' : 'Guardar cambios'}</Boton>
         </div>
       )}
     </section>
