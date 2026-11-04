@@ -2625,11 +2625,7 @@
     "pantalon-cargo-tactico-ripstop-negro",
     "cinto-tactico"
    ],
-   "guia": {
-    "url": "/guias/cordura-y-lona-diferencias/",
-    "titulo": "CORDURA Y LONA: QUÉ DIFERENCIAS HAY EN MOCHILAS Y BOLSOS",
-    "imagen": null
-   },
+   "guia": null,
    "opciones": {
     "con_talles": true,
     "es_calzado": true,
@@ -2879,11 +2875,7 @@
     "cinto-tactico",
     "uniforme-tactico"
    ],
-   "guia": {
-    "url": "/guias/cordura-y-lona-diferencias/",
-    "titulo": "CORDURA Y LONA: QUÉ DIFERENCIAS HAY EN MOCHILAS Y BOLSOS",
-    "imagen": null
-   },
+   "guia": null,
    "opciones": {
     "con_talles": true,
     "es_calzado": true,
@@ -3161,11 +3153,7 @@
     "cinto-tactico",
     "uniforme-tactico"
    ],
-   "guia": {
-    "url": "/guias/cordura-y-lona-diferencias/",
-    "titulo": "CORDURA Y LONA: QUÉ DIFERENCIAS HAY EN MOCHILAS Y BOLSOS",
-    "imagen": null
-   },
+   "guia": null,
    "opciones": {
     "con_talles": true,
     "es_calzado": true,

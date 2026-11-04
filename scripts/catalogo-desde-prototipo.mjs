@@ -74,7 +74,8 @@ const productos = Object.entries(D.PDPS).map(([slug, p], orden) => {
     faq: p.qa.map(([q, a]) => ({ q, a })),
     relacionados_tarjetas: p.related || [],
     relacionados: [...new Set((p.related || []).map((k) => slugDe(D.PROD[k] && D.PROD[k].to)).filter(Boolean))],
-    guia: p.guide ? { url: ruta(p.guide).replace('/blog/', '/guias/'), titulo: p.guideT || null, imagen: foto(p.guideImg) } : null,
+    // Calzado: el prototipo recomienda la guía de Cordura y lona (de mochilas); el cliente pidió sacarla.
+    guia: p.guide && !p.shoe ? { url: ruta(p.guide).replace('/blog/', '/guias/'), titulo: p.guideT || null, imagen: foto(p.guideImg) } : null,
     opciones: {
       con_talles: !p.noSizes, es_calzado: !!p.shoe, es_sombrero: !!p.hat, es_indumentaria: !!p.apparel, consulta_whatsapp_talle: !!p.waNote,
       info_altura: !!p.tallInfo, columnas_talle: p.sizeCols || null, nota_talle: p.sizeNote || null, proporcion_foto: p.ar || null,

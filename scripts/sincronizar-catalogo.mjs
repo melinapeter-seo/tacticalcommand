@@ -95,7 +95,7 @@ async function main() {
 
   // Textos con datos que se editan en la hoja `config`: {envio_rafaela} → "$5.000".
   const generar = async (catalogo, categorias, config) => {
-    const marcas = { envio_rafaela: '$' + Number(config.envio_rafaela || 0).toLocaleString('es-AR') };
+    const marcas = { envio_rafaela: '$ ' + Number(config.envio_rafaela || 0).toLocaleString('es-AR') };
     const llenar = (v) => JSON.parse(JSON.stringify(v).replace(/\{(\w+)\}/g, (m, k) => marcas[k] ?? m));
     await escribir(path.join(SALIDA, 'catalog.json'), llenar(catalogo));
     await escribir(path.join(SALIDA, 'categorias.json'), llenar(categorias));

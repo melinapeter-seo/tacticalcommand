@@ -23,8 +23,8 @@ export const producto = (slug: string) => productos.find((p) => p.slug === slug)
 export const categoriaDeProducto = (p: Producto) => categorias.find((c) => c.titulo === p.categoria)!;
 
 export const money = (n: number) => '$ ' + n.toLocaleString('es-AR');
-/** Costo de envío dentro de Rafaela (hoja `config`), con el formato de los textos: "$5.000". */
-export const ENVIO_RAFAELA = '$' + configJson.envio_rafaela.toLocaleString('es-AR');
+/** Costo de envío dentro de Rafaela (hoja `config`), con el formato de los textos: "$ 5.000". */
+export const ENVIO_RAFAELA = '$ ' + configJson.envio_rafaela.toLocaleString('es-AR');
 
 /** Precio efectivo (planilla): el del talle, si no el del color, si no el del producto. */
 export function precioDe(p: Producto, c: Color, talle?: string | null): number {
