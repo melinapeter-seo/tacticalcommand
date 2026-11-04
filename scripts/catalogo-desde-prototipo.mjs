@@ -114,7 +114,8 @@ const RENOMBRAR = { 'cinto-tactico-cobra': 'cinto-tactico' };
 const TEXTOS = [
   ['Los talles se consultan por WhatsApp antes de realizar la compra.', 'Disponible en talles del XS al 2XL.'],
   ['$5.000', '{envio_rafaela}'],
-  ['https://www.instagram.com/tactical.comand/', 'https://www.instagram.com/tacticallcommand/'], // link confirmado por el cliente
+  ['https://www.instagram.com/tactical.comand/', 'https://www.instagram.com/tacticallcommand/'],
+  ['https://www.facebook.com/share/1FVdYnVcC4/', 'https://www.facebook.com/profile.php?id=100046798483571'], // links confirmados por el cliente
   // El borcego 5.11 va sin «estilo» en el nombre; se mantiene la aclaración de que no es original.
   ['No. Es un producto no original de estilo 5.11. No debe confundirse con un artículo fabricado o comercializado oficialmente por esa marca.',
     'No. Es un producto no original. No debe confundirse con un artículo fabricado o comercializado oficialmente por la marca 5.11.'],
