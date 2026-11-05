@@ -69,21 +69,28 @@ function renderCart() {
     items.forEach((c: CartItem, i: number) => {
       const it = document.createElement('div');
       it.className = 'it';
-      it.innerHTML = `<img alt="" loading="lazy"><div class="b"><div class="sku"></div><div class="n"></div><div class="v"></div><div class="r"><div class="q"></div><button type="button" class="rm">QUITAR</button></div></div>`;
+      it.innerHTML = `<img alt="" loading="lazy"><div class="b"><div class="top"><div class="n"></div><button type="button" class="rm" aria-label="Quitar del carrito">✕</button></div><div class="sku"></div><div class="v"></div><div class="r"><div class="qty"><button type="button" class="qb" data-d="-1" aria-label="Restar uno">−</button><span class="qn" aria-live="polite"></span><button type="button" class="qb" data-d="1" aria-label="Sumar uno">+</button></div><div class="pr"></div></div></div>`;
       const img = it.querySelector('img')!;
       if (c.img) img.src = c.img; else img.removeAttribute('src');
       img.alt = c.n;
       it.querySelector('.sku')!.textContent = c.sku;
       it.querySelector('.n')!.textContent = c.n;
-      it.querySelector('.v')!.textContent = c.variant || '';
-      it.querySelector('.q')!.textContent = `${c.qty} UN. · ${c.mp ? money(c.mp * c.qty) : 'PRECIO A CONFIRMAR'}`;
+      const v = it.querySelector('.v')!;
+      (c.variant || '').split(/ · (?=(?:TALLE|NRO|NÚMERO) )/i).filter(Boolean).forEach((t) => { const ch = document.createElement('span'); ch.textContent = t; v.appendChild(ch); });
+      it.querySelector('.qn')!.textContent = String(c.qty);
+      const pr = it.querySelector('.pr')!;
+      pr.textContent = c.mp ? money(c.mp * c.qty) : 'A confirmar';
+      if (c.qty > 1 && c.mp) { const u = document.createElement('small'); u.textContent = money(c.mp) + ' c/u'; pr.appendChild(u); }
+      const menos = it.querySelector<HTMLButtonElement>('.qb[data-d="-1"]')!;
+      menos.disabled = c.qty <= 1;
+      it.querySelectorAll<HTMLButtonElement>('.qb').forEach((b) => b.addEventListener('click', () => { cart.setQty(i, c.qty + Number(b.dataset.d)); renderCart(); }));
       it.querySelector('.rm')!.addEventListener('click', () => { cart.remove(i); renderCart(); });
       list.appendChild(it);
     });
   }
   const tot = cartTotal(items);
   const totEl = $('#cart-total');
-  if (totEl) totEl.textContent = tot > 0 && items.every((c) => c.mp > 0) ? money(tot) : 'A CONFIRMAR';
+  if (totEl) totEl.textContent = tot > 0 && items.every((c) => c.mp > 0) ? money(tot) : 'A confirmar';
   const cta = $('#cart-cta');
   if (cta) cta.hidden = !items.length;
   const wa = $<HTMLAnchorElement>('#cart-wa');

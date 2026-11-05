@@ -19,6 +19,7 @@ export const cart = {
   get: (): CartItem[] => (storage ? read() : mem),
   add: (it: CartItem) => write([...cart.get(), it]),
   remove: (i: number) => write(cart.get().filter((_, j) => j !== i)),
+  setQty: (i: number, q: number) => write(cart.get().map((c, j) => (j === i ? { ...c, qty: Math.max(1, Math.min(99, q)) } : c))),
 };
 
 export const cartTotal = (items: CartItem[]) => items.reduce((a, c) => a + c.mp * c.qty, 0);

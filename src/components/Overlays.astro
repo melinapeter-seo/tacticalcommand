@@ -30,8 +30,12 @@ const x = `<svg viewBox="0 0 24 24" fill="none" stroke="#E3B23C" stroke-width="2
     <div class="dr-top"><span>CARRITO / <span data-cart-count>0</span> ÍTEMS</span><button type="button" data-close>CERRAR ✕</button></div>
     <div class="dr-list" id="cart-list"></div>
     <div class="dr-foot">
-      <div class="dr-row"><span style="color:#9AA09A">SUBTOTAL</span><span id="cart-total">A CONFIRMAR</span></div>
-      <div class="dr-row dr-ship"><span>ENVÍO</span><span class="dr-ship-v"><span style="color:#C3C8C1">A CARGO DEL COMPRADOR</span><span>RAFAELA {ENVIO_RAFAELA} · RESTO DEL PAÍS COSTO A COORDINAR POR WHATSAPP</span></span></div>
+      <div class="dr-sub"><span>Subtotal</span><span id="cart-total">A confirmar</span></div>
+      <div class="dr-ship">
+        <div class="dr-ship-h">ENVÍO <span>· A CARGO DEL COMPRADOR</span></div>
+        <div class="dr-ship-r"><span>Rafaela</span><b>{ENVIO_RAFAELA}</b></div>
+        <div class="dr-ship-r"><span>Resto del país</span><b>A coordinar por WhatsApp</b></div>
+      </div>
       <div id="cart-cta" hidden>
         <a id="cart-wa" href="#" target="_blank" rel="noopener" class="btn-gold anim dr-wa" data-wa="carrito">ENVIAR PEDIDO POR WHATSAPP →</a>
         <div class="dr-how">
@@ -96,20 +100,33 @@ const x = `<svg viewBox="0 0 24 24" fill="none" stroke="#E3B23C" stroke-width="2
   .dr-top button { background: none; border: 0; cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--muted); }
   .dr-list { flex: 1; overflow-y: auto; padding: 0 24px; }
   .dr-list :global(.empty) { padding: 60px 0; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--muted-2); line-height: 2; }
-  .dr-list :global(.it) { display: flex; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--surface); }
-  .dr-list :global(.it img) { width: 76px; height: 96px; flex: none; object-fit: cover; background: var(--surface); }
-  .dr-list :global(.it .b) { flex: 1; min-width: 0; }
-  .dr-list :global(.sku) { font-family: var(--mono); font-size: 10px; letter-spacing: .18em; color: var(--faint); }
-  .dr-list :global(.n) { font-size: 15px; font-weight: 500; margin-top: 6px; line-height: 1.25; }
-  .dr-list :global(.v) { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted); margin-top: 6px; }
-  .dr-list :global(.r) { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
-  .dr-list :global(.q) { font-family: var(--mono); font-size: 11px; color: var(--text); }
-  .dr-list :global(.rm) { background: none; border: 0; cursor: pointer; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--muted-2); }
-  .dr-list :global(.rm:hover) { color: var(--gold); }
-  .dr-foot { border-top: 1px solid var(--border); padding: 22px 24px; display: flex; flex-direction: column; gap: 16px; }
-  .dr-row { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; }
-  .dr-ship { font-size: 10px; color: var(--muted-2); }
-  .dr-ship-v { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; text-align: right; }
+  .dr-list :global(.it) { display: flex; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--border-soft); }
+  .dr-list :global(.it img) { width: 84px; height: 104px; flex: none; object-fit: cover; background: var(--surface); }
+  .dr-list :global(.it .b) { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .dr-list :global(.top) { display: flex; align-items: flex-start; gap: 10px; }
+  .dr-list :global(.n) { flex: 1; font-size: 16px; font-weight: 600; line-height: 1.25; color: var(--text); }
+  .dr-list :global(.rm) { flex: none; width: 28px; height: 28px; margin: -5px -6px 0 0; display: grid; place-items: center; background: none; border: 0; cursor: pointer; font-size: 13px; color: var(--muted-2); border-radius: 50%; }
+  .dr-list :global(.rm:hover) { color: var(--gold); background: var(--surface); }
+  .dr-list :global(.sku) { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; color: var(--ph); margin-top: 4px; }
+  .dr-list :global(.v) { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .dr-list :global(.v span) { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; color: var(--text-2); padding: 4px 8px; border: 1px solid var(--border); background: var(--surface-deep); }
+  .dr-list :global(.r) { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 14px; }
+  .dr-list :global(.qty) { display: inline-flex; align-items: center; border: 1px solid var(--border); }
+  .dr-list :global(.qb) { width: 32px; height: 32px; background: none; border: 0; cursor: pointer; color: var(--text); font-size: 16px; line-height: 1; }
+  .dr-list :global(.qb:hover:not(:disabled)) { color: var(--gold); }
+  .dr-list :global(.qb:disabled) { color: var(--border-dim); cursor: default; }
+  .dr-list :global(.qn) { min-width: 26px; text-align: center; font-family: var(--mono); font-size: 13px; color: var(--text); }
+  .dr-list :global(.pr) { font-size: 16px; font-weight: 600; color: var(--text); text-align: right; white-space: nowrap; }
+  .dr-list :global(.pr small) { display: block; font-size: 11px; font-weight: 400; color: var(--muted-2); margin-top: 2px; }
+  .dr-foot { border-top: 1px solid var(--border); padding: 20px 24px 22px; display: flex; flex-direction: column; gap: 14px; }
+  .dr-sub { display: flex; align-items: baseline; justify-content: space-between; }
+  .dr-sub span:first-child { font-size: 14px; color: var(--muted); }
+  #cart-total { font-size: 22px; font-weight: 600; color: var(--text); }
+  .dr-ship { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; background: var(--surface-deep); border: 1px solid var(--border-soft); }
+  .dr-ship-h { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--faint); }
+  .dr-ship-h span { color: var(--ph); }
+  .dr-ship-r { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; line-height: 1.35; color: var(--muted); }
+  .dr-ship-r b { font-weight: 500; color: var(--text-2); text-align: right; }
   #cart-cta:not([hidden]) { display: flex; flex-direction: column; gap: 16px; }
   .dr-wa { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 19px; letter-spacing: .18em; }
   .dr-how { display: flex; flex-direction: column; gap: 10px; }
