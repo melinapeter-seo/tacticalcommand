@@ -2,7 +2,7 @@
 // Los cambios van al borrador de la planilla y se ven en la web al publicar.
 import { useMemo, useState } from 'react';
 import type { Color, Ficha, Foto, Producto } from './datos';
-import { CATEGORIAS, calidad, cap, comprimirFoto, linkWhatsApp, money } from './datos';
+import { CATEGORIAS, calidad, cap, colorSinStock, comprimirFoto, linkWhatsApp, money, stockDe } from './datos';
 import { aFilas, slugDe } from './modelo';
 import { llamar } from './api';
 import { Boton, Campo, Encabezado, usePanel } from './ui';
@@ -55,6 +55,8 @@ function Lista({ abrir }: { abrir: (s: string) => void }) {
                 <span className="fila-p">
                   <span className="tags">
                     {!p.visible && <span className="tag tag-o">Oculto</span>}
+                    {stockDe(p) === 'sin' && <span className="tag tag-ss">Sin stock</span>}
+                    {stockDe(p) === 'parcial' && <span className="tag tag-sp">Stock parcial</span>}
                     {p.pendiente && <span className="tag tag-m">Pedido a Melina</span>}
                     {sinPublicar(p) && <span className="tag tag-p">Sin publicar</span>}
                   </span>
@@ -90,7 +92,7 @@ function ListaTextos({ valores, cambiar, placeholder, multilinea, agregar }: { v
 const productoNuevo = (): Producto => ({
   slug: '', nombre: '', categoria: 'ACCESORIOS', subcategoria: '', sku: '', visible: false, precio: 50000, orden: 9999, actualizado: '', pendiente: false, notas: '',
   ficha: { descripcion: '', descripcion_larga: [''], caracteristicas: [''], especificaciones: [{ k: '', v: '' }], faq: [{ q: '', a: '' }] },
-  colores: [{ nombre: 'NEGRO', sku: '', muestra: '#17191A', fotos: [], talles: [], ninos: [], precio: null, precios_talle: {} }],
+  colores: [{ nombre: 'NEGRO', sku: '', muestra: '#17191A', fotos: [], talles: [], ninos: [], precio: null, precios_talle: {}, agotado: false, agotados: [] }],
 });
 
 const aBase64 = (b: Blob) => new Promise<string>((r) => { const f = new FileReader(); f.onload = () => r(String(f.result).split(',')[1]); f.readAsDataURL(b); });
@@ -109,6 +111,7 @@ function Editor({ slug, abrir, volver }: { slug: string; abrir: (s: string) => v
   const subcats = [...new Set(bor.filter((x) => x.categoria === p.categoria).map((x) => x.subcategoria).filter(Boolean))];
   const ejemplo = bor.find((x) => x.categoria === p.categoria && x.slug !== p.slug && calidad(x).nivel === 'ok');
   const calzado = p.categoria === 'CALZADO';
+  const todoSin = p.colores.length > 0 && p.colores.every((c) => c.agotado);
   const versiones = todo.versiones[slug]?.length || 0;
   const set = (c: Partial<Producto>) => setP({ ...p, ...c });
   const setFicha = (c: Partial<Ficha>) => setP({ ...p, ficha: { ...p.ficha, ...c } });
@@ -218,12 +221,20 @@ function Editor({ slug, abrir, volver }: { slug: string; abrir: (s: string) => v
 
       <div className="tarjeta">
         <h2><span className="num">2</span> Colores, fotos y {calzado ? 'números' : 'talles'}</h2>
+        <div className={`stock-gral ${todoSin ? 'sin' : ''}`}>
+          <label className="interruptor">
+            <input type="checkbox" checked={!todoSin} onChange={(e) => setP({ ...p, colores: p.colores.map((c) => ({ ...c, agotado: !e.target.checked, agotados: e.target.checked && c.agotado ? [] : c.agotados })) })} />
+            <span className="int-v" aria-hidden="true" />
+            <span>{todoSin ? 'Todo el producto sin stock' : 'Producto con stock'}</span>
+          </label>
+          <p className="ayuda">{todoSin ? 'En la web se ve «SIN STOCK» y no se puede agregar al carrito. Se puede seguir consultando por WhatsApp.' : 'Para marcar un color o un talle sin stock, abrí el color.'}</p>
+        </div>
         {p.colores.map((c, i) => (
           <div key={i} className={`color ${abiertoColor === i ? 'abierto' : ''}`}>
             <button type="button" className="color-h" onClick={() => setAbiertoColor(abiertoColor === i ? -1 : i)} aria-expanded={abiertoColor === i}>
               <span className="sw" style={{ background: c.muestra }} />
               <span className="color-n">{cap(c.nombre) || 'Color sin nombre'}</span>
-              <span className="color-d">{c.fotos.length} fotos · {c.talles.length + c.ninos.length || 'sin'} {calzado ? 'números' : 'talles'}</span>
+              <span className="color-d">{colorSinStock(c) ? <span className="tag tag-ss">Sin stock</span> : c.agotados.length ? <span className="tag tag-sp">{c.agotados.length} sin stock</span> : <>{c.fotos.length} fotos · {c.talles.length + c.ninos.length || 'sin'} {calzado ? 'números' : 'talles'}</>}</span>
             </button>
             {abiertoColor === i && (
               <div className="color-c">
@@ -257,12 +268,35 @@ function Editor({ slug, abrir, volver }: { slug: string; abrir: (s: string) => v
                     <input value={c.ninos.join(', ')} onChange={(e) => setColor(i, { ninos: e.target.value.split(',').map((x) => x.trim()).filter(Boolean) })} />
                   </Campo>
                 )}
+                <div className="stock-color">
+                  <span className="campo-l">Stock</span>
+                  <label className="interruptor">
+                    <input type="checkbox" checked={!c.agotado} onChange={(e) => setColor(i, { agotado: !e.target.checked })} />
+                    <span className="int-v" aria-hidden="true" />
+                    <span>{c.agotado ? 'Este color está sin stock' : 'Hay stock de este color'}</span>
+                  </label>
+                  {!c.agotado && c.talles.length + c.ninos.length > 0 && (
+                    <>
+                      <p className="ayuda">Tocá {calzado ? 'los números' : 'los talles'} que no tenés. Se ven tachados en la web y no se pueden comprar.</p>
+                      <div className="talles-st">
+                        {[...c.talles, ...c.ninos].map((t) => {
+                          const sin = c.agotados.includes(t);
+                          return (
+                            <button key={t} type="button" className={`talle-st ${sin ? 'sin' : ''}`} aria-pressed={sin} onClick={() => setColor(i, { agotados: sin ? c.agotados.filter((x) => x !== t) : [...c.agotados, t] })}>
+                              <b>{t}</b><span>{sin ? 'Sin stock' : 'Hay'}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
+                </div>
                 {p.colores.length > 1 && <Boton tipo="txt" onClick={async () => { if (await confirmar({ titulo: `¿Quitar el color ${cap(c.nombre)}?`, si: 'Quitar color', peligro: true })) { setP({ ...p, colores: p.colores.filter((_, j) => j !== i) }); setAbiertoColor(-1); } }}>Quitar este color</Boton>}
               </div>
             )}
           </div>
         ))}
-        <Boton onClick={() => { setP({ ...p, colores: [...p.colores, { nombre: '', sku: p.sku, muestra: '#2F3530', fotos: [], talles: p.colores[0]?.talles || [], ninos: [], precio: null, precios_talle: {} }] }); setAbiertoColor(p.colores.length); }}>+ Agregar color</Boton>
+        <Boton onClick={() => { setP({ ...p, colores: [...p.colores, { nombre: '', sku: p.sku, muestra: '#2F3530', fotos: [], talles: p.colores[0]?.talles || [], ninos: [], precio: null, precios_talle: {}, agotado: false, agotados: [] }] }); setAbiertoColor(p.colores.length); }}>+ Agregar color</Boton>
       </div>
 
       <div className="tarjeta">

@@ -16,6 +16,7 @@ const rota = t.rota ? await Promise.all(t.rota.map(async (f) => (await getImage(
     ) : (
       <div class="ph"><span>PLACEHOLDER /<br />{t.placeholder}</span></div>
     )}
+    {t.sinStock && <span class="sin-stock">SIN STOCK</span>}
     <div class="pc-ver" aria-hidden="true">VER PRODUCTO →</div>
   </div>
   <div class="pc-meta"><span>{t.categoria}</span><span>{t.sku}</span></div>

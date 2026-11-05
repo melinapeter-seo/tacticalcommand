@@ -44,6 +44,7 @@ export function aProductos(prods: ProdRow[], vars: VarRow[], fichas: FichaRow[],
         fotos: String(v.fotos || '').split('|').map((x) => x.trim()).filter(Boolean).map((id): Foto => ({ id, url: urlFoto(id, repo) })),
         talles: propios.length ? ordenarTalles(propios) : tallesProd, ninos,
         precio: num(v.precio), precios_talle: json(v.precios_talle, {} as Record<string, number>),
+        agotado: bool(v.agotado), agotados: csv(v.agotados),
       };
     });
     return {
@@ -73,7 +74,7 @@ export function aFilas(p: Producto) {
     variantes: p.colores.map((c, idx): VarRow => ({
       slug: p.slug, idx, nombre: c.nombre.trim().toUpperCase(), sku: c.sku.trim(), swatch: c.muestra, fotos: c.fotos.map((f) => f.id).join('|'),
       precio: c.precio ?? '', precios_talle: Object.keys(c.precios_talle).length ? JSON.stringify(c.precios_talle) : '',
-      agotados: '', agotado: false, talles: c.talles.join(',') === tallesProd.join(',') ? '' : c.talles.join(','),
+      agotados: c.agotados.filter((t) => c.talles.includes(t) || c.ninos.includes(t)).join(','), agotado: c.agotado, talles: c.talles.join(',') === tallesProd.join(',') ? '' : c.talles.join(','),
     })),
     ficha: {
       contenido: {
@@ -112,6 +113,8 @@ export function cambios(pub: Producto[], bor: Producto[], cfgPub: Config, cfgBor
       if (JSON.stringify(o.precios_talle) !== JSON.stringify(c.precios_talle)) w.push(`${cap(c.nombre)}: precios por talle`);
       if (o.fotos.map((f) => f.id).join() !== c.fotos.map((f) => f.id).join()) w.push(`${cap(c.nombre)}: fotos`);
       if (o.talles.join() !== c.talles.join() || o.ninos.join() !== c.ninos.join()) w.push(`${cap(c.nombre)}: talles`);
+      if (o.agotado !== c.agotado) w.push(`${cap(c.nombre)}: ${c.agotado ? 'sin stock' : 'vuelve a tener stock'}`);
+      else if (!c.agotado && o.agotados.slice().sort().join() !== c.agotados.slice().sort().join()) w.push(`${cap(c.nombre)}: ${c.agotados.length ? 'sin stock en ' + c.agotados.join(', ') : 'todos los talles con stock'}`);
     }
     if (w.length) out.push({ t: d.nombre, w });
   }

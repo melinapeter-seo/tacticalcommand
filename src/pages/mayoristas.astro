@@ -18,7 +18,7 @@ const rows = await Promise.all(
         n: c.nombre, sw: c.muestra, sku: c.sku,
         g: (await fotosVista(c.fotos)).map((f) => ({ t: f.thumb, s: f.src, ss: f.srcset, f: f.full })),
         // Precio por talle (planilla): talle → color → producto.
-        sizes: !p.opciones.con_talles ? [{ t: 'UNIDAD', sp: false, p: precioDe(p, c) }] : c.talles.length ? c.talles.map((t) => ({ t: t.talle, sp: t.estado === 'consultar', p: precioDe(p, c, t.talle), ...(t.ninos ? { k: true } : {}) })) : [{ t: 'TALLE', sp: true, p: precioDe(p, c) }],
+        sizes: !p.opciones.con_talles ? [{ t: 'UNIDAD', sp: false, p: precioDe(p, c), ...(c.agotado ? { ag: true } : {}) }] : c.talles.length ? c.talles.map((t) => ({ t: t.talle, sp: t.estado === 'consultar', p: precioDe(p, c, t.talle), ...(t.ninos ? { k: true } : {}), ...(c.agotado || t.estado === 'agotado' ? { ag: true } : {}) })) : [{ t: 'TALLE', sp: true, p: precioDe(p, c) }],
       }))),
     })),
 );
@@ -245,6 +245,9 @@ const data = { min: MIN, rows };
   .panel :global(.sz.on) { border-color: rgba(227,178,60,.6); }
   .panel :global(.szt) { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
   .panel :global(.szt em) { font-style: normal; font-size: 8px; letter-spacing: .14em; color: var(--gold); border: 1px solid rgba(227,178,60,.5); padding: 2px 5px; }
+  .panel :global(.sz-ag) { opacity: .55; }
+  .panel :global(.cb em.ag) { font-style: normal; margin-left: 8px; font-size: 8px; letter-spacing: .14em; color: var(--warn); border: 1px solid rgba(232,180,160,.5); padding: 2px 5px; }
+  .panel :global(.szt em.ag) { color: var(--warn); border-color: rgba(232,180,160,.5); }
   .panel :global(.ctl) { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
   .panel :global(.ctl button) { width: 44px; height: 44px; flex: none; background: none; border: 1px solid var(--border); color: var(--text); cursor: pointer; font-family: var(--mono); font-size: 15px; }
   .panel :global(.ctl button:hover) { border-color: var(--gold); color: var(--gold); }

@@ -18,7 +18,8 @@ export const GET: APIRoute = async () => {
       const multi = p.colores.length > 1;
       const talles = c.talles.map((t) => t.talle);
       const porTalle = new Set(talles.map((t) => precioDe(p, c, t))).size > 1;
-      const variantes = porTalle ? talles.map((t) => ({ id: `${c.sku}-${t}`, talles: [t], precio: precioDe(p, c, t) })) : [{ id: c.sku, talles, precio: precioDe(p, c, talles[0]) }];
+      const agT = (t: string) => !!c.agotado || c.talles.some((x) => x.talle === t && x.estado === 'agotado');
+      const variantes = porTalle ? talles.map((t) => ({ id: `${c.sku}-${t}`, talles: [t], precio: precioDe(p, c, t), ag: agT(t) })) : [{ id: c.sku, talles, precio: precioDe(p, c, talles[0]), ag: !!c.agotado || (talles.length > 0 && talles.every(agT)) }];
       for (const v of variantes) items.push(`<item>
 <g:id>${x(v.id)}</g:id>
 <g:item_group_id>${x(p.sku)}</g:item_group_id>
@@ -27,7 +28,7 @@ export const GET: APIRoute = async () => {
 <g:link>${SITE}/productos/${p.slug}/${multi ? '?color=' + encodeURIComponent(c.nombre) : ''}</g:link>
 <g:image_link>${imgs[0]}</g:image_link>
 ${imgs.slice(1).map((u) => `<g:additional_image_link>${u}</g:additional_image_link>`).join('\n')}
-<g:availability>in_stock</g:availability>
+<g:availability>${v.ag ? 'out_of_stock' : 'in_stock'}</g:availability>
 <g:price>${v.precio} ARS</g:price>
 <g:condition>new</g:condition>
 <g:brand>Tactical Command</g:brand>

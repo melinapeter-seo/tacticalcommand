@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import Scroller from '../../components/Scroller.astro';
 import SizeCalc from '../../components/SizeCalc.astro';
-import { ENVIO_RAFAELA, productos, categoriaDeProducto, guias, precioDe, precioTexto, rangoPrecio, relacionados, tarjeta, WA, type Producto, type TarjetaVista } from '../../lib/data';
+import { ENVIO_RAFAELA, productos, categoriaDeProducto, colorAgotado, guias, precioDe, precioTexto, productoAgotado, rangoPrecio, relacionados, talleAgotado, tarjeta, WA, type Producto, type TarjetaVista } from '../../lib/data';
 import { fotosVista } from '../../lib/fotos';
 import { graph, breadcrumbs, faqPage, abs, cap, desc, ORG_ID } from '../../lib/seo';
 
@@ -28,7 +28,10 @@ const colores = await Promise.all(p.colores.map(async (c) => ({
   // Calzado: los números de niños van en una fila aparte.
   talles: c.talles.filter((t) => !t.ninos).map((t) => t.talle), ninos: c.talles.filter((t) => t.ninos).map((t) => t.talle),
   precio: precioDe(p, c), pt: Object.fromEntries(c.talles.map((t) => [t.talle, precioDe(p, c, t.talle)])),
+  // Sin stock: el color entero (ag) o algunos talles (sst).
+  ag: colorAgotado(c), sst: c.talles.filter(talleAgotado).map((t) => t.talle),
 })));
+const agotado = productoAgotado(p);
 const r0 = rangoPrecio(p, p.colores[0]);
 const c0 = colores[0];
 const tallesMax = c0.talles;
@@ -63,8 +66,8 @@ const fecha = actualizado.toLocaleDateString('es-AR', { day: '2-digit', month: '
 
 // JSON-LD: ProductGroup con una variante (Product + Offer) por color.
 const validUntil = new Date(hoy.getFullYear(), hoy.getMonth() + 3, 0).toISOString().slice(0, 10);
-const offer = (sku: string, price: number) => ({
-  '@type': 'Offer', price, priceCurrency: 'ARS', availability: 'https://schema.org/InStock', itemCondition: 'https://schema.org/NewCondition',
+const offer = (sku: string, price: number, sinStock = false) => ({
+  '@type': 'Offer', price, priceCurrency: 'ARS', availability: sinStock ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock', itemCondition: 'https://schema.org/NewCondition',
   priceValidUntil: validUntil, url: abs(path), seller: { '@id': ORG_ID },
   shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AR' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'DAY' } }, shippingRate: { '@type': 'MonetaryAmount', currency: 'ARS', description: `A cargo del comprador: dentro de Rafaela ${ENVIO_RAFAELA}; resto del país, se coordina por WhatsApp` } },
   hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'AR', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays: 10, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/FreeReturn', merchantReturnLink: abs('/arrepentimiento/') },
@@ -85,8 +88,8 @@ const jsonld = graph(
       const tt = [...c.talles, ...c.ninos];
       const nom = (t: string) => (c.ninos.includes(t) ? `${t} (niños)` : t);
       const precios = new Set(tt.map((t) => c.pt[t]));
-      if (precios.size > 1) return tt.map((t) => ({ ...v, name: `${v.name} ${o.es_calzado ? 'número' : 'talle'} ${nom(t)}`, sku: `${c.sku}-${t}`, size: nom(t), offers: offer(`${c.sku}-${t}`, c.pt[t]) }));
-      return [{ ...v, ...(tt.length ? { size: tt.map(nom).join(', ') } : {}), offers: offer(c.sku, tt.length ? c.pt[tt[0]] : c.precio) }];
+      if (precios.size > 1) return tt.map((t) => ({ ...v, name: `${v.name} ${o.es_calzado ? 'número' : 'talle'} ${nom(t)}`, sku: `${c.sku}-${t}`, size: nom(t), offers: offer(`${c.sku}-${t}`, c.pt[t], c.ag || c.sst.includes(t)) }));
+      return [{ ...v, ...(tt.length ? { size: tt.map(nom).join(', ') } : {}), offers: offer(c.sku, tt.length ? c.pt[tt[0]] : c.precio, c.ag) }];
     }),
   },
   breadcrumbs([['Inicio', '/'], [cap(cat.titulo), `/${cat.slug}/`], [nombre, path]]),
@@ -133,7 +136,7 @@ const data = { slug: p.slug, nombre, multi, app, shoe: o.es_calzado, conTalles: 
         <h1 class:list={['h1', { nw: !app && h1.length <= 26 }]}>{h1}</h1>
         <p class="lead d-std" id="lead">{p.descripcion}</p>
         <button type="button" class="ver-mas d-std" id="lead-mas" aria-controls="lead" aria-expanded="false" hidden>VER MÁS +</button>
-        <div class="price price-top"><data value={r0.min} data-precio>{precioTexto(r0)}</data></div>
+        <div class="price price-top"><data value={r0.min} data-precio>{precioTexto(r0)}</data>{agotado && <span class="ag-tag">SIN STOCK</span>}</div>
         <div class="hr hr-a"></div>
 
         {(multi || app) && (
@@ -141,8 +144,8 @@ const data = { slug: p.slug, nombre, multi, app, shoe: o.es_calzado, conTalles: 
             <div class="row-l"><span>COLOR</span><span data-color-name class="cn">{c0.n}</span></div>
             <div class="sw-list" role="radiogroup" aria-label="Color">
               {colores.map((c, i) => (
-                <button type="button" class="sw" role="radio" aria-checked={i === 0 ? 'true' : 'false'} data-color={c.n} aria-label={c.n}>
-                  <span class="sw-c" style={`background:${c.sw}`}></span><span class="sw-n">{c.n}</span>
+                <button type="button" class="sw" role="radio" aria-checked={i === 0 ? 'true' : 'false'} data-color={c.n} aria-label={c.ag ? `${c.n} (sin stock)` : c.n} data-ag={c.ag ? '' : undefined}>
+                  <span class="sw-c" style={`background:${c.sw}`}></span><span class="sw-n">{c.n}</span>{c.ag && <span class="sw-ag">SIN STOCK</span>}
                 </button>
               ))}
             </div>
@@ -177,6 +180,7 @@ const data = { slug: p.slug, nombre, multi, app, shoe: o.es_calzado, conTalles: 
         <div class="hr hr-b d-std"></div>
         <div class="price price-bot d-std"><data value={r0.min} data-precio>{precioTexto(r0)}</data></div>
 
+        <div class="ag-msg" id="ag-msg" hidden><b>SIN STOCK</b><span id="ag-msg-t">Este color no está disponible por ahora. Consultanos por WhatsApp y te avisamos cuando vuelva.</span></div>
         <button type="button" class="btn-gold anim cta" data-add>AGREGAR AL CARRITO</button>
         <a href={waAsk(c0.n, c0.sku)} target="_blank" rel="noopener" class="wa-ask" data-wa="ficha" id="wa-ask">CONSULTAR POR WHATSAPP</a>
         <a href="/mayoristas/" class="ws-link"><span class="t">¿Comprás 8 unidades o más?</span><span class="g">COTIZÁ POR MAYOR →</span></a>
@@ -660,4 +664,13 @@ const data = { slug: p.slug, nombre, multi, app, shoe: o.es_calzado, conTalles: 
     .gal[data-n]:not([data-n='1']) .gi { width: calc(50% - 5px); }
     .gal[data-n]:not([data-n='1']) .gal-items { gap: 10px; }
   }
+  /* ---------- Sin stock ---------- */
+  .ag-tag { display: inline-block; vertical-align: middle; margin-left: 14px; padding: 6px 10px; border: 1px solid var(--warn); color: var(--warn); font-family: var(--mono); font-size: 11px; letter-spacing: .16em; line-height: 1; }
+  .sw[data-ag] .sw-c { opacity: .45; background-image: linear-gradient(135deg, transparent 46%, var(--warn) 47%, var(--warn) 53%, transparent 54%) !important; }
+  .sw-ag { display: block; margin-top: 3px; font-family: var(--mono); font-size: 9px; letter-spacing: .12em; color: var(--warn); }
+  .sz[data-ag] { color: var(--ph) !important; text-decoration: line-through; text-decoration-color: var(--warn); border-style: dashed !important; cursor: not-allowed; background: transparent !important; }
+  .ag-msg { display: flex; flex-direction: column; gap: 6px; margin: 4px 0 14px; padding: 12px 14px; border: 1px solid rgba(232,180,160,.45); background: rgba(232,180,160,.06); font-size: 13px; line-height: 1.45; color: var(--text-2); }
+  .ag-msg[hidden] { display: none; }
+  .ag-msg b { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .16em; color: var(--warn); }
+  [data-add][aria-disabled='true'] { background: var(--surface) !important; color: var(--ph) !important; box-shadow: none !important; border: 1px solid var(--border) !important; cursor: not-allowed; animation: none !important; }
 </style>

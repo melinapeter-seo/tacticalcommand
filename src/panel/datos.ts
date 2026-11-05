@@ -10,7 +10,10 @@ export type Pedido = {
 };
 export type Cliente = { id: string; nombre: string; telefono: string; localidad: string; tipo: string; cuit: string; nota: string; alta: string };
 export type Foto = { id: string; url: string };
-export type Color = { nombre: string; sku: string; muestra: string; fotos: Foto[]; talles: string[]; ninos: string[]; precio: number | null; precios_talle: Record<string, number> };
+export type Color = { nombre: string; sku: string; muestra: string; fotos: Foto[]; talles: string[]; ninos: string[]; precio: number | null; precios_talle: Record<string, number>; agotado: boolean; agotados: string[] };
+/** Sin stock: el color entero, o todos sus talles marcados. */
+export const colorSinStock = (c: Color) => c.agotado || (c.talles.length + c.ninos.length > 0 && [...c.talles, ...c.ninos].every((t) => c.agotados.includes(t)));
+export const stockDe = (p: Producto): 'ok' | 'parcial' | 'sin' => (p.colores.every(colorSinStock) ? 'sin' : p.colores.some((c) => c.agotado || c.agotados.length) ? 'parcial' : 'ok');
 export type Ficha = { descripcion: string; descripcion_larga: string[]; caracteristicas: string[]; especificaciones: { k: string; v: string }[]; faq: { q: string; a: string }[] };
 export type Producto = { slug: string; nombre: string; categoria: string; subcategoria: string; sku: string; visible: boolean; precio: number; orden: number; actualizado: string; pendiente: boolean; notas: string; ficha: Ficha; colores: Color[] };
 

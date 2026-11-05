@@ -94,6 +94,7 @@ const jsonld = graph(
           <a href={t.url} class="card">
             <div class="card-img">
               {t.imagen ? <Foto src={t.imagen} alt={t.nombre} sizes="(min-width: 1024px) 23vw, (min-width: 760px) 32vw, 48vw" /> : <div class="ph"><span>IMAGEN PENDIENTE<br />{t.placeholder}</span></div>}
+              {t.sinStock && <span class="sin-stock">SIN STOCK</span>}
             </div>
             <div class="card-b">
               <h2 class="card-n">{t.nombre}</h2>

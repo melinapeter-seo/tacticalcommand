@@ -6,7 +6,7 @@ import configJson from '../data/generado/config.json';
 import sitioJson from '../data/sitio.json';
 
 export type Talle = { talle: string; estado: string; ninos?: boolean };
-export type Color = { nombre: string; sku: string; muestra: string; fotos: string[]; talles: Talle[]; precio?: number | null; precios_talle?: Record<string, number> };
+export type Color = { nombre: string; sku: string; muestra: string; fotos: string[]; talles: Talle[]; precio?: number | null; precios_talle?: Record<string, number>; agotado?: boolean };
 export type Tarjeta = { clave: string; nombre: string; color: string | null; imagen: string | null; rota?: string[] };
 export type Producto = (typeof catalogo.productos)[number] & { colores: Color[]; tarjetas: Tarjeta[] };
 export type Categoria = (typeof categoriasJson)[number];
@@ -37,6 +37,10 @@ export function rangoPrecio(p: Producto, c?: Color) {
   const min = Math.min(...ps);
   return { min, varia: ps.some((v) => v !== min) };
 }
+/** Sin stock (panel › Productos › Colores): el color entero, o todos sus talles marcados sin stock. */
+export const talleAgotado = (t: Talle) => t.estado === 'agotado';
+export const colorAgotado = (c: Color) => !!c.agotado || (c.talles.length > 0 && c.talles.every(talleAgotado));
+export const productoAgotado = (p: Producto) => p.colores.every(colorAgotado);
 /** "$ 50.000" o "DESDE $ 45.000" si el precio cambia según talle o color. */
 export const precioTexto = (r: { min: number; varia: boolean }) => (r.varia ? 'DESDE ' : '') + money(r.min);
 
@@ -57,6 +61,7 @@ export function tarjeta(clave: string) {
     clave, nombre: t.nombre, categoria: p.categoria, sku: t.color ? col.sku : p.sku, url, slug: p.slug,
     imagen: t.imagen || col.fotos[0] || null, rota: t.rota || null,
     precio: rangoPrecio(p, t.color ? col : undefined), placeholder: p.nombre.toUpperCase(),
+    sinStock: t.color ? colorAgotado(col) : productoAgotado(p),
   };
 }
 export type TarjetaVista = NonNullable<ReturnType<typeof tarjeta>>;

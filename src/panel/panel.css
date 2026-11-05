@@ -281,3 +281,21 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 
 .acciones-sec { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-top: 10px; }
 .acciones-sec .b-txt:last-child { color: var(--red); }
+
+/* ---------- Stock ---------- */
+.tag-ss { background: var(--red-bg); color: var(--red); }
+.tag-sp { background: var(--amber-bg); color: #6B4E0A; }
+.stock-gral { margin: 4px 0 16px; padding: 12px 14px; border-radius: 10px; background: var(--green-bg); }
+.stock-gral.sin { background: var(--red-bg); }
+.stock-gral .interruptor { margin-top: 0; }
+.stock-gral .ayuda { margin: 6px 0 0; }
+.stock-color { display: flex; flex-direction: column; gap: 8px; margin: 6px 0 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.stock-color .interruptor { margin-top: 0; }
+.stock-color .ayuda { margin: 2px 0 0; }
+.talles-st { display: flex; flex-wrap: wrap; gap: 8px; }
+.talle-st { min-width: 64px; min-height: 52px; padding: 6px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--card); cursor: pointer; font: inherit; color: var(--text); }
+.talle-st b { font-size: 16px; }
+.talle-st span { font-size: 11px; color: var(--green); }
+.talle-st.sin { border-color: var(--red); background: var(--red-bg); }
+.talle-st.sin b { text-decoration: line-through; color: var(--red); }
+.talle-st.sin span { color: var(--red); }

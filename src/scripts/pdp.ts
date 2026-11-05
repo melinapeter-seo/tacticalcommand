@@ -3,7 +3,7 @@ import { cart, money, waLink } from './cart';
 import { track } from './track';
 
 type Foto = { src: string; srcset: string; w: number; h: number; full: string; thumb: string };
-type Col = { n: string; sku: string; sw: string; talles: string[]; ninos: string[]; fotos: Foto[]; precio: number; pt: Record<string, number> };
+type Col = { n: string; sku: string; sw: string; talles: string[]; ninos: string[]; fotos: Foto[]; precio: number; pt: Record<string, number>; ag: boolean; sst: string[] };
 type Data = { slug: string; nombre: string; multi: boolean; app: boolean; shoe: boolean; conTalles: boolean; colores: Col[] };
 
 const D: Data = JSON.parse(document.getElementById('pdp-data')!.textContent!);
@@ -23,8 +23,12 @@ const todos = (c: Col) => [...c.talles, ...c.ninos];
 const etiqueta = (t: string) => (D.shoe ? `NRO ${t}${col.ninos.includes(t) ? ' · NIÑOS' : ''}` : `TALLE ${t}`);
 const sinTalle = D.shoe ? 'SELECCIONE SU NRO' : 'SELECCIONAR TALLE';
 const enMensaje = () => (talle ? `, ${D.shoe ? 'número' : 'talle'} ${talle}${col.ninos.includes(talle) ? ' (niños)' : ''}` : '');
-const precio = () => (talle ? col.pt[talle] ?? col.precio : Math.min(col.precio, ...todos(col).map((t) => col.pt[t])));
-const varia = () => !talle && new Set(todos(col).map((t) => col.pt[t])).size > 1;
+const conStock = (c: Col) => (c.ag ? [] : todos(c).filter((t) => !c.sst.includes(t)));
+const base = () => (conStock(col).length ? conStock(col) : todos(col));
+const precio = () => (talle ? col.pt[talle] ?? col.precio : base().length ? Math.min(...base().map((t) => col.pt[t] ?? col.precio)) : col.precio);
+const varia = () => !talle && new Set(base().map((t) => col.pt[t])).size > 1;
+/** El color elegido no se puede comprar: sin stock entero, o todos sus talles sin stock. */
+const colSinStock = () => col.ag || (todos(col).length > 0 && conStock(col).length === 0);
 
 track('view_item', { producto: D.nombre, sku: col.sku, valor: precio() });
 
@@ -100,7 +104,18 @@ function syncTexts() {
   const st = $('#sz-state');
   if (st) { st.textContent = talle ? etiqueta(talle) : sinTalle; st.classList.toggle('on', !!talle); }
   const ss = $('#st-s');
-  if (ss) ss.textContent = col.n + (D.conTalles ? ' · ' + (talle ? etiqueta(talle) : sinTalle) : '');
+  if (ss) ss.textContent = col.n + (colSinStock() ? ' · SIN STOCK' : D.conTalles ? ' · ' + (talle ? etiqueta(talle) : sinTalle) : '');
+  // Sin stock: talles tachados, aviso y botón de compra deshabilitado.
+  $$<HTMLButtonElement>('.sz').forEach((b) => { const ag = col.ag || col.sst.includes(b.dataset.talle!); b.toggleAttribute('data-ag', ag); b.setAttribute('aria-disabled', String(ag)); b.title = (D.shoe ? 'Nro ' : 'Talle ') + b.dataset.talle + (ag ? ' · sin stock' : ''); });
+  const sin = colSinStock();
+  const am = $('#ag-msg');
+  if (am) {
+    am.hidden = !sin;
+    const t = $('#ag-msg-t');
+    if (t) t.textContent = (D.multi || D.app) && D.colores.some((x) => !x.ag) ? 'Este color no está disponible por ahora. Consultanos por WhatsApp y te avisamos cuando vuelva.' : 'Este producto no está disponible por ahora. Consultanos por WhatsApp y te avisamos cuando vuelva.';
+  }
+  if (st && sin) { st.textContent = 'SIN STOCK'; st.classList.remove('on'); }
+  $$('[data-add]').forEach((b) => { b.setAttribute('aria-disabled', String(sin)); b.textContent = sin ? 'SIN STOCK' : b.classList.contains('st-b') ? 'COMPRAR' : 'AGREGAR AL CARRITO'; });
 }
 function pickColor(n: string, user = true) {
   const c = D.colores.find((x) => x.n === n);
@@ -109,7 +124,7 @@ function pickColor(n: string, user = true) {
   $$('.sw').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.color === n)));
   // Cada color tiene sus talles; si el talle elegido no existe en el nuevo color, se limpia.
   $$<HTMLButtonElement>('.sz').forEach((b) => (b.hidden = !todos(c).includes(b.dataset.talle!)));
-  if (talle && !todos(c).includes(talle)) { talle = null; $$('.sz').forEach((b) => b.setAttribute('aria-checked', 'false')); }
+  if (talle && (!todos(c).includes(talle) || c.ag || c.sst.includes(talle))) { talle = null; $$('.sz').forEach((b) => b.setAttribute('aria-checked', 'false')); }
   renderGal();
   syncTexts();
   if (user) {
@@ -122,9 +137,11 @@ function pickColor(n: string, user = true) {
 $$('.sw').forEach((b) => b.addEventListener('click', () => pickColor(b.dataset.color!)));
 const qc = new URLSearchParams(location.search).get('color');
 if (qc && qc !== col.n) pickColor(qc, false);
+else if (!qc && colSinStock()) { const c = D.colores.find((x) => !x.ag && (!todos(x).length || x.sst.length < todos(x).length)); if (c) pickColor(c.n, false); }
 
 // ---------- Talle ----------
 $$('.sz').forEach((b) => b.addEventListener('click', () => {
+  if (b.hasAttribute('data-ag')) { w.tcFlash?.(D.shoe ? 'ESE NÚMERO ESTÁ SIN STOCK' : 'ESE TALLE ESTÁ SIN STOCK'); return; }
   talle = b.dataset.talle!;
   $$('.sz').forEach((x) => x.setAttribute('aria-checked', String(x === b)));
   syncTexts();
@@ -133,6 +150,7 @@ $$('.sz').forEach((b) => b.addEventListener('click', () => {
 
 // ---------- Carrito ----------
 $$('[data-add]').forEach((b) => b.addEventListener('click', () => {
+  if (colSinStock()) { w.tcFlash?.('SIN STOCK · CONSULTANOS POR WHATSAPP'); return; }
   if (D.conTalles && !talle) {
     w.tcFlash?.(D.shoe ? 'SELECCIONÁ UN NÚMERO' : 'SELECCIONÁ UN TALLE');
     document.getElementById('sz-grid')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
