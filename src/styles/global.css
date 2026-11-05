@@ -23,7 +23,7 @@
   --gold-text: linear-gradient(100deg, #8A6A1E 0%, #C9922A 18%, #E3B23C 34%, #FFF3C4 47%, #E3B23C 60%, #C9922A 78%, #8A6A1E 100%);
   --glow: 0 0 42px rgba(227, 178, 60, .55), 0 0 14px rgba(255, 214, 110, .35);
   --ease: cubic-bezier(.22, 1, .36, 1);
-  --pad: 40px; --header-h: 76px;
+  --pad: 40px; --header-h: max(76px, calc(60px / var(--z)));
   /* El sitio se diseña sobre un lienzo fijo y se escala con `zoom` (ver Base.astro). --z = factor actual. */
   --z: 1;
   color-scheme: dark;

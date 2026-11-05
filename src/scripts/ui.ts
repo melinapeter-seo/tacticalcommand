@@ -61,7 +61,7 @@ export function flash(msg: string) {
 function renderCart() {
   const items = cart.get();
   $$('[data-cart-count]').forEach((n) => (n.textContent = String(items.length)));
-  $$('.cart-m').forEach((b) => b.toggleAttribute('data-vacio', !items.length));
+  $$('.cart-m, .cart-t').forEach((b) => b.toggleAttribute('data-vacio', !items.length));
   const list = $('#cart-list');
   if (!list) return;
   if (!items.length) list.innerHTML = '<div class="empty">CARRITO VACÍO.<br>AGREGÁ UN PRODUCTO DESDE UNA FICHA.</div>';

@@ -17,8 +17,8 @@ const cart = `<svg viewBox="0 0 24 24" fill="none" stroke="#E3B23C" stroke-width
       ))}
     </nav>
     <div class="acts">
-      <button type="button" class="search-t gold-text" data-open="search">BUSCAR</button>
-      <button type="button" class="cart-t" data-open="cart"><Fragment set:html={cart} /><span class="sr-only">Carrito</span><span class="pulse">[<span data-cart-count>0</span>]</span></button>
+      <button type="button" class="ico-d" data-open="search" aria-label="Buscar"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5L21 21"></path></svg></button>
+      <button type="button" class="ico-d cart-t" data-open="cart" data-vacio><Fragment set:html={cart} /><span class="sr-only">Carrito, productos:</span><span class="badge" data-cart-count>0</span></button>
       <a href="/mayoristas/" class="ws-t">MAYORISTAS</a>
     </div>
   </div>
@@ -36,21 +36,37 @@ const cart = `<svg viewBox="0 0 24 24" fill="none" stroke="#E3B23C" stroke-width
   .aviso { background: var(--gold); color: #0D0F0D; text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; padding: 8px 16px; }
   .hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 70; background: rgba(26,29,27,.88); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); transition: background .4s var(--ease), border-color .4s var(--ease); }
   .hdr.over:not(.scrolled) { background: transparent; border-bottom-color: transparent; backdrop-filter: none; }
-  .hdr-d { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 40px; height: 76px; }
-  .logo { display: flex; align-items: center; line-height: 1; font-family: var(--stencil); font-weight: 400; font-size: 30px; letter-spacing: .06em; white-space: nowrap; filter: drop-shadow(0 0 16px rgba(227,178,60,.6)); }
-  .nav { display: flex; align-items: center; gap: 20px; }
-  .nav-it { display: flex; align-items: center; gap: 20px; }
-  .sep { width: 1px; height: 16px; background: var(--gold); opacity: .85; }
-  .nav a { font-family: var(--mono); font-size: 13px; letter-spacing: .12em; white-space: nowrap; color: #FFFFFF; padding: 6px 0; border-bottom: 1px solid transparent; transition: color .2s; }
+  /* El sitio se escala con zoom (--z); en notebooks eso achica el menú. Los tamaños usan max(base, mínimo / --z)
+     para que el texto nunca quede por debajo de ~11,5 px reales. */
+  .hdr-d { --fz: max(13px, calc(11.5px / var(--z))); display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 40px; height: var(--header-h); }
+  .logo { display: flex; align-items: center; line-height: 1; font-family: var(--stencil); font-weight: 400; font-size: max(30px, calc(21px / var(--z))); letter-spacing: .06em; white-space: nowrap; filter: drop-shadow(0 0 16px rgba(227,178,60,.6)); }
+  .nav { display: flex; align-items: center; gap: max(26px, calc(16px / var(--z))); }
+  .nav-it { display: flex; align-items: center; gap: max(26px, calc(16px / var(--z))); }
+  .sep { width: 1px; height: 1.2em; background: var(--gold); opacity: .5; font-size: var(--fz); }
+  .nav a { position: relative; font-family: var(--mono); font-size: var(--fz); letter-spacing: .08em; white-space: nowrap; color: #FFFFFF; padding: 8px 0; transition: color .2s; }
+  .nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
   .nav a:hover { color: var(--gold); }
-  .nav a[aria-current='page'] { border-bottom-color: var(--gold); }
-  .acts { display: flex; align-items: center; gap: 26px; }
-  .search-t { background-color: transparent; border: 0; padding: 6px 0; cursor: pointer; font-family: var(--mono); font-size: 13px; letter-spacing: .12em; white-space: nowrap; font-weight: 600; filter: drop-shadow(0 0 7px rgba(227,178,60,.65)); animation: none; }
-  .cart-t, .cart-m { background: none; border: 0; padding: 4px 0; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-  .cart-t :global(svg) { width: 26px; height: 26px; filter: drop-shadow(0 0 7px rgba(227,178,60,.65)); animation: goldpulseF 4.5s ease-in-out infinite; }
-  .cart-t > span { font-family: var(--mono); font-size: 13px; letter-spacing: .12em; white-space: nowrap; color: var(--gold); }
-  .ws-t { font-family: var(--mono); font-size: 13px; letter-spacing: .12em; white-space: nowrap; color: var(--text); border: 1px solid var(--gold); padding: 12px 20px; }
+  .nav a:hover::after, .nav a[aria-current='page']::after { transform: scaleX(1); }
+  .nav a[aria-current='page'] { color: var(--gold); }
+  .acts { display: flex; align-items: center; gap: max(14px, calc(8px / var(--z))); }
+  .ico-d { --s: max(26px, calc(20px / var(--z))); position: relative; background: none; border: 0; padding: 0; width: calc(var(--s) * 1.75); height: calc(var(--s) * 1.75); cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background .2s; }
+  .ico-d:hover { background: rgba(227,178,60,.08); }
+  .ico-d :global(svg) { width: var(--s); height: var(--s); filter: drop-shadow(0 0 7px rgba(227,178,60,.45)); }
+  .cart-t :global(svg) { filter: drop-shadow(0 0 7px rgba(227,178,60,.65)); animation: goldpulseF 4.5s ease-in-out infinite; }
+  .cart-t .badge { position: absolute; top: 8%; right: 4%; min-width: 1.7em; height: 1.7em; padding: 0 .4em; border-radius: 1em; background: var(--gold); color: var(--ink); font-family: var(--mono); font-size: max(11px, calc(9.5px / var(--z))); font-weight: 600; line-height: 1.7em; text-align: center; box-shadow: 0 0 0 2px var(--bg); }
+  .cart-t[data-vacio] .badge { display: none; }
+  .ws-t { margin-left: max(10px, calc(6px / var(--z))); font-family: var(--mono); font-size: var(--fz); letter-spacing: .12em; white-space: nowrap; color: var(--text); border: 1px solid var(--gold); padding: .95em 1.5em; transition: background .3s, color .3s, box-shadow .3s; }
   .ws-t:hover { background: var(--gold-grad); background-size: 230% auto; color: var(--ink); box-shadow: var(--glow); }
+  /* Notebooks chicas (1024–1199 px): mismo tamaño de letra legible, pero más compacto para que entre todo. */
+  @media (max-width: 1199px) {
+    .hdr-d { --fz: calc(11px / var(--z)); gap: calc(10px / var(--z)); padding: 0 calc(14px / var(--z)); }
+    .logo { font-size: calc(17px / var(--z)); }
+    .nav, .nav-it { gap: calc(11px / var(--z)); }
+    .nav a { letter-spacing: .04em; }
+    .acts { gap: calc(2px / var(--z)); }
+    .ico-d { --s: calc(18px / var(--z)); }
+    .ws-t { margin-left: calc(4px / var(--z)); padding: .85em 1em; letter-spacing: .08em; }
+  }
   .hdr-m { display: flex; align-items: center; justify-content: space-between; padding: 0 10px 0 16px; height: var(--header-h); gap: 8px; }
   .logo-m { font-family: var(--stencil); font-weight: 400; font-size: 20px; letter-spacing: .05em; white-space: nowrap; filter: drop-shadow(0 0 16px rgba(227,178,60,.6)); flex: 0 1 auto; min-width: 0; overflow: hidden; }
   .acts-m { display: flex; align-items: center; gap: 2px; flex: none; }
