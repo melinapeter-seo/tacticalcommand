@@ -3854,17 +3854,17 @@
     "titulo": "Bajo Chaleco Manga Larga Multicam | Tactical Command",
     "descripcion": "Bajo chaleco manga larga Multicam con cuello Mao, cierre frontal y bolsillos con velcro para parches. Talles S a 3XL. Ideal para servicio, caza, camping y outdoor."
    },
-   "descripcion": "Bajo chaleco de manga larga en patrón Multicam, confeccionado en una combinación de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, mientras que las mangas están confeccionadas en tela gabardina e incorporan bolsillos con cierre de velcro para colocar parches.",
+   "descripcion": "Bajo chaleco de manga larga en patrón Multicam, confeccionado en una combinación de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, mientras que las mangas están confeccionadas en tela gabardina o ripstop e incorporan bolsillos con cierre de velcro para colocar parches.",
    "descripcion_larga": [
     "El Bajo Chaleco Manga Larga Multicam está diseñado como una prenda funcional para actividades que requieren comodidad y practicidad.",
-    "Está confeccionado con una combinación de algodón + poliéster + licra, con cuerpo de material flexible y mangas en tela gabardina con patrón Multicam.",
+    "Está confeccionado con una combinación de algodón + poliéster + licra, con cuerpo de material flexible y mangas en tela gabardina o ripstop con patrón Multicam.",
     "Incorpora cuello Mao con abrojo y cremallera frontal, además de dos bolsillos en las mangas con cierre de velcro, preparados para agregar parches.",
     "Es una opción versátil para servicio, caza, camping, aventuras y actividades outdoor.",
     "Calidad Premium."
    ],
    "caracteristicas": [
     "Patrón Multicam",
-    "Mangas en tela gabardina",
+    "Mangas en tela gabardina o ripstop",
     "Algodón + poliéster + licra",
     "Cuello Mao con abrojo + cremallera",
     "2 bolsillos con velcro para parches",
@@ -3873,7 +3873,7 @@
    "funciones": [
     {
      "titulo": "PATRÓN MULTICAM",
-     "texto": "Mangas confeccionadas en tela gabardina con patrón Multicam.",
+     "texto": "Mangas confeccionadas en tela gabardina o ripstop con patrón Multicam.",
      "destacado": "Mangas Multicam"
     },
     {
@@ -3887,9 +3887,9 @@
      "destacado": "Cremallera"
     },
     {
-     "titulo": "MANGAS EN GABARDINA",
-     "texto": "Mangas confeccionadas en tela gabardina.",
-     "destacado": "Tela gabardina"
+     "titulo": "MANGAS EN GABARDINA O RIPSTOP",
+     "texto": "Mangas confeccionadas en tela gabardina o ripstop.",
+     "destacado": "Gabardina o ripstop"
     },
     {
      "titulo": "BOLSILLOS CON VELCRO",
@@ -3935,7 +3935,7 @@
      },
      {
       "titulo": "MANGAS",
-      "texto": "Tela gabardina con patrón Multicam."
+      "texto": "Tela gabardina o ripstop con patrón Multicam."
      },
      {
       "titulo": "CUELLO",
@@ -4021,7 +4021,7 @@
     },
     {
      "q": "¿Qué material tiene el bajo chaleco?",
-     "a": "Está confeccionado en una combinación de algodón, poliéster y licra, con mangas de tela gabardina."
+     "a": "Está confeccionado en una combinación de algodón, poliéster y licra, con mangas de tela gabardina o ripstop."
     },
     {
      "q": "¿De qué color es?",
@@ -4049,7 +4049,7 @@
     },
     {
      "q": "¿Qué diferencia tiene con el Bajo Chaleco Manga Larga Negro?",
-     "a": "Además del color, este modelo tiene mangas en tela gabardina Multicam y sus dos bolsillos están ubicados en las mangas, preparados para parches."
+     "a": "Además del color, este modelo tiene mangas Multicam en tela gabardina o ripstop, y sus dos bolsillos están ubicados en las mangas, preparados para parches."
     }
    ],
    "relacionados_tarjetas": [
@@ -4149,17 +4149,17 @@
     "titulo": "Bajo Chaleco Manga Corta Multicam | Tactical Command",
     "descripcion": "Bajo chaleco manga corta Multicam con cuello Mao, cierre frontal y bolsillos con velcro para parches. Talles S a 3XL. Ideal para verano, servicio, caza, camping y outdoor."
    },
-   "descripcion": "Bajo chaleco de manga corta en patrón Multicam, confeccionado en una combinación de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, mientras que las mangas están confeccionadas en tela gabardina e incorporan bolsillos con cierre de velcro para colocar parches. Su manga corta lo hace ideal para el verano.",
+   "descripcion": "Bajo chaleco de manga corta en patrón Multicam, confeccionado en una combinación de algodón, poliéster y licra. Cuenta con cuello Mao con abrojo y cremallera frontal, mientras que las mangas están confeccionadas en tela gabardina o ripstop e incorporan bolsillos con cierre de velcro para colocar parches. Su manga corta lo hace ideal para el verano.",
    "descripcion_larga": [
     "El Bajo Chaleco Manga Corta Multicam está diseñado como una prenda funcional para actividades que requieren comodidad y practicidad.",
-    "Está confeccionado con una combinación de algodón + poliéster + licra, con cuerpo de material flexible y mangas en tela gabardina con patrón Multicam.",
+    "Está confeccionado con una combinación de algodón + poliéster + licra, con cuerpo de material flexible y mangas en tela gabardina o ripstop con patrón Multicam.",
     "Incorpora cuello Mao con abrojo y cremallera frontal, además de dos bolsillos en las mangas con cierre de velcro, preparados para agregar parches.",
     "Es una opción versátil para servicio, caza, camping, aventuras y actividades outdoor, y su manga corta lo hace ideal para el verano.",
     "Calidad Premium."
    ],
    "caracteristicas": [
     "Patrón Multicam",
-    "Mangas en tela gabardina",
+    "Mangas en tela gabardina o ripstop",
     "Algodón + poliéster + licra",
     "Cuello Mao con abrojo + cremallera",
     "2 bolsillos con velcro para parches",
@@ -4169,7 +4169,7 @@
    "funciones": [
     {
      "titulo": "PATRÓN MULTICAM",
-     "texto": "Mangas confeccionadas en tela gabardina con patrón Multicam.",
+     "texto": "Mangas confeccionadas en tela gabardina o ripstop con patrón Multicam.",
      "destacado": "Mangas Multicam"
     },
     {
@@ -4183,9 +4183,9 @@
      "destacado": "Cremallera"
     },
     {
-     "titulo": "MANGAS EN GABARDINA",
-     "texto": "Mangas confeccionadas en tela gabardina.",
-     "destacado": "Tela gabardina"
+     "titulo": "MANGAS EN GABARDINA O RIPSTOP",
+     "texto": "Mangas confeccionadas en tela gabardina o ripstop.",
+     "destacado": "Gabardina o ripstop"
     },
     {
      "titulo": "BOLSILLOS CON VELCRO",
@@ -4232,7 +4232,7 @@
      },
      {
       "titulo": "MANGAS",
-      "texto": "Tela gabardina con patrón Multicam."
+      "texto": "Tela gabardina o ripstop con patrón Multicam."
      },
      {
       "titulo": "CUELLO",
@@ -4318,7 +4318,7 @@
     },
     {
      "q": "¿Qué material tiene el bajo chaleco?",
-     "a": "Está confeccionado en una combinación de algodón, poliéster y licra, con mangas de tela gabardina."
+     "a": "Está confeccionado en una combinación de algodón, poliéster y licra, con mangas de tela gabardina o ripstop."
     },
     {
      "q": "¿De qué color es?",
@@ -4350,7 +4350,7 @@
     },
     {
      "q": "¿Qué diferencia tiene con el Bajo Chaleco Manga Corta Negro?",
-     "a": "Además del color, este modelo tiene mangas en tela gabardina Multicam y sus dos bolsillos están ubicados en las mangas, preparados para parches."
+     "a": "Además del color, este modelo tiene mangas Multicam en tela gabardina o ripstop, y sus dos bolsillos están ubicados en las mangas, preparados para parches."
     }
    ],
    "relacionados_tarjetas": [
