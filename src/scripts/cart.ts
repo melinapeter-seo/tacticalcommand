@@ -26,5 +26,5 @@ export const cartTotal = (items: CartItem[]) => items.reduce((a, c) => a + c.mp 
 export function cartWaLink(items: CartItem[]) {
   const tot = cartTotal(items);
   const ok = tot > 0 && items.every((c) => c.mp > 0);
-  return waLink('Hola Walter! Quiero hacer este pedido:\n\n' + items.map((c, i) => (i + 1) + '. ' + c.n + (c.variant ? ' (' + c.variant.toLowerCase() + ')' : '') + ' x' + c.qty + (c.mp ? ' - ' + money(c.mp * c.qty) : '') + (c.sku && !/confirmar/i.test(c.sku) ? ' [' + c.sku + ']' : '')).join('\n') + (ok ? '\n\nSubtotal: ' + money(tot) : '') + '\n\n¿Me confirmás stock, forma de pago y envío?');
+  return waLink('Hola Walter! Quiero hacer este pedido:\n\n' + items.map((c, i) => (i + 1) + '. ' + c.n + (c.variant ? ' (' + c.variant.toLowerCase().replace(/(talle )(\S+)$/, (_: string, a: string, t: string) => a + t.toUpperCase()) + ')' : '') + ' x' + c.qty + (c.mp ? ' - ' + money(c.mp * c.qty) : '') + (c.sku && !/confirmar/i.test(c.sku) ? ' [' + c.sku + ']' : '')).join('\n') + (ok ? '\n\nSubtotal: ' + money(tot) : '') + '\n\n¿Me confirmás stock, forma de pago y envío?');
 }
