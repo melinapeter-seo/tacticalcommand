@@ -4,3 +4,5 @@
 Para regenerarlos: `node design/og/render.mjs design/og/og.html <carpeta>` (con Playwright) y copiar
 `og-B.jpg` → `src/assets/og/web.jpg` y `og-C.jpg` → `src/assets/og/panel.jpg`.
 Productos y categorías se generan solos en el build (`src/pages/og/[...ruta].jpg.ts`).
+
+Guías: `node design/og/guias.mjs` genera `src/assets/og/guias/<slug>.jpg` (título de la guía y sus productos). Si se agrega una guía y no se corre, usa la imagen de la web.

@@ -1,16 +1,18 @@
 // Imágenes Open Graph 1200×630. Productos y categorías: su foto + escudo, generadas en el build.
-// Web (home y demás páginas) y panel: diseños fijos en src/assets/og/ (fuente en design/og/).
+// Web (home y demás páginas), panel y guías: diseños fijos en src/assets/og/ (fuente en design/og/).
 import type { APIRoute, GetStaticPaths } from 'astro';
 import sharp from 'sharp';
 import path from 'node:path';
 import fs from 'node:fs';
-import { productos, categorias } from '../../lib/data';
+import { productos, categorias, guias } from '../../lib/data';
 
 const ASSETS = path.resolve('src/assets/tc');
 
 export const getStaticPaths: GetStaticPaths = () => [
   { params: { ruta: 'default' }, props: { fija: 'web.jpg' } },
   { params: { ruta: 'panel' }, props: { fija: 'panel.jpg' } },
+  // Guía sin imagen propia generada (design/og/guias.mjs): usa la de la web.
+  ...guias.map((g) => ({ params: { ruta: `guias/${g.slug}` }, props: { fija: fs.existsSync(path.resolve('src/assets/og/guias', `${g.slug}.jpg`)) ? `guias/${g.slug}.jpg` : 'web.jpg' } })),
   ...productos.map((p) => ({ params: { ruta: `productos/${p.slug}` }, props: { foto: p.colores[0].fotos[0] || null } })),
   ...categorias.map((c) => ({ params: { ruta: `categorias/${c.slug}` }, props: { foto: c.imagen } })),
 ];
