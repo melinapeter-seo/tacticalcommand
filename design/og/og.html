@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: 'Gunplay'; src: url('file:///home/user/tacticalcommand/public/fonts/tc-gunplay.woff2') format('woff2'); }
+@font-face { font-family: 'Plex'; src: url('file:///home/user/tacticalcommand/public/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); }
+* { margin: 0; box-sizing: border-box; }
+body { width: 1200px; height: 630px; overflow: hidden; background: #0F110F; font-family: 'Gunplay', sans-serif; }
+.c { position: relative; width: 1200px; height: 630px; overflow: hidden; }
+.t1, .t2 { color: #F2F2EE; line-height: .95; letter-spacing: .01em; text-shadow: 0 4px 18px rgba(0,0,0,.6); }
+.g { color: #E3B23C; }
+.logo { border-radius: 50%; box-shadow: 0 0 0 3px rgba(227,178,60,.55), 0 10px 30px rgba(0,0,0,.6); }
+.url { font-family: 'Plex', monospace; color: #C9CDC6; letter-spacing: .28em; font-size: 17px; }
+.barra { position: absolute; left: 0; right: 0; bottom: 0; height: 7px; background: #E3B23C; }
+/* Variante A: vidriera de productos abajo, logo + texto arriba */
+.A .vid { position: absolute; left: 0; right: 0; bottom: 0; height: 330px; display: flex; }
+.A .vid img { flex: 1; min-width: 0; height: 100%; object-fit: cover; }
+.A .fade { position: absolute; inset: 0; background: linear-gradient(180deg, #0F110F 0%, #0F110F 44%, rgba(15,17,15,.55) 62%, rgba(15,17,15,0) 80%); }
+.A .top { position: absolute; left: 70px; right: 60px; top: 62px; display: flex; align-items: center; gap: 34px; }
+.A .logo { width: 170px; height: 170px; flex: none; }
+.A .t1 { font-size: 62px; white-space: nowrap; }
+.A .t2 { font-size: 62px; margin-top: 8px; white-space: nowrap; }
+.A .url { position: absolute; right: 60px; top: 30px; font-size: 14px; }
+/* Variante B: texto + logo a la izquierda, productos en mosaico a la derecha sobre fondo táctico */
+.B .fondo { position: absolute; inset: 0; background: url('file:///home/user/tacticalcommand/src/assets/tc/op-01.webp') center/cover; filter: blur(6px) brightness(.32) saturate(.7); transform: scale(1.08); }
+.B .izq { position: absolute; left: 66px; top: 0; bottom: 0; width: 560px; display: flex; flex-direction: column; justify-content: center; }
+.B .tit div { font-size: 66px; line-height: 1.04; color: #F2F2EE; letter-spacing: .01em; text-shadow: 0 4px 18px rgba(0,0,0,.6); }
+.B .tit .g { color: #E3B23C; }
+.B .tit-p div { font-size: 84px; }
+.B .pie { display: flex; align-items: center; gap: 22px; margin-top: 34px; }
+.B .logo { width: 112px; height: 112px; flex: none; }
+.B .url { font-size: 15px; letter-spacing: .26em; line-height: 1.7; }
+.B .mos { position: absolute; right: 52px; top: 52px; bottom: 59px; width: 470px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; }
+.B .mos img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 1px solid rgba(227,178,60,.35); box-shadow: 0 10px 26px rgba(0,0,0,.55); }
+</style></head>
+<body>
+<div class="c B" id="B" style="display:none">
+  <div class="fondo"></div>
+  <div class="izq">
+    <div class="tit"><div>EQUIPAMIENTO</div><div>TÁCTICO PARA</div><div class="g">CONDICIONES</div><div class="g">REALES</div></div>
+    <div class="pie">
+      <img class="logo" src="file:///home/user/tacticalcommand/src/assets/tc/logo-tc.webp">
+      <div class="url">TACTICAL COMMAND<br>TACTICALCOMMAND.COM.AR</div>
+    </div>
+  </div>
+  <div class="mos">
+    <img src="file:///home/user/tacticalcommand/src/assets/tc/gtx-ng-1.webp">
+    <img src="file:///home/user/tacticalcommand/src/assets/tc/as50mc-1.webp">
+    <img src="file:///home/user/tacticalcommand/src/assets/tc/ranger-1.webp">
+    <img src="file:///home/user/tacticalcommand/src/assets/tc/uni-mp-1.webp">
+  </div>
+  <div class="barra"></div>
+</div>
+<div class="c B" id="C" style="display:none">
+  <div class="fondo"></div>
+  <div class="izq">
+    <div class="tit tit-p"><div>PANEL DE</div><div class="g">GESTIÓN WEB</div></div>
+    <div class="pie">
+      <img class="logo" src="file:///home/user/tacticalcommand/src/assets/tc/logo-tc.webp">
+      <div class="url">TACTICAL COMMAND<br>TACTICALCOMMAND.COM.AR</div>
+    </div>
+  </div>
+  <div class="mos">
+    <img src="file:///home/user/tacticalcommand/src/assets/tc/gtx-ng-1.webp">
+    <img src="file:///home/user/tacticalcommand/src/assets/tc/as50mc-1.webp">
+    <img src="file:///home/user/tacticalcommand/src/assets/tc/ranger-1.webp">
+    <img src="file:///home/user/tacticalcommand/src/assets/tc/uni-mp-1.webp">
+  </div>
+  <div class="barra"></div>
+</div>
+</body></html>

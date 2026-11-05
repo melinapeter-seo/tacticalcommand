@@ -1,23 +1,26 @@
-// Imágenes Open Graph 1200×630 generadas en el build: foto del producto/guía/categoría + escudo.
+// Imágenes Open Graph 1200×630. Productos y categorías: su foto + escudo, generadas en el build.
+// Web (home y demás páginas) y panel: diseños fijos en src/assets/og/ (fuente en design/og/).
 import type { APIRoute, GetStaticPaths } from 'astro';
 import sharp from 'sharp';
 import path from 'node:path';
-import { productos, categorias, guias } from '../../lib/data';
+import fs from 'node:fs';
+import { productos, categorias } from '../../lib/data';
 
 const ASSETS = path.resolve('src/assets/tc');
 
 export const getStaticPaths: GetStaticPaths = () => [
-  { params: { ruta: 'default' }, props: { foto: 'hero-poster.webp' } },
+  { params: { ruta: 'default' }, props: { fija: 'web.jpg' } },
+  { params: { ruta: 'panel' }, props: { fija: 'panel.jpg' } },
   ...productos.map((p) => ({ params: { ruta: `productos/${p.slug}` }, props: { foto: p.colores[0].fotos[0] || null } })),
   ...categorias.map((c) => ({ params: { ruta: `categorias/${c.slug}` }, props: { foto: c.imagen } })),
-  ...guias.map((g) => ({ params: { ruta: `guias/${g.slug}` }, props: { foto: g.imagen } })),
 ];
 
 export const GET: APIRoute = async ({ props }) => {
+  if (props.fija) return new Response(fs.readFileSync(path.resolve('src/assets/og', props.fija as string)), { headers: { 'Content-Type': 'image/jpeg' } });
   const W = 1200, H = 630;
   const layers: sharp.OverlayOptions[] = [];
   const foto = props.foto as string | null;
-  const wide = foto === 'hero-poster.webp' || categorias.some((c) => c.imagen === foto);
+  const wide = categorias.some((c) => c.imagen === foto);
   if (foto) {
     const buf = await sharp(path.join(ASSETS, foto)).resize(wide ? W : H, H, { fit: 'cover' }).toBuffer();
     layers.push({ input: buf, left: 0, top: 0 });
