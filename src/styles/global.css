@@ -28,7 +28,7 @@
   --z: 1;
   color-scheme: dark;
 }
-@media (max-width: 1023px) { :root { --pad: 18px; --header-h: 46px; } }
+@media (max-width: 1023px) { :root { --pad: 18px; --header-h: 54px; } }
 
 @keyframes tapglow { 0%, 100% { box-shadow: 0 0 0 0 rgba(227,178,60,.45); transform: scale(1) } 50% { box-shadow: 0 0 0 12px rgba(227,178,60,0); transform: scale(1.07) } }
 @keyframes goldpulseF { 0%, 100% { filter: drop-shadow(0 0 5px rgba(227,178,60,.5)) } 50% { filter: drop-shadow(0 0 16px rgba(255,214,110,1)) drop-shadow(0 0 26px rgba(227,178,60,.6)) } }
