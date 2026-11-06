@@ -10,7 +10,8 @@ const API = 'http://localhost:8790';
 const post = async (b) => (await (await fetch(API, { method: 'POST', body: JSON.stringify(b) })).json());
 
 // Datos de ejemplo: clientes y pedidos en distintos pasos.
-const { data: { token } } = await post({ action: 'login', pin: '123456' });
+// El simulador arranca con SIM_USUARIOS="walter:Walter:temporal-1" (ver LEEME.md).
+const { data: { token } } = await post({ action: 'login', usuario: 'walter', clave: 'temporal-1' });
 const P = (action, b = {}) => post({ action, token, ...b });
 const it = (n, sku, qty = 1) => ({ n, sku, qty, price: 50000 });
 const crear = async (nombre, telefono, destino, items, extra = {}) => (await P('createOrder', { cliente: { nombre, telefono, localidad: destino, tipo: extra.tipo || 'MINORISTA' }, destino, entrega: extra.entrega || 'DOMICILIO', tipo: extra.tipo || 'MINORISTA', items, nota: extra.nota || '' })).data.pedido.codigo;
@@ -35,8 +36,12 @@ const ver = (sel, block = 'center') => pg.evaluate(([s, bl]) => document.querySe
 const nav = (t) => pg.click(`.nav-i:has-text("${t}")`);
 
 await pg.goto('http://tacticalcommand.com.ar/panel/', { waitUntil: 'networkidle' });
-await pg.fill('input[autocomplete="current-password"]', '123456'); await foto('login');
-await pg.click('button[type=submit]'); await pg.waitForSelector('.fila');
+await pg.fill('input[autocomplete="username"]', 'walter'); await pg.fill('input[autocomplete="current-password"]', 'temporal-1'); await foto('login');
+await pg.click('button[type=submit]'); await pg.waitForSelector('.form-clave');
+// Primera vez: elegir una contraseña propia
+const cl = pg.locator('.form-clave input[type=password]');
+await cl.nth(0).fill('temporal-1'); await cl.nth(1).fill('mi-clave-2026'); await cl.nth(2).fill('mi-clave-2026'); await foto('clave-nueva');
+await pg.click('text=Guardar contraseña'); await pg.waitForSelector('.fila');
 await foto('pedidos');
 
 // Nuevo pedido
@@ -73,6 +78,9 @@ await nav('Productos'); await pg.waitForSelector('.fila-prod'); await foto('prod
 await pg.click('.fila-prod:has-text("Borcego Táctico Ranger")'); await pg.waitForSelector('.calidad'); await foto('editor-arriba');
 await ver('.calidad', 'start'); await pg.evaluate(() => scrollBy(0, -70)); await foto('editor-calidad');
 await ver('.color.abierto', 'start'); await pg.evaluate(() => scrollBy(0, -70)); await foto('editor-colores');
+// Stock: un número sin stock en ese color
+await pg.click('.talle-st:has(b:text-is("40"))'); await ver('.stock-color', 'start'); await pg.evaluate(() => scrollBy(0, -150)); await foto('stock');
+await ver('.stock-gral', 'start'); await pg.evaluate(() => scrollBy(0, -120)); await foto('stock-gral');
 await pg.evaluate(() => [...document.querySelectorAll('.tarjeta h2')].find((h) => h.textContent.includes('La ficha'))?.scrollIntoView({ block: 'start' })); await pg.evaluate(() => scrollBy(0, -70)); await foto('editor-ficha');
 await pg.evaluate(() => [...document.querySelectorAll('.campo-l')].find((h) => h.textContent.includes('Preguntas'))?.scrollIntoView({ block: 'start' })); await pg.evaluate(() => scrollBy(0, -70)); await foto('editor-faq');
 // Subir una foto y guardar
@@ -85,9 +93,9 @@ await pg.click('text=‹ Volver').catch(() => {});
 
 // Precios
 await nav('Precios'); await pg.waitForSelector('.precio-f');
-await pg.locator('.precio-in input').first().fill('54.000'); await foto('precios');
+await pg.locator('.precio-in input').first().fill('54.000'); await pg.locator('.precio-in.may input').first().fill('41.000'); await foto('precios');
 await pg.click('.precio-f:has-text("Campera") >> text=Colores y talles'); await ver('.precio-v', 'start'); await pg.evaluate(() => scrollBy(0, -140)); await foto('precios-talles');
-await pg.click('text=% Ajuste masivo'); await pg.waitForSelector('.modal'); await pg.selectOption('.modal select >> nth=0', 'CALZADO'); await foto('ajuste');
+await pg.click('text=% Ajuste masivo'); await pg.waitForSelector('.modal'); await pg.selectOption('.modal select >> nth=1', 'CALZADO'); await foto('ajuste');
 await pg.click('.modal button:has-text("Cancelar")');
 await pg.click('text=Guardar precios'); await toast();
 
@@ -102,7 +110,7 @@ await pg.click('text=Mayoristas'); await foto('mayoristas'); await pg.click('tex
 await pg.click('text=Destacados de la home'); await foto('destacados'); await pg.click('text=‹ Volver');
 await pg.click('text=Aviso en la web'); await pg.click('.interruptor'); await pg.fill('label:has-text("Texto") input', 'Del 24 al 31 de diciembre no hacemos envíos'); await foto('aviso'); await pg.click('text=‹ Volver');
 await pg.click('text=Fotos de clientes'); await foto('resenas'); await pg.click('text=‹ Volver');
-await pg.click('text=Cambiar el PIN'); await foto('pin');
+await pg.click('text=Cambiar mi contraseña'); await foto('clave');
 
 // Computadora
 await pg.setViewportSize({ width: 1280, height: 800 }); await nav('Pedidos'); await pg.waitForSelector('.fila');

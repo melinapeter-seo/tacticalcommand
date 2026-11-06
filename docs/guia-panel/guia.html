@@ -97,8 +97,9 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
     <div>
       <ol class="pasos">
         <li>Abrí <span class="url">tacticalcommand.com.ar/panel/</span> en el celular o en la computadora.</li>
-        <li>Escribí tu <b>PIN</b> (los números que te pasó Melina) y tocá <span class="btn btn-o">Entrar</span>.</li>
-        <li>Listo. La sesión dura <b>12 horas</b> en ese dispositivo; después te vuelve a pedir el PIN.</li>
+        <li>Escribí tu <b>usuario</b> (<b>walter</b>) y tu <b>contraseña</b>, y tocá <span class="btn btn-o">Entrar</span>. Con <b>Ver</b> mostrás lo que escribiste.</li>
+        <li><b>La primera vez</b> entrás con la contraseña temporal que te pasó Melina, y el panel te pide que elijas <b>una propia</b> (al menos 8 caracteres). Solo vos la vas a saber.</li>
+        <li>Listo. La sesión dura <b>12 horas</b> en ese dispositivo; después te vuelve a pedir la contraseña.</li>
       </ol>
       <div class="caja tip"><b>Tenelo a mano como una app</b>En el celular, con el panel abierto en Chrome, tocá los tres puntitos <b>⋮</b> y elegí <b>«Agregar a la pantalla de inicio»</b>. Te queda un ícono para entrar directo.</div>
       <h2>Qué hay en esta guía</h2>
@@ -106,10 +107,10 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
         <li><span>01</span>Lo básico: las 5 secciones y la regla de oro</li>
         <li><span>02</span>Pedidos: cargar, avisar y avanzar</li>
         <li><span>03</span>Clientes</li>
-        <li><span>04</span>Productos: fichas, fotos, colores y talles</li>
-        <li><span>05</span>Precios y ajuste masivo</li>
+        <li><span>04</span>Productos: fichas, fotos, colores, talles y stock</li>
+        <li><span>05</span>Precios minoristas y mayoristas</li>
         <li><span>06</span>Publicar los cambios en la web</li>
-        <li><span>07</span>Más: resumen, mayoristas, destacados, aviso, fotos y PIN</li>
+        <li><span>07</span>Más: resumen, mayoristas, destacados, aviso, fotos y contraseña</li>
         <li><span>08</span>Si algo no anda</li>
       </ul>
     </div>
@@ -128,7 +129,7 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
     <div><b>Clientes</b>Quién te compró y qué</div>
     <div><b>Productos</b>Fichas, fotos, colores y talles</div>
     <div><b>Precios</b>Precios y ajustes</div>
-    <div><b>Más</b>Resumen, mayoristas, web y PIN</div>
+    <div><b>Más</b>Resumen, mayoristas, web y contraseña</div>
   </div>
   <h2>La regla de oro: qué se guarda solo y qué hay que publicar</h2>
   <div class="reglas">
@@ -269,6 +270,8 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
         <tr><td><span class="chip e0">Oculto</span></td><td>No se ve en la web.</td></tr>
         <tr><td><span class="chip" style="background:#F1E8FA;color:#5B3A82">Pedido a Melina</span></td><td>Le pediste que arme la ficha.</td></tr>
         <tr><td><span class="chip e1">Sin publicar</span></td><td>Tiene cambios que todavía no están en la web.</td></tr>
+        <tr><td><span class="chip" style="background:#FBE9E7;color:#B3261E">Sin stock</span></td><td>No se puede comprar en la web (ver «Sin stock»).</td></tr>
+        <tr><td><span class="chip" style="background:#FFF4D6;color:#6B4E0A">Stock parcial</span></td><td>Algún color o talle está sin stock.</td></tr>
         <tr><td><span class="chip e3">6/6</span></td><td>La calidad de la ficha (ver capítulo siguiente).</td></tr>
       </table>
       <h2>Al abrir un producto</h2>
@@ -303,6 +306,24 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
   <div class="pie"><span>Guía del panel · Tactical Command</span><span>10</span></div>
 </section>
 
+<section class="pag">
+  <p class="cap">04 · Productos</p>
+  <h1>Marcar «sin stock»</h1>
+  <div class="cols dos-tel">
+    <div class="fig"><div class="tel chico"><img src="img/stock.png" alt=""></div><div class="pie-foto">Un color abierto: el número 40, sin stock</div></div>
+    <div class="fig"><div class="tel chico"><img src="img/stock-gral.png" alt=""></div><div class="pie-foto">Todo el producto, con un interruptor</div></div>
+  </div>
+  <p class="intro" style="margin-top:5mm">Cuando algo se te termina, marcalo y la web lo muestra al instante de publicar. Se puede marcar un talle, un color entero o todo el producto.</p>
+  <ol class="pasos">
+    <li><b>Un talle o número</b>: abrí el color y, en <b>Stock</b>, tocá el talle. Queda en rojo, «Sin stock». En la web se ve tachado y no se puede elegir. Tocalo de nuevo cuando vuelva a entrar.</li>
+    <li><b>Un color entero</b>: en ese mismo lugar, apagá <b>«Hay stock de este color»</b>. En la web, el color aparece marcado y el botón de compra dice «SIN STOCK».</li>
+    <li><b>Todo el producto</b>: en la sección 2, apagá <b>«Producto con stock»</b>. La web muestra «SIN STOCK» en la ficha y en las tarjetas.</li>
+    <li>Tocá <span class="btn btn-o">Guardar cambios</span> y publicá.</li>
+  </ol>
+  <div class="caja tip"><b>El cliente igual te puede consultar</b>Aunque no pueda agregarlo al carrito, sigue teniendo el botón para preguntarte por WhatsApp. Si un producto se termina por mucho tiempo, también podés ocultarlo.</div>
+  <div class="pie"><span>Guía del panel · Tactical Command</span><span>11</span></div>
+</section>
+
 <!-- 11 · La ficha -->
 <section class="pag">
   <p class="cap">04 · Productos</p>
@@ -321,7 +342,7 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
     <tr><td><b>Preguntas frecuentes</b></td><td>Lo que te preguntan siempre por WhatsApp, con su respuesta.</td></tr>
   </table>
   <div class="caja ok"><b>El semáforo de calidad</b>Arriba del producto ves qué le falta a la ficha (por ejemplo «3 preguntas frecuentes o más»). No te impide publicar, pero completarla ayuda a que el producto aparezca en Google y a que el cliente se decida.</div>
-  <div class="pie"><span>Guía del panel · Tactical Command</span><span>11</span></div>
+  <div class="pie"><span>Guía del panel · Tactical Command</span><span>12</span></div>
 </section>
 
 <!-- 12 · Nuevo producto y Melina -->
@@ -347,26 +368,27 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
     </div>
     <div class="fig"><div class="tel"><img src="img/producto-nuevo.png" alt=""></div><div class="pie-foto">Un producto nuevo, con el pedido a Melina arriba</div></div>
   </div>
-  <div class="pie"><span>Guía del panel · Tactical Command</span><span>12</span></div>
+  <div class="pie"><span>Guía del panel · Tactical Command</span><span>13</span></div>
 </section>
 
 <!-- 13 · Precios -->
 <section class="pag">
   <p class="cap">05 · Precios</p>
-  <h1>Precios</h1>
+  <h1>Precios minoristas y mayoristas</h1>
   <div class="cols dos-tel">
-    <div class="fig"><div class="tel chico"><img src="img/precios.png" alt=""></div><div class="pie-foto">El precio de cada producto</div></div>
-    <div class="fig"><div class="tel chico"><img src="img/ajuste.png" alt=""></div><div class="pie-foto">El ajuste masivo, con vista previa</div></div>
+    <div class="fig"><div class="tel chico"><img src="img/precios.png" alt=""></div><div class="pie-foto">Minorista y mayorista de cada producto</div></div>
+    <div class="fig"><div class="tel chico"><img src="img/precios-talles.png" alt=""></div><div class="pie-foto">Por color y por talle</div></div>
   </div>
   <h2 style="margin-top:5mm">Cambiar un precio</h2>
   <ol class="pasos">
-    <li>Escribí el precio nuevo en el recuadro del producto. Los que cambiaste quedan marcados con un borde dorado y te muestran el precio que está en la web.</li>
-    <li>Si <b>un color o un talle cuesta distinto</b>, tocá <span class="btn btn-t">Colores y talles</span> y cargalo ahí. Vacío = usa el precio del producto. En la web, la ficha muestra «DESDE» el menor hasta que el cliente elige.</li>
+    <li>Cada producto tiene dos recuadros: <b>Minorista</b> (el que ve cualquier cliente en la web) y <b>Mayorista</b> (en azul; es el que se ve en la página de Mayoristas y en el pedido mayorista). Los que cambiaste quedan marcados con un borde dorado.</li>
+    <li>Si <b>un color o un talle cuesta distinto</b>, tocá <span class="btn btn-t">Colores y talles</span>: ahí cargás los dos precios de cada color y de cada talle. Vacío = usa el del producto (o el del color).</li>
     <li>Tocá <span class="btn btn-o">Guardar precios</span> y después publicá.</li>
   </ol>
+  <div class="caja ojo"><b>Antes de publicar el primer precio mayorista</b>Cargá los mayoristas de todos los productos. Desde que hay uno publicado, la página de Mayoristas pasa a mostrar precios mayoristas, y los que no tengan dicen «A CONFIRMAR».</div>
   <h2>Subir o bajar varios a la vez</h2>
-  <p>Tocá <span class="btn btn-s">% Ajuste masivo</span>: elegí todos los productos o una categoría, subir o bajar, el porcentaje y el redondeo (por ejemplo, que termine en $ 900). Mirá la vista previa y tocá <span class="btn btn-o">Aplicar</span>. También ajusta los precios por color y por talle. Revisá y guardá.</p>
-  <div class="pie"><span>Guía del panel · Tactical Command</span><span>13</span></div>
+  <p>Tocá <span class="btn btn-s">% Ajuste masivo</span>: elegí <b>qué precios</b> (minoristas, mayoristas o ambos), todos los productos o una categoría, subir o bajar, el porcentaje y el redondeo. Mirá la vista previa, tocá <span class="btn btn-o">Aplicar</span>, revisá y guardá.</p>
+  <div class="pie"><span>Guía del panel · Tactical Command</span><span>14</span></div>
 </section>
 
 <!-- 14 · Publicar -->
@@ -387,7 +409,7 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
     </div>
     <div class="fig"><div class="tel"><img src="img/revisar.png" alt=""></div><div class="pie-foto">La revisión antes de publicar</div></div>
   </div>
-  <div class="pie"><span>Guía del panel · Tactical Command</span><span>14</span></div>
+  <div class="pie"><span>Guía del panel · Tactical Command</span><span>15</span></div>
 </section>
 
 <!-- 15 · Más (1) -->
@@ -401,8 +423,8 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
   <h2 style="margin-top:5mm">Resumen del negocio</h2>
   <p>Elegí el mes y mirá las ventas, la cantidad de pedidos y unidades, el promedio por pedido, minoristas contra mayoristas, lo más pedido y cuántos pedidos esperan tu aviso. Sale de los pedidos que cargás en el panel: cuanto más completo lo tengas, más útil es.</p>
   <h2>Mayoristas</h2>
-  <p>Cambiá el <b>mínimo de unidades</b> (con − y +), el texto de condiciones y el <b>costo de envío dentro de Rafaela</b>: se actualiza solo en el carrito, en las preguntas frecuentes y en el portal mayorista. Abajo ves tus clientes mayoristas. Guardá y publicá.</p>
-  <div class="pie"><span>Guía del panel · Tactical Command</span><span>15</span></div>
+  <p>Cambiá el <b>mínimo de unidades</b> (con − y +), el texto de condiciones y el <b>costo de envío dentro de Rafaela</b>: se actualiza solo en el carrito, en las preguntas frecuentes y en el portal mayorista. Abajo ves tus clientes mayoristas. Guardá y publicá. Los <b>precios mayoristas</b> se cargan en <b>Precios</b>, al lado de cada precio minorista.</p>
+  <div class="pie"><span>Guía del panel · Tactical Command</span><span>16</span></div>
 </section>
 
 <!-- 16 · Más (2) -->
@@ -419,24 +441,24 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
   <p>Una franja dorada arriba de todas las páginas. Prendela, escribí el texto (por ejemplo «Del 24 al 31 de diciembre no hacemos envíos»), guardá y publicá. Para sacarla, apagala y publicá de nuevo.</p>
   <h2>Fotos de clientes</h2>
   <p>Las fotos de «Garantía de satisfacción». Sumá con <span class="btn btn-s">+ Foto</span>, ordená y quitá como en los productos. <b>Pedile permiso al cliente antes de subir su foto.</b></p>
-  <div class="pie"><span>Guía del panel · Tactical Command</span><span>16</span></div>
+  <div class="pie"><span>Guía del panel · Tactical Command</span><span>17</span></div>
 </section>
 
-<!-- 17 · PIN y problemas -->
+<!-- 18 · Contraseña y problemas -->
 <section class="pag">
   <p class="cap">07 · Más · 08 · Si algo no anda</p>
-  <h1>Tu PIN y qué hacer si algo falla</h1>
+  <h1>Tu contraseña y qué hacer si algo falla</h1>
   <div class="cols">
     <div>
-      <h2>Cambiar el PIN</h2>
-      <p>En Más › <b>Cambiar el PIN</b>: escribí el actual, el nuevo (entre 6 y 12 números) y repetilo. Al cambiarlo se cierra la sesión en los otros dispositivos. Elegí uno que no sea fácil de adivinar y no lo compartas.</p>
+      <h2>Cambiar tu contraseña</h2>
+      <p>En Más › <b>Cambiar mi contraseña</b>: escribí la actual, la nueva (al menos 8 caracteres) y repetila. Al cambiarla se cierra tu sesión en los otros dispositivos. Elegí una que no sea fácil de adivinar y no la compartas: Melina entra con su propio usuario.</p>
       <div class="faq">
-        <h3>«PIN incorrecto» o «Demasiados intentos»</h3>
-        <p>Revisá los números. Después de 10 intentos fallidos hay que esperar 10 minutos. Si te olvidaste el PIN, pedíselo a Melina.</p>
+        <h3>«Usuario o contraseña incorrectos» o «Demasiados intentos»</h3>
+        <p>Revisá lo que escribiste (con <b>Ver</b>). Después de 10 intentos fallidos hay que esperar 10 minutos. Si te olvidaste la contraseña, Melina te pone una temporal nueva y elegís otra al entrar.</p>
         <h3>«No hay conexión con la planilla»</h3>
         <p>Es internet. Probá de nuevo en un rato; lo que no se guardó, volvé a guardarlo.</p>
         <h3>«La sesión venció»</h3>
-        <p>Pasaron las 12 horas. Volvé a entrar con tu PIN.</p>
+        <p>Pasaron las 12 horas. Volvé a entrar con tu usuario y contraseña.</p>
         <h3>Publiqué y no veo el cambio en la web</h3>
         <p>Esperá 2 minutos y recargá la página. Si sigue igual, fijate que la barra de «cambios sin publicar» no esté todavía.</p>
         <h3>Publiqué algo mal en un producto</h3>
@@ -445,10 +467,10 @@ ol.pasos > li::before { content: counter(p); position: absolute; left: 0; top: -
         <p>Abrilo y tocá «↶ Deshacer el último paso».</p>
       </div>
     </div>
-    <div class="fig"><div class="tel"><img src="img/pin.png" alt=""></div><div class="pie-foto">Cambiar el PIN</div></div>
+    <div class="fig"><div class="tel"><img src="img/clave.png" alt=""></div><div class="pie-foto">Cambiar tu contraseña</div></div>
   </div>
   <div class="caja tip" style="margin-top:6mm"><b>¿Cualquier otra duda?</b>Escribile a Melina por WhatsApp al <b>+54 9 3492 68-6435</b>. Si podés, mandale una captura de la pantalla.</div>
-  <div class="pie"><span>Guía del panel · Tactical Command</span><span>17</span></div>
+  <div class="pie"><span>Guía del panel · Tactical Command</span><span>18</span></div>
 </section>
 
 </body>
