@@ -2,8 +2,8 @@
 import type { Cliente, Color, Ficha, Foto, Pedido, Producto } from './datos';
 import { cap, money } from './datos';
 
-export type ProdRow = { slug: string; nombre: string; categoria: string; subcategoria: string; sku: string; descripcion: string; visible: boolean | string; precio: number | string; talles: string; talles_ninos: string; orden: number | string; actualizado: string };
-export type VarRow = { slug: string; idx: number | string; nombre: string; sku: string; swatch: string; fotos: string; precio: number | string; precios_talle: string; agotados: string; agotado: boolean | string; talles: string };
+export type ProdRow = { slug: string; nombre: string; categoria: string; subcategoria: string; sku: string; descripcion: string; visible: boolean | string; precio: number | string; talles: string; talles_ninos: string; orden: number | string; actualizado: string; precio_mayorista?: number | string };
+export type VarRow = { slug: string; idx: number | string; nombre: string; sku: string; swatch: string; fotos: string; precio: number | string; precios_talle: string; agotados: string; agotado: boolean | string; talles: string; precio_mayorista?: number | string; precios_talle_mayorista?: string };
 export type FichaRow = { slug: string; contenido: string; pendiente: boolean | string; notas: string };
 export type Config = Record<string, string | number | boolean>;
 export type Todo = {
@@ -45,11 +45,12 @@ export function aProductos(prods: ProdRow[], vars: VarRow[], fichas: FichaRow[],
         talles: propios.length ? ordenarTalles(propios) : tallesProd, ninos,
         precio: num(v.precio), precios_talle: json(v.precios_talle, {} as Record<string, number>),
         agotado: bool(v.agotado), agotados: csv(v.agotados),
+        precio_may: num(v.precio_mayorista), precios_talle_may: json(v.precios_talle_mayorista, {} as Record<string, number>),
       };
     });
     return {
       slug: r.slug, nombre: String(r.nombre), categoria: String(r.categoria), subcategoria: String(r.subcategoria || ''), sku: String(r.sku || ''),
-      visible: bool(r.visible), precio: num(r.precio) ?? 0, orden: num(r.orden) ?? 9999, actualizado: String(r.actualizado || ''),
+      visible: bool(r.visible), precio: num(r.precio) ?? 0, precio_may: num(r.precio_mayorista) ?? 0, orden: num(r.orden) ?? 9999, actualizado: String(r.actualizado || ''),
       pendiente: bool(f?.pendiente), notas: String(f?.notas || ''),
       ficha: {
         descripcion: String(r.descripcion || ''), descripcion_larga: c.descripcion_larga || [], caracteristicas: c.caracteristicas || [],
@@ -69,12 +70,13 @@ export function aFilas(p: Producto) {
     producto: {
       slug: p.slug, nombre: p.nombre.trim(), categoria: p.categoria, subcategoria: p.subcategoria.trim().toUpperCase(), sku: p.sku.trim(),
       descripcion: p.ficha.descripcion.trim(), visible: p.visible, precio: p.precio, talles: tallesProd.join(','), talles_ninos: ninos.join(','),
-      orden: p.orden, actualizado: p.actualizado,
+      orden: p.orden, actualizado: p.actualizado, precio_mayorista: p.precio_may || '',
     } as ProdRow,
     variantes: p.colores.map((c, idx): VarRow => ({
       slug: p.slug, idx, nombre: c.nombre.trim().toUpperCase(), sku: c.sku.trim(), swatch: c.muestra, fotos: c.fotos.map((f) => f.id).join('|'),
       precio: c.precio ?? '', precios_talle: Object.keys(c.precios_talle).length ? JSON.stringify(c.precios_talle) : '',
       agotados: c.agotados.filter((t) => c.talles.includes(t) || c.ninos.includes(t)).join(','), agotado: c.agotado, talles: c.talles.join(',') === tallesProd.join(',') ? '' : c.talles.join(','),
+      precio_mayorista: c.precio_may ?? '', precios_talle_mayorista: Object.keys(c.precios_talle_may).length ? JSON.stringify(c.precios_talle_may) : '',
     })),
     ficha: {
       contenido: {
@@ -96,7 +98,8 @@ export function cambios(pub: Producto[], bor: Producto[], cfgPub: Config, cfgBor
     if (!p) { out.push({ t: d.nombre || 'Producto nuevo', w: [d.visible ? 'Producto nuevo, visible en la web' : 'Producto nuevo (oculto)'] }); continue; }
     const w: string[] = [];
     if (p.nombre !== d.nombre) w.push(`Nombre: ${p.nombre} → ${d.nombre}`);
-    if (p.precio !== d.precio) w.push(`Precio: ${money(p.precio)} → ${money(d.precio)}`);
+    if (p.precio !== d.precio) w.push(`Precio minorista: ${money(p.precio)} → ${money(d.precio)}`);
+    if (p.precio_may !== d.precio_may) w.push(`Precio mayorista: ${p.precio_may ? money(p.precio_may) : 'sin cargar'} → ${d.precio_may ? money(d.precio_may) : 'sin cargar'}`);
     if (p.visible !== d.visible) w.push(d.visible ? 'Ahora visible en la web' : 'Oculto en la web');
     if (p.categoria !== d.categoria || p.subcategoria !== d.subcategoria) w.push(`Categoría: ${cap(d.categoria)} / ${cap(d.subcategoria)}`);
     if (p.ficha.descripcion !== d.ficha.descripcion) w.push('Descripción corta');
@@ -111,6 +114,8 @@ export function cambios(pub: Producto[], bor: Producto[], cfgPub: Config, cfgBor
       if (!o) continue;
       if ((o.precio ?? null) !== (c.precio ?? null)) w.push(`${cap(c.nombre)}: ${c.precio == null ? 'usa el precio del producto' : 'precio ' + money(c.precio)}`);
       if (JSON.stringify(o.precios_talle) !== JSON.stringify(c.precios_talle)) w.push(`${cap(c.nombre)}: precios por talle`);
+      if ((o.precio_may ?? null) !== (c.precio_may ?? null)) w.push(`${cap(c.nombre)}: ${c.precio_may == null ? 'mayorista igual al del producto' : 'precio mayorista ' + money(c.precio_may)}`);
+      if (JSON.stringify(o.precios_talle_may) !== JSON.stringify(c.precios_talle_may)) w.push(`${cap(c.nombre)}: precios mayoristas por talle`);
       if (o.fotos.map((f) => f.id).join() !== c.fotos.map((f) => f.id).join()) w.push(`${cap(c.nombre)}: fotos`);
       if (o.talles.join() !== c.talles.join() || o.ninos.join() !== c.ninos.join()) w.push(`${cap(c.nombre)}: talles`);
       if (o.agotado !== c.agotado) w.push(`${cap(c.nombre)}: ${c.agotado ? 'sin stock' : 'vuelve a tener stock'}`);

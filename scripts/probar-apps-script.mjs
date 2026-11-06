@@ -35,7 +35,9 @@ const P = (action, b = {}) => post({ action, token, ...b }); // usa el token vig
 const todo = ok(P('getAll'), 'getAll');
 const pd = todo.productos_draft, vd = todo.variantes_draft;
 pd.find((p) => p.slug === 'shemagh').precio = 42000;
+pd.find((p) => p.slug === 'shemagh').precio_mayorista = 30000;
 vd.find((v) => v.slug === 'campera-gtex-outdoor' && v.nombre === 'AZUL NOCHE').precios_talle = '{"3XL":70000}';
+vd.find((v) => v.slug === 'campera-gtex-outdoor' && v.nombre === 'AZUL NOCHE').precios_talle_mayorista = '{"3XL":52000}';
 assert.equal(ok(P('saveDraft', { productos: pd, variantes: vd, config: { ws_minimo: 10 } }), 'saveDraft').cambios, 3);
 assert.equal(Number(ok(get({ action: 'catalog' }), 'catalog').productos.find((p) => p.slug === 'shemagh').precio), 50000, 'lo publicado no cambia con el borrador');
 falla(P('saveDraft', { productos: [...pd, { ...pd[0] }] }), /repetido/, 'slug repetido');
@@ -47,6 +49,12 @@ assert.equal(estado.fetches.at(-1).url, 'https://api.netlify.com/build_hooks/x')
 const cat2 = ok(get({ action: 'catalog' }), 'catalog tras publicar');
 const she = cat2.productos.find((p) => p.slug === 'shemagh');
 assert.equal(she.precio, 42000);
+// Precios mayoristas: los guarda y los ve el panel, pero el catálogo público no los devuelve.
+assert.ok(!('precio_mayorista' in she), 'catálogo público sin precio mayorista'); n++;
+assert.ok(cat2.variantes.every((v) => !('precio_mayorista' in v) && !('precios_talle_mayorista' in v)), 'variantes públicas sin mayoristas'); n++;
+const todoM = ok(P('getAll'), 'getAll con mayoristas');
+assert.equal(Number(todoM.productos.find((p) => p.slug === 'shemagh').precio_mayorista), 30000);
+assert.equal(todoM.variantes.find((v) => v.slug === 'campera-gtex-outdoor' && v.nombre === 'AZUL NOCHE').precios_talle_mayorista, '{"3XL":52000}');
 assert.equal(she.actualizado, new Date().toISOString().slice(0, 10));
 assert.equal(Number(cat2.config.ws_minimo), 10);
 assert.equal(ok(P('saveDraft', {}), 'sin cambios').cambios, 0);

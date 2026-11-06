@@ -83,3 +83,12 @@ Hacelo una vez, con la cuenta contacto@melinapeter.com.ar. Los pedidos, clientes
 4. Con **instalar** elegido en el desplegable, tocá **Ejecutar**. Crea las hojas nuevas (`fichas`, `fichas_draft`, `historial`) y suma a `config` lo que falte (destacados, fotos de clientes, aviso). Si Google pide permisos nuevos, aceptalos igual que la primera vez.
 5. **Implementar › Gestionar implementaciones › ✏️ (editar) › Versión: Nueva versión › Implementar**. Así la dirección `/exec` sigue siendo la misma y no hay que tocar Netlify.
 6. Entrá a `https://tacticalcommand.netlify.app/panel/` con el PIN. Si arriba dice «Falta actualizar el código de la planilla», el paso 5 no quedó hecho.
+
+## Actualizar para precios mayoristas
+
+Agrega las columnas `precio_mayorista` (en `productos` y `productos_draft`) y `precio_mayorista` y `precios_talle_mayorista` (en `variantes` y `variantes_draft`), al final de cada hoja. No se toca nada de lo cargado. Los precios mayoristas son privados: el catálogo público de la API no los devuelve.
+
+1. **Extensiones › Apps Script**. Reemplazá `Código.gs` y `Semilla.gs` por las versiones nuevas (mismos links de arriba, **Copy raw file**). Guardá.
+2. Con **instalar** elegido en el desplegable, tocá **Ejecutar**. Suma los encabezados de las columnas nuevas.
+3. **Implementar › Gestionar implementaciones › ✏️ › Versión: Nueva versión › Implementar**.
+4. Entrá al panel › **Precios**. Si arriba dice «Para cargar precios mayoristas falta actualizar el código de la planilla», el paso 3 no quedó hecho.

@@ -245,13 +245,25 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 .precio-a { display: flex; align-items: center; gap: 12px; }
 .precio-a .mini { width: 48px; height: 48px; }
 .precio-a .fila-txt { flex: 1; }
-.precio-in { flex: 0 0 132px; display: flex; align-items: center; gap: 6px; font-weight: 500; }
-.precio-in input { text-align: right; }
+.precio-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.precio-in { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.precio-l { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.precio-in.may .precio-l { color: var(--blue); }
+.precio-c-in { display: flex; align-items: center; gap: 6px; font-weight: 500; }
+.precio-c-in input { text-align: right; min-width: 0; }
+.precio-in.may input { border-color: #B9CDE3; background: #F6F9FC; }
+.precio-w { font-size: 12px; color: var(--gold-d); }
 .precio-v { margin-top: 8px; display: grid; gap: 14px; }
-.precio-c { border-top: 1px solid var(--line); padding-top: 12px; }
-.talles-p { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; }
-.talle-p { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
-.talle-p input { min-height: 42px !important; padding: 8px 10px !important; font-size: 16px; }
+.precio-c { border-top: 1px solid var(--line); padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.precio-cn { font-weight: 600; }
+.talles-p { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.talle-p { display: flex; flex-direction: column; gap: 6px; padding: 8px; border: 1px solid var(--line); border-radius: 10px; }
+.talle-pn { font-weight: 600; font-size: 14px; }
+.talle-p label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.talle-p label span { width: 32px; flex: none; }
+.talle-p label.may span { color: var(--blue); }
+.talle-p label.may input { border-color: #B9CDE3; background: #F6F9FC; }
+.talle-p input { min-width: 0; min-height: 38px !important; padding: 6px 8px !important; font-size: 16px; text-align: right; }
 .acciones-dos { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; }
 @media (min-width: 900px) { .acciones-dos { display: flex; justify-content: flex-end; } }
 

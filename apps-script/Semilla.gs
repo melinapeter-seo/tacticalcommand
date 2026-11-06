@@ -1,5 +1,5 @@
 // Generado por scripts/generar-semilla.mjs a partir de src/data/. No editar a mano.
-const COLUMNAS = {"productos":["slug","nombre","categoria","subcategoria","sku","descripcion","visible","precio","talles","talles_ninos","orden","actualizado"],"variantes":["slug","idx","nombre","sku","swatch","fotos","precio","precios_talle","agotados","agotado","talles"],"fichas":["slug","contenido","pendiente","notas"]};
+const COLUMNAS = {"productos":["slug","nombre","categoria","subcategoria","sku","descripcion","visible","precio","talles","talles_ninos","orden","actualizado","precio_mayorista"],"variantes":["slug","idx","nombre","sku","swatch","fotos","precio","precios_talle","agotados","agotado","talles","precio_mayorista","precios_talle_mayorista"],"fichas":["slug","contenido","pendiente","notas"]};
 const INDEXNOW_KEY = "1812fd1788a18675031ad2819a2ffe64";
 const SEMILLA = {
  "productos": [
@@ -15,7 +15,8 @@ const SEMILLA = {
    "talles": "",
    "talles_ninos": "",
    "orden": 140,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "bolso-mochila-tactica-70l",
@@ -29,7 +30,8 @@ const SEMILLA = {
    "talles": "",
    "talles_ninos": "",
    "orden": 100,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "mochila-tactica-assault-50l",
@@ -43,7 +45,8 @@ const SEMILLA = {
    "talles": "",
    "talles_ninos": "",
    "orden": 70,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "mochila-tactica-45l",
@@ -57,7 +60,8 @@ const SEMILLA = {
    "talles": "",
    "talles_ninos": "",
    "orden": 10,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "uniforme-tactico",
@@ -71,7 +75,8 @@ const SEMILLA = {
    "talles": "S,M,L,XL,2XL,3XL",
    "talles_ninos": "",
    "orden": 100,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "cinto-tactico",
@@ -85,7 +90,8 @@ const SEMILLA = {
    "talles": "",
    "talles_ninos": "",
    "orden": 40,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "shemagh",
@@ -99,7 +105,8 @@ const SEMILLA = {
    "talles": "",
    "talles_ninos": "",
    "orden": 70,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "borcego-tactico-511-negro",
@@ -113,7 +120,8 @@ const SEMILLA = {
    "talles": "44,45",
    "talles_ninos": "",
    "orden": 30,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "borcego-tactico-ranger-negro",
@@ -127,7 +135,8 @@ const SEMILLA = {
    "talles": "36,37,38,39,40,41,42,43,44",
    "talles_ninos": "30,31,32,33,34,35",
    "orden": 20,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "borcegos-tacticos-altama-negros",
@@ -141,7 +150,8 @@ const SEMILLA = {
    "talles": "36,37,38,39,40,41,42,43,44,45",
    "talles_ninos": "30,31,32,33,34,35",
    "orden": 10,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "bajo-chaleco-manga-larga-negro",
@@ -155,7 +165,8 @@ const SEMILLA = {
    "talles": "S,M,L,XL,2XL,3XL",
    "talles_ninos": "",
    "orden": 60,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "bajo-chaleco-manga-corta-negro",
@@ -169,7 +180,8 @@ const SEMILLA = {
    "talles": "S,M,L,XL,2XL,3XL",
    "talles_ninos": "",
    "orden": 70,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "bajo-chaleco-manga-larga-multicam",
@@ -183,7 +195,8 @@ const SEMILLA = {
    "talles": "S,M,L,XL,2XL,3XL",
    "talles_ninos": "",
    "orden": 40,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "bajo-chaleco-manga-corta-multicam",
@@ -197,7 +210,8 @@ const SEMILLA = {
    "talles": "S,M,L,XL,2XL,3XL",
    "talles_ninos": "",
    "orden": 50,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "parche-bordado-bandera-argentina",
@@ -211,7 +225,8 @@ const SEMILLA = {
    "talles": "",
    "talles_ninos": "",
    "orden": 100,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "sombrero-de-monte-tactico",
@@ -225,7 +240,8 @@ const SEMILLA = {
    "talles": "XS,S,M,L,XL,2XL",
    "talles_ninos": "",
    "orden": 20,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "gafa-tactica-sport-lentes-intercambiables",
@@ -239,7 +255,8 @@ const SEMILLA = {
    "talles": "",
    "talles_ninos": "",
    "orden": 10,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "pantalon-cargo-tactico-ripstop-woodland",
@@ -253,7 +270,8 @@ const SEMILLA = {
    "talles": "S,M,L,XL,2XL,3XL",
    "talles_ninos": "",
    "orden": 90,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "pantalon-cargo-tactico-ripstop-negro",
@@ -267,7 +285,8 @@ const SEMILLA = {
    "talles": "S,M,L,XL,2XL,3XL",
    "talles_ninos": "",
    "orden": 80,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   },
   {
    "slug": "campera-gtex-outdoor",
@@ -281,7 +300,8 @@ const SEMILLA = {
    "talles": "S,M,L,XL,2XL,3XL,4XL,5XL",
    "talles_ninos": "",
    "orden": 10,
-   "actualizado": ""
+   "actualizado": "",
+   "precio_mayorista": ""
   }
  ],
  "variantes": [
@@ -296,7 +316,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "bolso-mochila-tactica-70l",
@@ -309,7 +331,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "bolso-mochila-tactica-70l",
@@ -322,7 +346,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "bolso-mochila-tactica-70l",
@@ -335,7 +361,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "bolso-mochila-tactica-70l",
@@ -348,7 +376,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "mochila-tactica-assault-50l",
@@ -361,7 +391,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "mochila-tactica-assault-50l",
@@ -374,7 +406,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "mochila-tactica-assault-50l",
@@ -387,7 +421,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "mochila-tactica-45l",
@@ -400,7 +436,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "mochila-tactica-45l",
@@ -413,7 +451,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "mochila-tactica-45l",
@@ -426,7 +466,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "mochila-tactica-45l",
@@ -439,7 +481,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "mochila-tactica-45l",
@@ -452,7 +496,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "mochila-tactica-45l",
@@ -465,7 +511,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "uniforme-tactico",
@@ -478,7 +526,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "uniforme-tactico",
@@ -491,7 +541,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "uniforme-tactico",
@@ -504,7 +556,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "cinto-tactico",
@@ -517,7 +571,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "cinto-tactico",
@@ -530,7 +586,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "cinto-tactico",
@@ -543,7 +601,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "shemagh",
@@ -556,7 +616,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "shemagh",
@@ -569,7 +631,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "shemagh",
@@ -582,7 +646,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "borcego-tactico-511-negro",
@@ -595,7 +661,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "borcego-tactico-ranger-negro",
@@ -608,7 +676,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "borcegos-tacticos-altama-negros",
@@ -621,7 +691,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "bajo-chaleco-manga-larga-negro",
@@ -634,7 +706,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "bajo-chaleco-manga-corta-negro",
@@ -647,7 +721,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "bajo-chaleco-manga-larga-multicam",
@@ -660,7 +736,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "bajo-chaleco-manga-corta-multicam",
@@ -673,7 +751,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "parche-bordado-bandera-argentina",
@@ -686,7 +766,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "sombrero-de-monte-tactico",
@@ -699,7 +781,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "sombrero-de-monte-tactico",
@@ -712,7 +796,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "gafa-tactica-sport-lentes-intercambiables",
@@ -725,7 +811,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "pantalon-cargo-tactico-ripstop-woodland",
@@ -738,7 +826,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "pantalon-cargo-tactico-ripstop-negro",
@@ -751,7 +841,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "campera-gtex-outdoor",
@@ -764,7 +856,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "campera-gtex-outdoor",
@@ -777,7 +871,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": ""
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   },
   {
    "slug": "campera-gtex-outdoor",
@@ -790,7 +886,9 @@ const SEMILLA = {
    "precios_talle": "",
    "agotados": "",
    "agotado": false,
-   "talles": "S,M,L,XL,2XL,3XL"
+   "talles": "S,M,L,XL,2XL,3XL",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
   }
  ],
  "fichas": [

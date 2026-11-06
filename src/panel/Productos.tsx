@@ -90,9 +90,9 @@ function ListaTextos({ valores, cambiar, placeholder, multilinea, agregar }: { v
 }
 
 const productoNuevo = (): Producto => ({
-  slug: '', nombre: '', categoria: 'ACCESORIOS', subcategoria: '', sku: '', visible: false, precio: 50000, orden: 9999, actualizado: '', pendiente: false, notas: '',
+  slug: '', nombre: '', categoria: 'ACCESORIOS', subcategoria: '', sku: '', visible: false, precio: 50000, precio_may: 0, orden: 9999, actualizado: '', pendiente: false, notas: '',
   ficha: { descripcion: '', descripcion_larga: [''], caracteristicas: [''], especificaciones: [{ k: '', v: '' }], faq: [{ q: '', a: '' }] },
-  colores: [{ nombre: 'NEGRO', sku: '', muestra: '#17191A', fotos: [], talles: [], ninos: [], precio: null, precios_talle: {}, agotado: false, agotados: [] }],
+  colores: [{ nombre: 'NEGRO', sku: '', muestra: '#17191A', fotos: [], talles: [], ninos: [], precio: null, precios_talle: {}, agotado: false, agotados: [], precio_may: null, precios_talle_may: {} }],
 });
 
 const aBase64 = (b: Blob) => new Promise<string>((r) => { const f = new FileReader(); f.onload = () => r(String(f.result).split(',')[1]); f.readAsDataURL(b); });
@@ -296,7 +296,7 @@ function Editor({ slug, abrir, volver }: { slug: string; abrir: (s: string) => v
             )}
           </div>
         ))}
-        <Boton onClick={() => { setP({ ...p, colores: [...p.colores, { nombre: '', sku: p.sku, muestra: '#2F3530', fotos: [], talles: p.colores[0]?.talles || [], ninos: [], precio: null, precios_talle: {}, agotado: false, agotados: [] }] }); setAbiertoColor(p.colores.length); }}>+ Agregar color</Boton>
+        <Boton onClick={() => { setP({ ...p, colores: [...p.colores, { nombre: '', sku: p.sku, muestra: '#2F3530', fotos: [], talles: p.colores[0]?.talles || [], ninos: [], precio: null, precios_talle: {}, agotado: false, agotados: [], precio_may: null, precios_talle_may: {} }] }); setAbiertoColor(p.colores.length); }}>+ Agregar color</Boton>
       </div>
 
       <div className="tarjeta">

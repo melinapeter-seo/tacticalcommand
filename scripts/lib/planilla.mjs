@@ -8,8 +8,8 @@
 // especificaciones y preguntas frecuentes. `pendiente` marca las fichas que Walter le pidió armar a Melina.
 
 export const COLS = {
-  productos: ['slug', 'nombre', 'categoria', 'subcategoria', 'sku', 'descripcion', 'visible', 'precio', 'talles', 'talles_ninos', 'orden', 'actualizado'],
-  variantes: ['slug', 'idx', 'nombre', 'sku', 'swatch', 'fotos', 'precio', 'precios_talle', 'agotados', 'agotado', 'talles'],
+  productos: ['slug', 'nombre', 'categoria', 'subcategoria', 'sku', 'descripcion', 'visible', 'precio', 'talles', 'talles_ninos', 'orden', 'actualizado', 'precio_mayorista'],
+  variantes: ['slug', 'idx', 'nombre', 'sku', 'swatch', 'fotos', 'precio', 'precios_talle', 'agotados', 'agotado', 'talles', 'precio_mayorista', 'precios_talle_mayorista'],
   fichas: ['slug', 'contenido', 'pendiente', 'notas'],
 };
 /** Campos de la ficha que viven en la hoja `fichas` (la descripción corta está en `productos`). */
@@ -51,7 +51,7 @@ export function aFilas(catalogo, categorias, config, hoy = new Date().toISOStrin
     const ninos = ordenarTalles(p.colores.flatMap((c) => c.talles.filter((t) => t.ninos).map((t) => t.talle)));
     productos.push({
       slug: p.slug, nombre: p.nombre, categoria: p.categoria, subcategoria: p.subcategoria, sku: p.sku, descripcion: p.descripcion,
-      visible: true, precio: p.precio_minorista, talles: tallesProd.join(','), talles_ninos: ninos.join(','), orden: ord[p.slug] ?? p.orden, actualizado: hoy,
+      visible: true, precio: p.precio_minorista, talles: tallesProd.join(','), talles_ninos: ninos.join(','), orden: ord[p.slug] ?? p.orden, actualizado: hoy, precio_mayorista: '',
     });
     p.colores.forEach((c, idx) => {
       const propios = adultos(c);
@@ -59,7 +59,7 @@ export function aFilas(catalogo, categorias, config, hoy = new Date().toISOStrin
         slug: p.slug, idx, nombre: c.nombre, sku: c.sku, swatch: c.muestra, fotos: c.fotos.join('|'),
         precio: c.precio ?? '', precios_talle: c.precios_talle && Object.keys(c.precios_talle).length ? JSON.stringify(c.precios_talle) : '',
         agotados: c.talles.filter((t) => t.estado === 'agotado').map((t) => t.talle).join(','), agotado: false,
-        talles: propios.join(',') === tallesProd.join(',') ? '' : propios.join(','),
+        talles: propios.join(',') === tallesProd.join(',') ? '' : propios.join(','), precio_mayorista: '', precios_talle_mayorista: '',
       });
     });
   }
