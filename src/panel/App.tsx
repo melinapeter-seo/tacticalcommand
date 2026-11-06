@@ -1,10 +1,11 @@
-// Panel de Tactical Command: entra con PIN, lee la planilla (getAll) y edita pedidos, clientes, productos, precios y
+// Panel de Tactical Command: entra con usuario y contraseña (o PIN, si todavía no hay usuarios), lee la planilla (getAll) y edita pedidos, clientes, productos, precios y
 // ajustes de la web. Los productos, precios y ajustes van a borrador hasta «Revisar y publicar».
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { cerrarSesion, entrar, llamar, sesion, SesionVencida } from './api';
 import { faltaAvisar } from './datos';
 import { aProductos, cambios, type FotosRepo, type Todo } from './modelo';
 import { PanelCtx, Confirmacion, Toast, useToast, Icono, Boton } from './ui';
+import { FormClave } from './Clave';
 import Pedidos from './Pedidos';
 import Clientes from './Clientes';
 import Productos from './Productos';
@@ -31,6 +32,7 @@ export default function App() {
   const [conf, setConf] = useState<{ titulo: string; texto?: string; si: string; peligro?: boolean } | null>(null);
   const [revisar, setRevisar] = useState(false);
   const [viejo, setViejo] = useState(false);
+  const [, refrescar] = useState(0);
   const resolver = useRef<(v: boolean) => void>(() => {});
 
   const salir = (msg = '') => { cerrarSesion(); setTodo(null); setLogueado(false); if (msg) setToast(msg); };
@@ -55,6 +57,7 @@ export default function App() {
   const pendientes = useMemo(() => (todo ? cambios(pub, bor, todo.config, todo.config_draft) : []), [pub, bor, todo]);
 
   if (!logueado) return <Login entrar={() => setLogueado(true)} />;
+  if (sesion()?.cambiar) return <ClaveNueva listo={() => { refrescar((n) => n + 1); setToast('Contraseña guardada'); }} salir={() => salir()} />;
   if (!todo) return <div className="cargando">{error ? <><p>{error}</p><Boton onClick={recargar}>Probar de nuevo</Boton></> : 'Cargando los datos de la planilla…'}</div>;
 
   const sinAvisar = todo.pedidos.filter(faltaAvisar).length;
@@ -137,25 +140,50 @@ export default function App() {
 }
 
 function Login({ entrar: listo }: { entrar: () => void }) {
-  const [pin, setPin] = useState('');
+  const [usuario, setUsuario] = useState('');
+  const [clave, setClave] = useState('');
+  const [ver, setVer] = useState(false);
   const [error, setError] = useState('');
   const [cargando, setCargando] = useState(false);
   async function enviar(e: React.FormEvent) {
     e.preventDefault();
     setCargando(true);
-    try { await entrar(pin); listo(); } catch (err) { setError((err as Error).message); setPin(''); } finally { setCargando(false); }
+    try { await entrar(usuario.trim(), clave); listo(); } catch (err) { setError((err as Error).message); setClave(''); } finally { setCargando(false); }
   }
   return (
     <div className="login">
       <form className="login-c" onSubmit={enviar}>
         <div className="marca">Tactical Command <span>Panel</span></div>
-        <h1>Ingresá tu PIN</h1>
-        <input className="pin" type="password" inputMode="numeric" autoComplete="current-password" maxLength={12} value={pin} aria-label="PIN" aria-invalid={!!error}
-          onChange={(e) => { setPin(e.target.value.replace(/\D/g, '')); setError(''); }} autoFocus />
+        <h1>Ingresá al panel</h1>
+        <label className="campo"><span className="campo-l">Usuario</span>
+          <input value={usuario} autoComplete="username" autoCapitalize="none" autoCorrect="off" spellCheck={false} onChange={(e) => { setUsuario(e.target.value); setError(''); }} autoFocus />
+        </label>
+        <label className="campo"><span className="campo-l">Contraseña</span>
+          <span className="clave-in">
+            <input type={ver ? 'text' : 'password'} value={clave} autoComplete="current-password" aria-invalid={!!error} onChange={(e) => { setClave(e.target.value); setError(''); }} />
+            <button type="button" className="clave-ver" onClick={() => setVer(!ver)} aria-label={ver ? 'Ocultar contraseña' : 'Mostrar contraseña'}>{ver ? 'Ocultar' : 'Ver'}</button>
+          </span>
+        </label>
         {error && <p className="campo-err" role="alert">{error}</p>}
-        <Boton tipo="pri" type="submit" disabled={pin.length < 4 || cargando}>{cargando ? 'Entrando…' : 'Entrar'}</Boton>
-        <p className="login-n">La sesión dura 12 horas en este dispositivo.</p>
+        <Boton tipo="pri" type="submit" disabled={clave.length < 4 || cargando}>{cargando ? 'Entrando…' : 'Entrar'}</Boton>
+        <p className="login-n">La sesión dura 12 horas en este dispositivo. ¿Te olvidaste la contraseña? Pedile a Melina que te la restablezca.</p>
       </form>
+    </div>
+  );
+}
+
+/** Primera vez con una contraseña temporal: hay que elegir una propia antes de seguir. */
+function ClaveNueva({ listo, salir }: { listo: () => void; salir: () => void }) {
+  const s = sesion();
+  return (
+    <div className="login">
+      <div className="login-c">
+        <div className="marca">Tactical Command <span>Panel</span></div>
+        <h1>Hola{s?.nombre ? `, ${s.nombre}` : ''}</h1>
+        <p className="ayuda">Estás entrando con una contraseña temporal. Elegí una propia: solo vos la vas a saber.</p>
+        <FormClave listo={listo} />
+        <Boton tipo="txt" onClick={salir}>Salir</Boton>
+      </div>
     </div>
   );
 }

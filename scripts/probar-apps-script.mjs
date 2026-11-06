@@ -212,4 +212,32 @@ assert.equal(Number(mig.cfg.ws_minimo), 9, 'no pisa lo que ya estaba');
 assert.ok('destacados' in mig.cfg && 'aviso_activo' in mig.cfg, 'agrega las claves que faltaban');
 n += 3;
 
+// ---------- Usuarios y contraseñas ----------
+const tokPin = ok(post({ action: 'login', pin: '135790' }), 'login con PIN antes de usuarios').token;
+vm.runInContext("crearUsuario('Walter', 'Walter', 'temporal-1')", ctx);
+falla(post({ action: 'login', pin: '135790' }), /incorrectos/, 'con usuarios, el PIN ya no entra');
+falla(post({ action: 'getAll', token: tokPin }), /Sesión inválida/, 'con usuarios, la sesión de PIN deja de valer');
+falla(post({ action: 'login', usuario: 'walter', clave: 'mala-clave' }), /incorrectos/, 'contraseña mala');
+const lw = ok(post({ action: 'login', usuario: ' WALTER ', clave: 'temporal-1' }), 'login con usuario');
+assert.equal(lw.cambiar, true, 'contraseña temporal: pide cambiarla'); assert.equal(lw.nombre, 'Walter'); n += 2;
+ok(post({ action: 'getAll', token: lw.token }), 'getAll con usuario');
+falla(post({ action: 'changePassword', token: lw.token, actual: 'temporal-1', nueva: 'corta' }), /8 caracteres/, 'contraseña corta');
+falla(post({ action: 'changePassword', token: lw.token, actual: 'otra-cosa', nueva: 'nueva-clave-1' }), /actual no es correcta/, 'actual mala');
+const lw2 = ok(post({ action: 'changePassword', token: lw.token, actual: 'temporal-1', nueva: 'nueva-clave-1' }), 'cambiar contraseña');
+assert.equal(lw2.cambiar, false); n++;
+falla(post({ action: 'getAll', token: lw.token }), /Sesión inválida/, 'la contraseña nueva cierra las sesiones anteriores');
+ok(post({ action: 'getAll', token: lw2.token }), 'la sesión nueva sirve');
+falla(post({ action: 'login', usuario: 'walter', clave: 'temporal-1' }), /incorrectos/, 'la temporal ya no entra');
+ok(post({ action: 'login', usuario: 'walter', clave: 'nueva-clave-1' }), 'entra con la suya');
+vm.runInContext("crearUsuario('melina', 'Melina', 'otra-temporal')", ctx);
+falla(post({ action: 'login', usuario: 'melina', clave: 'nueva-clave-1' }), /incorrectos/, 'cada usuario tiene su contraseña');
+const lm = ok(post({ action: 'login', usuario: 'melina', clave: 'otra-temporal' }), 'login melina');
+falla(post({ action: 'changePin', token: lm.token, actual: '135790', nuevo: '111111' }), /usuarios y contraseñas/, 'sin cambio de PIN con usuarios');
+assert.ok(!estado.props.USUARIOS.includes('nueva-clave-1') && !estado.props.USUARIOS.includes('otra-temporal'), 'no guarda contraseñas en texto'); n++;
+for (let i = 0; i < 10; i++) post({ action: 'login', usuario: 'melina', clave: 'x' });
+falla(post({ action: 'login', usuario: 'melina', clave: 'otra-temporal' }), /Demasiados intentos/, 'bloqueo tras 10 intentos');
+ok(post({ action: 'login', usuario: 'walter', clave: 'nueva-clave-1' }), 'el bloqueo es por usuario');
+vm.runInContext("quitarUsuario('melina'); quitarUsuario('walter')", ctx);
+ok(post({ action: 'login', pin: '135790' }), 'sin usuarios vuelve el PIN');
+
 console.log(`Apps Script: ${n} comprobaciones OK.`);

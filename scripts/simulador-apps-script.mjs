@@ -118,6 +118,8 @@ export function crearSimulador({ props = {} } = {}) {
       base64Encode: (bytes) => Buffer.from(bytes.map((b) => b & 255)).toString('base64'),
       base64Decode: (s) => [...Buffer.from(s, 'base64')],
       getUuid: () => crypto.randomUUID(),
+      DigestAlgorithm: { SHA_256: 'sha256' }, Charset: { UTF_8: 'utf8' },
+      computeDigest: (alg, s) => [...crypto.createHash(alg).update(String(s), 'utf8').digest()].map((b) => (b > 127 ? b - 256 : b)),
       newBlob: (bytes, mime, nombre) => blob(bytes.map((b) => b & 255), mime, nombre),
       formatDate: (d) => d.toISOString().slice(0, 10),
     },
@@ -157,6 +159,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const puerto = Number(process.argv[2]) || 8790;
   const sim = crearSimulador({ props: { PIN: '123456', DEPLOY_HOOK_URL: 'https://api.netlify.com/build_hooks/simulado' } });
   sim.ctx.instalar();
+  // SIM_USUARIOS="walter:Walter:temporal-1,melina:Melina:otra-clave" arranca con usuarios (contraseña temporal).
+  for (const u of (process.env.SIM_USUARIOS || '').split(',').filter(Boolean)) { const [us, nom, cl] = u.split(':'); sim.ctx.crearUsuario(us, nom, cl); }
   http.createServer((q, r) => {
     const u = new URL(q.url, 'http://x');
     r.setHeader('Access-Control-Allow-Origin', '*');

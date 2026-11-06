@@ -1,9 +1,10 @@
-// Más: condiciones mayoristas, destacados de la home, aviso en la web, fotos de clientes, resumen y cambio de PIN.
-// Los ajustes de la web van al borrador (se ven al publicar); el PIN cambia al instante.
+// Más: condiciones mayoristas, destacados de la home, aviso en la web, fotos de clientes, resumen y cambio de contraseña
+// (o de PIN, si todavía no hay usuarios). Los ajustes de la web van al borrador; la contraseña cambia al instante.
 import { useMemo, useState } from 'react';
 import { cap, comprimirFoto, faltaAvisar, money } from './datos';
 import { bool, json, urlFoto } from './modelo';
-import { guardarSesion, llamar } from './api';
+import { guardarSesion, llamar, sesion } from './api';
+import { FormClave } from './Clave';
 import { Boton, Campo, Encabezado, Icono, usePanel } from './ui';
 
 const OPCIONES = [
@@ -12,8 +13,8 @@ const OPCIONES = [
   { k: 'destacados', t: 'Destacados de la home', d: 'Qué productos se ven primero' },
   { k: 'aviso', t: 'Aviso en la web', d: 'Una franja arriba de todo' },
   { k: 'resenas', t: 'Fotos de clientes', d: '«Garantía de satisfacción»' },
-  { k: 'pin', t: 'Cambiar el PIN', d: 'La clave para entrar al panel' },
 ];
+const conUsuario = () => !!sesion()?.usuario;
 
 export default function Mas({ salir }: { salir: () => void }) {
   const [sub, setSub] = useState<string | null>(null);
@@ -23,12 +24,13 @@ export default function Mas({ salir }: { salir: () => void }) {
   if (sub === 'destacados') return <Destacados volver={volver} />;
   if (sub === 'aviso') return <Aviso volver={volver} />;
   if (sub === 'resenas') return <Resenas volver={volver} />;
-  if (sub === 'pin') return <Pin volver={volver} />;
+  if (sub === 'pin') return conUsuario() ? <MiClave volver={volver} /> : <Pin volver={volver} />;
+  const opciones = [...OPCIONES, conUsuario() ? { k: 'pin', t: 'Cambiar mi contraseña', d: `Entraste como ${sesion()!.usuario}` } : { k: 'pin', t: 'Cambiar el PIN', d: 'La clave para entrar al panel' }];
   return (
     <section className="sec">
       <Encabezado titulo="Más" />
       <ul className="lista">
-        {OPCIONES.map((o) => (
+        {opciones.map((o) => (
           <li key={o.k}><button type="button" className="fila fila-menu" onClick={() => setSub(o.k)}><span className="fila-txt"><span className="fila-n">{o.t}</span><span className="fila-d">{o.d}</span></span><Icono n="flecha" /></button></li>
         ))}
       </ul>
@@ -255,6 +257,16 @@ function Resenas({ volver }: { volver: () => void }) {
       {JSON.stringify(lista) !== JSON.stringify(inicial) && (
         <div className="acciones-fijas"><Boton tipo="pri" disabled={ocupado || subiendo} onClick={() => guardar({ resenas: JSON.stringify(lista) })}>{ocupado ? 'Guardando…' : 'Guardar fotos'}</Boton></div>
       )}
+    </section>
+  );
+}
+
+function MiClave({ volver }: { volver: () => void }) {
+  const { aviso } = usePanel();
+  return (
+    <section className="sec">
+      <Encabezado titulo="Cambiar mi contraseña" volver={volver} texto="Al cambiarla se cierra tu sesión en los otros dispositivos." />
+      <div className="tarjeta"><FormClave pedirActual listo={() => { aviso('Contraseña cambiada. Usala la próxima vez que entres.'); volver(); }} /></div>
     </section>
   );
 }

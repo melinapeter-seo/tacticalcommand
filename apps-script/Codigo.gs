@@ -4,10 +4,11 @@
  * Públicas (GET):  catalog · track · photo
  * Privadas (POST con token del login): login · getAll · saveDraft · saveProduct · deleteProduct · restoreVersion ·
  *   publish · discardDraft · createOrder · advanceOrder · undoStep · setGuia · markNotified · deleteOrder · upsertClient · createClient ·
- *   uploadPhoto · changePin
+ *   uploadPhoto · changePin · changePassword
  * Respuesta: { ok: true, data } o { ok: false, error }.
  *
- * Script Properties: PIN (lo carga el menú «Configurar PIN»), TOKEN_SECRET (lo genera `instalar`),
+ * Script Properties: USUARIOS (los crea el menú «Usuarios del panel»; mientras no haya, se entra con el PIN),
+ * PIN (lo carga el menú «Configurar PIN»), TOKEN_SECRET (lo genera `instalar`),
  * DEPLOY_HOOK_URL (Build Hook de Netlify) y, opcional, SITE_URL para avisar a IndexNow.
  * Las columnas de productos/variantes y la semilla están en Semilla.gs (generado desde el repo).
  */
@@ -108,8 +109,8 @@ function doPost(e) {
   return responder(() => {
     // El panel manda text/plain para evitar el preflight de CORS, que Apps Script no atiende.
     const b = JSON.parse((e.postData && e.postData.contents) || '{}');
-    if (b.action === 'login') return login(b.pin);
-    verificarToken(b.token);
+    if (b.action === 'login') return login(b);
+    const quien = verificarToken(b.token);
     const acciones = {
       getAll: () => todo(),
       saveDraft: () => conLock(() => guardarBorrador(b)),
@@ -117,6 +118,7 @@ function doPost(e) {
       deleteProduct: () => conLock(() => borrarProducto(b.slug)),
       restoreVersion: () => conLock(() => restaurarVersion(b.slug)),
       changePin: () => cambiarPin(b.actual, b.nuevo),
+      changePassword: () => cambiarClave(quien, b.actual, b.nueva),
       publish: () => conLock(() => publicar()),
       discardDraft: () => conLock(() => descartarBorrador()),
       createOrder: () => conLock(() => crearPedido(b)),
@@ -285,18 +287,47 @@ function limitar(clave, maxPorMinuto) {
 }
 
 // ---------- Sesión ----------
-function login(pin) {
-  const real = prop('PIN');
-  if (!real) throw new Error('El PIN todavía no está configurado.');
+// Usuarios con contraseña (propiedad USUARIOS: { usuario: { nombre, sal, hash, v, cambiar } }). La contraseña se guarda
+// con hash SHA-256 iterado y sal propia; `v` cambia con cada contraseña nueva y cierra las sesiones anteriores.
+// Mientras no haya usuarios creados, se entra con el PIN (como antes).
+const ITER = 300;
+function usuarios() { return json(prop('USUARIOS'), {}); }
+function guardarUsuarios(u) { PropertiesService.getScriptProperties().setProperty('USUARIOS', JSON.stringify(u)); }
+function hashClave(clave, sal) {
+  let h = sal + String(clave);
+  for (let i = 0; i < ITER; i++) h = Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, h + sal, Utilities.Charset.UTF_8));
+  return h;
+}
+const normUsuario = (u) => String(u || '').trim().toLowerCase();
+function validarClave(clave) {
+  if (String(clave || '').length < 8) throw new Error('La contraseña tiene que tener al menos 8 caracteres.');
+}
+
+function login(b) {
+  const us = usuarios();
+  const conUsuarios = Object.keys(us).length > 0;
   const cache = CacheService.getScriptCache();
-  const fallos = Number(cache.get('login-fallos') || 0);
+  const u = normUsuario(b.usuario);
+  const clave = conUsuarios ? 'login-fallos-' + u : 'login-fallos';
+  const fallos = Number(cache.get(clave) || 0);
   if (fallos >= 10) throw new Error('Demasiados intentos. Esperá 10 minutos.');
-  if (String(pin || '') !== real) {
-    cache.put('login-fallos', String(fallos + 1), 600);
-    throw new Error('PIN incorrecto.');
+  const fallo = (msg) => { cache.put(clave, String(fallos + 1), 600); throw new Error(msg); };
+  if (!conUsuarios) {
+    const real = prop('PIN');
+    if (!real) throw new Error('El PIN todavía no está configurado.');
+    if (String(b.pin || '') !== real) fallo('PIN incorrecto.');
+    return sesionNueva('', 0, { usuario: '', nombre: '' });
   }
+  const x = us[u];
+  if (!x || hashClave(b.clave, x.sal) !== x.hash) fallo('Usuario o contraseña incorrectos.');
+  cache.remove(clave);
+  return sesionNueva(u, x.v, { usuario: u, nombre: x.nombre || u, cambiar: !!x.cambiar });
+}
+
+function sesionNueva(usuario, v, extra) {
   const exp = Date.now() + TOKEN_HORAS * 3600 * 1000;
-  return { token: exp + '.' + firma(String(exp)), exp };
+  const base = [exp, usuario, v].join('.');
+  return Object.assign({ token: base + '.' + firma(base), exp }, extra);
 }
 
 function firma(s) {
@@ -305,10 +336,54 @@ function firma(s) {
   return Utilities.base64EncodeWebSafe(Utilities.computeHmacSha256Signature(s, secreto)).replace(/=+$/, '');
 }
 
+/** Devuelve el usuario de la sesión ('' con PIN). */
 function verificarToken(token) {
-  const [exp, f] = String(token || '').split('.');
-  if (!exp || !f || f !== firma(exp)) throw new Error('Sesión inválida. Volvé a ingresar el PIN.');
-  if (Number(exp) < Date.now()) throw new Error('La sesión venció. Volvé a ingresar el PIN.');
+  const partes = String(token || '').split('.');
+  const f = partes.pop(), base = partes.join('.');
+  const [exp, usuario = '', v = '0'] = partes;
+  if (!exp || !f || f !== firma(base)) throw new Error('Sesión inválida. Volvé a ingresar.');
+  if (Number(exp) < Date.now()) throw new Error('La sesión venció. Volvé a ingresar.');
+  const us = usuarios();
+  if (Object.keys(us).length) {
+    // Con usuarios: las sesiones de PIN dejan de valer, y una contraseña nueva cierra las sesiones anteriores.
+    const x = us[usuario];
+    if (!usuario || !x || String(x.v) !== String(v)) throw new Error('Sesión inválida. Volvé a ingresar.');
+  }
+  return usuario;
+}
+
+/** Cada usuario cambia su propia contraseña. Cierra sus otras sesiones y devuelve una nueva. */
+function cambiarClave(usuario, actual, nueva) {
+  const us = usuarios();
+  const x = us[usuario];
+  if (!usuario || !x) throw new Error('Para cambiar la contraseña tenés que entrar con tu usuario.');
+  if (hashClave(actual, x.sal) !== x.hash) throw new Error('La contraseña actual no es correcta.');
+  validarClave(nueva);
+  if (String(nueva) === String(actual)) throw new Error('La contraseña nueva tiene que ser distinta de la actual.');
+  x.sal = Utilities.getUuid(); x.hash = hashClave(nueva, x.sal); x.v = (Number(x.v) || 0) + 1; x.cambiar = false;
+  guardarUsuarios(us);
+  return sesionNueva(usuario, x.v, { usuario, nombre: x.nombre || usuario, cambiar: false });
+}
+
+/** Crea un usuario o le pone una contraseña temporal (la tiene que cambiar al entrar). Lo usa el menú de la planilla. */
+function crearUsuario(usuario, nombre, clave) {
+  const u = normUsuario(usuario);
+  if (!/^[a-z0-9._-]{3,30}$/.test(u)) throw new Error('El usuario tiene que tener entre 3 y 30 letras o números, sin espacios.');
+  validarClave(clave);
+  const us = usuarios();
+  const v = us[u] ? (Number(us[u].v) || 0) + 1 : 1;
+  const sal = Utilities.getUuid();
+  us[u] = { nombre: String(nombre || (us[u] && us[u].nombre) || u).trim(), sal, hash: hashClave(clave, sal), v, cambiar: true };
+  guardarUsuarios(us);
+  return u;
+}
+
+function quitarUsuario(usuario) {
+  const us = usuarios();
+  const u = normUsuario(usuario);
+  if (!us[u]) throw new Error('No existe el usuario «' + u + '».');
+  delete us[u];
+  guardarUsuarios(us);
 }
 
 // ---------- Catálogo: borrador y publicación ----------
@@ -386,12 +461,13 @@ function restaurarVersion(slug) {
 
 /** Cambia el PIN desde el panel. Cierra las demás sesiones y devuelve una nueva para quien lo cambió. */
 function cambiarPin(actual, nuevo) {
+  if (Object.keys(usuarios()).length) throw new Error('El panel ya usa usuarios y contraseñas: cambiá tu contraseña.');
   if (String(actual || '') !== prop('PIN')) throw new Error('El PIN actual no es correcto.');
   if (!/^\d{6,12}$/.test(String(nuevo || ''))) throw new Error('El PIN nuevo tiene que tener entre 6 y 12 números.');
   const props = PropertiesService.getScriptProperties();
   props.setProperty('PIN', String(nuevo));
   props.setProperty('TOKEN_SECRET', Utilities.getUuid() + Utilities.getUuid());
-  return login(nuevo);
+  return login({ pin: nuevo });
 }
 
 function validarCatalogo(productos, variantes) {
@@ -696,7 +772,9 @@ function onOpen() {
     .addItem('Publicar en la web', 'menuPublicar')
     .addItem('Descartar borrador', 'menuDescartar')
     .addSeparator()
-    .addItem('Configurar PIN del panel', 'menuPin')
+    .addItem('Usuarios del panel: crear o restablecer contraseña', 'menuUsuario')
+    .addItem('Usuarios del panel: quitar', 'menuQuitarUsuario')
+    .addItem('Configurar PIN del panel (si no hay usuarios)', 'menuPin')
     .addItem('Configurar Build Hook de Netlify', 'menuHook')
     .addItem('Instalar / reparar', 'instalar')
     .addToUi();
@@ -728,6 +806,30 @@ function menuPin() {
   if (!/^\d{6,12}$/.test(pin)) { ui.alert('El PIN tiene que tener entre 6 y 12 números.'); return; }
   PropertiesService.getScriptProperties().setProperty('PIN', pin);
   ui.alert('PIN guardado.');
+}
+
+function menuUsuario() {
+  const ui = SpreadsheetApp.getUi();
+  const lista = Object.keys(usuarios());
+  const r1 = ui.prompt('Usuario del panel', (lista.length ? 'Usuarios actuales: ' + lista.join(', ') + '.\n' : '') + 'Escribí el usuario (por ejemplo: walter). Si ya existe, se le pone una contraseña temporal nueva.', ui.ButtonSet.OK_CANCEL);
+  if (r1.getSelectedButton() !== ui.Button.OK) return;
+  const r2 = ui.prompt('Nombre', 'Cómo lo saluda el panel (por ejemplo: Walter).', ui.ButtonSet.OK_CANCEL);
+  if (r2.getSelectedButton() !== ui.Button.OK) return;
+  const r3 = ui.prompt('Contraseña temporal', 'Mínimo 8 caracteres. La primera vez que entre, el panel le pide que la cambie por una propia.', ui.ButtonSet.OK_CANCEL);
+  if (r3.getSelectedButton() !== ui.Button.OK) return;
+  try {
+    const u = crearUsuario(r1.getResponseText(), r2.getResponseText(), r3.getResponseText());
+    ui.alert('Listo: el usuario «' + u + '» entra con esa contraseña temporal y la cambia al ingresar.' + (lista.length ? '' : '\n\nDesde ahora el PIN deja de funcionar: creá también tu propio usuario.'));
+  } catch (e) { ui.alert(e.message); }
+}
+
+function menuQuitarUsuario() {
+  const ui = SpreadsheetApp.getUi();
+  const lista = Object.keys(usuarios());
+  if (!lista.length) { ui.alert('Todavía no hay usuarios: el panel usa el PIN.'); return; }
+  const r = ui.prompt('Quitar usuario', 'Usuarios: ' + lista.join(', ') + '.\nEscribí el que querés quitar.' + (lista.length === 1 ? '\n\nEs el último: el panel vuelve a usar el PIN.' : ''), ui.ButtonSet.OK_CANCEL);
+  if (r.getSelectedButton() !== ui.Button.OK) return;
+  try { quitarUsuario(r.getResponseText()); ui.alert('Usuario quitado.'); } catch (e) { ui.alert(e.message); }
 }
 
 function menuHook() {

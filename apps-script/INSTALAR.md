@@ -92,3 +92,14 @@ Agrega las columnas `precio_mayorista` (en `productos` y `productos_draft`) y `p
 2. Con **instalar** elegido en el desplegable, tocá **Ejecutar**. Suma los encabezados de las columnas nuevas.
 3. **Implementar › Gestionar implementaciones › ✏️ › Versión: Nueva versión › Implementar**.
 4. Entrá al panel › **Precios**. Si arriba dice «Para cargar precios mayoristas falta actualizar el código de la planilla», el paso 3 no quedó hecho.
+
+## Usuarios y contraseñas del panel
+
+Reemplaza el PIN compartido por un usuario y una contraseña para cada persona (por ejemplo, Walter y Melina). Los dos tienen el mismo acceso.
+
+1. Actualizá `Código.gs` (como arriba), guardá y hacé **Implementar › Gestionar implementaciones › ✏️ › Nueva versión**.
+2. Recargá la planilla. En el menú **Tactical Command › Usuarios del panel: crear o restablecer contraseña**, creá tu usuario (por ejemplo `melina`) con una contraseña temporal, y después el de Walter (`walter`) con otra.
+3. Pasale a Walter su usuario y su contraseña temporal. La primera vez que entra, el panel le pide que la cambie por una propia: solo él la sabe.
+4. Desde que existe el primer usuario, el PIN deja de funcionar. Mientras no haya usuarios, se entra dejando «Usuario» vacío y poniendo el PIN en «Contraseña».
+
+Si alguien se olvida la contraseña: el mismo menú le pone una temporal nueva (y cierra sus sesiones abiertas). Para sacar a alguien: **Usuarios del panel: quitar**. Las contraseñas no se guardan en texto: solo una huella (hash) que no se puede revertir. Cada uno cambia la suya desde **Más › Cambiar mi contraseña**.

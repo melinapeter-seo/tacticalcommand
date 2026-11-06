@@ -35,7 +35,7 @@ const ver = (sel, block = 'center') => pg.evaluate(([s, bl]) => document.querySe
 const nav = (t) => pg.click(`.nav-i:has-text("${t}")`);
 
 await pg.goto('http://tacticalcommand.com.ar/panel/', { waitUntil: 'networkidle' });
-await pg.fill('.pin', '123456'); await foto('login');
+await pg.fill('input[autocomplete="current-password"]', '123456'); await foto('login');
 await pg.click('button[type=submit]'); await pg.waitForSelector('.fila');
 await foto('pedidos');
 

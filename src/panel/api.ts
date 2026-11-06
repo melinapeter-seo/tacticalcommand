@@ -2,7 +2,8 @@
 import { API } from '../lib/api';
 
 const CLAVE = 'tc-panel-sesion';
-type Sesion = { token: string; exp: number };
+/** usuario vacío = se entró con el PIN (todavía no hay usuarios creados). cambiar = contraseña temporal. */
+export type Sesion = { token: string; exp: number; usuario?: string; nombre?: string; cambiar?: boolean };
 
 export function sesion(): Sesion | null {
   try {
@@ -34,8 +35,10 @@ export async function llamar<T = any>(action: string, cuerpo: Record<string, unk
   return d.data as T;
 }
 
-export async function entrar(pin: string) {
-  const s = await llamar<Sesion>('login', { pin });
+// Se manda también `pin` con la contraseña: así funciona con un Apps Script sin usuarios (o anterior a ellos),
+// donde se entra dejando el usuario vacío y poniendo el PIN.
+export async function entrar(usuario: string, clave: string) {
+  const s = await llamar<Sesion>('login', { usuario, clave, pin: clave });
   guardarSesion(s);
   return s;
 }
