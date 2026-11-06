@@ -86,7 +86,7 @@ Hacelo una vez, con la cuenta contacto@melinapeter.com.ar. Los pedidos, clientes
 
 ## Actualizar para precios mayoristas
 
-Agrega las columnas `precio_mayorista` (en `productos` y `productos_draft`) y `precio_mayorista` y `precios_talle_mayorista` (en `variantes` y `variantes_draft`), al final de cada hoja. No se toca nada de lo cargado. Los precios mayoristas son privados: el catálogo público de la API no los devuelve.
+Agrega las columnas `precio_mayorista` (en `productos` y `productos_draft`) y `precio_mayorista` y `precios_talle_mayorista` (en `variantes` y `variantes_draft`), al final de cada hoja. No se toca nada de lo cargado. Los precios mayoristas se muestran en la web, en la página de Mayoristas: mientras no se publique ninguno, esa página sigue mostrando el precio publicado (minorista).
 
 1. **Extensiones › Apps Script**. Reemplazá `Código.gs` y `Semilla.gs` por las versiones nuevas (mismos links de arriba, **Copy raw file**). Guardá.
 2. Con **instalar** elegido en el desplegable, tocá **Ejecutar**. Suma los encabezados de las columnas nuevas.

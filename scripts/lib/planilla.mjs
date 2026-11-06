@@ -108,6 +108,7 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
         ],
         agotado: bool(v.agotado),
         precio: num(v.precio), precios_talle: json(v.precios_talle, {}),
+        precio_mayorista: num(v.precio_mayorista), precios_talle_mayorista: json(v.precios_talle_mayorista, {}),
       };
     });
     if (!colores.length) continue;
@@ -132,7 +133,7 @@ export function combinar(api, base, categoriasBase, resolverFoto) {
       nombre, categoria, subcategoria: String(r.subcategoria || '').trim().toUpperCase(), sku: String(r.sku || '').trim(),
       descripcion: String(r.descripcion || b?.descripcion || '').trim(), orden: num(r.orden) ?? 9999, actualizado: r.actualizado ? String(r.actualizado).slice(0, 10) : null,
       // Sigue siendo "de referencia" hasta que Walter le cambie el precio.
-      precio_minorista: precio, precio_transferencia: precio, precio_provisorio: !!b?.precio_provisorio && precio === b.precio_minorista,
+      precio_minorista: precio, precio_mayorista: num(r.precio_mayorista) ?? 0, precio_transferencia: precio, precio_provisorio: !!b?.precio_provisorio && precio === b.precio_minorista,
       migas: sinCambios ? b.migas : migas,
       colores,
     });

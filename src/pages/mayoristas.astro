@@ -2,30 +2,38 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import config from '../data/generado/config.json';
-import { ENVIO_RAFAELA, productos, precioDe, precioTexto, rangoPrecio, WA } from '../lib/data';
+import { ENVIO_RAFAELA, HAY_MAYORISTAS as MAY, productos, precioDe, precioMayDe, precioTexto, rangoPrecio, WA, type Color, type Producto } from '../lib/data';
 import { fotosVista } from '../lib/fotos';
 import { graph, breadcrumbs, faqPage, abs, ORG_ID } from '../lib/seo';
 
 const CATS = ['INDUMENTARIA', 'EQUIPOS TÁCTICOS', 'CALZADO', 'ACCESORIOS'];
 const MIN = config.ws_minimo;
+// Precio por unidad: el mayorista (panel › Precios) si Walter ya publicó alguno; si no, el publicado (minorista), como antes.
+// Con mayoristas, un talle sin precio mayorista queda «A CONFIRMAR» (no suma al subtotal).
+const precioU = (p: Producto, c: Color, t?: string) => (MAY ? precioMayDe(p, c, t) : precioDe(p, c, t));
+const rango = (p: Producto) => {
+  if (!MAY) return rangoPrecio(p);
+  const ps = p.colores.flatMap((c) => (c.talles.length ? c.talles.map((t) => precioMayDe(p, c, t.talle)) : [precioMayDe(p, c)])).filter((v) => v > 0);
+  return ps.length ? { min: Math.min(...ps), varia: new Set(ps).size > 1 } : { min: 0, varia: false };
+};
 const rows = await Promise.all(
   productos
     .slice()
     .sort((a, b) => CATS.indexOf(a.categoria) - CATS.indexOf(b.categoria))
     .map(async (p) => ({
-      slug: p.slug, n: p.titulo.join(' ').replace(/\s+/g, ' ').trim(), sku: p.sku, cat: p.categoria, price: rangoPrecio(p), to: `/productos/${p.slug}/`,
+      slug: p.slug, n: p.titulo.join(' ').replace(/\s+/g, ' ').trim(), sku: p.sku, cat: p.categoria, price: rango(p), to: `/productos/${p.slug}/`,
       colors: await Promise.all(p.colores.map(async (c) => ({
         n: c.nombre, sw: c.muestra, sku: c.sku,
         g: (await fotosVista(c.fotos)).map((f) => ({ t: f.thumb, s: f.src, ss: f.srcset, f: f.full })),
         // Precio por talle (planilla): talle → color → producto.
-        sizes: !p.opciones.con_talles ? [{ t: 'UNIDAD', sp: false, p: precioDe(p, c), ...(c.agotado ? { ag: true } : {}) }] : c.talles.length ? c.talles.map((t) => ({ t: t.talle, sp: t.estado === 'consultar', p: precioDe(p, c, t.talle), ...(t.ninos ? { k: true } : {}), ...(c.agotado || t.estado === 'agotado' ? { ag: true } : {}) })) : [{ t: 'TALLE', sp: true, p: precioDe(p, c) }],
+        sizes: !p.opciones.con_talles ? [{ t: 'UNIDAD', sp: !precioU(p, c), p: precioU(p, c), ...(c.agotado ? { ag: true } : {}) }] : c.talles.length ? c.talles.map((t) => ({ t: t.talle, sp: t.estado === 'consultar' || !precioU(p, c, t.talle), p: precioU(p, c, t.talle), ...(t.ninos ? { k: true } : {}), ...(c.agotado || t.estado === 'agotado' ? { ag: true } : {}) })) : [{ t: 'TALLE', sp: true, p: precioU(p, c) }],
       }))),
     })),
 );
 const cats = ['TODO', ...CATS].map((t) => ({ t, n: t === 'TODO' ? rows.length : rows.filter((r) => r.cat === t).length })).filter((c) => c.n > 0);
 const qa = [
   { q: '¿Tactical Command vende por mayor?', a: 'Sí. Ofrece venta mayorista de indumentaria y equipos tácticos sujeta a disponibilidad y condiciones comerciales vigentes.' },
-  { q: '¿Hay un mínimo de compra mayorista?', a: `Sí. La cotización mayorista se habilita desde ${MIN} unidades en total, combinando los productos, colores y talles que quieras. El precio mayorista final se confirma por WhatsApp.` },
+  { q: '¿Hay un mínimo de compra mayorista?', a: `Sí. La cotización mayorista se habilita desde ${MIN} unidades en total, combinando los productos, colores y talles que quieras. ${MAY ? 'Los precios mayoristas por unidad están publicados en cada artículo; el stock y el envío se confirman por WhatsApp.' : 'El precio mayorista final se confirma por WhatsApp.'}` },
   { q: '¿Quién puede solicitar una cotización mayorista?', a: 'Comercios, revendedores y compradores profesionales pueden preparar una solicitud mayorista.' },
   { q: '¿La cotización confirma el stock?', a: 'No. La disponibilidad publicada es orientativa y el stock final debe validarse.' },
   { q: '¿Puedo pedir más unidades que las disponibles?', a: 'Sí. Se puede solicitar una cantidad superior a la publicada, pero las unidades adicionales quedan sujetas a confirmación.' },
@@ -41,7 +49,7 @@ const jsonld = graph(
   faqPage(qa),
   breadcrumbs([['Inicio', '/'], ['Mayoristas', path]]),
 );
-const data = { min: MIN, rows };
+const data = { min: MIN, rows, may: MAY };
 ---
 <Base title="Venta mayorista de equipamiento táctico | Tactical Command" description={`Cotización mayorista de indumentaria y equipos tácticos para comercios y revendedores. Desde ${MIN} unidades combinables, con envío desde Rafaela a todo el país.`} path={path} jsonld={jsonld} wsFooter>
   <section class="top" aria-labelledby="ws-h1">
@@ -51,7 +59,7 @@ const data = { min: MIN, rows };
       <p class="lead-p">Tactical Command ofrece venta mayorista de indumentaria y equipos tácticos para comercios, revendedores y compradores profesionales en Argentina. Desde Rafaela, Santa Fe, permite preparar pedidos por producto, talle, color y cantidad para solicitar una cotización sujeta a disponibilidad y validación final de stock.</p>
       <div class="min">
         <div class="min-l"><span class="k">MÍNIMO DE COMPRA MAYORISTA</span><span class="v">{MIN} UNIDADES</span></div>
-        <p>Podés combinar productos, colores y talles.<br />El precio mayorista final se confirma por WhatsApp.</p>
+        <p>Podés combinar productos, colores y talles.<br />{MAY ? 'Ves el precio mayorista de cada artículo; stock y envío se confirman por WhatsApp.' : 'El precio mayorista final se confirma por WhatsApp.'}</p>
       </div>
       <div class="top-cta">
         <a href="#bulk" class="btn-gold anim c1">ARMAR PEDIDO MAYORISTA ↓</a>
@@ -99,7 +107,7 @@ const data = { min: MIN, rows };
                 </div>
                 <div class="aside">
                   <div class="nums">
-                    <div class="num pr"><span class="k">PRECIO PUBLICADO / UN.</span><span class="v"><data value={r.price.min}>{precioTexto(r.price)}</data></span></div>
+                    <div class="num pr"><span class="k">{MAY ? 'PRECIO MAYORISTA / UN.' : 'PRECIO PUBLICADO / UN.'}</span><span class="v">{r.price.min ? <data value={r.price.min}>{precioTexto(r.price)}</data> : 'A CONFIRMAR'}</span></div>
                     <div class="num un"><span class="k">EN PEDIDO</span><span class="v" data-units>—</span></div>
                   </div>
                   <button type="button" class="tg" data-toggle aria-expanded="false">CARGAR CANTIDADES +</button>
@@ -141,11 +149,11 @@ const data = { min: MIN, rows };
       <h2 id="q-h">RESUMEN DE COTIZACIÓN</h2>
       <div class="q-lines" id="q-lines"></div>
       <div class="q-sum">
-        <div><span class="k">SUBTOTAL A PRECIO PUBLICADO</span><span id="q-total">$ 0</span></div>
+        <div><span class="k">{MAY ? 'SUBTOTAL MAYORISTA' : 'SUBTOTAL A PRECIO PUBLICADO'}</span><span id="q-total">$ 0</span></div>
         <div><span class="k">ENVÍO</span><span class="ship"><span class="g">A CARGO DEL COMPRADOR</span><span class="s">RAFAELA {ENVIO_RAFAELA} · RESTO DEL PAÍS COSTO A COORDINAR POR WHATSAPP</span></span></div>
-        <div class="fin"><span>PRECIO MAYORISTA</span><span class="g">SE CONFIRMA POR WHATSAPP</span></div>
+        <div class="fin"><span>{MAY ? 'STOCK Y ENVÍO' : 'PRECIO MAYORISTA'}</span><span class="g">{MAY ? 'SE CONFIRMAN POR WHATSAPP' : 'SE CONFIRMA POR WHATSAPP'}</span></div>
       </div>
-      <p class="q-p">Los montos corresponden a los precios publicados de cada artículo. El precio mayorista del total de tu compra, el stock y el envío se confirman en el siguiente paso, por WhatsApp.</p>
+      <p class="q-p">{MAY ? 'Los montos corresponden a los precios mayoristas de cada artículo. Los marcados A CONFIRMAR, el stock y el envío se confirman en el siguiente paso, por WhatsApp.' : 'Los montos corresponden a los precios publicados de cada artículo. El precio mayorista del total de tu compra, el stock y el envío se confirman en el siguiente paso, por WhatsApp.'}</p>
       <div class="q-min" id="q-minbox">
         <div class="q-min-t"><span class="k">MÍNIMO DE COMPRA MAYORISTA · {MIN} UNIDADES</span><span id="q-minst"></span></div>
         <div class="q-min-bar"><div id="q-minpct"></div></div>

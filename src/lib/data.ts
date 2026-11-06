@@ -6,7 +6,7 @@ import configJson from '../data/generado/config.json';
 import sitioJson from '../data/sitio.json';
 
 export type Talle = { talle: string; estado: string; ninos?: boolean };
-export type Color = { nombre: string; sku: string; muestra: string; fotos: string[]; talles: Talle[]; precio?: number | null; precios_talle?: Record<string, number>; agotado?: boolean };
+export type Color = { nombre: string; sku: string; muestra: string; fotos: string[]; talles: Talle[]; precio?: number | null; precios_talle?: Record<string, number>; agotado?: boolean; precio_mayorista?: number | null; precios_talle_mayorista?: Record<string, number> };
 export type Tarjeta = { clave: string; nombre: string; color: string | null; imagen: string | null; rota?: string[] };
 export type Producto = (typeof catalogo.productos)[number] & { colores: Color[]; tarjetas: Tarjeta[] };
 export type Categoria = (typeof categoriasJson)[number];
@@ -31,6 +31,13 @@ export function precioDe(p: Producto, c: Color, talle?: string | null): number {
   const t = talle ? c.precios_talle?.[talle] : undefined;
   return t ?? c.precio ?? p.precio_minorista;
 }
+/** Precio mayorista (panel › Precios): talle → color → producto. 0 = sin cargar («a confirmar»). */
+export function precioMayDe(p: Producto, c: Color, talle?: string | null): number {
+  const t = talle ? c.precios_talle_mayorista?.[talle] : undefined;
+  return t || c.precio_mayorista || (p as any).precio_mayorista || 0;
+}
+/** Hay precios mayoristas publicados: la página de mayoristas los usa. Si no hay ninguno, muestra el precio publicado. */
+export const HAY_MAYORISTAS = productos.some((p) => p.colores.some((c) => (c.talles.length ? c.talles.some((t) => precioMayDe(p, c, t.talle) > 0) : precioMayDe(p, c) > 0)));
 /** Precio mínimo de un color (o de todo el producto) y si varía según la elección. */
 export function rangoPrecio(p: Producto, c?: Color) {
   const ps = (c ? [c] : p.colores).flatMap((x) => (x.talles.length ? x.talles.map((t) => precioDe(p, x, t.talle)) : [precioDe(p, x)]));

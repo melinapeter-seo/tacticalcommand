@@ -1,5 +1,5 @@
 // Precios: minorista y mayorista de cada producto, por color y por talle, y ajuste masivo con redondeo y vista previa.
-// El mayorista es privado: lo ve solo el panel (el catálogo público de la API no lo devuelve).
+// El mayorista se muestra en la web, en la página de Mayoristas.
 // Se guardan en el borrador y se ven en la web al publicar.
 import { useMemo, useState } from 'react';
 import type { Producto } from './datos';

@@ -49,9 +49,9 @@ assert.equal(estado.fetches.at(-1).url, 'https://api.netlify.com/build_hooks/x')
 const cat2 = ok(get({ action: 'catalog' }), 'catalog tras publicar');
 const she = cat2.productos.find((p) => p.slug === 'shemagh');
 assert.equal(she.precio, 42000);
-// Precios mayoristas: los guarda y los ve el panel, pero el catálogo público no los devuelve.
-assert.ok(!('precio_mayorista' in she), 'catálogo público sin precio mayorista'); n++;
-assert.ok(cat2.variantes.every((v) => !('precio_mayorista' in v) && !('precios_talle_mayorista' in v)), 'variantes públicas sin mayoristas'); n++;
+// Precios mayoristas: los guarda el panel y llegan a la web (página de mayoristas).
+assert.equal(Number(she.precio_mayorista), 30000); n++;
+assert.equal(cat2.variantes.find((v) => v.slug === 'campera-gtex-outdoor' && v.nombre === 'AZUL NOCHE').precios_talle_mayorista, '{"3XL":52000}'); n++;
 const todoM = ok(P('getAll'), 'getAll con mayoristas');
 assert.equal(Number(todoM.productos.find((p) => p.slug === 'shemagh').precio_mayorista), 30000);
 assert.equal(todoM.variantes.find((v) => v.slug === 'campera-gtex-outdoor' && v.nombre === 'AZUL NOCHE').precios_talle_mayorista, '{"3XL":52000}');

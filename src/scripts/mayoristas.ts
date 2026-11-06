@@ -6,7 +6,7 @@ type Img = { t: string; s: string; ss: string; f: string };
 type Size = { t: string; sp: boolean; p: number; k?: boolean; ag?: boolean }; // k: número de niños (calzado); ag: sin stock
 type Color = { n: string; sw: string; sku: string; g: Img[]; sizes: Size[] };
 type Row = { slug: string; n: string; sku: string; cat: string; price: { min: number; varia: boolean }; to: string; colors: Color[] };
-const D: { min: number; rows: Row[] } = JSON.parse(document.getElementById('ws-data')!.textContent!);
+const D: { min: number; rows: Row[]; may: boolean } = JSON.parse(document.getElementById('ws-data')!.textContent!);
 const $ = <T extends HTMLElement = HTMLElement>(s: string, r: ParentNode = document) => r.querySelector<T>(s);
 const $$ = <T extends HTMLElement = HTMLElement>(s: string, r: ParentNode = document) => Array.from(r.querySelectorAll<T>(s));
 const w = window as any;
@@ -22,6 +22,9 @@ const q = (k: string) => qty[k] || 0;
 const rowOf = (slug: string) => D.rows.find((r) => r.slug === slug)!;
 const colOf = (r: Row) => r.colors.find((c) => c.n === color[r.slug]) || r.colors[0];
 const subOf = (r: Row) => r.colors.reduce((a, x) => a + x.sizes.reduce((b, z) => b + q(`${r.slug}|${x.n}|${z.t}`) * z.p, 0), 0);
+/** Unidades elegidas sin precio (mayorista sin cargar): no suman al subtotal y se marcan «A CONFIRMAR». */
+const sinPrecio = (r: Row) => r.colors.some((x) => x.sizes.some((z) => !z.p && q(`${r.slug}|${x.n}|${z.t}`) > 0));
+const textoSub = (n: number, falta: boolean) => (falta ? (n ? `${money(n)} + A CONFIRMAR` : 'A CONFIRMAR') : money(n));
 const unitsOf = (r: Row, c?: Color) => (c ? [c] : r.colors).reduce((a, x) => a + x.sizes.reduce((b, z) => b + q(`${r.slug}|${x.n}|${z.t}`), 0), 0);
 // Los estilos con scope de Astro necesitan el atributo del componente en el HTML generado acá.
 const cid = Array.from($('#ws-rows')!.attributes).find((a) => a.name.startsWith('data-astro-cid'))?.name || '';
@@ -44,9 +47,9 @@ function renderPanel(art: HTMLElement) {
         <div class="lbl"><span>${c.sizes[0].t === 'UNIDAD' ? 'CANTIDAD' : r.cat === 'CALZADO' ? 'CANTIDADES POR NÚMERO' : 'CANTIDADES POR TALLE'}</span><span style="color:#9AA09A">${esc(c.n)}</span></div>
         <div class="szs">${c.sizes.map((z) => { const k = `${r.slug}|${c.n}|${z.t}`, v = q(k); if (z.ag) return `<div class="sz sz-ag"><div class="szt"><span>${esc(z.t)}</span>${z.k ? '<em>NIÑOS</em>' : ''}<em class="ag">SIN STOCK</em></div></div>`;
           return `<div class="sz${v ? ' on' : ''}"><div class="szt"><span>${esc(z.t)}</span>${z.k ? '<em>NIÑOS</em>' : ''}${z.sp ? '<em>A CONFIRMAR</em>' : ''}</div><div class="ctl"><button type="button" data-k="${esc(k)}" data-d="-1" aria-label="Restar ${esc(z.t)}">−</button><output aria-live="polite">${p2(v)}</output><button type="button" data-k="${esc(k)}" data-d="1" aria-label="Sumar ${esc(z.t)}">+</button></div></div>`; }).join('')}</div>
-        ${c.sizes.some((z) => z.sp) ? '<div style="margin-top:10px;font-family:var(--mono);font-size:10px;line-height:1.8;color:#9AA09A">Los talles marcados A CONFIRMAR se validan antes de aprobar el pedido.</div>' : ''}
+        ${c.sizes.some((z) => z.sp) ? `<div style="margin-top:10px;font-family:var(--mono);font-size:10px;line-height:1.8;color:#9AA09A">${D.may ? 'Lo marcado A CONFIRMAR todavía no tiene precio mayorista publicado: se confirma por WhatsApp.' : 'Los talles marcados A CONFIRMAR se validan antes de aprobar el pedido.'}</div>` : ''}
       </div>
-      <div class="sub"><div><span class="k">${ru ? `SUBTOTAL · ${ru} UN.` : 'SUBTOTAL'}</span><span class="v">${ru ? money(subOf(r)) : '—'}</span></div>${ru ? '<button type="button" class="clr">VACIAR ARTÍCULO</button>' : ''}</div>
+      <div class="sub"><div><span class="k">${ru ? `SUBTOTAL · ${ru} UN.` : 'SUBTOTAL'}</span><span class="v">${ru ? textoSub(subOf(r), sinPrecio(r)) : '—'}</span></div>${ru ? '<button type="button" class="clr">VACIAR ARTÍCULO</button>' : ''}</div>
     </div>`;
   scope(panel);
 }
@@ -71,7 +74,7 @@ function lines() {
   const out: { n: string; v: string; qty: number; unit: string; sub: string; total: number }[] = [];
   for (const r of D.rows) for (const c of r.colors) for (const z of c.sizes) {
     const v = q(`${r.slug}|${c.n}|${z.t}`);
-    if (v) out.push({ n: r.n, v: z.t === 'UNIDAD' ? c.n : `${c.n} / ${z.t}${z.k ? ' (NIÑOS)' : ''}`, qty: v, unit: money(z.p), sub: money(v * z.p), total: v * z.p });
+    if (v) out.push({ n: r.n, v: z.t === 'UNIDAD' ? c.n : `${c.n} / ${z.t}${z.k ? ' (NIÑOS)' : ''}`, qty: v, unit: z.p ? money(z.p) : 'A CONFIRMAR', sub: z.p ? money(v * z.p) : 'A CONFIRMAR', total: v * z.p });
   }
   return out;
 }
@@ -83,7 +86,8 @@ function renderTotals() {
   const ok = units >= D.min, faltan = D.min - units, pct = Math.min(100, (units / D.min) * 100).toFixed(1) + '%';
   $('#ws-units')!.textContent = String(units);
   $('#ws-prods')!.textContent = p2(prods);
-  $('#ws-total')!.textContent = money(total);
+  const falta = ls.some((l) => !l.total);
+  $('#ws-total')!.textContent = textoSub(total, falta);
   const m = $('#ws-min')!;
   m.textContent = ok ? 'MÍNIMO MAYORISTA ALCANZADO' : `MÍNIMO ${D.min} UNIDADES · ${faltan === 1 ? 'FALTA 1' : `FALTAN ${faltan}`}`;
   m.classList.toggle('ok', ok);
@@ -92,14 +96,16 @@ function renderTotals() {
   const ql = $('#q-lines')!;
   ql.innerHTML = ls.length ? ls.map((l) => `<div class="l"><span>${esc(l.n)}</span><span>${esc(l.v)}</span><span>${l.qty} UN.</span><span>${l.unit}</span><span>${l.sub}</span></div>`).join('') : '<div class="e">SIN UNIDADES SELECCIONADAS.<br>AGREGÁ CANTIDADES EN EL CATÁLOGO.</div>';
   scope(ql);
-  $('#q-total')!.textContent = money(total);
+  $('#q-total')!.textContent = textoSub(total, falta);
   $('#q-minbox')!.classList.toggle('ok', ok);
   $('#q-minst')!.textContent = ok ? 'ALCANZADO ✓' : `${units} / ${D.min} · ${faltan === 1 ? 'FALTA 1 UNIDAD' : `FALTAN ${faltan} UNIDADES`}`;
   $('#q-minpct')!.style.width = pct;
   const enable = ok && ls.length > 0;
   const wa = $<HTMLAnchorElement>('#q-wa')!;
   wa.hidden = !enable; $('#q-no')!.hidden = enable;
-  wa.href = waLink('Hola Walter! Quiero cotizar esta compra mayorista:\n\n' + ls.map((l, i) => `${i + 1}. ${l.n} (${l.v.toLowerCase()}) x${l.qty} - ${l.sub}`).join('\n') + `\n\nSubtotal a precio publicado: ${money(total)}\n\n¿Me confirmás el precio mayorista, stock y envío?`);
+  wa.href = waLink(D.may
+    ? 'Hola Walter! Quiero hacer esta compra mayorista:\n\n' + ls.map((l, i) => `${i + 1}. ${l.n} (${l.v.toLowerCase().replace(/ \/ (\S+)/, (_m, t) => ' / ' + t.toUpperCase())}) x${l.qty} - ${l.sub === 'A CONFIRMAR' ? 'precio a confirmar' : l.sub}`).join('\n') + `\n\nSubtotal mayorista: ${money(total)}${falta ? ' (más los artículos a confirmar)' : ''}\n\n¿Me confirmás stock y envío?`
+    : 'Hola Walter! Quiero cotizar esta compra mayorista:\n\n' + ls.map((l, i) => `${i + 1}. ${l.n} (${l.v.toLowerCase().replace(/ \/ (\S+)/, (_m, t) => ' / ' + t.toUpperCase())}) x${l.qty} - ${l.sub}`).join('\n') + `\n\nSubtotal a precio publicado: ${money(total)}\n\n¿Me confirmás el precio mayorista, stock y envío?`);
   wa.dataset.track = JSON.stringify({ tipo: 'mayorista', qty: units, valor: total });
 }
 

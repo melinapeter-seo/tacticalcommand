@@ -82,9 +82,6 @@ const hojas = () => ({
   clientes: ['id', 'nombre', 'telefono', 'localidad', 'tipo', 'cuit', 'nota', 'alta'],
 });
 const NUMERICAS = ['precio', 'precio_mayorista', 'orden', 'idx', 'estado', 'total_ref'];
-/** Columnas privadas: solo las ve el panel (con PIN), nunca el catálogo público. */
-const PRIVADAS = ['precio_mayorista', 'precios_talle_mayorista'];
-const sinPrivadas = (o) => { const x = Object.assign({}, o); PRIVADAS.forEach((k) => delete x[k]); return x; };
 const BOOLEANAS = ['visible', 'agotado', 'avisado_0', 'avisado_1', 'avisado_2', 'avisado_3', 'pendiente'];
 const VERSIONES = 5;
 const CATEGORIAS = ['INDUMENTARIA', 'EQUIPOS TÁCTICOS', 'CALZADO', 'ACCESORIOS'];
@@ -233,10 +230,10 @@ function catalogo() {
   const cache = CacheService.getScriptCache();
   const enCache = cache.get('catalog');
   if (enCache) return JSON.parse(enCache);
-  const productos = leer('productos').filter((p) => p.visible === true && p.slug).map(sinPrivadas);
+  const productos = leer('productos').filter((p) => p.visible === true && p.slug);
   const slugs = new Set(productos.map((p) => p.slug));
   const data = {
-    productos, variantes: leer('variantes').filter((v) => slugs.has(v.slug)).map(sinPrivadas),
+    productos, variantes: leer('variantes').filter((v) => slugs.has(v.slug)),
     fichas: leer('fichas').filter((f) => slugs.has(f.slug)).map((f) => ({ slug: f.slug, contenido: f.contenido })), config: leerConfig('config'),
   };
   const txt = JSON.stringify(data);
