@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Overlays from '../components/Overlays.astro';
+import Cookies from '../components/Cookies.astro';
 import { SITE } from '../lib/data';
 import { abs } from '../lib/seo';
 
@@ -99,6 +100,7 @@ const robots = noindex ? 'noindex,nofollow' : 'index,follow,max-image-preview:la
     </main>
     <Footer extraPb={wsFooter} />
     <Overlays />
+    <Cookies />
     <script>
       import '../scripts/ui.ts';
     </script>

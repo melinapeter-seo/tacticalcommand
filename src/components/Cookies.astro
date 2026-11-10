@@ -1,0 +1,151 @@
+---
+// Aviso de cookies y preferencias por categoría (las de sitio.json › cookies). Nada de medición se carga sin
+// consentimiento: Google Analytics 4 con «Analítica», Meta Pixel con «Publicitarias» (si hay ID cargado).
+// La elección vive en localStorage (`tc-cookies`) y se cambia desde «Configurar cookies» en el pie.
+import { sitio } from '../lib/data';
+const s = sitio as typeof sitio & { ga4?: string; meta_pixel?: string };
+const cats = s.cookies;
+const conf = { ga: s.ga4 || '', pixel: s.meta_pixel || '' };
+---
+<div class="ck-bar" id="ck-bar" role="region" aria-label="Aviso de cookies" hidden>
+  <p>Usamos cookies propias y de terceros para entender cómo se usa el sitio y mejorarlo. Podés aceptarlas, rechazarlas o elegir cuáles. <a href="/legal/politica-de-cookies/">Política de cookies</a></p>
+  <div class="ck-b">
+    <button type="button" class="ck-t" data-ck="rechazar">RECHAZAR</button>
+    <button type="button" class="ck-t" data-ck="configurar">CONFIGURAR</button>
+    <button type="button" class="btn-gold ck-ok" data-ck="aceptar">ACEPTAR</button>
+  </div>
+</div>
+
+<div class="ov ck-ov" id="ck-modal" hidden role="dialog" aria-modal="true" aria-labelledby="ck-h">
+  <div class="ck-box">
+    <div class="ck-top"><h2 id="ck-h">PREFERENCIAS DE COOKIES</h2><button type="button" class="ck-x" data-ck="cerrar" aria-label="Cerrar">✕</button></div>
+    <p class="ck-i">Elegí qué cookies aceptás. Las necesarias hacen funcionar el sitio (carrito, compra, seguridad) y no se pueden desactivar.</p>
+    <ul class="ck-rows">
+      {cats.map((c: any) => (
+        <li>
+          <div><span class="ck-n">{c.t.toUpperCase()}</span><span class="ck-d">{c.d}</span></div>
+          <button type="button" class="ck-sw" role="switch" aria-checked={c.fixed ? 'true' : 'false'} aria-label={c.t} data-k={c.k} disabled={c.fixed}><span></span></button>
+        </li>
+      ))}
+    </ul>
+    <div class="ck-mb">
+      <button type="button" class="ck-t" data-ck="guardar">GUARDAR ELECCIÓN</button>
+      <button type="button" class="btn-gold ck-ok" data-ck="aceptar">ACEPTAR TODAS</button>
+    </div>
+  </div>
+</div>
+<script type="application/json" id="ck-conf" set:html={JSON.stringify(conf)} />
+
+<script>
+  type Pref = { v: number; fun: boolean; ana: boolean; pub: boolean; fecha: string };
+  const KEY = 'tc-cookies', V = 1;
+  const conf = JSON.parse(document.getElementById('ck-conf')!.textContent!) as { ga: string; pixel: string };
+  const w = window as any;
+  const bar = document.getElementById('ck-bar')!, modal = document.getElementById('ck-modal')!;
+  const leer = (): Pref | null => { try { const c = JSON.parse(localStorage.getItem(KEY) || 'null'); return c && c.v === V ? c : null; } catch { return null; } };
+
+  function cargarGA() {
+    if (!conf.ga || w.__tcGA) return;
+    w.__tcGA = true;
+    w.dataLayer = w.dataLayer || [];
+    w.gtag = function () { w.dataLayer.push(arguments); };
+    w.gtag('js', new Date());
+    w.gtag('config', conf.ga);
+    const sc = document.createElement('script');
+    sc.async = true; sc.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(conf.ga)}`;
+    document.head.appendChild(sc);
+  }
+  function cargarPixel() {
+    if (!conf.pixel || w.fbq) return;
+    const f: any = (w.fbq = function () { f.callMethod ? f.callMethod.apply(f, arguments) : f.queue.push(arguments); });
+    if (!w._fbq) w._fbq = f;
+    f.push = f; f.loaded = true; f.version = '2.0'; f.queue = [];
+    const sc = document.createElement('script');
+    sc.async = true; sc.src = 'https://connect.facebook.net/en_US/fbevents.js';
+    document.head.appendChild(sc);
+    w.fbq('init', conf.pixel); w.fbq('track', 'PageView');
+  }
+  function aplicar(c: Pref) { if (c.ana) cargarGA(); if (c.pub) cargarPixel(); }
+
+  /** Borra las cookies de medición ya guardadas (al retirar el consentimiento). */
+  function borrarMedicion() {
+    const dom = location.hostname.split('.').slice(-3).join('.');
+    document.cookie.split(';').map((x) => x.split('=')[0].trim()).filter((n) => /^(_ga|_gid|_gat|_fbp|_fbc)/.test(n)).forEach((n) => {
+      for (const d of ['', `; domain=${location.hostname}`, `; domain=.${dom}`]) document.cookie = `${n}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d}`;
+    });
+  }
+
+  function guardar(fun: boolean, ana: boolean, pub: boolean) {
+    const antes = leer();
+    const c: Pref = { v: V, fun, ana, pub, fecha: new Date().toISOString() };
+    try { localStorage.setItem(KEY, JSON.stringify(c)); } catch { /* sin storage: vale solo para esta visita */ }
+    bar.hidden = true; cerrarModal();
+    // Si se retira un permiso ya dado, se borran sus cookies y se recarga para descargar los scripts.
+    if (antes && ((antes.ana && !ana) || (antes.pub && !pub))) { borrarMedicion(); location.reload(); return; }
+    aplicar(c);
+  }
+
+  function abrirModal() {
+    const c = leer();
+    modal.querySelectorAll<HTMLButtonElement>('.ck-sw:not([disabled])').forEach((b) => b.setAttribute('aria-checked', String(!!(c && (c as any)[b.dataset.k!]))));
+    modal.hidden = false; document.documentElement.classList.add('ov-open');
+    modal.querySelector<HTMLElement>('.ck-x')?.focus();
+  }
+  function cerrarModal() { modal.hidden = true; document.documentElement.classList.remove('ov-open'); }
+  const elegido = (k: string) => modal.querySelector(`.ck-sw[data-k="${k}"]`)?.getAttribute('aria-checked') === 'true';
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    const sw = t.closest<HTMLButtonElement>('.ck-sw');
+    if (sw && !sw.disabled) { sw.setAttribute('aria-checked', String(sw.getAttribute('aria-checked') !== 'true')); return; }
+    if (t.closest('[data-ck-abrir]')) { abrirModal(); return; }
+    if (t === modal) { cerrarModal(); return; }
+    const a = t.closest<HTMLElement>('[data-ck]')?.dataset.ck;
+    if (a === 'aceptar') guardar(true, true, true);
+    else if (a === 'rechazar') guardar(false, false, false);
+    else if (a === 'configurar') abrirModal();
+    else if (a === 'guardar') guardar(elegido('fun'), elegido('ana'), elegido('pub'));
+    else if (a === 'cerrar') cerrarModal();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) cerrarModal(); });
+
+  const c = leer();
+  if (c) aplicar(c); else bar.hidden = false;
+</script>
+
+<style>
+  .ck-bar { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 90; max-width: 980px; margin: 0 auto; display: flex; align-items: center; gap: 24px; padding: 18px 22px; background: rgba(21,24,22,.97); border: 1px solid var(--border); box-shadow: 0 18px 50px rgba(0,0,0,.5); backdrop-filter: blur(10px); animation: ck-in .5s var(--ease) both; }
+  .ck-bar[hidden] { display: none; }
+  .ck-bar p { flex: 1; margin: 0; font-size: 14px; line-height: 1.55; color: var(--text-2); }
+  .ck-bar a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+  .ck-b, .ck-mb { display: flex; gap: 10px; flex: none; }
+  .ck-t { background: none; border: 1px solid var(--border-dim); color: var(--text); font-family: var(--mono); font-size: 11px; letter-spacing: .16em; padding: 13px 16px; cursor: pointer; transition: border-color .2s, color .2s; }
+  .ck-t:hover { border-color: var(--gold); color: var(--gold); }
+  .ck-ok { font-size: 11px; letter-spacing: .16em; padding: 13px 20px; }
+  .ck-ov { position: fixed; inset: 0; z-index: 95; display: grid; place-items: center; padding: 16px; background: rgba(8,10,8,.72); backdrop-filter: blur(4px); }
+  .ck-ov[hidden] { display: none; }
+  .ck-box { width: 100%; max-width: 560px; max-height: calc(100dvh - 32px); overflow-y: auto; background: var(--surface-deep); border: 1px solid var(--border); padding: 26px 24px; }
+  .ck-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .ck-top h2 { margin: 0; font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: .2em; color: var(--gold); }
+  .ck-x { width: 36px; height: 36px; background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer; }
+  .ck-i { font-size: 14px; line-height: 1.6; color: var(--text-2); margin: 14px 0 6px; }
+  .ck-rows { list-style: none; margin: 0; padding: 0; }
+  .ck-rows li { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--border-soft); }
+  .ck-n { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--text); }
+  .ck-d { display: block; margin-top: 5px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+  .ck-sw { position: relative; flex: none; width: 48px; height: 26px; border-radius: 13px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; transition: background .2s, border-color .2s; }
+  .ck-sw span { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #7E887E; transition: transform .2s var(--ease), background .2s; }
+  .ck-sw[aria-checked='true'] { background: var(--gold); border-color: var(--gold); }
+  .ck-sw[aria-checked='true'] span { transform: translateX(22px); background: var(--ink); }
+  .ck-sw:disabled { cursor: default; opacity: .7; }
+  .ck-mb { margin-top: 20px; justify-content: flex-end; }
+  @keyframes ck-in { from { opacity: 0; transform: translateY(16px); } }
+  @media (max-width: 1023px) {
+    .ck-bar { left: 10px; right: 10px; bottom: 10px; flex-direction: column; align-items: stretch; gap: 14px; padding: 16px; }
+    .ck-bar p { font-size: 13px; }
+    .ck-b { display: grid; grid-template-columns: 1fr 1fr; }
+    .ck-b .ck-ok { grid-column: 1 / -1; grid-row: 1; padding: 15px; }
+    .ck-mb { flex-direction: column-reverse; }
+    .ck-mb > * { width: 100%; }
+  }
+</style>
