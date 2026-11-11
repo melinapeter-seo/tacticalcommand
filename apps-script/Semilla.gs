@@ -69,7 +69,7 @@ const SEMILLA = {
    "categoria": "INDUMENTARIA",
    "subcategoria": "UNIFORMES",
    "sku": "TC-UNI-001",
-   "descripcion": "Uniforme táctico en Marpat o gris topo, compuesto por chaquetilla y pantalón cargo. La chaquetilla cuenta con cuello Mao, cierre frontal cubierto y paneles de abrojo en el pecho y las mangas. El pantalón incorpora bolsillos laterales y refuerzos en las rodillas. Disponible en gabardina o ripstop, a elección, y en talles del S al 3XL, según disponibilidad.",
+   "descripcion": "Uniforme táctico en Marpat, gris topo o Woodland, compuesto por chaquetilla y pantalón cargo. La chaquetilla cuenta con cuello Mao, cierre frontal y paneles de abrojo/velcro en el pecho y las mangas. El pantalón incorpora bolsillos laterales y refuerzos en las rodillas. Disponible en gabardina o ripstop, según el color, y en talles del S al 3XL, según disponibilidad.",
    "visible": true,
    "precio": 50000,
    "talles": "S,M,L,XL,2XL,3XL",
@@ -561,6 +561,21 @@ const SEMILLA = {
    "precios_talle_mayorista": ""
   },
   {
+   "slug": "uniforme-tactico",
+   "idx": 3,
+   "nombre": "WOODLAND · RIPSTOP",
+   "sku": "TC-UNI-WD-RS",
+   "swatch": "#5B5A3F",
+   "fotos": "uni-wd-1.webp|uni-wd-2.webp|uni-wd-3.webp|uni-wd-4.webp|uni-wd-5.webp",
+   "precio": 60000,
+   "precios_talle": "{\"2XL\":65000,\"3XL\":65000}",
+   "agotados": "",
+   "agotado": false,
+   "talles": "",
+   "precio_mayorista": "",
+   "precios_talle_mayorista": ""
+  },
+  {
    "slug": "cinto-tactico",
    "idx": 0,
    "nombre": "NEGRO",
@@ -918,7 +933,7 @@ const SEMILLA = {
   },
   {
    "slug": "uniforme-tactico",
-   "contenido": "{\"descripcion_larga\":[\"El uniforme táctico es un conjunto de dos piezas, chaquetilla y pantalón, pensado para quienes buscan una prenda funcional con diseño táctico.\",\"La chaquetilla presenta cuello Mao, cierre frontal cubierto y paneles de abrojo en el pecho y las mangas, que permiten colocar parches o identificaciones compatibles. El pantalón tiene diseño cargo, bolsillos laterales y refuerzos en la zona de las rodillas.\",\"El conjunto se confecciona en gabardina o ripstop, según la preferencia del comprador y la disponibilidad. Antes de hacer el pedido, confirmá por WhatsApp la tela disponible, el talle y el precio vigente.\",\"Se ofrece en Marpat y gris topo, en talles del S al 3XL, sujetos a disponibilidad.\"],\"caracteristicas\":[\"Chaquetilla + pantalón\",\"Cuello Mao\",\"Cierre frontal cubierto\",\"Abrojo en pecho y mangas\",\"Pantalón cargo con refuerzo en rodillas\",\"Marpat o gris topo · S al 3XL\"],\"especificaciones\":[{\"k\":\"PRODUCTO\",\"v\":\"Uniforme táctico\"},{\"k\":\"TIPO\",\"v\":\"Conjunto de dos piezas\"},{\"k\":\"PRENDAS INCLUIDAS\",\"v\":\"Chaquetilla + pantalón\"},{\"k\":\"COLORES\",\"v\":\"Marpat y gris topo\"},{\"k\":\"CUELLO\",\"v\":\"Mao\"},{\"k\":\"CIERRE DE CHAQUETILLA\",\"v\":\"Frontal cubierto\"},{\"k\":\"PANELES DE ABROJO\",\"v\":\"Pecho y mangas\"},{\"k\":\"PANTALÓN\",\"v\":\"Tipo cargo\"},{\"k\":\"BOLSILLOS DEL PANTALÓN\",\"v\":\"Laterales\"},{\"k\":\"REFUERZOS\",\"v\":\"Zona de las rodillas\"},{\"k\":\"TELA\",\"v\":\"Gabardina o ripstop, a elección\"},{\"k\":\"TALLES\",\"v\":\"S al 3XL\"},{\"k\":\"CALIDAD\",\"v\":\"Premium\"}],\"faq\":[{\"q\":\"¿Qué incluye el uniforme táctico?\",\"a\":\"Incluye una chaquetilla táctica y un pantalón cargo, diseñados como conjunto.\"},{\"q\":\"¿En qué colores está disponible?\",\"a\":\"Se ofrece en Marpat y gris topo.\"},{\"q\":\"¿Qué características tiene la chaquetilla?\",\"a\":\"Cuello Mao, cierre frontal cubierto y paneles de abrojo en el pecho y las mangas.\"},{\"q\":\"¿Cómo es el pantalón del uniforme?\",\"a\":\"Es un pantalón cargo con bolsillos laterales y refuerzos en la zona de las rodillas.\"},{\"q\":\"¿En qué telas está disponible?\",\"a\":\"En gabardina o ripstop, a elección, según disponibilidad.\"},{\"q\":\"¿Qué talles hay?\",\"a\":\"Del S al 3XL. La disponibilidad de cada talle se confirma antes del pedido.\"},{\"q\":\"¿Los paneles de abrojo permiten colocar parches?\",\"a\":\"Sí. Los paneles del pecho y las mangas permiten colocar parches o identificaciones compatibles.\"}]}",
+   "contenido": "{\"descripcion_larga\":[\"El uniforme táctico es un conjunto de dos piezas, chaquetilla y pantalón, pensado para quienes buscan una prenda funcional con diseño táctico.\",\"La chaquetilla presenta cuello Mao, cierre frontal y paneles de abrojo/velcro en el pecho y las mangas, que permiten colocar parches o identificaciones compatibles. El pantalón tiene diseño cargo, bolsillos laterales y refuerzos en la zona de las rodillas.\",\"El conjunto se confecciona en gabardina o ripstop, según el color y la disponibilidad. En la variante Woodland, ambas prendas son de tela Ripstop con estampado de camuflaje inspirado en la indumentaria táctica americana, pensado para integrarse visualmente en entornos naturales, y suman puños ajustables y triple costura. Antes de hacer el pedido, confirmá por WhatsApp la tela disponible, el talle y el precio vigente.\",\"Se ofrece en Marpat, gris topo y Woodland, en talles del S al 3XL, sujetos a disponibilidad.\"],\"caracteristicas\":[\"Chaquetilla + pantalón\",\"Cuello Mao\",\"Abrojo/velcro en pecho y mangas\",\"Pantalón cargo con refuerzo en rodillas\",\"Marpat, gris topo o Woodland\",\"Talles S al 3XL\"],\"especificaciones\":[{\"k\":\"PRODUCTO\",\"v\":\"Uniforme táctico\"},{\"k\":\"TIPO\",\"v\":\"Conjunto de dos piezas\"},{\"k\":\"PRENDAS INCLUIDAS\",\"v\":\"Chaquetilla + pantalón\"},{\"k\":\"COLORES\",\"v\":\"Marpat, gris topo y Woodland\"},{\"k\":\"CUELLO\",\"v\":\"Mao (con prendedor en Woodland)\"},{\"k\":\"CIERRE DE CHAQUETILLA\",\"v\":\"Frontal\"},{\"k\":\"PANELES DE ABROJO/VELCRO\",\"v\":\"Pecho y mangas\"},{\"k\":\"PUÑOS\",\"v\":\"Ajustables (Woodland)\"},{\"k\":\"PANTALÓN\",\"v\":\"Tipo cargo\"},{\"k\":\"BOLSILLOS DEL PANTALÓN\",\"v\":\"Laterales (tapas con botones en Woodland)\"},{\"k\":\"CINTURA\",\"v\":\"Pasacintos con reajuste (Woodland)\"},{\"k\":\"REFUERZOS\",\"v\":\"Zona de las rodillas\"},{\"k\":\"COSTURAS\",\"v\":\"Triple costura (Woodland)\"},{\"k\":\"TELA\",\"v\":\"Gabardina o ripstop, según color\"},{\"k\":\"TALLES\",\"v\":\"S al 3XL\"},{\"k\":\"CALIDAD\",\"v\":\"Premium\"}],\"faq\":[{\"q\":\"¿Qué incluye el uniforme táctico?\",\"a\":\"Incluye una chaquetilla táctica y un pantalón cargo, diseñados como conjunto.\"},{\"q\":\"¿En qué colores está disponible?\",\"a\":\"Se ofrece en Marpat, gris topo y Woodland.\"},{\"q\":\"¿Qué características tiene la chaquetilla?\",\"a\":\"Cuello Mao, cierre frontal y paneles de abrojo/velcro en el pecho y las mangas para colocar parches o bordados.\"},{\"q\":\"¿Cómo es el pantalón del uniforme?\",\"a\":\"Es un pantalón cargo con bolsillos laterales y refuerzos en la zona de las rodillas.\"},{\"q\":\"¿En qué telas está disponible?\",\"a\":\"Marpat y Woodland en ripstop; gris topo en gabardina o ripstop, a elección.\"},{\"q\":\"¿Qué talles hay?\",\"a\":\"Del S al 3XL. La disponibilidad de cada talle se confirma antes del pedido.\"},{\"q\":\"¿Los paneles de abrojo/velcro permiten colocar parches?\",\"a\":\"Sí. Los paneles del pecho y las mangas permiten colocar parches o identificaciones compatibles.\"}]}",
    "pendiente": false,
    "notas": ""
   },

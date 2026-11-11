@@ -62,6 +62,8 @@ export function tarjeta(clave: string) {
   const hit = TARJETAS[clave];
   if (!hit) return null;
   const { p, t } = hit;
+  // Tarjeta de un color que (todavía) no está en la planilla: no se muestra, para no llevar a un color que no existe.
+  if (t.color && !p.colores.some((c) => c.nombre === t.color)) return null;
   const col = p.colores.find((c) => c.nombre === t.color) || p.colores[0];
   const url = `/productos/${p.slug}/` + (t.color ? `?color=${encodeURIComponent(t.color)}` : '');
   return {

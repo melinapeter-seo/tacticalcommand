@@ -32,7 +32,8 @@
    ],
    "UNIFORMES": [
     "unimp",
-    "unigt"
+    "unigt",
+    "uniwd"
    ]
   },
   "tarjetas": [
@@ -46,7 +47,8 @@
    "pantr",
    "pantwd",
    "unimp",
-   "unigt"
+   "unigt",
+   "uniwd"
   ],
   "comparativa": {
    "titulo": "¿QUÉ PRENDA ELEGIR?",
@@ -105,7 +107,7 @@
       "Gabardina o ripstop",
       "Trabajo operativo, seguridad e instrucción",
       "Chaquetilla + pantalón cargo; abrojo en pecho y mangas, refuerzo en rodillas",
-      "Marpat y Gris Topo · S a 3XL"
+      "Marpat, Gris Topo y Woodland · S a 3XL"
      ]
     }
    ]
@@ -121,7 +123,7 @@
    },
    {
     "q": "¿Qué incluye el uniforme táctico?",
-    "a": "Chaquetilla y pantalón cargo. La chaquetilla tiene cuello Mao, cierre frontal cubierto y abrojo en pecho y mangas; el pantalón, bolsillos laterales y refuerzos en rodillas. Se ofrece en Marpat y gris topo, en gabardina o ripstop, del S al 3XL."
+    "a": "Chaquetilla y pantalón cargo. La chaquetilla tiene cuello Mao, cierre frontal y abrojo/velcro en pecho y mangas; el pantalón, bolsillos laterales y refuerzos en rodillas. Se ofrece en Marpat, gris topo y Woodland, en gabardina o ripstop según el color, del S al 3XL."
    },
    {
     "q": "¿Las prendas tienen velcro para parches?",

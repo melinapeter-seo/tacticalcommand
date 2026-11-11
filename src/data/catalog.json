@@ -1634,20 +1634,20 @@
     "titulo": null,
     "descripcion": null
    },
-   "descripcion": "Uniforme táctico en Marpat o gris topo, compuesto por chaquetilla y pantalón cargo. La chaquetilla cuenta con cuello Mao, cierre frontal cubierto y paneles de abrojo en el pecho y las mangas. El pantalón incorpora bolsillos laterales y refuerzos en las rodillas. Disponible en gabardina o ripstop, a elección, y en talles del S al 3XL, según disponibilidad.",
+   "descripcion": "Uniforme táctico en Marpat, gris topo o Woodland, compuesto por chaquetilla y pantalón cargo. La chaquetilla cuenta con cuello Mao, cierre frontal y paneles de abrojo/velcro en el pecho y las mangas. El pantalón incorpora bolsillos laterales y refuerzos en las rodillas. Disponible en gabardina o ripstop, según el color, y en talles del S al 3XL, según disponibilidad.",
    "descripcion_larga": [
     "El uniforme táctico es un conjunto de dos piezas, chaquetilla y pantalón, pensado para quienes buscan una prenda funcional con diseño táctico.",
-    "La chaquetilla presenta cuello Mao, cierre frontal cubierto y paneles de abrojo en el pecho y las mangas, que permiten colocar parches o identificaciones compatibles. El pantalón tiene diseño cargo, bolsillos laterales y refuerzos en la zona de las rodillas.",
-    "El conjunto se confecciona en gabardina o ripstop, según la preferencia del comprador y la disponibilidad. Antes de hacer el pedido, confirmá por WhatsApp la tela disponible, el talle y el precio vigente.",
-    "Se ofrece en Marpat y gris topo, en talles del S al 3XL, sujetos a disponibilidad."
+    "La chaquetilla presenta cuello Mao, cierre frontal y paneles de abrojo/velcro en el pecho y las mangas, que permiten colocar parches o identificaciones compatibles. El pantalón tiene diseño cargo, bolsillos laterales y refuerzos en la zona de las rodillas.",
+    "El conjunto se confecciona en gabardina o ripstop, según el color y la disponibilidad. En la variante Woodland, ambas prendas son de tela Ripstop con estampado de camuflaje inspirado en la indumentaria táctica americana, pensado para integrarse visualmente en entornos naturales, y suman puños ajustables y triple costura. Antes de hacer el pedido, confirmá por WhatsApp la tela disponible, el talle y el precio vigente.",
+    "Se ofrece en Marpat, gris topo y Woodland, en talles del S al 3XL, sujetos a disponibilidad."
    ],
    "caracteristicas": [
     "Chaquetilla + pantalón",
     "Cuello Mao",
-    "Cierre frontal cubierto",
-    "Abrojo en pecho y mangas",
+    "Abrojo/velcro en pecho y mangas",
     "Pantalón cargo con refuerzo en rodillas",
-    "Marpat o gris topo · S al 3XL"
+    "Marpat, gris topo o Woodland",
+    "Talles S al 3XL"
    ],
    "funciones": [
     {
@@ -1657,22 +1657,27 @@
     },
     {
      "titulo": "CUELLO MAO",
-     "texto": "Chaquetilla con cuello Mao.",
+     "texto": "Chaquetilla con cuello Mao; en Woodland, con prendedor.",
      "destacado": null
     },
     {
-     "titulo": "CIERRE FRONTAL CUBIERTO",
-     "texto": "Chaquetilla con cierre frontal cubierto.",
+     "titulo": "CIERRE FRONTAL",
+     "texto": "Chaquetilla con cierre frontal.",
      "destacado": null
     },
     {
-     "titulo": "PANELES DE ABROJO",
+     "titulo": "PANELES DE ABROJO/VELCRO",
      "texto": "En el pecho y las mangas, para colocar parches o identificaciones compatibles.",
      "destacado": null
     },
     {
+     "titulo": "PUÑOS AJUSTABLES",
+     "texto": "En la variante Woodland, permiten regular el ajuste en las muñecas.",
+     "destacado": null
+    },
+    {
      "titulo": "PANTALÓN CARGO",
-     "texto": "Diseño cargo con bolsillos laterales.",
+     "texto": "Diseño cargo con bolsillos laterales; en Woodland, con tapas con botones y pasacintos con reajuste.",
      "destacado": null
     },
     {
@@ -1681,8 +1686,8 @@
      "destacado": null
     },
     {
-     "titulo": "DOS OPCIONES DE TELA",
-     "texto": "Gabardina o ripstop, a elección según disponibilidad.",
+     "titulo": "TELA SEGÚN COLOR",
+     "texto": "Gabardina o ripstop en Marpat/gris topo; ripstop con triple costura en Woodland.",
      "destacado": null
     }
    ],
@@ -1708,7 +1713,7 @@
     },
     {
      "titulo": "OUTDOOR",
-     "texto": "Para actividades al aire libre, en Marpat o gris topo."
+     "texto": "Para actividades al aire libre, en Marpat, gris topo o Woodland."
     }
    ],
    "medidas": [],
@@ -1731,19 +1736,23 @@
     },
     {
      "k": "COLORES",
-     "v": "Marpat y gris topo"
+     "v": "Marpat, gris topo y Woodland"
     },
     {
      "k": "CUELLO",
-     "v": "Mao"
+     "v": "Mao (con prendedor en Woodland)"
     },
     {
      "k": "CIERRE DE CHAQUETILLA",
-     "v": "Frontal cubierto"
+     "v": "Frontal"
     },
     {
-     "k": "PANELES DE ABROJO",
+     "k": "PANELES DE ABROJO/VELCRO",
      "v": "Pecho y mangas"
+    },
+    {
+     "k": "PUÑOS",
+     "v": "Ajustables (Woodland)"
     },
     {
      "k": "PANTALÓN",
@@ -1751,15 +1760,23 @@
     },
     {
      "k": "BOLSILLOS DEL PANTALÓN",
-     "v": "Laterales"
+     "v": "Laterales (tapas con botones en Woodland)"
+    },
+    {
+     "k": "CINTURA",
+     "v": "Pasacintos con reajuste (Woodland)"
     },
     {
      "k": "REFUERZOS",
      "v": "Zona de las rodillas"
     },
     {
+     "k": "COSTURAS",
+     "v": "Triple costura (Woodland)"
+    },
+    {
      "k": "TELA",
-     "v": "Gabardina o ripstop, a elección"
+     "v": "Gabardina o ripstop, según color"
     },
     {
      "k": "TALLES",
@@ -1777,11 +1794,11 @@
     },
     {
      "q": "¿En qué colores está disponible?",
-     "a": "Se ofrece en Marpat y gris topo."
+     "a": "Se ofrece en Marpat, gris topo y Woodland."
     },
     {
      "q": "¿Qué características tiene la chaquetilla?",
-     "a": "Cuello Mao, cierre frontal cubierto y paneles de abrojo en el pecho y las mangas."
+     "a": "Cuello Mao, cierre frontal y paneles de abrojo/velcro en el pecho y las mangas para colocar parches o bordados."
     },
     {
      "q": "¿Cómo es el pantalón del uniforme?",
@@ -1789,14 +1806,14 @@
     },
     {
      "q": "¿En qué telas está disponible?",
-     "a": "En gabardina o ripstop, a elección, según disponibilidad."
+     "a": "Marpat y Woodland en ripstop; gris topo en gabardina o ripstop, a elección."
     },
     {
      "q": "¿Qué talles hay?",
      "a": "Del S al 3XL. La disponibilidad de cada talle se confirma antes del pedido."
     },
     {
-     "q": "¿Los paneles de abrojo permiten colocar parches?",
+     "q": "¿Los paneles de abrojo/velcro permiten colocar parches?",
      "a": "Sí. Los paneles del pecho y las mangas permiten colocar parches o identificaciones compatibles."
     }
    ],
@@ -1942,6 +1959,49 @@
        "estado": "disponible"
       }
      ]
+    },
+    {
+     "nombre": "WOODLAND · RIPSTOP",
+     "sku": "TC-UNI-WD-RS",
+     "muestra": "#5B5A3F",
+     "fotos": [
+      "uni-wd-1.webp",
+      "uni-wd-2.webp",
+      "uni-wd-3.webp",
+      "uni-wd-4.webp",
+      "uni-wd-5.webp"
+     ],
+     "talles": [
+      {
+       "talle": "S",
+       "estado": "disponible"
+      },
+      {
+       "talle": "M",
+       "estado": "disponible"
+      },
+      {
+       "talle": "L",
+       "estado": "disponible"
+      },
+      {
+       "talle": "XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "2XL",
+       "estado": "disponible"
+      },
+      {
+       "talle": "3XL",
+       "estado": "disponible"
+      }
+     ],
+     "precio": 60000,
+     "precios_talle": {
+      "2XL": 65000,
+      "3XL": 65000
+     }
     }
    ],
    "tarjetas": [
@@ -1956,6 +2016,12 @@
      "nombre": "Uniforme Táctico Gris Topo",
      "color": "GRIS TOPO · GABARDINA",
      "imagen": "uni-gt-1.webp"
+    },
+    {
+     "clave": "uniwd",
+     "nombre": "Uniforme Táctico Woodland",
+     "color": "WOODLAND · RIPSTOP",
+     "imagen": "uni-wd-1.webp"
     }
    ]
   },
