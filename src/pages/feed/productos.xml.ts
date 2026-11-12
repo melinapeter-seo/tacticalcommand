@@ -6,6 +6,12 @@ import { img } from '../../lib/img';
 // Feed para Google Merchant Center (listados gratuitos): un ítem por color, agrupado por item_group_id.
 // Si un color tiene precios distintos por talle, un ítem por color y talle.
 const x = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+// Peso aproximado del paquete (kg) para la tabla de envíos de Merchant Center: hasta 1 kg = envío chico; más = grande.
+// Por subcategoría (palabra clave); si no coincide ninguna, un valor por categoría.
+const PESOS: [RegExp, number][] = [[/PARCHE/, 0.1], [/SHEMAGH/, 0.3], [/SOMBRERO|GORRO/, 0.3], [/CINTUR|CINTO/, 0.4], [/GAFA/, 0.5], [/BAJO CHALECO/, 0.5],
+  [/BANDOLERA/, 0.8], [/PANTAL/, 0.8], [/UNIFORME/, 1.5], [/CAMPERA/, 1.5], [/MOCHILA/, 2], [/BOLSO/, 2.5], [/BORCEGO|CALZADO/, 2.5]];
+const PESO_CAT: Record<string, number> = { ACCESORIOS: 0.5, INDUMENTARIA: 1.2, CALZADO: 2.5, 'EQUIPOS TÁCTICOS': 2 };
+const peso = (cat: string, sub: string) => PESOS.find(([re]) => re.test(sub))?.[1] ?? PESO_CAT[cat] ?? 1.5;
 const cap = (s: string) => s.toLowerCase().replace(/(^|\s)(\S)/g, (_m, a, b) => a + b.toUpperCase());
 
 export const GET: APIRoute = async () => {
@@ -36,6 +42,7 @@ ${imgs.slice(1).map((u) => `<g:additional_image_link>${u}</g:additional_image_li
 <g:color>${x(cap(c.nombre))}</g:color>
 ${v.talles.length ? `<g:size>${x(v.talles.join('/'))}</g:size>` : ''}
 <g:product_type>${x(cap(p.categoria) + ' > ' + cap(p.subcategoria))}</g:product_type>
+<g:shipping_weight>${peso(p.categoria, p.subcategoria)} kg</g:shipping_weight>
 </item>`);
     }
   }
